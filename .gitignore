@@ -1,0 +1,8 @@
+*.pdb
+project/Release/
+project/ipch/
+*.suo
+project/Develop/
+project/Debug/
+*.sdf
+*.opensdf

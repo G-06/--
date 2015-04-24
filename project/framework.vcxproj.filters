@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sources">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="sources\default_include">
+      <UniqueIdentifier>{40502598-9a92-49cd-8efb-a7c3597ad5bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\safety">
+      <UniqueIdentifier>{d295361b-6112-4afd-90c9-16c299070014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\type_alias">
+      <UniqueIdentifier>{b0088fb2-9f82-4cba-b931-11e4536f252d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\stdafx">
+      <UniqueIdentifier>{8614097c-af4c-4ce7-9c36-11c6898a02b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\debug_tool">
+      <UniqueIdentifier>{c0f4609e-022a-4360-bf69-8359f7a15f01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\default_constant_definition">
+      <UniqueIdentifier>{a0714e18-6a10-42aa-9d20-56766b703575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system">
+      <UniqueIdentifier>{420f52c9-1612-4075-b445-267a9dfa735d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\window">
+      <UniqueIdentifier>{1d1faf88-fdfa-4ae5-a0be-70510e93edb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\thread">
+      <UniqueIdentifier>{aac0bc5d-f0ba-4f11-be5e-4c0dbc38ac23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application">
+      <UniqueIdentifier>{22f91c19-7bdd-4e50-9989-8dd327cdb284}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\scene">
+      <UniqueIdentifier>{c73fe964-27b3-407f-a499-4f775253eb99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\timer">
+      <UniqueIdentifier>{48e7907e-e569-4d5e-b634-37183c6d5709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\render">
+      <UniqueIdentifier>{84d91af6-b598-4aed-be21-824b3cc2d6a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\directx9">
+      <UniqueIdentifier>{c3fe1cf0-c43e-44f2-9a0a-b879f72e79f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\collision">
+      <UniqueIdentifier>{89c50674-90a6-465e-afb1-aec08af3fc83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\directx9\texture">
+      <UniqueIdentifier>{098fa85d-e3fe-416f-b61c-ea8eb59af985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\scene\title">
+      <UniqueIdentifier>{5958b5ab-91f2-4361-939e-ea7594a9b26e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\scene\game">
+      <UniqueIdentifier>{79aced37-18c4-4101-8897-616ef67dc672}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\direct_input">
+      <UniqueIdentifier>{323ec76d-60a9-49c6-9ce1-7c9cb302b2a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\scene\factory">
+      <UniqueIdentifier>{622401ee-ddad-4b7d-b55b-8958cd7dbbac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\frame">
+      <UniqueIdentifier>{017dc161-dc7d-49a0-9459-1af7f58ba01f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\direct_input\device">
+      <UniqueIdentifier>{5325bfd7-b16a-4c0e-a6cd-4a1d65ab07d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\common">
+      <UniqueIdentifier>{38d3639b-0606-433b-8c16-5b0056e3fa08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\common\basic">
+      <UniqueIdentifier>{472b3053-a584-4a10-b862-b27b95d9bbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\directx9\font">
+      <UniqueIdentifier>{2a20fc97-c24d-4c84-840b-95832b97c173}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sources\main.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\default_include.h">
+      <Filter>sources\default_include</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\safety\safety.h">
+      <Filter>sources\default_include\safety</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\type_alias\type_alias.h">
+      <Filter>sources\default_include\type_alias</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\stdafx\stdafx.h">
+      <Filter>sources\default_include\stdafx</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\debug_tool\assert.h">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\debug_tool\debug_tool.h">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\default_constant_definition\default_constant_definition.h">
+      <Filter>sources\default_include\default_constant_definition</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\system.h">
+      <Filter>sources\system</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\window\main_window.h">
+      <Filter>sources\system\window</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\window\window.h">
+      <Filter>sources\system\window</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\thread\thread.h">
+      <Filter>sources\system\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\application.h">
+      <Filter>sources\application</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\timer\timer.h">
+      <Filter>sources\system\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\render\sprite.h">
+      <Filter>sources\render</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\directx9\directx9.h">
+      <Filter>sources\system\directx9</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\scene_manager.h">
+      <Filter>sources\application\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\scene.h">
+      <Filter>sources\application\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\directx9\texture\texture.h">
+      <Filter>sources\system\directx9\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\render\fade.h">
+      <Filter>sources\render</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\collision\collision.h">
+      <Filter>sources\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\collision\collision_circle.h">
+      <Filter>sources\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\collision\collision_point.h">
+      <Filter>sources\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\collision\collision_line.h">
+      <Filter>sources\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\scene_game.h">
+      <Filter>sources\application\scene\game</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\factory\scene_factory.h">
+      <Filter>sources\application\scene\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\frame\frame_controller.h">
+      <Filter>sources\frame</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\debug_tool\debug_console.h">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\debug_tool\debug_trace.h">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\default_include\debug_tool\debug_display.h">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\direct_input\direct_input.h">
+      <Filter>sources\system\direct_input</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\direct_input\device\di_keyboard.h">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\direct_input\device\di_mouse.h">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\direct_input\device\di_device.h">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\direct_input\input_event_buffer.h">
+      <Filter>sources\system\direct_input</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\direct_input\input_alias.h">
+      <Filter>sources\system\direct_input</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\common\basic\basic.h">
+      <Filter>sources\common\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\title\scene_title.h">
+      <Filter>sources\application\scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\title\title_bg.h">
+      <Filter>sources\application\scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\directx9\font\font_texture.h">
+      <Filter>sources\system\directx9\font</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\render\text_box.h">
+      <Filter>sources\render</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sources\main.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\default_include\stdafx\stdafx.cpp">
+      <Filter>sources\default_include\stdafx</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\default_include\debug_tool\assert.cpp">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\system.cpp">
+      <Filter>sources\system</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\window\main_window.cpp">
+      <Filter>sources\system\window</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\window\window.cpp">
+      <Filter>sources\system\window</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\thread\thread.cpp">
+      <Filter>sources\system\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\application.cpp">
+      <Filter>sources\application</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\timer\timer.cpp">
+      <Filter>sources\system\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\render\sprite.cpp">
+      <Filter>sources\render</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\directx9\directx9.cpp">
+      <Filter>sources\system\directx9</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\scene_manager.cpp">
+      <Filter>sources\application\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\scene.cpp">
+      <Filter>sources\application\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\directx9\texture\texture.cpp">
+      <Filter>sources\system\directx9\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\render\fade.cpp">
+      <Filter>sources\render</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\collision\collision.cpp">
+      <Filter>sources\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\collision\collision_circle.cpp">
+      <Filter>sources\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\collision\collision_point.cpp">
+      <Filter>sources\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\collision\collision_line.cpp">
+      <Filter>sources\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\scene_game.cpp">
+      <Filter>sources\application\scene\game</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\frame\frame_controller.cpp">
+      <Filter>sources\frame</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\default_include\debug_tool\debug_console.cpp">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\default_include\debug_tool\debug_tool.cpp">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\default_include\debug_tool\debug_trace.cpp">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\default_include\debug_tool\debug_display.cpp">
+      <Filter>sources\default_include\debug_tool</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\direct_input\direct_input.cpp">
+      <Filter>sources\system\direct_input</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\direct_input\device\di_mouse.cpp">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\direct_input\device\di_keyboard.cpp">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\direct_input\device\di_device.cpp">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\direct_input\input_event_buffer.cpp">
+      <Filter>sources\system\direct_input</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\title\scene_title.cpp">
+      <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\title\title_bg.cpp">
+      <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\directx9\font\font_texture.cpp">
+      <Filter>sources\system\directx9\font</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\render\text_box.cpp">
+      <Filter>sources\render</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
