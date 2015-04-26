@@ -53,6 +53,7 @@
     <ClCompile Include="sources\system\timer\timer.cpp" />
     <ClCompile Include="sources\system\window\main_window.cpp" />
     <ClCompile Include="sources\system\window\window.cpp" />
+    <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp" />
     <ClCompile Include="sources\system\xaudio2\xaudio2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +98,7 @@
     <ClInclude Include="sources\system\timer\timer.h" />
     <ClInclude Include="sources\system\window\main_window.h" />
     <ClInclude Include="sources\system\window\window.h" />
+    <ClInclude Include="sources\system\xaudio2\bgm\bgm.h" />
     <ClInclude Include="sources\system\xaudio2\xaudio2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

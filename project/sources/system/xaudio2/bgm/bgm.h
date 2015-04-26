@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// xaudio2
+// bgm
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,8 +10,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _XAUDIO2_H_
-#define _XAUDIO2_H_
+#ifndef _BGM_H_
+#define _BGM_H_
 
 //*****************************************************************************
 // include
@@ -21,14 +21,21 @@
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class XAudio2 : public Basic
+class BGM : public Basic
 {
 public:
+	enum BGM_ID
+	{
+		BGM_ID_NONE = -1,
+		BGM_ID_TEST,
+		BGM_ID_MAX,
+	};
+
 	// constructor
-	XAudio2(void);
+	BGM(void);
 
 	// destructor
-	virtual ~XAudio2(void);
+	virtual ~BGM(void);
 
 	// initialize
 	bool Initialize(void);
@@ -36,26 +43,23 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
-	// load wave file
-	bool LoadWaveFile(const s8* filename);
+	// play
+	bool Play(const BGM_ID& bgm_id);
 
-	// チャンクのチェック
-	HRESULT CheckChunk(HANDLE h_file, DWORD format, DWORD *chunk_size, DWORD *chunk_data_position);
+	// stop
+	void Stop(void);
 
-	// チャンクデータの読み込み
-	HRESULT ReadChunkData(HANDLE h_file, void* buffer, DWORD buffer_size, DWORD buffer_offset);
-
-	// XAudio2の取得
-	IXAudio2* __xaudio2(void){return xaudio2_;}
-
-	// XAudio2の取得
-	IXAudio2MasteringVoice* __mastering_voice(void){return mastering_voice_;}
+	// accessor
+	const BGM_ID& __current_bgm(void)const{ return current_bgm_; }
+	void __is_loop(const bool& is_loop){ is_loop_ = is_loop; }
 
 private:
-	IXAudio2* xaudio2_;
-	IXAudio2MasteringVoice* mastering_voice_;
+	static const s8* BGM_NAME[BGM_ID_MAX];
+
+	BGM_ID current_bgm_;
+	bool is_loop_;
 };
 
-#endif // _XAUDIO2_H_
+#endif // _BGM_H_
 
 //---------------------------------- EOF --------------------------------------

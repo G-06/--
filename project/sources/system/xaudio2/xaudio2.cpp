@@ -32,36 +32,21 @@ XAudio2::~XAudio2(void)
 //=============================================================================
 bool XAudio2::Initialize(void)
 {
-	HRESULT hr;
-
-	// COMライブラリの初期化
+	// initiialize COM
 	CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
-	// XAudio2オブジェクトの作成
-	hr = XAudio2Create(&xaudio2_, 0);
-
-	if(FAILED(hr))
+	// create xaudio2
+	if(FAILED(XAudio2Create(&xaudio2_,0)))
 	{
-		// COMライブラリの終了処理
 		CoUninitialize();
 		return false;
 	}
 
-	// マスターボイスの生成
-	hr = xaudio2_->CreateMasteringVoice(&mastering_voice_);
-
-	if(FAILED(hr))
+	// create master voice
+	if(FAILED(xaudio2_->CreateMasteringVoice(&mastering_voice_)))
 	{
-		if(xaudio2_ != NULL)
-		{
-			// XAudio2オブジェクトの開放
-			xaudio2_->Release();
-			xaudio2_ = NULL;
-		}
-
-		// COMライブラリの終了処理
+		SafeRelease(xaudio2_);
 		CoUninitialize();
-
 		return false;
 	}
 
@@ -82,6 +67,13 @@ void XAudio2::Uninitialize(void)
 	SafeRelease(xaudio2_);
 
 	CoUninitialize();
+}
+
+//=============================================================================
+// load wave file
+//=============================================================================
+bool LoadWaveFile(const s8* filename)
+{
 }
 
 //=============================================================================
