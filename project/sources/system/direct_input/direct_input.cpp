@@ -17,6 +17,11 @@
 #include "device/di_virtual.h"
 #include "system/system.h"
 
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+const s8* DirectInput::SYSTEM_FILE_NAME = "resources/system/input.bin";
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -60,6 +65,9 @@ bool DirectInput::Initialize(void)
 
 	// push direct input virtual to device list
 	device_list_.push_back(di_virtual_);
+
+	// load input file
+	di_virtual_->Load(SYSTEM_FILE_NAME);
 
 	for(auto it = device_list_.begin();it != device_list_.end();++it)
 	{
@@ -142,6 +150,14 @@ s32 DirectInput::GetValue(const INPUT_EVENT_VALUE& input_event_value)
 bool DirectInput::RegisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event)
 {
 	return di_virtual_->Register(input_event_virtual,input_event);
+}
+
+//=============================================================================
+// save input event vertual
+//=============================================================================
+void DirectInput::SaveInputEventVertual(void)
+{
+	di_virtual_->Save(SYSTEM_FILE_NAME);
 }
 
 //---------------------------------- EOF --------------------------------------

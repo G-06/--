@@ -54,7 +54,7 @@ bool Application::Initialize(void)
 		return false;
 	}
 
-	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_0,INPUT_EVENT_R);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_0,INPUT_EVENT_R);
 
 	text_box_ = new TextBox(FontTexture::TYPE_MS_GOTHIC,32);
 	text_box_->Initialize();

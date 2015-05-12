@@ -98,4 +98,61 @@ bool DIVirtual::Register(const INPUT_EVENT& input_event_virtual,const INPUT_EVEN
 	return false;
 }
 
+//=============================================================================
+// load
+//=============================================================================
+bool DIVirtual::Load(const s8* filename)
+{
+	FILE* file = nullptr;
+	u32 size = 0;
+	u32 key = 0;
+
+	fopen_s(&file,filename,"rb");
+
+	if(file == nullptr)
+	{
+		return false;
+	}
+
+	for(u32 i = 0;i < KEY_MAX;++i)
+	{
+		fread(&size,sizeof(u32),1,file);
+	
+		for(u32 j = 0;j < size;++j)
+		{
+			fread(&key,sizeof(u32),1,file);
+			input_event_container_[i].push_back((INPUT_EVENT)key);
+		}
+	}
+
+	fclose(file);
+
+	return true;
+}
+
+//=============================================================================
+// save
+//=============================================================================
+bool DIVirtual::Save(const s8* filename)
+{
+	FILE* file = nullptr;
+
+	fopen_s(&file,filename,"wb");
+
+	for(u32 i = 0;i < KEY_MAX;++i)
+	{
+		u32 size = input_event_container_[i].size();
+		fwrite(&size,sizeof(u32),1,file);
+		for(u32 j = 0;j < size;++j)
+		{
+			u32 key = input_event_container_[i][j];
+			fwrite(&key,sizeof(u32),1,file);
+		}
+	}
+
+	fclose(file);
+
+	return true;
+}
+
 //---------------------------------- EOF --------------------------------------

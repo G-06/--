@@ -43,10 +43,16 @@ public:
 	// register
 	bool Register(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
 
+	// load
+	bool Load(const s8* filename);
+
+	// save
+	bool Save(const s8* filename);
+
 private:
 	static const u16 KEY_MAX = INPUT_EVENT_VIRTUAL_15 - INPUT_EVENT_VIRTUAL_0;
 	bool preview_key_[KEY_MAX];
-	std::list<INPUT_EVENT> input_event_container_[KEY_MAX];
+	std::vector<INPUT_EVENT> input_event_container_[KEY_MAX];
 };
 
 #endif // _DI_VIRTUAL_H_

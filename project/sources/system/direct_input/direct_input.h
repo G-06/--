@@ -66,7 +66,11 @@ public:
 	// register input event vertual
 	bool RegisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
 
+	// save input event vertual
+	void SaveInputEventVertual(void);
+
 private:
+	static const s8* SYSTEM_FILE_NAME;
 	LPDIRECTINPUT8 direct_input_;
 	std::list<DIDevice*> device_list_;
 	Window* window_;
