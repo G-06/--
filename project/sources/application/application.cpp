@@ -54,6 +54,8 @@ bool Application::Initialize(void)
 		return false;
 	}
 
+	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_0,INPUT_EVENT_R);
+
 	text_box_ = new TextBox(FontTexture::TYPE_MS_GOTHIC,32);
 	text_box_->Initialize();
 
@@ -135,7 +137,7 @@ void Application::Update(void)
 				text_box_->__position(D3DXVECTOR2(text_box_->__position().x,text_box_->__position().y + 1.0f));
 			}
 
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_R))
+			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_0))
 			{
 				text_box_->Restart();
 			}

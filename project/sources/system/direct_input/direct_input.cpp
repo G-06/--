@@ -10,13 +10,11 @@
 // include
 //*****************************************************************************
 #include "direct_input.h"
-
-//#include "../../window/window.h"
-
 #include "input_event_buffer.h"
 #include "device/di_device.h"
 #include "device/di_keyboard.h"
 #include "device/di_mouse.h"
+#include "device/di_virtual.h"
 #include "system/system.h"
 
 //=============================================================================
@@ -57,6 +55,12 @@ bool DirectInput::Initialize(void)
 	// push direct input mouse to device list
 	device_list_.push_back(di_mouse);
 
+	// create direct input keyboard
+	di_virtual_ = new DIVirtual(input_event_buffer_);
+
+	// push direct input virtual to device list
+	device_list_.push_back(di_virtual_);
+
 	for(auto it = device_list_.begin();it != device_list_.end();++it)
 	{
 		if(!SafeInitialize(*it))
@@ -77,6 +81,7 @@ void DirectInput::Uninitialize(void)
 	{
 		SafeRelease(*it);
 	}
+
 	SafeRelease(input_event_buffer_);
 }
 
@@ -129,6 +134,14 @@ bool DirectInput::CheckRepeat(const INPUT_EVENT& input_event)
 s32 DirectInput::GetValue(const INPUT_EVENT_VALUE& input_event_value)
 {
 	return input_event_buffer_->GetValue(input_event_value);
+}
+
+//=============================================================================
+// register input event vertual
+//=============================================================================
+bool DirectInput::RegisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event)
+{
+	return di_virtual_->Register(input_event_virtual,input_event);
 }
 
 //---------------------------------- EOF --------------------------------------

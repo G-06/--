@@ -205,6 +205,9 @@
     <ClInclude Include="sources\render\text_box.h">
       <Filter>sources\render</Filter>
     </ClInclude>
+    <ClInclude Include="sources\system\direct_input\device\di_virtual.h">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -308,6 +311,9 @@
     </ClCompile>
     <ClCompile Include="sources\render\text_box.cpp">
       <Filter>sources\render</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\direct_input\device\di_virtual.cpp">
+      <Filter>sources\system\direct_input\device</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

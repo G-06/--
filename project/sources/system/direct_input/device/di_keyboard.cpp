@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// direct input keyboad
+// direct input keyboard
 //
 // Author		: Kenji Kabutomori
 //

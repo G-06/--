@@ -25,6 +25,7 @@
 class DIDevice;
 class Window;
 class InputEventBuffer;
+class DIVirtual;
 
 //*****************************************************************************
 // class definition
@@ -62,12 +63,15 @@ public:
 	// get value
 	s32 GetValue(const INPUT_EVENT_VALUE& input_event_value);
 
+	// register input event vertual
+	bool RegisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
+
 private:
 	LPDIRECTINPUT8 direct_input_;
 	std::list<DIDevice*> device_list_;
 	Window* window_;
 	InputEventBuffer* input_event_buffer_;
-
+	DIVirtual* di_virtual_;
 };
 
 #endif // _DIRECT_INPUT_H_
