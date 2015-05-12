@@ -25,6 +25,7 @@
     <ClCompile Include="sources\collision\collision_circle.cpp" />
     <ClCompile Include="sources\collision\collision_line.cpp" />
     <ClCompile Include="sources\collision\collision_point.cpp" />
+    <ClCompile Include="sources\common\animation\animation.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\assert.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\debug_console.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\debug_display.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="sources\collision\collision_circle.h" />
     <ClInclude Include="sources\collision\collision_line.h" />
     <ClInclude Include="sources\collision\collision_point.h" />
+    <ClInclude Include="sources\common\animation\animation.h" />
     <ClInclude Include="sources\common\basic\basic.h" />
     <ClInclude Include="sources\default_include\debug_tool\assert.h" />
     <ClInclude Include="sources\default_include\debug_tool\debug_console.h" />
