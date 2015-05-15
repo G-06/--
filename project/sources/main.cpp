@@ -22,6 +22,11 @@ int APIENTRY WinMain(HINSTANCE hinstance, HINSTANCE preview_hinstance, LPSTR com
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // _RELEASE
 
+	// HACK Ç∆ÇËÇ†Ç¶Ç∏ñ≥Ç¢Ç∆ÉEÉCÉãÉXÇ…Ç»ÇÈ
+	FILE* file = nullptr;
+	fopen_s(&file,"framework.exe","rb");
+	fclose(file);
+
 	// setup system
 	if(!System::Setup(hinstance))
 	{

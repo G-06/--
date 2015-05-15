@@ -1,59 +1,60 @@
 //*****************************************************************************
 //
-// texture
+// direct input virtual
 //
 // Author		: Kenji Kabutomori
 //
 //*****************************************************************************
 
 //*****************************************************************************
-// include guard
+// include gaurd
 //*****************************************************************************
 #pragma once
-#ifndef _TEXTURE_H_
-#define _TEXTURE_H_
+#ifndef _DI_VIRTUAL_H_
+#define _DI_VIRTUAL_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
+#include "di_device.h"
+#include "../input_alias.h"
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Texture : public Basic
+class DIVirtual : public DIDevice
 {
 public:
-	enum TEXTURE_ID
-	{
-		TEXTURE_ID_NONE = -1,
-		TEXTURE_ID_TEST = 0,
-		TEXTURE_ID_ANIM_TEST,
-		TEXTURE_ID_TITLE_BG,
-		TEXTURE_ID_MAX
-	};
-
 	// constructor
-	Texture(void);
+	DIVirtual(InputEventBuffer* input_event_buffer);
 
 	// destructor
-	virtual ~Texture(void);
+	virtual ~DIVirtual(void);
 
 	// initialize
 	bool Initialize(void);
 
 	// uninitialize
 	void Uninitialize(void);
+	
+	// update
+	void Update(void);
 
-	// get texture
-	LPDIRECT3DTEXTURE9 GetTexture(const TEXTURE_ID& texture_id)const;
+	// register
+	bool Register(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
+
+	// load
+	bool Load(const s8* filename);
+
+	// save
+	bool Save(const s8* filename);
 
 private:
-	static const s8* TEXTURE_NAME[TEXTURE_ID_MAX];
-	LPDIRECT3DDEVICE9 device_;
-	LPDIRECT3DTEXTURE9 texture_container_[TEXTURE_ID_MAX];
+	static const u16 KEY_MAX = INPUT_EVENT_VIRTUAL_15 - INPUT_EVENT_VIRTUAL_0;
+	bool preview_key_[KEY_MAX];
+	std::vector<INPUT_EVENT> input_event_container_[KEY_MAX];
 };
 
-#endif	// _TEXTURE_H_
+#endif // _DI_VIRTUAL_H_
 
 //---------------------------------- EOF --------------------------------------

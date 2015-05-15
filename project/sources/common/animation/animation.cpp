@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// texture
+// animation
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,76 +9,65 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "texture.h"
-#include "system/system.h"
-
-//*****************************************************************************
-// constant definition
-//*****************************************************************************
-const s8* Texture::TEXTURE_NAME[TEXTURE_ID_MAX] =
-{
-	"resources/texture/test.png",
-	"resources/texture/anim_test.png",
-	"resources/texture/title/title_bg.jpg"
-};
+#include "animation.h"
 
 //=============================================================================
 // constructor
 //=============================================================================
-Texture::Texture(void) :
-device_(nullptr)
+Animation::Animation(void)
+	:frame_count_(0)
+	,current_index_(0)
 {
-	memset(texture_container_,0,sizeof(texture_container_));
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-Texture::~Texture(void)
+Animation::~Animation(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool Texture::Initialize(void)
+bool Animation::Initialize(void)
 {
-	device_ = GET_DIRECTX9_DEVICE;
-
-	for(u32 i = 0;i < TEXTURE_ID_MAX;++i)
-	{
-		if(FAILED(D3DXCreateTextureFromFile(device_,TEXTURE_NAME[i],&texture_container_[i])))
-		{
-			ASSERT("failed load texure");
-			return false;
-		}
-	}
-
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void Texture::Uninitialize(void)
+void Animation::Uninitialize(void)
 {
-	for(u32 i = 0;i < TEXTURE_ID_MAX;++i)
+}
+
+//=============================================================================
+// update
+//=============================================================================
+void Animation::Update(void)
+{
+	if(current_index_ >= 0 && current_index_ < container_.size())
 	{
-		SafeRelease(texture_container_[i]);
+		frame_count_++;
+
+		if(frame_count_ > container_[current_index_]._frame)
+		{
+			current_index_ = container_[current_index_]._next_index;
+			frame_count_ = 0;
+		}
 	}
 }
 
 //=============================================================================
-// get texture
+// add
 //=============================================================================
-LPDIRECT3DTEXTURE9 Texture::GetTexture(const TEXTURE_ID& texture_id)const
+void Animation::Add(DATA* data,u32 size)
 {
-	if(texture_id == TEXTURE_ID_NONE)
+	for(u32 i = 0;i < size;++i)
 	{
-		return nullptr;
+		container_.push_back(*(data + i));
 	}
-
-	return texture_container_[texture_id];
 }
 
 //---------------------------------- EOF --------------------------------------

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// texture
+// animation
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,8 +10,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _TEXTURE_H_
-#define _TEXTURE_H_
+#ifndef _ANIMATION_H_
+#define _ANIMATION_H_
 
 //*****************************************************************************
 // include
@@ -21,23 +21,24 @@
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Texture : public Basic
+class Animation : public Basic
 {
 public:
-	enum TEXTURE_ID
+	typedef struct DATA
 	{
-		TEXTURE_ID_NONE = -1,
-		TEXTURE_ID_TEST = 0,
-		TEXTURE_ID_ANIM_TEST,
-		TEXTURE_ID_TITLE_BG,
-		TEXTURE_ID_MAX
+		u32 _frame;
+		u32 _next_index;
+
+		DATA(u32 frame,u32 next_index)
+			:_frame(frame),
+			_next_index(next_index) {}
 	};
 
 	// constructor
-	Texture(void);
+	Animation(void);
 
 	// destructor
-	virtual ~Texture(void);
+	virtual ~Animation(void);
 
 	// initialize
 	bool Initialize(void);
@@ -45,15 +46,22 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
-	// get texture
-	LPDIRECT3DTEXTURE9 GetTexture(const TEXTURE_ID& texture_id)const;
+	// update
+	void Update(void);
+
+	// add
+	void Add(DATA* data,u32 size);
+
+	// accessor
+	void __current_index(const u32& current_index) { current_index_ = current_index; frame_count_ = 0; }
+	const u32& __current_index(void)const { return current_index_; }
 
 private:
-	static const s8* TEXTURE_NAME[TEXTURE_ID_MAX];
-	LPDIRECT3DDEVICE9 device_;
-	LPDIRECT3DTEXTURE9 texture_container_[TEXTURE_ID_MAX];
+	u32 frame_count_;
+	u32 current_index_;
+	std::vector<DATA> container_;
 };
 
-#endif	// _TEXTURE_H_
+#endif	// _ANIMATION_H_
 
 //---------------------------------- EOF --------------------------------------

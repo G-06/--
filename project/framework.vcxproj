@@ -25,6 +25,7 @@
     <ClCompile Include="sources\collision\collision_circle.cpp" />
     <ClCompile Include="sources\collision\collision_line.cpp" />
     <ClCompile Include="sources\collision\collision_point.cpp" />
+    <ClCompile Include="sources\common\animation\animation.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\assert.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\debug_console.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\debug_display.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="sources\system\direct_input\device\di_device.cpp" />
     <ClCompile Include="sources\system\direct_input\device\di_keyboard.cpp" />
     <ClCompile Include="sources\system\direct_input\device\di_mouse.cpp" />
+    <ClCompile Include="sources\system\direct_input\device\di_virtual.cpp" />
     <ClCompile Include="sources\system\direct_input\direct_input.cpp" />
     <ClCompile Include="sources\system\direct_input\input_event_buffer.cpp" />
     <ClCompile Include="sources\system\system.cpp" />
@@ -68,6 +70,7 @@
     <ClInclude Include="sources\collision\collision_circle.h" />
     <ClInclude Include="sources\collision\collision_line.h" />
     <ClInclude Include="sources\collision\collision_point.h" />
+    <ClInclude Include="sources\common\animation\animation.h" />
     <ClInclude Include="sources\common\basic\basic.h" />
     <ClInclude Include="sources\default_include\debug_tool\assert.h" />
     <ClInclude Include="sources\default_include\debug_tool\debug_console.h" />
@@ -90,6 +93,7 @@
     <ClInclude Include="sources\system\direct_input\device\di_device.h" />
     <ClInclude Include="sources\system\direct_input\device\di_keyboard.h" />
     <ClInclude Include="sources\system\direct_input\device\di_mouse.h" />
+    <ClInclude Include="sources\system\direct_input\device\di_virtual.h" />
     <ClInclude Include="sources\system\direct_input\direct_input.h" />
     <ClInclude Include="sources\system\direct_input\input_alias.h" />
     <ClInclude Include="sources\system\direct_input\input_event_buffer.h" />
