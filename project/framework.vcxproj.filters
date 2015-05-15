@@ -80,6 +80,9 @@
     <Filter Include="sources\system\directx9\font">
       <UniqueIdentifier>{2a20fc97-c24d-4c84-840b-95832b97c173}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\common\animation">
+      <UniqueIdentifier>{1c3a907c-c99d-4590-83fa-34590e798ccd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -208,6 +211,9 @@
     <ClInclude Include="sources\system\direct_input\device\di_virtual.h">
       <Filter>sources\system\direct_input\device</Filter>
     </ClInclude>
+    <ClInclude Include="sources\common\animation\animation.h">
+      <Filter>sources\common\animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -314,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="sources\system\direct_input\device\di_virtual.cpp">
       <Filter>sources\system\direct_input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\common\animation\animation.cpp">
+      <Filter>sources\common\animation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

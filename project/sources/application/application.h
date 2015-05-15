@@ -28,6 +28,7 @@ class SceneManager;
 // HACK
 class FontTexture;
 class Sprite;
+class Animation;
 class TextBox;
 
 //*****************************************************************************
@@ -60,6 +61,7 @@ private:
 
 	// HACK
 	Sprite* sprite_;
+	Animation* animation_;
 	FontTexture* font_texture_;
 	TextBox* text_box_;
 };

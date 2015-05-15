@@ -23,21 +23,24 @@ const Sprite::POINT Sprite::DEFAULT_POINT = Sprite::POINT_LEFT_UP;
 //=============================================================================
 // constructor
 //=============================================================================
-Sprite::Sprite(void) :
-device_(nullptr),
-vertex_buffer_(nullptr),
-texture_(nullptr),
-position_(DEFAULT_POSITION),
-size_(DEFAULT_SIZE),
-color_(DEFAULT_COLOR),
-point_(DEFAULT_POINT),
-left_(0.0f),
-right_(1.0f),
-top_(0.0f),
-bottom_(1.0f),
-rotation_(0.0f),
-scale_(1.0f,1.0f),
-texture_id_(Texture::TEXTURE_ID_NONE)
+Sprite::Sprite(void)
+	:device_(nullptr)
+	,vertex_buffer_(nullptr)
+	,texture_(nullptr)
+	,position_(DEFAULT_POSITION)
+	,size_(DEFAULT_SIZE)
+	,color_(DEFAULT_COLOR)
+	,point_(DEFAULT_POINT)
+	,left_(0.0f)
+	,right_(1.0f)
+	,top_(0.0f)
+	,bottom_(1.0f)
+	,rotation_(0.0f)
+	,scale_(1.0f,1.0f)
+	,texture_id_(Texture::TEXTURE_ID_NONE)
+	,index_(-1)
+	,division_width_(1)
+	,division_height_(1)
 {
 }
 
@@ -209,11 +212,27 @@ void Sprite::SetParameter(void)
 		}
 	}
 
-	// texcoord
-	vertex[0]._texcoord = D3DXVECTOR2( left_,top_);
-	vertex[1]._texcoord = D3DXVECTOR2(right_,top_);
-	vertex[2]._texcoord = D3DXVECTOR2( left_,bottom_);
-	vertex[3]._texcoord = D3DXVECTOR2(right_,bottom_);
+	if(index_ == -1)
+	{
+		// texcoord
+		vertex[0]._texcoord = D3DXVECTOR2(left_,top_);
+		vertex[1]._texcoord = D3DXVECTOR2(right_,top_);
+		vertex[2]._texcoord = D3DXVECTOR2(left_,bottom_);
+		vertex[3]._texcoord = D3DXVECTOR2(right_,bottom_);
+	}
+	else
+	{
+		float left = 1.0f / division_width_ * (index_ % division_width_);
+		float right = 1.0f / division_width_ * ((index_ % division_width_) + 1);
+		float top = 1.0f / division_height_ * (index_ / division_width_);
+		float bottom = 1.0f / division_height_ * ((index_ / division_width_) + 1);
+
+		// texcoord
+		vertex[0]._texcoord = D3DXVECTOR2(left,top);
+		vertex[1]._texcoord = D3DXVECTOR2(right,top);
+		vertex[2]._texcoord = D3DXVECTOR2(left,bottom);
+		vertex[3]._texcoord = D3DXVECTOR2(right,bottom);
+	}
 
 	// color
 	vertex[0]._color = color_;

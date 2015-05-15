@@ -18,6 +18,7 @@
 // HACK
 #include "system/directx9/font/font_texture.h"
 #include "render/sprite.h"
+#include "common/animation/animation.h"
 #include "render/text_box.h"
 
 //=============================================================================
@@ -54,7 +55,30 @@ bool Application::Initialize(void)
 		return false;
 	}
 
-	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_0,INPUT_EVENT_R);
+	Animation::DATA data[] =
+	{
+		Animation::DATA(5,1),
+		Animation::DATA(5,2),
+		Animation::DATA(5,3),
+		Animation::DATA(5,4),
+		Animation::DATA(5,5),
+		Animation::DATA(5,6),
+		Animation::DATA(5,7),
+		Animation::DATA(5,8),
+		Animation::DATA(5,9),
+		Animation::DATA(5,0)
+	};
+	animation_ = new Animation();
+	animation_->Add(data,sizeof(data) / sizeof(Animation::DATA));
+
+	sprite_ = new Sprite();
+	sprite_->Initialize();
+	sprite_->__size(D3DXVECTOR2(100.0f,100.0f));
+	sprite_->__division_width(5);
+	sprite_->__division_height(2);
+	sprite_->__index(0);
+	sprite_->__texture_id(Texture::TEXTURE_ID_ANIM_TEST);
+	sprite_->SetParameter();
 
 	text_box_ = new TextBox(FontTexture::TYPE_MS_GOTHIC,32);
 	text_box_->Initialize();
@@ -82,6 +106,8 @@ void Application::Uninitialize(void)
 	SafeRelease(scene_manager_);
 
 	SafeRelease(text_box_);
+	SafeRelease(animation_);
+	SafeRelease(sprite_);
 }
 
 //=============================================================================
@@ -117,6 +143,10 @@ void Application::Update(void)
 			// update scene manager
 			scene_manager_->Update();
 
+			animation_->Update();
+			sprite_->__index(animation_->__current_index());
+			sprite_->SetParameter();
+
 			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT))
 			{
 				text_box_->__position(D3DXVECTOR2(text_box_->__position().x - 1.0f,text_box_->__position().y));
@@ -149,6 +179,8 @@ void Application::Update(void)
 			scene_manager_->Draw();
 
 			text_box_->Draw();
+
+			sprite_->Draw();
 
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
 			{
