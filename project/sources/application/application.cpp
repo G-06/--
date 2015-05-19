@@ -123,6 +123,9 @@ void Application::Update(void)
 		// update frame controller
 		frame_controller->Update();
 
+		// print fps
+		DEBUG_TOOL.__debug_display()->Print("FPS : %d\n",frame_controller->__fps());
+
 		// is loop window system
 		if(!GET_SYSTEM.__window()->__is_loop())
 		{
@@ -134,9 +137,6 @@ void Application::Update(void)
 
 		// update debug tool
 		DEBUG_TOOL.Update();
-
-		// print fps
-		DEBUG_TOOL.__debug_display()->Print("FPS : %d\n",frame_controller->__fps());
 
 		if(!DEBUG_TOOL.__is_pause())
 		{

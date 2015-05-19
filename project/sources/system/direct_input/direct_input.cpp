@@ -14,6 +14,7 @@
 #include "device/di_device.h"
 #include "device/di_keyboard.h"
 #include "device/di_mouse.h"
+#include "device/di_pad.h"
 #include "device/di_virtual.h"
 #include "system/system.h"
 
@@ -26,6 +27,12 @@ const s8* DirectInput::SYSTEM_FILE_NAME = "resources/system/input.bin";
 // constructor
 //=============================================================================
 DirectInput::DirectInput(void)
+	:input_event_buffer_(nullptr)
+	,di_keyboard_(nullptr)
+	,di_mouse_(nullptr)
+	,di_pad_(nullptr)
+	,di_virtual_(nullptr)
+	,is_reset_(false)
 {
 }
 
@@ -45,36 +52,68 @@ bool DirectInput::Initialize(void)
 
 	input_event_buffer_ = new InputEventBuffer();
 
+	if(!SafeInitialize(input_event_buffer_))
+	{
+		SafeRelease(input_event_buffer_);
+		return false;
+	}
+
 	// create direct input
 	DirectInput8Create(window_->__hinstance(),DIRECTINPUT_VERSION,IID_IDirectInput8,(void**)&direct_input_,NULL);
 
 	// create direct input keyboard
-	DIKeyboard* di_keyboard = new DIKeyboard(direct_input_,window_,input_event_buffer_);
+	di_keyboard_ = new DIKeyboard(direct_input_,window_,input_event_buffer_);
 
-	// push direct input keyboard to device list
-	device_list_.push_back(di_keyboard);
+	// initilize direct input keyboard
+	if(SafeInitialize(di_keyboard_))
+	{
+		// push direct input keyboard to device list
+		device_list_.push_back(di_keyboard_);
+	}
+	else
+	{
+		SafeRelease(di_keyboard_);
+	}
+
+	// create direct input mouse
+	di_mouse_ = new DIMouse(direct_input_,window_,input_event_buffer_);
+
+	// initilize direct input mouse
+	if(SafeInitialize(di_mouse_))
+	{
+		// push direct input mouse to device list
+		device_list_.push_back(di_mouse_);
+	}
+	else
+	{
+		SafeRelease(di_mouse_);
+	}
 
 	// create direct input keyboard
-	DIMouse* di_mouse = new DIMouse(direct_input_,window_,input_event_buffer_);
+	di_pad_ = new DIPad(direct_input_,window_,input_event_buffer_);
 
-	// push direct input mouse to device list
-	device_list_.push_back(di_mouse);
+	// initilize direct input pad
+	if(SafeInitialize(di_pad_))
+	{
+		// push direct input pad to device list
+		device_list_.push_back(di_pad_);
+	}
+	else
+	{
+		SafeRelease(di_pad_);
+	}
 
-	// create direct input keyboard
+	// create direct input virtual
 	di_virtual_ = new DIVirtual(input_event_buffer_);
 
-	// push direct input virtual to device list
-	device_list_.push_back(di_virtual_);
-
-	// load input file
-	di_virtual_->Load(SYSTEM_FILE_NAME);
-
-	for(auto it = device_list_.begin();it != device_list_.end();++it)
+	// initilize direct input virtual
+	if(SafeInitialize(di_virtual_))
 	{
-		if(!SafeInitialize(*it))
-		{
-			return false;
-		}
+		// push direct input virtual to device list
+		device_list_.push_back(di_virtual_);
+
+		// load input file
+		di_virtual_->Load(SYSTEM_FILE_NAME);
 	}
 
 	return true;
@@ -90,6 +129,8 @@ void DirectInput::Uninitialize(void)
 		SafeRelease(*it);
 	}
 
+	device_list_.clear();
+
 	SafeRelease(input_event_buffer_);
 }
 
@@ -98,10 +139,44 @@ void DirectInput::Uninitialize(void)
 //=============================================================================
 void DirectInput::Update(void)
 {
-	for(auto it = device_list_.begin();it != device_list_.end();++it)
+	if(is_reset_)
 	{
-		(*it)->Update();
 	}
+	else
+	{
+		for(auto it = device_list_.begin();it != device_list_.end();++it)
+		{
+			(*it)->Update();
+		}
+	}
+}
+
+//=============================================================================
+// reset device
+//=============================================================================
+void DirectInput::ResetDevice(void)
+{
+	is_reset_ = true;
+
+	if(di_pad_ != nullptr)
+	{
+		device_list_.remove(di_pad_);
+	}
+
+	SafeRelease(di_pad_);
+
+	di_pad_ = new DIPad(direct_input_,window_,input_event_buffer_);
+
+	if(SafeInitialize(di_pad_))
+	{
+		device_list_.push_back(di_pad_);
+	}
+	else
+	{
+		SafeRelease(di_pad_);
+	}
+
+	is_reset_ = false;
 }
 
 //=============================================================================

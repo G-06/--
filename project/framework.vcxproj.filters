@@ -223,6 +223,9 @@
     <ClInclude Include="sources\system\xaudio2\bgm\bgm.h">
       <Filter>sources\system\xaudio2</Filter>
     </ClInclude>
+    <ClInclude Include="sources\system\direct_input\device\di_pad.h">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -338,6 +341,9 @@
     </ClCompile>
     <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp">
       <Filter>sources\system\xaudio2</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\direct_input\device\di_pad.cpp">
+      <Filter>sources\system\direct_input\device</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
