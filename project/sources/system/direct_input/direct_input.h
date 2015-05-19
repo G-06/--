@@ -26,6 +26,9 @@ class DIDevice;
 class Window;
 class InputEventBuffer;
 class DIVirtual;
+class DIKeyboard;
+class DIMouse;
+class DIPad;
 
 //*****************************************************************************
 // class definition
@@ -47,6 +50,9 @@ public:
 
 	// update
 	void Update(void);
+
+	// reset device
+	void ResetDevice(void);
 
 	// check press
 	bool CheckPress(const INPUT_EVENT& input_event);
@@ -75,7 +81,11 @@ private:
 	std::list<DIDevice*> device_list_;
 	Window* window_;
 	InputEventBuffer* input_event_buffer_;
+	DIKeyboard* di_keyboard_;
+	DIMouse* di_mouse_;
+	DIPad* di_pad_;
 	DIVirtual* di_virtual_;
+	bool is_reset_;
 };
 
 #endif // _DIRECT_INPUT_H_

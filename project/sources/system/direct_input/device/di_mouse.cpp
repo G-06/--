@@ -79,13 +79,6 @@ bool DIMouse::Initialize(void)
 //=============================================================================
 void DIMouse::Uninitialize(void)
 {
-	if(direct_input_device_ != nullptr)
-	{
-		direct_input_device_->Unacquire();
-		direct_input_device_->Release();
-		direct_input_device_ = nullptr;
-	}
-
 	DIDevice::Uninitialize();
 }
 
@@ -95,10 +88,10 @@ void DIMouse::Uninitialize(void)
 void DIMouse::Update(void)
 {
 	POINT pos;
-	DIMOUSESTATE2 temp_state = {NULL};
+	DIMOUSESTATE2 dimousestate2 = {NULL};
 
 	// マウスの情報取得
-	if(SUCCEEDED(direct_input_device_->GetDeviceState(sizeof(temp_state),&temp_state)))
+	if(SUCCEEDED(direct_input_device_->GetDeviceState(sizeof(dimousestate2),&dimousestate2)))
 	{
 		// スクリーン座標取得
 		GetCursorPos(&pos);
@@ -111,11 +104,11 @@ void DIMouse::Update(void)
 		input_event_buffer_->SetValue(INPUT_EVENT_VALUE_MOUSE_Y,pos.y);
 
 		// 差分を設定
-		input_event_buffer_->SetValue(INPUT_EVENT_VALUE_MOUSE_MOVE_X,temp_state.lX);
-		input_event_buffer_->SetValue(INPUT_EVENT_VALUE_MOUSE_MOVE_Y,temp_state.lY);
+		input_event_buffer_->SetValue(INPUT_EVENT_VALUE_MOUSE_MOVE_X,dimousestate2.lX);
+		input_event_buffer_->SetValue(INPUT_EVENT_VALUE_MOUSE_MOVE_Y,dimousestate2.lY);
 
 		// スクロール量取得
-		input_event_buffer_->SetValue(INPUT_EVENT_VALUE_MOUSE_SCROLL,temp_state.lZ);
+		input_event_buffer_->SetValue(INPUT_EVENT_VALUE_MOUSE_SCROLL,dimousestate2.lZ);
 	}
 	else
 	{
@@ -125,7 +118,7 @@ void DIMouse::Update(void)
 
 	for(int i = 0; i < KEY_MAX;++i)
 	{
-		const bool press_key = (temp_state.rgbButtons[i] & PUSH_BIT) ? true : false;
+		const bool press_key = (dimousestate2.rgbButtons[i] & PUSH_BIT) ? true : false;
 
 		// トリガーキーの算出
 		const bool trigger_key = (preview_key_[i] ^ press_key) & press_key;

@@ -11,6 +11,7 @@
 //*****************************************************************************
 #include "window.h"
 #include "system/thread/thread.h"
+#include "system/system.h"
 
 //=============================================================================
 // constructor
@@ -161,6 +162,10 @@ void Window::WindowThread(Window* in_window)
 			if(msg.message == WM_QUIT)
 			{
 				in_window->is_loop_ = false;
+			}
+			else if(msg.message == WM_DEVICECHANGE)
+			{
+				GET_DIRECT_INPUT->ResetDevice();
 			}
 			//else if(msg.message == WM_SIZE)
 			//{

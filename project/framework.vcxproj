@@ -47,6 +47,7 @@
     <ClCompile Include="sources\system\direct_input\device\di_device.cpp" />
     <ClCompile Include="sources\system\direct_input\device\di_keyboard.cpp" />
     <ClCompile Include="sources\system\direct_input\device\di_mouse.cpp" />
+    <ClCompile Include="sources\system\direct_input\device\di_pad.cpp" />
     <ClCompile Include="sources\system\direct_input\device\di_virtual.cpp" />
     <ClCompile Include="sources\system\direct_input\direct_input.cpp" />
     <ClCompile Include="sources\system\direct_input\input_event_buffer.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="sources\system\direct_input\device\di_device.h" />
     <ClInclude Include="sources\system\direct_input\device\di_keyboard.h" />
     <ClInclude Include="sources\system\direct_input\device\di_mouse.h" />
+    <ClInclude Include="sources\system\direct_input\device\di_pad.h" />
     <ClInclude Include="sources\system\direct_input\device\di_virtual.h" />
     <ClInclude Include="sources\system\direct_input\direct_input.h" />
     <ClInclude Include="sources\system\direct_input\input_alias.h" />
