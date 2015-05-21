@@ -41,6 +41,7 @@ Sprite::Sprite(void)
 	,index_(-1)
 	,division_width_(1)
 	,division_height_(1)
+	,is_flip_(false)
 {
 }
 
@@ -214,11 +215,22 @@ void Sprite::SetParameter(void)
 
 	if(index_ == -1)
 	{
-		// texcoord
-		vertex[0]._texcoord = D3DXVECTOR2(left_,top_);
-		vertex[1]._texcoord = D3DXVECTOR2(right_,top_);
-		vertex[2]._texcoord = D3DXVECTOR2(left_,bottom_);
-		vertex[3]._texcoord = D3DXVECTOR2(right_,bottom_);
+		if(is_flip_)
+		{
+			// texcoord
+			vertex[0]._texcoord = D3DXVECTOR2(right_,top_);
+			vertex[1]._texcoord = D3DXVECTOR2(left_,top_);
+			vertex[2]._texcoord = D3DXVECTOR2(right_,bottom_);
+			vertex[3]._texcoord = D3DXVECTOR2(left_,bottom_);
+		}
+		else
+		{
+			// texcoord
+			vertex[0]._texcoord = D3DXVECTOR2(left_,top_);
+			vertex[1]._texcoord = D3DXVECTOR2(right_,top_);
+			vertex[2]._texcoord = D3DXVECTOR2(left_,bottom_);
+			vertex[3]._texcoord = D3DXVECTOR2(right_,bottom_);
+		}
 	}
 	else
 	{
@@ -227,11 +239,22 @@ void Sprite::SetParameter(void)
 		float top = 1.0f / division_height_ * (index_ / division_width_);
 		float bottom = 1.0f / division_height_ * ((index_ / division_width_) + 1);
 
-		// texcoord
-		vertex[0]._texcoord = D3DXVECTOR2(left,top);
-		vertex[1]._texcoord = D3DXVECTOR2(right,top);
-		vertex[2]._texcoord = D3DXVECTOR2(left,bottom);
-		vertex[3]._texcoord = D3DXVECTOR2(right,bottom);
+		if(is_flip_)
+		{
+			// texcoord
+			vertex[0]._texcoord = D3DXVECTOR2(right,top);
+			vertex[1]._texcoord = D3DXVECTOR2(left,top);
+			vertex[2]._texcoord = D3DXVECTOR2(right,bottom);
+			vertex[3]._texcoord = D3DXVECTOR2(left,bottom);
+		}
+		else
+		{
+			// texcoord
+			vertex[0]._texcoord = D3DXVECTOR2(left,top);
+			vertex[1]._texcoord = D3DXVECTOR2(right,top);
+			vertex[2]._texcoord = D3DXVECTOR2(left,bottom);
+			vertex[3]._texcoord = D3DXVECTOR2(right,bottom);
+		}
 	}
 
 	// color

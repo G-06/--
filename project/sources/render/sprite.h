@@ -83,6 +83,10 @@ public:
 	void __index(const s32& index) { index_ = index; }
 	void __division_width(const u32& division_width) { division_width_ = division_width; }
 	void __division_height(const u32& division_height) { division_height_ = division_height; }
+	bool __is_flip(void)const { return is_flip_; }
+	void __is_flip(bool is_flip) { is_flip_ = is_flip; }
+
+
 private:
 	LPDIRECT3DDEVICE9 device_;
 	LPDIRECT3DVERTEXBUFFER9 vertex_buffer_;
@@ -108,6 +112,7 @@ private:
 	s32 index_;
 	u32 division_width_;
 	u32 division_height_;
+	bool is_flip_;
 };
 
 #endif	// _SPRITE_H_

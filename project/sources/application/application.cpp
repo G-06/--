@@ -57,19 +57,20 @@ bool Application::Initialize(void)
 
 	Animation::DATA data[] =
 	{
-		Animation::DATA(5,1),
-		Animation::DATA(5,2),
-		Animation::DATA(5,3),
-		Animation::DATA(5,4),
-		Animation::DATA(5,5),
-		Animation::DATA(5,6),
-		Animation::DATA(5,7),
-		Animation::DATA(5,8),
-		Animation::DATA(5,9),
-		Animation::DATA(5,0)
+		Animation::DATA(4,1,0),
+		Animation::DATA(2,2,1),
+		Animation::DATA(1,3,2),
+		Animation::DATA(2,4,3),
+		Animation::DATA(4,5,4),
+		Animation::DATA(2,6,5),
+		Animation::DATA(1,7,6),
+		Animation::DATA(2,8,7),
+		Animation::DATA(4,9,8),
+		Animation::DATA(2,0,9)
 	};
 	animation_ = new Animation();
 	animation_->Add(data,sizeof(data) / sizeof(Animation::DATA));
+	animation_->Start(0);
 
 	sprite_ = new Sprite();
 	sprite_->Initialize();
@@ -143,8 +144,13 @@ void Application::Update(void)
 			// update scene manager
 			scene_manager_->Update();
 
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
+			{
+				sprite_->__is_flip(!sprite_->__is_flip());
+			}
+
 			animation_->Update();
-			sprite_->__index(animation_->__current_index());
+			sprite_->__index(animation_->__number());
 			sprite_->SetParameter();
 
 			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT))
