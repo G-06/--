@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// application
+// stage
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,8 +10,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_
+#ifndef _STAGE_H_
+#define _STAGE_H_
 
 //*****************************************************************************
 // include
@@ -21,28 +21,19 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class ApplicationSystemManager;
-class SceneManager;
-
-// HACK
-class FontTexture;
 class Sprite;
-class Animation;
-class TextBox;
-class StageOffset;
-class Stage;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Application : public Basic
+class Stage : public Basic
 {
 public:
 	// constructor
-	Application(void);
+	Stage(void);
 
 	// destructor
-	virtual ~Application(void);
+	virtual ~Stage(void);
 
 	// initialize
 	bool Initialize(void);
@@ -53,23 +44,21 @@ public:
 	// update
 	void Update(void);
 
-private:
-	// scene manager
-	SceneManager* scene_manager_;
+	// draw
+	void Draw(void);
 
-	// is loop
-	bool is_loop_;
+	// accessor
+	//void __size(const D3DXVECTOR2& size) { size_ = size; }
+	const D3DXVECTOR2& __size(void)const { return size_; }
+	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
 
-	// HACK
-	Sprite* sprite_;
-	Stage* stage_;
-	Animation* animation_;
-	FontTexture* font_texture_;
-	TextBox* text_box_;
-	StageOffset* stage_offset_;
-	D3DXVECTOR2 position_;
+protected:
+	static const D3DXVECTOR2 STAGE_SIZE;
+	D3DXVECTOR2 size_;
+	D3DXVECTOR2 offset_position_;
+	Sprite* bg_;
 };
 
-#endif	// _APPLICATION_H_
+#endif	// _STAGE_H_
 
 //---------------------------------- EOF --------------------------------------

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// scene title
+// stage
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,32 +9,45 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "scene_title.h"
-#include "scene/factory/scene_factory.h"
-#include "title_bg.h"
+#include"stage.h"
+#include "render/sprite.h"
+#include "system/system.h"
+
+const D3DXVECTOR2 Stage::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 3.0f,(f32)DEFAULT_SCREEN_HEIGHT);
 
 //=============================================================================
 // constructor
 //=============================================================================
-SceneTitle::SceneTitle(void) :
-Scene(TYPE_TITLE)
+Stage::Stage(void)
+	:size_(STAGE_SIZE)
+	,offset_position_(0.0f,0.0f)
+	,bg_(nullptr)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-SceneTitle::~SceneTitle(void)
+Stage::~Stage(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool SceneTitle::Initialize(void)
+bool Stage::Initialize(void)
 {
-	title_bg_ = new TitleBg();
-	title_bg_->Initialize();
+	bg_ = new Sprite();
+
+	if(!bg_->Initialize())
+	{
+		SafeRelease(bg_);
+		return false;
+	}
+
+	bg_->__texture_id(Texture::TEXTURE_ID_TITLE_BG);
+	bg_->__size(STAGE_SIZE);
+	bg_->SetParameter();
 
 	return true;
 }
@@ -42,34 +55,24 @@ bool SceneTitle::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void SceneTitle::Uninitialize(void)
+void Stage::Uninitialize(void)
 {
-	SafeRelease(title_bg_);
-
-	SafeDelete(next_scene_factory_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void SceneTitle::Update(void)
+void Stage::Update(void)
 {
+	bg_->__position(D3DXVECTOR2(-offset_position_.x,-offset_position_.y));
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void SceneTitle::Draw(void)
+void Stage::Draw(void)
 {
-	//title_bg_->Draw();
-}
-
-//=============================================================================
-// create factory
-//=============================================================================
-SceneFactory* SceneTitle::CreateFactory(void)const
-{
-	return new TitleFactory();
+	bg_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

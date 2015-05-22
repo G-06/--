@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// scene title
+// stage offset
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,67 +9,57 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "scene_title.h"
-#include "scene/factory/scene_factory.h"
-#include "title_bg.h"
+#include"stage_offset.h"
+#include "system/system.h"
 
 //=============================================================================
 // constructor
 //=============================================================================
-SceneTitle::SceneTitle(void) :
-Scene(TYPE_TITLE)
+StageOffset::StageOffset(void)
+	:position_(0.0f,0.0f)
+	,stage_size_(0.0f,0.0f)
+	,reference_position_(0.0f,0.0f)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-SceneTitle::~SceneTitle(void)
+StageOffset::~StageOffset(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool SceneTitle::Initialize(void)
+bool StageOffset::Initialize(void)
 {
-	title_bg_ = new TitleBg();
-	title_bg_->Initialize();
-
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void SceneTitle::Uninitialize(void)
+void StageOffset::Uninitialize(void)
 {
-	SafeRelease(title_bg_);
-
-	SafeDelete(next_scene_factory_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void SceneTitle::Update(void)
+void StageOffset::Update(void)
 {
-}
+	position_.x = reference_position_.x - screen_size_.x * 0.5f;
 
-//=============================================================================
-// draw
-//=============================================================================
-void SceneTitle::Draw(void)
-{
-	//title_bg_->Draw();
-}
+	if(position_.x < 0.0f)
+	{
+		position_.x = 0.0f;
+	}
 
-//=============================================================================
-// create factory
-//=============================================================================
-SceneFactory* SceneTitle::CreateFactory(void)const
-{
-	return new TitleFactory();
+	if(position_.x > stage_size_.x - screen_size_.x)
+	{
+		position_.x = stage_size_.x - screen_size_.x;
+	}
 }
 
 //---------------------------------- EOF --------------------------------------

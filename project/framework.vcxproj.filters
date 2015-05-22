@@ -86,6 +86,9 @@
     <Filter Include="sources\system\xaudio2">
       <UniqueIdentifier>{2627231c-5bc2-4a2d-bc54-4d5f98050659}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\application\object">
+      <UniqueIdentifier>{af84194e-c08d-4506-9b81-495d2f95b3c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -226,6 +229,12 @@
     <ClInclude Include="sources\system\direct_input\device\di_pad.h">
       <Filter>sources\system\direct_input\device</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\stage_offset.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -344,6 +353,12 @@
     </ClCompile>
     <ClCompile Include="sources\system\direct_input\device\di_pad.cpp">
       <Filter>sources\system\direct_input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_offset.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

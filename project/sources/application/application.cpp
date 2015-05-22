@@ -20,6 +20,8 @@
 #include "render/sprite.h"
 #include "common/animation/animation.h"
 #include "render/text_box.h"
+#include "object/stage_offset.h"
+#include "object\stage.h"
 
 //=============================================================================
 // constructor
@@ -93,6 +95,13 @@ bool Application::Initialize(void)
 	text_box_->Print("Rキーでリセットされるか\n");
 	text_box_->Print("座標はリセットされません\n");
 
+	stage_offset_ = new StageOffset();
+	stage_offset_->Initialize();
+	stage_offset_->__stage_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 3.0f,(f32)DEFAULT_SCREEN_HEIGHT));
+	stage_offset_->__screen_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,(f32)DEFAULT_SCREEN_HEIGHT));
+
+	stage_ = new Stage();
+	stage_->Initialize();
 	return true;
 }
 
@@ -144,13 +153,24 @@ void Application::Update(void)
 			// update scene manager
 			scene_manager_->Update();
 
+			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_A))
+				position_.x -= 3.0f;
+			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_D))
+				position_.x += 3.0f;
+
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
 			{
 				sprite_->__is_flip(!sprite_->__is_flip());
 			}
 
+			stage_offset_->__reference_position(position_);
+			stage_offset_->Update();
+			D3DXVECTOR2 position = stage_offset_->__position();
 			animation_->Update();
 			sprite_->__index(animation_->__number());
+			sprite_->__position(D3DXVECTOR2(position_.x - position.x,position_.y - position.y));
+			stage_->__offset_position(position);
+			stage_->Update();
 			sprite_->SetParameter();
 
 			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT))
@@ -183,7 +203,7 @@ void Application::Update(void)
 		{
 			// draw scene manager
 			scene_manager_->Draw();
-
+			stage_->Draw();
 			text_box_->Draw();
 
 			sprite_->Draw();
