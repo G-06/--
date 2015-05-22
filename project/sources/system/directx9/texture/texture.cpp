@@ -19,7 +19,8 @@ const s8* Texture::TEXTURE_NAME[TEXTURE_ID_MAX] =
 {
 	"resources/texture/test.png",
 	"resources/texture/anim_test.png",
-	"resources/texture/title/title_bg.jpg"
+	"resources/texture/title/title_bg.jpg",
+	"resources/texture/stage_bg.png",
 };
 
 //=============================================================================

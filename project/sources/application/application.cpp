@@ -74,6 +74,7 @@ bool Application::Initialize(void)
 	animation_->Add(data,sizeof(data) / sizeof(Animation::DATA));
 	animation_->Start(0);
 
+	position_ = D3DXVECTOR2(0.0f,0.0f);
 	sprite_ = new Sprite();
 	sprite_->Initialize();
 	sprite_->__size(D3DXVECTOR2(100.0f,100.0f));
@@ -95,13 +96,14 @@ bool Application::Initialize(void)
 	text_box_->Print("Rキーでリセットされるか\n");
 	text_box_->Print("座標はリセットされません\n");
 
-	stage_offset_ = new StageOffset();
-	stage_offset_->Initialize();
-	stage_offset_->__stage_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 3.0f,(f32)DEFAULT_SCREEN_HEIGHT));
-	stage_offset_->__screen_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,(f32)DEFAULT_SCREEN_HEIGHT));
-
 	stage_ = new Stage();
 	stage_->Initialize();
+
+	stage_offset_ = new StageOffset();
+	stage_offset_->Initialize();
+	stage_offset_->__stage_size(stage_->__size());
+	stage_offset_->__screen_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,(f32)DEFAULT_SCREEN_HEIGHT));
+
 	return true;
 }
 

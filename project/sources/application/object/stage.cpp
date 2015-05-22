@@ -13,7 +13,7 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
-const D3DXVECTOR2 Stage::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 3.0f,(f32)DEFAULT_SCREEN_HEIGHT);
+const D3DXVECTOR2 Stage::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
 
 //=============================================================================
 // constructor
@@ -45,7 +45,7 @@ bool Stage::Initialize(void)
 		return false;
 	}
 
-	bg_->__texture_id(Texture::TEXTURE_ID_TITLE_BG);
+	bg_->__texture_id(Texture::TEXTURE_ID_STAGE_BG);
 	bg_->__size(STAGE_SIZE);
 	bg_->SetParameter();
 
@@ -57,6 +57,7 @@ bool Stage::Initialize(void)
 //=============================================================================
 void Stage::Uninitialize(void)
 {
+	SafeRelease(bg_);
 }
 
 //=============================================================================
