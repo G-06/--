@@ -235,6 +235,9 @@
     <ClInclude Include="sources\application\object\stage.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\system\xaudio2\xaudio2_sound.h">
+      <Filter>sources\system\xaudio2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -359,6 +362,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\stage.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp">
+      <Filter>sources\system\xaudio2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

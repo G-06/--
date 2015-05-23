@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// bgm
+// xaudio2 sound
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,32 +10,28 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _BGM_H_
-#define _BGM_H_
+#ifndef _XAUDIO2_SOUND_H_
+#define _XAUDIO2_SOUND_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
+
+//*****************************************************************************
+// forward declaration
+//*****************************************************************************
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class BGM : public Basic
+class XAudio2Sound : public Basic
 {
 public:
-	enum BGM_ID
-	{
-		BGM_ID_NONE = -1,
-		BGM_ID_TEST,
-		BGM_ID_MAX,
-	};
-
 	// constructor
-	BGM(void);
+	XAudio2Sound(IXAudio2* ixaudio2);
 
 	// destructor
-	virtual ~BGM(void);
+	virtual ~XAudio2Sound(void);
 
 	// initialize
 	bool Initialize(void);
@@ -43,24 +39,37 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
+	// load from file
+	bool LoadFromFile(const s8* filename);
+
 	// play
-	bool Play(const BGM_ID& bgm_id);
+	bool Play(const u32& loop_count);
 
 	// stop
 	void Stop(void);
 
-	// accessor
-	const BGM_ID& __current_bgm(void)const{ return current_bgm_; }
-	void __is_loop(const bool& is_loop){ is_loop_ = is_loop; }
+	// pause
+	void Pause(void);
 
+	// set volume
+	void SetVolume(const f32& volume);
+
+	// accesor
+	const f32& __volume(void) { return volume_; }
 private:
-	static const s8* BGM_NAME[BGM_ID_MAX];
+	IXAudio2* ixaudio2_;
+	IXAudio2SourceVoice* ixaudio2_source_voice_;
+	u8* data_;
+	u64 size_;
+	bool is_pause_;
+	bool is_play_;
+	f32 volume_;
 
-	BGM_ID current_bgm_;
-	bool is_loop_;
+	HRESULT CheckChunk(HANDLE hFile,DWORD format,DWORD *pChunkSize,DWORD *pChunkDataPosition);
+	HRESULT ReadChunkData(HANDLE hFile,void *pBuffer,DWORD dwBuffersize,DWORD dwBufferoffset);
 
 };
 
-#endif // _BGM_H_
+#endif // _XAUDIO2_SOUND_H_
 
 //---------------------------------- EOF --------------------------------------

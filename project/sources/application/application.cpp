@@ -15,6 +15,9 @@
 
 #include "frame/frame_controller.h"
 
+// HACK
+#include "system\xaudio2\xaudio2.h"
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -70,6 +73,15 @@ void Application::Update(void)
 {
 	FrameController* frame_controller = new FrameController();
 	frame_controller->Initialize();
+	XAudio2* xaudio2 = new XAudio2();
+
+	xaudio2->Initialize();
+
+	XAudio2Sound* xaudio2_sound = xaudio2->LoadWaveFile("resources/bgm/test.wav");
+
+	xaudio2_sound->Play(0);
+	f32 volume = 1.0f;
+	f32 master_volume = 1.0f;
 
 	while(is_loop_)
 	{
@@ -97,6 +109,30 @@ void Application::Update(void)
 			scene_manager_->Update();
 		}
 
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
+		{
+			volume += 0.1f;
+		}
+
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
+		{
+			volume -= 0.1f;
+		}
+
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
+		{
+			master_volume -= 0.1f;
+		}
+
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
+		{
+			master_volume += 0.1f;
+		}
+
+		xaudio2_sound->SetVolume(volume);
+		xaudio2->__mastering_voice()->SetVolume(master_volume);
+		DEBUG_TOOL.__debug_display()->Print("Volume : %f\n",volume);
+		DEBUG_TOOL.__debug_display()->Print("Master Volume : %f\n",master_volume);
 		if(GET_SYSTEM.__directx9()->BeginDraw())
 		{
 			// draw scene manager
@@ -122,6 +158,8 @@ void Application::Update(void)
 		frame_controller->Wait();
 	}
 
+	SafeRelease(xaudio2_sound);
+	SafeRelease(xaudio2);
 	SafeRelease(frame_controller);
 }
 

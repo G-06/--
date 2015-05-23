@@ -60,6 +60,7 @@
     <ClCompile Include="sources\system\window\window.cpp" />
     <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp" />
     <ClCompile Include="sources\system\xaudio2\xaudio2.cpp" />
+    <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\application\application.h" />
@@ -110,6 +111,7 @@
     <ClInclude Include="sources\system\window\window.h" />
     <ClInclude Include="sources\system\xaudio2\bgm\bgm.h" />
     <ClInclude Include="sources\system\xaudio2\xaudio2.h" />
+    <ClInclude Include="sources\system\xaudio2\xaudio2_sound.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D065D020-0DE1-4D84-929D-D472BD0380F4}</ProjectGuid>

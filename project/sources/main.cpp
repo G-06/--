@@ -44,6 +44,7 @@ int APIENTRY WinMain(HINSTANCE hinstance, HINSTANCE preview_hinstance, LPSTR com
 		ASSERT("failed setup debug tool");
 	}
 
+
 	// create application
 	Application* application = new Application();
 

@@ -17,6 +17,7 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
+#include "xaudio2_sound.h"
 
 //*****************************************************************************
 // class definition
@@ -37,13 +38,7 @@ public:
 	void Uninitialize(void);
 
 	// load wave file
-	bool LoadWaveFile(const s8* filename);
-
-	// チャンクのチェック
-	HRESULT CheckChunk(HANDLE h_file, DWORD format, DWORD *chunk_size, DWORD *chunk_data_position);
-
-	// チャンクデータの読み込み
-	HRESULT ReadChunkData(HANDLE h_file, void* buffer, DWORD buffer_size, DWORD buffer_offset);
+	XAudio2Sound* LoadWaveFile(const s8* filename);
 
 	// XAudio2の取得
 	IXAudio2* __xaudio2(void){return xaudio2_;}
