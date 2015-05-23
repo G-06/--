@@ -42,6 +42,9 @@ public:
 	// load from file
 	bool LoadFromFile(const s8* filename);
 
+	// load from resource
+	bool LoadFromResource(const s8* resource);
+
 	// play
 	bool Play(const u32& loop_count);
 
@@ -59,15 +62,12 @@ public:
 private:
 	IXAudio2* ixaudio2_;
 	IXAudio2SourceVoice* ixaudio2_source_voice_;
-	u8* data_;
-	u64 size_;
+	XAUDIO2_BUFFER xaudio2_buffer_;
 	bool is_pause_;
 	bool is_play_;
 	f32 volume_;
 
-	HRESULT CheckChunk(HANDLE hFile,DWORD format,DWORD *pChunkSize,DWORD *pChunkDataPosition);
-	HRESULT ReadChunkData(HANDLE hFile,void *pBuffer,DWORD dwBuffersize,DWORD dwBufferoffset);
-
+	bool ReadWaveData(const s8* data);
 };
 
 #endif // _XAUDIO2_SOUND_H_

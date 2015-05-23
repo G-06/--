@@ -15,9 +15,10 @@
 // constructor
 //=============================================================================
 XAudio2::XAudio2(void)
+	:xaudio2_(nullptr)
+	,mastering_voice_(nullptr)
+	,volume_(1.0f)
 {
-	xaudio2_ = nullptr;
-	mastering_voice_ = nullptr;
 }
 
 //=============================================================================
@@ -70,17 +71,30 @@ void XAudio2::Uninitialize(void)
 }
 
 //=============================================================================
-// load wave file
+// create xaudio2 sound
 //=============================================================================
-XAudio2Sound* XAudio2::LoadWaveFile(const s8* filename)
+XAudio2Sound* XAudio2::CreateXAudio2Sound(void)
 {
 	XAudio2Sound* xaudio2_sound = new XAudio2Sound(xaudio2_);
 
-	xaudio2_sound->Initialize();
-
-	xaudio2_sound->LoadFromFile(filename);
+	if(!SafeInitialize(xaudio2_sound))
+	{
+		SafeRelease(xaudio2_sound);
+	}
 
 	return xaudio2_sound;
+}
+//=============================================================================
+// set master volume
+//=============================================================================
+void XAudio2::SetMasterVolume(const f32& volume)
+{
+	volume_ = volume;
+	if(volume_ < 0.0f)
+	{
+		volume_ = 0.0f;
+	}
+	mastering_voice_->SetVolume(volume_);
 }
 
 //---------------------------------- EOF --------------------------------------

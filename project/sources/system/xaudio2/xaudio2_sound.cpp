@@ -17,8 +17,6 @@
 XAudio2Sound::XAudio2Sound(IXAudio2* ixaudio2)
 	:ixaudio2_(ixaudio2)
 	,ixaudio2_source_voice_(nullptr)
-	,data_(nullptr)
-	,size_(0)
 	,is_play_(false)
 	,is_pause_(false)
 	,volume_(1.0f)
@@ -52,8 +50,7 @@ void XAudio2Sound::Uninitialize(void)
 		ixaudio2_source_voice_ = nullptr;
 	}
 
-	SafeDeleteArray(data_);
-
+	//SafeDeleteArray(xaudio2_buffer_.pAudioData);
 }
 
 //=============================================================================
@@ -61,94 +58,31 @@ void XAudio2Sound::Uninitialize(void)
 //=============================================================================
 bool XAudio2Sound::LoadFromFile(const s8* filename)
 {
-	HANDLE hFile;
-	DWORD dwChunkSize = 0;
-	DWORD dwChunkPosition = 0;
-	DWORD dwFiletype;
-	WAVEFORMATEXTENSIBLE wfx;
-	XAUDIO2_BUFFER buffer;
+	s8* data;
+	FILE* file = nullptr;
+	u32 size;
 
-	// バッファのクリア
-	memset(&wfx,0,sizeof(WAVEFORMATEXTENSIBLE));
-	memset(&buffer,0,sizeof(XAUDIO2_BUFFER));
+	fopen_s(&file,filename,"rb");
 
-	// サウンドデータファイルの生成
-	hFile = CreateFile(filename,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,0,NULL);
-
-	if(hFile == INVALID_HANDLE_VALUE)
+	if(file == nullptr)
 	{
-		//MessageBox(hWnd,"サウンドデータファイルの生成に失敗！(1)","警告！",MB_ICONWARNING);
-		return (HRESULT_FROM_WIN32(GetLastError()) == S_OK);
-	}
-
-	if(SetFilePointer(hFile,0,NULL,FILE_BEGIN) == INVALID_SET_FILE_POINTER)
-	{// ファイルポインタを先頭に移動
-		//MessageBox(hWnd,"サウンドデータファイルの生成に失敗！(2)","警告！",MB_ICONWARNING);
-		return (HRESULT_FROM_WIN32(GetLastError()) == S_OK);
-	}
-
-	// WAVEファイルのチェック
-	if(FAILED(CheckChunk(hFile,'FFIR',&dwChunkSize,&dwChunkPosition)))
-	{
-		//MessageBox(hWnd,"WAVEファイルのチェックに失敗！(1)","警告！",MB_ICONWARNING);
 		return false;
 	}
 
-	if(FAILED(ReadChunkData(hFile,&dwFiletype,sizeof(DWORD),dwChunkPosition)))
-	{
-		//MessageBox(hWnd,"WAVEファイルのチェックに失敗！(2)","警告！",MB_ICONWARNING);
-		return false;
-	}
+	// get file size
+	fseek(file,0,SEEK_END);
+	size = ftell(file);
+	fseek(file,0,SEEK_SET);
 
-	if(dwFiletype != 'EVAW')
-	{
-		//MessageBox(hWnd,"WAVEファイルのチェックに失敗！(3)","警告！",MB_ICONWARNING);
-		return false;
-	}
+	// read data
+	data = new s8[size];
+	fread(data,1,size,file);
 
-	// フォーマットチェック
-	if(FAILED(CheckChunk(hFile,' tmf',&dwChunkSize,&dwChunkPosition)))
-	{
-		//MessageBox(hWnd,"フォーマットチェックに失敗！(1)","警告！",MB_ICONWARNING);
-		return false;
-	}
+	// close file
+	fclose(file);
 
-	if(FAILED(ReadChunkData(hFile,&wfx,dwChunkSize,dwChunkPosition)))
-	{
-		//MessageBox(hWnd,"フォーマットチェックに失敗！(2)","警告！",MB_ICONWARNING);
-		return false;
-	}
-
-	// オーディオデータ読み込み
-	if(FAILED(CheckChunk(hFile,'atad',&size_,&dwChunkPosition)))
-	{
-		//MessageBox(hWnd,"オーディオデータ読み込みに失敗！(1)","警告！",MB_ICONWARNING);
-		return false;
-	}
-
-	data_ = new u8[size_];
-
-	if(FAILED(ReadChunkData(hFile,data_,size_,dwChunkPosition)))
-	{
-		//MessageBox(hWnd,"オーディオデータ読み込みに失敗！(2)","警告！",MB_ICONWARNING);
-		return false;
-	}
-
-	// ソースボイスの生成
-	if(FAILED(ixaudio2_->CreateSourceVoice(&ixaudio2_source_voice_,&(wfx.Format))))
-	{
-		//MessageBox(hWnd,"ソースボイスの生成に失敗！","警告！",MB_ICONWARNING);
-		return false;
-	}
-
-	memset(&buffer,0,sizeof(XAUDIO2_BUFFER));
-	buffer.AudioBytes = size_;
-	buffer.pAudioData = data_;
-	buffer.Flags = XAUDIO2_END_OF_STREAM;
-	buffer.LoopCount = 0;
-
-	// オーディオバッファの登録
-	ixaudio2_source_voice_->SubmitSourceBuffer(&buffer);
+	// read wave data
+	ReadWaveData(data);
 
 	return true;
 }
@@ -166,8 +100,8 @@ bool XAudio2Sound::Play(const u32& loop_count)
 	if(!is_play_)
 	{
 		memset(&buffer,0,sizeof(XAUDIO2_BUFFER));
-		buffer.AudioBytes = size_;
-		buffer.pAudioData = data_;
+		buffer.AudioBytes = xaudio2_buffer_.AudioBytes;
+		buffer.pAudioData = xaudio2_buffer_.pAudioData;
 		buffer.Flags = XAUDIO2_END_OF_STREAM;
 
 		if(loop_count == 0)
@@ -239,91 +173,108 @@ void XAudio2Sound::SetVolume(const f32& volume)
 }
 
 //=============================================================================
-// チャンクのチェック
+// load from resource
 //=============================================================================
-HRESULT XAudio2Sound::CheckChunk(HANDLE hFile,DWORD format,DWORD *pChunkSize,DWORD *pChunkDataPosition)
+bool XAudio2Sound::LoadFromResource(const s8* resource)
 {
-	HRESULT hr = S_OK;
-	DWORD dwRead;
-	DWORD dwChunkType;
-	DWORD dwChunkDataSize;
-	DWORD dwRIFFDataSize = 0;
-	DWORD dwFileType;
-	DWORD dwBytesRead = 0;
-	DWORD dwOffset = 0;
+	HRSRC hrsrc = FindResource(GetModuleHandle(NULL),MAKEINTRESOURCE(resource),"WAVE");
+	HGLOBAL hglobal = LoadResource(NULL,hrsrc);
+	s8* data = (s8*)LockResource(hglobal);
 
-	if(SetFilePointer(hFile,0,NULL,FILE_BEGIN) == INVALID_SET_FILE_POINTER)
-	{// ファイルポインタを先頭に移動
-		return HRESULT_FROM_WIN32(GetLastError());
-	}
-
-	while(hr == S_OK)
-	{
-		if(ReadFile(hFile,&dwChunkType,sizeof(DWORD),&dwRead,NULL) == 0)
-		{// チャンクの読み込み
-			hr = HRESULT_FROM_WIN32(GetLastError());
-		}
-
-		if(ReadFile(hFile,&dwChunkDataSize,sizeof(DWORD),&dwRead,NULL) == 0)
-		{// チャンクデータの読み込み
-			hr = HRESULT_FROM_WIN32(GetLastError());
-		}
-
-		switch(dwChunkType)
-		{
-			case 'FFIR':
-				dwRIFFDataSize = dwChunkDataSize;
-				dwChunkDataSize = 4;
-				if(ReadFile(hFile,&dwFileType,sizeof(DWORD),&dwRead,NULL) == 0)
-				{// ファイルタイプの読み込み
-					hr = HRESULT_FROM_WIN32(GetLastError());
-				}
-				break;
-
-			default:
-				if(SetFilePointer(hFile,dwChunkDataSize,NULL,FILE_CURRENT) == INVALID_SET_FILE_POINTER)
-				{// ファイルポインタをチャンクデータ分移動
-					return HRESULT_FROM_WIN32(GetLastError());
-				}
-		}
-
-		dwOffset += sizeof(DWORD) * 2;
-		if(dwChunkType == format)
-		{
-			*pChunkSize = dwChunkDataSize;
-			*pChunkDataPosition = dwOffset;
-
-			return S_OK;
-		}
-
-		dwOffset += dwChunkDataSize;
-		if(dwBytesRead >= dwRIFFDataSize)
-		{
-			return S_FALSE;
-		}
-	}
-
-	return S_OK;
+	return ReadWaveData(data);
 }
 
 //=============================================================================
-// チャンクデータの読み込み
+// read wave data
 //=============================================================================
-HRESULT XAudio2Sound::ReadChunkData(HANDLE hFile,void *pBuffer,DWORD dwBuffersize,DWORD dwBufferoffset)
+bool XAudio2Sound::ReadWaveData(const s8* data)
 {
-	DWORD dwRead;
+	struct RiffHeader
+	{
+		s8 riff[4];
+		s32 size;
+		u32 type;
+	};
 
-	if(SetFilePointer(hFile,dwBufferoffset,NULL,FILE_BEGIN) == INVALID_SET_FILE_POINTER)
-	{// ファイルポインタを指定位置まで移動
-		return HRESULT_FROM_WIN32(GetLastError());
+	struct FormatChunk
+	{
+		s8 id[4];
+		s32 size;
+		s16 format;
+		u16 channels;
+		u32 samplerate;
+		u32 bytepersec;
+		u16 blockalign;
+		u16 bitswidth;
+	};
+
+	struct DataChunk
+	{
+		s8 id[4];
+		s32 size;
+	};
+
+	WAVEFORMATEXTENSIBLE waveformatextensible;
+	XAUDIO2_BUFFER xaudio2_buffer;
+	RiffHeader riff_header;
+	FormatChunk format_chank;
+	DataChunk data_chunk;
+	u8* buffer = nullptr;
+	u32 offset = 0;
+
+	// read riff header
+	memcpy(&riff_header,&data[0],sizeof(RiffHeader));
+
+	// check RIFF
+	if(riff_header.riff[0] != 'R' || riff_header.riff[1] != 'I' || riff_header.riff[2] != 'F' || riff_header.riff[3] != 'F')
+	{
+		return false;
 	}
 
-	if(ReadFile(hFile,pBuffer,dwBuffersize,&dwRead,NULL) == 0)
-	{// データの読み込み
-		return HRESULT_FROM_WIN32(GetLastError());
+	// offset
+	offset += sizeof(RiffHeader);
+
+	// read format chunk
+	memcpy(&format_chank,&data[offset],sizeof(FormatChunk));
+
+	if(format_chank.id[0] != 'f' || format_chank.id[1] != 'm' || format_chank.id[2] != 't')
+	{
+		return false;
+	}
+	// offset
+	offset += format_chank.size + 8;
+
+	// read data chunk
+	memcpy(&data_chunk,&data[offset],sizeof(DataChunk));
+
+	// offset
+	offset += sizeof(DataChunk);
+
+	// read data
+	buffer = new u8[data_chunk.size];
+	for(u32 i = 0;i < data_chunk.size;++i)
+	{
+		buffer[i] = data[i + offset];
 	}
 
-	return S_OK;
+	xaudio2_buffer_.AudioBytes = data_chunk.size;
+	xaudio2_buffer_.pAudioData = buffer;
+
+	waveformatextensible.Format.wFormatTag = format_chank.format;
+	waveformatextensible.Format.nChannels = format_chank.channels;
+	waveformatextensible.Format.nSamplesPerSec = format_chank.samplerate;
+	waveformatextensible.Format.nAvgBytesPerSec = format_chank.bytepersec;
+	waveformatextensible.Format.nBlockAlign = format_chank.blockalign;
+	waveformatextensible.Format.wBitsPerSample = format_chank.bitswidth;
+	waveformatextensible.Format.cbSize = sizeof(FormatChunk) - format_chank.size - 8;
+
+	// ソースボイスの生成
+	if(FAILED(ixaudio2_->CreateSourceVoice(&ixaudio2_source_voice_,&waveformatextensible.Format)))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 //---------------------------------- EOF --------------------------------------

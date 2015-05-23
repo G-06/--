@@ -37,18 +37,20 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
-	// load wave file
-	XAudio2Sound* LoadWaveFile(const s8* filename);
+	// create xaudio2 sound
+	XAudio2Sound* CreateXAudio2Sound(void);
 
-	// XAudio2�̎擾
-	IXAudio2* __xaudio2(void){return xaudio2_;}
+	// set master volume
+	void SetMasterVolume(const f32& volume);
 
-	// XAudio2�̎擾
-	IXAudio2MasteringVoice* __mastering_voice(void){return mastering_voice_;}
+	// accessor
+	const f32& __volume(void) { return volume_; }
 
 private:
 	IXAudio2* xaudio2_;
 	IXAudio2MasteringVoice* mastering_voice_;
+	f32 volume_;
+
 };
 
 #endif // _XAUDIO2_H_

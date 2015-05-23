@@ -77,9 +77,12 @@ void Application::Update(void)
 
 	xaudio2->Initialize();
 
-	XAudio2Sound* xaudio2_sound = xaudio2->LoadWaveFile("resources/bgm/test.wav");
+	XAudio2Sound* xaudio2_sound = xaudio2->CreateXAudio2Sound();
+
+	xaudio2_sound->LoadFromFile("resources/bgm/test.wav");
 
 	xaudio2_sound->Play(0);
+
 	f32 volume = 1.0f;
 	f32 master_volume = 1.0f;
 
@@ -109,6 +112,12 @@ void Application::Update(void)
 			scene_manager_->Update();
 		}
 
+		master_volume = xaudio2->__volume();
+		volume = xaudio2_sound->__volume();
+
+		DEBUG_TOOL.__debug_display()->Print("Volume : %f\n",volume);
+		DEBUG_TOOL.__debug_display()->Print("Master Volume : %f\n",master_volume);
+
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
 		{
 			volume += 0.1f;
@@ -130,9 +139,8 @@ void Application::Update(void)
 		}
 
 		xaudio2_sound->SetVolume(volume);
-		xaudio2->__mastering_voice()->SetVolume(master_volume);
-		DEBUG_TOOL.__debug_display()->Print("Volume : %f\n",volume);
-		DEBUG_TOOL.__debug_display()->Print("Master Volume : %f\n",master_volume);
+		xaudio2->SetMasterVolume(master_volume);
+
 		if(GET_SYSTEM.__directx9()->BeginDraw())
 		{
 			// draw scene manager
