@@ -11,14 +11,15 @@
 //*****************************************************************************
 #include "scene_game.h"
 #include "scene/factory/scene_factory.h"
-
-#include "render/sprite.h"
+#include "system/system.h"
+#include "application/object/stage.h"
+#include "application/object/stage_offset.h"
 
 //=============================================================================
 // constructor
 //=============================================================================
-SceneGame::SceneGame(void) :
-Scene(TYPE_GAME)
+SceneGame::SceneGame(void)
+	:Scene(TYPE_GAME)
 {
 }
 
@@ -34,11 +35,23 @@ SceneGame::~SceneGame(void)
 //=============================================================================
 bool SceneGame::Initialize(void)
 {
-	sprite_ = new Sprite();
-	sprite_->Initialize();
-	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__texture_id(Texture::TEXTURE_ID_TEST);
-	sprite_->SetParameter();
+	stage_ = new Stage();
+
+	if(!SafeInitialize(stage_))
+	{
+		return false;
+	}
+
+	stage_offset_ = new StageOffset();
+
+	if(!SafeInitialize(stage_offset_))
+	{
+		return false;
+	}
+
+	stage_offset_->__screen_size(D3DXVECTOR2((f32)GET_WINDOW->__width(),(f32)GET_WINDOW->__height()));
+	stage_offset_->__stage_size(stage_->__size());
+
 	return true;
 }
 
@@ -47,9 +60,13 @@ bool SceneGame::Initialize(void)
 //=============================================================================
 void SceneGame::Uninitialize(void)
 {
-	SafeRelease(sprite_);
-
 	SafeDelete(next_scene_factory_);
+
+	// release stage offset
+	SafeRelease(stage_offset_);
+
+	// release stage
+	SafeRelease(stage_);
 }
 
 //=============================================================================
@@ -57,10 +74,14 @@ void SceneGame::Uninitialize(void)
 //=============================================================================
 void SceneGame::Update(void)
 {
-	if(next_scene_factory_ == nullptr)
-	{
-		next_scene_factory_ = new TitleFactory();
-	}
+	// update stage offset
+	stage_offset_->Update();
+
+	// set offset position
+	stage_->__offset_position(stage_offset_->__position());
+
+	// update stage
+	stage_->Update();
 }
 
 //=============================================================================
@@ -68,7 +89,8 @@ void SceneGame::Update(void)
 //=============================================================================
 void SceneGame::Draw(void)
 {
-	sprite_->Draw();
+	// draw stage
+	stage_->Draw();
 }
 
 //=============================================================================

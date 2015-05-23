@@ -19,6 +19,7 @@ StageOffset::StageOffset(void)
 	:position_(0.0f,0.0f)
 	,stage_size_(0.0f,0.0f)
 	,reference_position_(0.0f,0.0f)
+	,screen_size_(0.0f,0.0f)
 {
 }
 

@@ -17,9 +17,10 @@
 //=============================================================================
 // constructor
 //=============================================================================
-SceneManager::SceneManager(void) :
-current_scene_(nullptr),
-next_scene_(nullptr)
+SceneManager::SceneManager(void)
+	:current_scene_(nullptr)
+	,next_scene_(nullptr)
+	,is_error_(false)
 {
 }
 
@@ -92,7 +93,13 @@ void SceneManager::Update(void)
 		// fade out
 		fade_->Start(Fade::TYPE_OUT);
 		next_scene_ = current_scene_->__next_scene_factory()->Create();
-		next_scene_->Initialize();
+
+		if(!SafeInitialize(next_scene_))
+		{
+			is_error_ = true;
+			DEBUG_TOOL.__debug_trace()->Print("failed initialize next scene\n");
+			return;
+		}
 	}
 
 	// update fade

@@ -24,6 +24,7 @@
 // macro definition
 //*****************************************************************************
 #define GET_SYSTEM System::GetInstance()
+#define GET_WINDOW System::GetInstance().__window()
 #define GET_DIRECTX9 System::GetInstance().__directx9()
 #define GET_DIRECTX9_DEVICE System::GetInstance().__directx9()->__direct3ddevice()
 #define GET_DIRECT_INPUT System::GetInstance().__direct_input()

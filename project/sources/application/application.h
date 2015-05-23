@@ -24,14 +24,6 @@
 class ApplicationSystemManager;
 class SceneManager;
 
-// HACK
-class FontTexture;
-class Sprite;
-class Animation;
-class TextBox;
-class StageOffset;
-class Stage;
-
 //*****************************************************************************
 // class definition
 //*****************************************************************************
@@ -59,15 +51,6 @@ private:
 
 	// is loop
 	bool is_loop_;
-
-	// HACK
-	Sprite* sprite_;
-	Stage* stage_;
-	Animation* animation_;
-	FontTexture* font_texture_;
-	TextBox* text_box_;
-	StageOffset* stage_offset_;
-	D3DXVECTOR2 position_;
 };
 
 #endif	// _APPLICATION_H_
