@@ -50,7 +50,8 @@ void XAudio2Sound::Uninitialize(void)
 		ixaudio2_source_voice_ = nullptr;
 	}
 
-	//SafeDeleteArray(xaudio2_buffer_.pAudioData);
+	SafeDeleteArray(xaudio2_buffer_.pAudioData);
+
 }
 
 //=============================================================================

@@ -18,6 +18,7 @@
 //*****************************************************************************
 #include "basic/basic.h"
 #include "xaudio2_sound.h"
+#include "bgm/bgm.h"
 
 //*****************************************************************************
 // class definition
@@ -37,19 +38,21 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
-	// create xaudio2 sound
-	XAudio2Sound* CreateXAudio2Sound(void);
+	// update
+	void Update(void);
 
-	// set master volume
-	void SetMasterVolume(const f32& volume);
+	// set volume
+	void SetVolume(const f32& volume);
 
 	// accessor
 	const f32& __volume(void) { return volume_; }
+	BGM* __bgm(void)const { return bgm_; }
 
 private:
-	IXAudio2* xaudio2_;
-	IXAudio2MasteringVoice* mastering_voice_;
+	IXAudio2* ixaudio2_;
+	IXAudio2MasteringVoice* ixaudio2_mastering_voice_;
 	f32 volume_;
+	BGM* bgm_;
 
 };
 

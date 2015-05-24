@@ -15,9 +15,10 @@
 // constructor
 //=============================================================================
 XAudio2::XAudio2(void)
-	:xaudio2_(nullptr)
-	,mastering_voice_(nullptr)
+	:ixaudio2_(nullptr)
+	,ixaudio2_mastering_voice_(nullptr)
 	,volume_(1.0f)
+	,bgm_(nullptr)
 {
 }
 
@@ -37,16 +38,30 @@ bool XAudio2::Initialize(void)
 	CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
 	// create xaudio2
-	if(FAILED(XAudio2Create(&xaudio2_,0)))
+	if(FAILED(XAudio2Create(&ixaudio2_,0)))
 	{
 		CoUninitialize();
 		return false;
 	}
 
 	// create master voice
-	if(FAILED(xaudio2_->CreateMasteringVoice(&mastering_voice_)))
+	if(FAILED(ixaudio2_->CreateMasteringVoice(&ixaudio2_mastering_voice_)))
 	{
-		SafeRelease(xaudio2_);
+		SafeRelease(ixaudio2_);
+		CoUninitialize();
+		return false;
+	}
+
+	bgm_ = new BGM(ixaudio2_);
+
+	if(!SafeInitialize(bgm_))
+	{
+		if(ixaudio2_mastering_voice_ != nullptr)
+		{
+			ixaudio2_mastering_voice_->DestroyVoice();
+			ixaudio2_mastering_voice_ = nullptr;
+		}
+		SafeRelease(ixaudio2_);
 		CoUninitialize();
 		return false;
 	}
@@ -59,42 +74,40 @@ bool XAudio2::Initialize(void)
 //=============================================================================
 void XAudio2::Uninitialize(void)
 {
-	if(mastering_voice_ != nullptr)
+	SafeRelease(bgm_);
+
+	if(ixaudio2_mastering_voice_ != nullptr)
 	{
-		mastering_voice_->DestroyVoice();
-		mastering_voice_ = nullptr;
+		ixaudio2_mastering_voice_->DestroyVoice();
+		ixaudio2_mastering_voice_ = nullptr;
 	}
 
-	SafeRelease(xaudio2_);
+	SafeRelease(ixaudio2_);
 
 	CoUninitialize();
 }
 
 //=============================================================================
-// create xaudio2 sound
+// update
 //=============================================================================
-XAudio2Sound* XAudio2::CreateXAudio2Sound(void)
+void XAudio2::Update(void)
 {
-	XAudio2Sound* xaudio2_sound = new XAudio2Sound(xaudio2_);
-
-	if(!SafeInitialize(xaudio2_sound))
-	{
-		SafeRelease(xaudio2_sound);
-	}
-
-	return xaudio2_sound;
+	bgm_->Update();
 }
+
 //=============================================================================
-// set master volume
+// set volume
 //=============================================================================
-void XAudio2::SetMasterVolume(const f32& volume)
+void XAudio2::SetVolume(const f32& volume)
 {
 	volume_ = volume;
+
 	if(volume_ < 0.0f)
 	{
 		volume_ = 0.0f;
 	}
-	mastering_voice_->SetVolume(volume_);
+
+	ixaudio2_mastering_voice_->SetVolume(volume_);
 }
 
 //---------------------------------- EOF --------------------------------------

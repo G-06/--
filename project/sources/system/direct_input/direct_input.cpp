@@ -32,7 +32,7 @@ DirectInput::DirectInput(void)
 	,di_mouse_(nullptr)
 	,di_pad_(nullptr)
 	,di_virtual_(nullptr)
-	,is_reset_(false)
+	,is_use_(false)
 {
 }
 
@@ -139,15 +139,17 @@ void DirectInput::Uninitialize(void)
 //=============================================================================
 void DirectInput::Update(void)
 {
-	if(is_reset_)
+	if(is_use_)
 	{
 	}
 	else
 	{
+		is_use_ = true;
 		for(auto it = device_list_.begin();it != device_list_.end();++it)
 		{
 			(*it)->Update();
 		}
+		is_use_ = false;
 	}
 }
 
@@ -156,7 +158,9 @@ void DirectInput::Update(void)
 //=============================================================================
 void DirectInput::ResetDevice(void)
 {
-	is_reset_ = true;
+	while(!is_use_);
+
+	is_use_ = true;
 
 	if(di_pad_ != nullptr)
 	{
@@ -176,7 +180,7 @@ void DirectInput::ResetDevice(void)
 		SafeRelease(di_pad_);
 	}
 
-	is_reset_ = false;
+	is_use_ = false;
 }
 
 //=============================================================================

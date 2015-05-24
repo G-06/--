@@ -21,8 +21,8 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class ApplicationSystemManager;
 class SceneManager;
+class FrameController;
 
 //*****************************************************************************
 // class definition
@@ -45,11 +45,10 @@ public:
 	// update
 	void Update(void);
 
+	bool __is_loop(void)const { return is_loop_; }
 private:
-	// scene manager
 	SceneManager* scene_manager_;
-
-	// is loop
+	FrameController* frame_controller_;
 	bool is_loop_;
 };
 

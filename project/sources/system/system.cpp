@@ -55,8 +55,14 @@ bool System::Setup(HINSTANCE hinstance)
 	}
 
 	// create xaudio2
+	instance_.xaudio2_ = new XAudio2();
 
 	// initialize xaudio2
+	if(!SafeInitialize(instance_.xaudio2_))
+	{
+		ASSERT("falied initialize xaudio2");
+		return false;
+	}
 
 	// create direct input
 	instance_.direct_input_ = new DirectInput();
@@ -84,6 +90,9 @@ void System::Shutdown(void)
 
 	// release direct input
 	SafeRelease(instance_.direct_input_);
+
+	// release xaudio2
+	SafeRelease(instance_.xaudio2_);
 
 	timeEndPeriod(0);
 }

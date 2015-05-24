@@ -12,11 +12,7 @@
 #include "application.h"
 #include "system/system.h"
 #include "scene/scene_manager.h"
-
 #include "frame/frame_controller.h"
-
-// HACK
-#include "system\xaudio2\xaudio2.h"
 
 //=============================================================================
 // constructor
@@ -48,8 +44,20 @@ bool Application::Initialize(void)
 	// initialize scene manager
 	if(!SafeInitialize(scene_manager_))
 	{
+		SafeRelease(scene_manager_);
 		ASSERT("failed initialize scene manager");
 		return false;
+	}
+
+	// create frame controller
+	frame_controller_ = new FrameController();
+
+	// initialize frame controller
+	if(!SafeInitialize(frame_controller_))
+	{
+		SafeRelease(scene_manager_);
+		SafeRelease(frame_controller_);
+		ASSERT("failed initialize frame controller");
 	}
 
 	return true;
@@ -64,6 +72,10 @@ void Application::Uninitialize(void)
 
 	// release scene manager
 	SafeRelease(scene_manager_);
+
+	// release frame controller
+	SafeRelease(frame_controller_);
+
 }
 
 //=============================================================================
@@ -71,104 +83,71 @@ void Application::Uninitialize(void)
 //=============================================================================
 void Application::Update(void)
 {
-	FrameController* frame_controller = new FrameController();
-	frame_controller->Initialize();
-	XAudio2* xaudio2 = new XAudio2();
+	// update frame controller
+	frame_controller_->Update();
 
-	xaudio2->Initialize();
+	// print fps
+	DEBUG_TOOL.__debug_display()->Print("FPS : %d\n",frame_controller_->__fps());
 
-	XAudio2Sound* xaudio2_sound = xaudio2->CreateXAudio2Sound();
-
-	xaudio2_sound->LoadFromResource(MAKEINTRESOURCE(200));
-
-	xaudio2_sound->Play(0);
-
-	f32 volume = 1.0f;
-	f32 master_volume = 1.0f;
-
-	while(is_loop_)
+	// is loop window system
+	if(!GET_SYSTEM.__window()->__is_loop())
 	{
-		// update frame controller
-		frame_controller->Update();
-
-		// print fps
-		DEBUG_TOOL.__debug_display()->Print("FPS : %d\n",frame_controller->__fps());
-
-		// is loop window system
-		if(!GET_SYSTEM.__window()->__is_loop())
-		{
-			is_loop_ = false;
-		}
-
-		// update direct input
-		GET_DIRECT_INPUT->Update();
-
-		// update debug tool
-		DEBUG_TOOL.Update();
-
-		if(!DEBUG_TOOL.__is_pause())
-		{
-			// update scene manager
-			scene_manager_->Update();
-		}
-
-		master_volume = xaudio2->__volume();
-		volume = xaudio2_sound->__volume();
-
-		DEBUG_TOOL.__debug_display()->Print("Volume : %f\n",volume);
-		DEBUG_TOOL.__debug_display()->Print("Master Volume : %f\n",master_volume);
-
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
-		{
-			volume += 0.1f;
-		}
-
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
-		{
-			volume -= 0.1f;
-		}
-
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
-		{
-			master_volume -= 0.1f;
-		}
-
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
-		{
-			master_volume += 0.1f;
-		}
-
-		xaudio2_sound->SetVolume(volume);
-		xaudio2->SetMasterVolume(master_volume);
-
-		if(GET_SYSTEM.__directx9()->BeginDraw())
-		{
-			// draw scene manager
-			scene_manager_->Draw();
-
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
-			{
-				GET_DIRECTX9->ScreenShot();
-				DEBUG_TOOL.__debug_trace()->Print("capture screen shot\n");
-			}
-
-			// draw debug tool
-			DEBUG_TOOL.Draw();
-
-			GET_SYSTEM.__directx9()->EndDraw();
-		}
-
-		if(scene_manager_->__is_error())
-		{
-			is_loop_ = true;
-		}
-
-		frame_controller->Wait();
+		is_loop_ = false;
 	}
 
-	SafeRelease(xaudio2_sound);
-	SafeRelease(xaudio2);
-	SafeRelease(frame_controller);
+	// update direct input
+	GET_DIRECT_INPUT->Update();
+
+	// update xaudio2
+	GET_XAUDIO2->Update();
+
+	// update debug tool
+	DEBUG_TOOL.Update();
+
+	if(!DEBUG_TOOL.__is_pause())
+	{
+		// update scene manager
+		scene_manager_->Update();
+	}
+
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LSHIFT))
+	{
+		GET_BGM->Play(BGM::BGM_ID_TEST);
+	}
+
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RSHIFT))
+	{
+		GET_BGM->Play(BGM::BGM_ID_TEST2);
+	}
+
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
+	{
+		GET_BGM->Stop();
+	}
+
+	if(GET_SYSTEM.__directx9()->BeginDraw())
+	{
+		// draw scene manager
+		scene_manager_->Draw();
+
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
+		{
+			GET_DIRECTX9->ScreenShot();
+			DEBUG_TOOL.__debug_trace()->Print("capture screen shot\n");
+		}
+
+		// draw debug tool
+		DEBUG_TOOL.Draw();
+
+		GET_SYSTEM.__directx9()->EndDraw();
+	}
+
+	if(scene_manager_->__is_error())
+	{
+		is_loop_ = true;
+	}
+
+	frame_controller_->Wait();
 }
 
 //---------------------------------- EOF --------------------------------------
