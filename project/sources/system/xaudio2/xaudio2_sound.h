@@ -58,7 +58,10 @@ public:
 	void SetVolume(const f32& volume);
 
 	// accesor
-	const f32& __volume(void) { return volume_; }
+	const f32& __volume(void)const { return volume_; }
+	bool __is_play(void)const { return is_play_; }
+	bool __is_pause(void)const { return is_pause_; }
+
 private:
 	IXAudio2* ixaudio2_;
 	IXAudio2SourceVoice* ixaudio2_source_voice_;

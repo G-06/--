@@ -97,6 +97,14 @@ void BGM::Update(void)
 //=============================================================================
 bool BGM::Play(const BGM_ID& bgm_id)
 {
+	if(preview_bgm_ != BGM_ID_NONE)
+	{
+		if(xaudio2_sound_[preview_bgm_ - BGM_ID_TEST]->__is_play())
+		{
+			xaudio2_sound_[preview_bgm_ - BGM_ID_TEST]->Stop();
+		}
+	}
+
 	preview_bgm_ = current_bgm_;
 	current_bgm_ = bgm_id;
 
