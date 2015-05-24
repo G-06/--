@@ -38,7 +38,7 @@ int APIENTRY WinMain(HINSTANCE hinstance, HINSTANCE preview_hinstance, LPSTR com
 		return 0;
 	}
 
-	ASSERT_EXP(DebugTool::Setup(),"failed setup debug tool");
+	ASSERT_EXP(!DebugTool::Setup(),"failed setup debug tool");
 
 	// create application
 	Application* application = new Application();
