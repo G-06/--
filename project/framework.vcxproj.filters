@@ -89,6 +89,9 @@
     <Filter Include="sources\application\object">
       <UniqueIdentifier>{af84194e-c08d-4506-9b81-495d2f95b3c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{1dc14815-e18c-4925-ba51-c1a6bcf900a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -235,6 +238,9 @@
     <ClInclude Include="sources\application\object\stage.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="resources\resource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
     <ClInclude Include="sources\system\xaudio2\xaudio2_sound.h">
       <Filter>sources\system\xaudio2</Filter>
     </ClInclude>
@@ -366,5 +372,10 @@
     <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp">
       <Filter>sources\system\xaudio2</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\resource.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

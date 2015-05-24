@@ -79,7 +79,7 @@ void Application::Update(void)
 
 	XAudio2Sound* xaudio2_sound = xaudio2->CreateXAudio2Sound();
 
-	xaudio2_sound->LoadFromFile("resources/bgm/test.wav");
+	xaudio2_sound->LoadFromResource(MAKEINTRESOURCE(200));
 
 	xaudio2_sound->Play(0);
 
