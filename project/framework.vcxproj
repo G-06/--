@@ -62,6 +62,7 @@
     <ClCompile Include="sources\system\xaudio2\xaudio2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resources\resource.h" />
     <ClInclude Include="sources\application\application.h" />
     <ClInclude Include="sources\application\object\stage.h" />
     <ClInclude Include="sources\application\object\stage_offset.h" />
@@ -110,6 +111,9 @@
     <ClInclude Include="sources\system\window\window.h" />
     <ClInclude Include="sources\system\xaudio2\bgm\bgm.h" />
     <ClInclude Include="sources\system\xaudio2\xaudio2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D065D020-0DE1-4D84-929D-D472BD0380F4}</ProjectGuid>
