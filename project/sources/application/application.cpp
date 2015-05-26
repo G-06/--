@@ -68,9 +68,6 @@ bool Application::Initialize(void)
 		ASSERT("failed initialize frame controller");
 	}
 
-	//new Player();
-	player_ = new Player();
-	player_->Initialize();
 
 	return true;
 }
@@ -122,15 +119,6 @@ void Application::Update(void)
 		scene_manager_->Update();
 	}
 
-		if(!DEBUG_TOOL.__is_pause())
-		{
-			// update scene manager
-			scene_manager_->Update();
-
-			player_->Update();
-
-		
-		}
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LSHIFT))
 	{
 		GET_BGM->Play(BGM::BGM_ID_TEST);
@@ -150,8 +138,6 @@ void Application::Update(void)
 	{
 		// draw scene manager
 		scene_manager_->Draw();
-
-		player_->Draw();
 
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
 		{

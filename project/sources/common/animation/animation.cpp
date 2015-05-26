@@ -68,7 +68,7 @@ void Animation::Update(void)
 //=============================================================================
 // add
 //=============================================================================
-void Animation::Add(DATA* data,u32 size)
+void Animation::Add(const DATA* data,u32 size)
 {
 	for(u32 i = 0;i < size;++i)
 	{

@@ -52,7 +52,7 @@ public:
 	void Update(void);
 
 	// add
-	void Add(DATA* data,u32 size);
+	void Add(const DATA* data,u32 size);
 
 	// start
 	void Start(u32 index);
