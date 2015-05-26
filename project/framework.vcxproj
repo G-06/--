@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\application\application.cpp" />
+    <ClCompile Include="sources\application\object\player.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
     <ClCompile Include="sources\application\scene\scene.cpp" />
     <ClCompile Include="sources\application\scene\scene_manager.cpp" />
@@ -61,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\application\application.h" />
+    <ClInclude Include="sources\application\object\player.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
     <ClInclude Include="sources\application\scene\scene.h" />

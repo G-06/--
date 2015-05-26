@@ -86,6 +86,9 @@
     <Filter Include="sources\system\xaudio2">
       <UniqueIdentifier>{2627231c-5bc2-4a2d-bc54-4d5f98050659}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\application\object">
+      <UniqueIdentifier>{1911babc-1b96-49fe-aa9f-62a94201bda7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -226,6 +229,9 @@
     <ClInclude Include="sources\system\direct_input\device\di_pad.h">
       <Filter>sources\system\direct_input\device</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\player.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -344,6 +350,9 @@
     </ClCompile>
     <ClCompile Include="sources\system\direct_input\device\di_pad.cpp">
       <Filter>sources\system\direct_input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\player.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

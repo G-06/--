@@ -20,6 +20,7 @@
 #include "render/sprite.h"
 #include "common/animation/animation.h"
 #include "render/text_box.h"
+#include "object/player.h"
 
 //=============================================================================
 // constructor
@@ -93,6 +94,10 @@ bool Application::Initialize(void)
 	text_box_->Print("Rキーでリセットされるか\n");
 	text_box_->Print("座標はリセットされません\n");
 
+	//new Player();
+	player_ = new Player();
+	player_->Initialize();
+
 	return true;
 }
 
@@ -150,6 +155,7 @@ void Application::Update(void)
 			}
 
 			animation_->Update();
+			player_->Update();
 			sprite_->__index(animation_->__number());
 			sprite_->SetParameter();
 
@@ -183,6 +189,8 @@ void Application::Update(void)
 		{
 			// draw scene manager
 			scene_manager_->Draw();
+
+			player_->Draw();
 
 			text_box_->Draw();
 
