@@ -37,7 +37,7 @@ SceneManager::~SceneManager(void)
 bool SceneManager::Initialize(void)
 {
 	// create current scene
-	current_scene_ = new SceneTitle();
+	current_scene_ = new SceneLogo();
 
 	// initialize current scene
 	if(!SafeInitialize(current_scene_))

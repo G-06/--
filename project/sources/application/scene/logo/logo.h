@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// texture
+// title bg
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,38 +10,30 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _TEXTURE_H_
-#define _TEXTURE_H_
+#ifndef _LOGO_LOGO_H_
+#define _LOGO_LOGO_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
 #include "basic/basic.h"
-#include "../resources/resource.h"
+
+//*****************************************************************************
+// forward declaration
+//*****************************************************************************
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Texture : public Basic
+class Logo : public Basic
 {
 public:
-	enum TEXTURE_ID
-	{
-		TEXTURE_ID_NONE = -1,
-		TEXTURE_ID_TEST = TEXTURE_TEST,
-		TEXTURE_ID_ANIM_TEST,
-		TEXTURE_ID_TITLE_BG,
-		TEXTURE_ID_STAGE_BG,
-		TEXTURE_ID_LOGO,
-		TEXTURE_ID_LOGO_BG,
-		TEXTURE_ID_MAX
-	};
-
 	// constructor
-	Texture(void);
+	Logo(void);
 
 	// destructor
-	virtual ~Texture(void);
+	virtual ~Logo(void);
 
 	// initialize
 	bool Initialize(void);
@@ -49,14 +41,18 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
-	// get texture
-	LPDIRECT3DTEXTURE9 GetTexture(const TEXTURE_ID& texture_id)const;
+	// update
+	void Update(void);
 
+	// draw
+	void Draw(void);
 private:
-	LPDIRECT3DDEVICE9 device_;
-	LPDIRECT3DTEXTURE9 texture_container_[TEXTURE_ID_MAX - TEXTURE_ID_TEST];
+	Sprite* logo_neko_;
+	u32 index_num_;
+	u32 logo_timer_;
+
 };
 
-#endif	// _TEXTURE_H_
+#endif	// _TITLE_BG_H_
 
 //---------------------------------- EOF --------------------------------------

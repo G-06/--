@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-// texture
+// scene logo
 //
-// Author		: Kenji Kabutomori
+// Author		: taichi kitazawa
 //
 //*****************************************************************************
 
@@ -10,38 +10,31 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _TEXTURE_H_
-#define _TEXTURE_H_
+#ifndef _SCENE_LOGO_H_
+#define _SCENE_LOGO_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
-#include "../resources/resource.h"
+#include "scene/scene.h"
+
+//*****************************************************************************
+// forward declaration
+//*****************************************************************************
+class Logo;
+class LogoBg;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Texture : public Basic
+class SceneLogo : public Scene
 {
 public:
-	enum TEXTURE_ID
-	{
-		TEXTURE_ID_NONE = -1,
-		TEXTURE_ID_TEST = TEXTURE_TEST,
-		TEXTURE_ID_ANIM_TEST,
-		TEXTURE_ID_TITLE_BG,
-		TEXTURE_ID_STAGE_BG,
-		TEXTURE_ID_LOGO,
-		TEXTURE_ID_LOGO_BG,
-		TEXTURE_ID_MAX
-	};
-
 	// constructor
-	Texture(void);
+	SceneLogo(void);
 
 	// destructor
-	virtual ~Texture(void);
+	virtual ~SceneLogo(void);
 
 	// initialize
 	bool Initialize(void);
@@ -49,14 +42,21 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
-	// get texture
-	LPDIRECT3DTEXTURE9 GetTexture(const TEXTURE_ID& texture_id)const;
+	// update
+	void Update(void);
+
+	// draw
+	void Draw(void);
+
+	// create factory
+	SceneFactory* CreateFactory(void)const;
 
 private:
-	LPDIRECT3DDEVICE9 device_;
-	LPDIRECT3DTEXTURE9 texture_container_[TEXTURE_ID_MAX - TEXTURE_ID_TEST];
+
+	Logo* Logo_neko_;
+	LogoBg* Logo_bg_;
 };
 
-#endif	// _TEXTURE_H_
+#endif	// _SCENE_LOGO_H_
 
 //---------------------------------- EOF --------------------------------------

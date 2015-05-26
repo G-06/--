@@ -1,41 +1,45 @@
 //*****************************************************************************
 //
-// scene title
+// scene logo
 //
-// Author		: Kenji Kabutomori
+// Author		: taichi kitazawa
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "scene_title.h"
+#include "scene_logo.h"
+#include "logo.h"
+#include "logo_bg.h"
 #include "scene/factory/scene_factory.h"
-#include "title_bg.h"
 #include "system/system.h"
 
 //=============================================================================
 // constructor
 //=============================================================================
-SceneTitle::SceneTitle(void) :
-Scene(TYPE_TITLE)
+SceneLogo::SceneLogo(void)
+	:Scene(TYPE_LOGO)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-SceneTitle::~SceneTitle(void)
+SceneLogo::~SceneLogo(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool SceneTitle::Initialize(void)
+bool SceneLogo::Initialize(void)
 {
-	title_bg_ = new TitleBg();
-	title_bg_->Initialize();
+	Logo_neko_ = new Logo;
+	Logo_neko_ ->Initialize();
+
+	Logo_bg_ = new LogoBg;
+	Logo_bg_ ->Initialize();
 
 	return true;
 }
@@ -43,50 +47,46 @@ bool SceneTitle::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void SceneTitle::Uninitialize(void)
+void SceneLogo::Uninitialize(void)
 {
-	SafeRelease(title_bg_);
-
+	SafeRelease(Logo_neko_);
+	SafeRelease(Logo_bg_);
 	SafeDelete(next_scene_factory_);
+	
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void SceneTitle::Update(void)
+void SceneLogo::Update(void)
 {
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
 	{
 		if(next_scene_factory_ == nullptr)
 		{
-			next_scene_factory_ = new GameFactory();
+			next_scene_factory_ = new TitleFactory();
 		}
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
-	{
-		if(next_scene_factory_ == nullptr)
-		{
-			next_scene_factory_ = new LogoFactory();
-		}
-	}
+	Logo_neko_->Update();
 
 }
-
 //=============================================================================
 // draw
 //=============================================================================
-void SceneTitle::Draw(void)
+void SceneLogo::Draw(void)
 {
-	title_bg_->Draw();
+	// draw stage
+	Logo_bg_->Draw();
+	Logo_neko_->Draw();
 }
 
 //=============================================================================
 // create factory
 //=============================================================================
-SceneFactory* SceneTitle::CreateFactory(void)const
+SceneFactory* SceneLogo::CreateFactory(void)const
 {
-	return new TitleFactory();
+	return new LogoFactory();
 }
 
 //---------------------------------- EOF --------------------------------------

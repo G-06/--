@@ -31,7 +31,8 @@ class Scene : public Basic
 public:
 	enum TYPE
 	{
-		TYPE_TITLE = 0,		// タイトル
+		TYPE_LOGO = 0,		// タイトル前のロゴ
+		TYPE_TITLE,			// タイトル
 		TYPE_GAME,			// ゲーム
 		TYPE_RESULT,		// リザルト
 		TYPE_MAX			// タイプの最大数

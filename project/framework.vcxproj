@@ -19,6 +19,9 @@
     <ClCompile Include="sources\application\object\stage.cpp" />
     <ClCompile Include="sources\application\object\stage_offset.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
+    <ClCompile Include="sources\application\scene\logo\logo.cpp" />
+    <ClCompile Include="sources\application\scene\logo\logo_bg.cpp" />
+    <ClCompile Include="sources\application\scene\logo\scene_logo.cpp" />
     <ClCompile Include="sources\application\scene\scene.cpp" />
     <ClCompile Include="sources\application\scene\scene_manager.cpp" />
     <ClCompile Include="sources\application\scene\title\scene_title.cpp" />
@@ -69,6 +72,9 @@
     <ClInclude Include="sources\application\object\stage_offset.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
+    <ClInclude Include="sources\application\scene\logo\logo.h" />
+    <ClInclude Include="sources\application\scene\logo\logo_bg.h" />
+    <ClInclude Include="sources\application\scene\logo\scene_logo.h" />
     <ClInclude Include="sources\application\scene\scene.h" />
     <ClInclude Include="sources\application\scene\scene_manager.h" />
     <ClInclude Include="sources\application\scene\title\scene_title.h" />

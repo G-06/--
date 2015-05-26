@@ -1,74 +1,99 @@
 //*****************************************************************************
 //
-// scene title
+// title bg
 //
-// Author		: Kenji Kabutomori
+// Author		: taichi kitazawa
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "scene_title.h"
-#include "scene/factory/scene_factory.h"
-#include "title_bg.h"
+#include "logo.h"
+#include "render/sprite.h"
 #include "system/system.h"
+
+#define TIME	(80)
+#define DELAY	(5)
+
+#define DEFAULT_POS_X	(400.0f)
+#define DEFAULT_POS_Y	(200.0f)
+
+#define DEFAULT_SIZE_X	(400.0f)
+#define DEFAULT_SIZE_Y	(400.0f)
+
+#define DIVISION_X		(3)
+#define DIVISION_Y		(1)
 
 //=============================================================================
 // constructor
 //=============================================================================
-SceneTitle::SceneTitle(void) :
-Scene(TYPE_TITLE)
+Logo::Logo(void)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-SceneTitle::~SceneTitle(void)
+Logo::~Logo(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool SceneTitle::Initialize(void)
+bool Logo::Initialize(void)
 {
-	title_bg_ = new TitleBg();
-	title_bg_->Initialize();
+	logo_neko_ = new Sprite();
+	logo_neko_->Initialize();
+	logo_neko_->__size(D3DXVECTOR2(DEFAULT_SIZE_X,DEFAULT_SIZE_Y));
+	logo_neko_->__position(D3DXVECTOR2(DEFAULT_POS_X,DEFAULT_POS_Y));
+	logo_neko_->__texture_id(Texture::TEXTURE_ID_LOGO);
+	logo_neko_->__division_height(DIVISION_Y);
+	logo_neko_->__division_width(DIVISION_X);
+	logo_neko_->__index((u32)0);
+	logo_neko_->SetParameter();
 
+
+	index_num_=99;
+	logo_timer_=0;
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void SceneTitle::Uninitialize(void)
+void Logo::Uninitialize(void)
 {
-	SafeRelease(title_bg_);
-
-	SafeDelete(next_scene_factory_);
+	SafeRelease(logo_neko_);
+	SafeDelete(logo_neko_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void SceneTitle::Update(void)
+void Logo::Update(void)
 {
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	if(logo_timer_ == TIME)
 	{
-		if(next_scene_factory_ == nullptr)
-		{
-			next_scene_factory_ = new GameFactory();
-		}
+		logo_neko_->__index(1);
+		logo_neko_->SetParameter();
+	}
+	if(logo_timer_ == TIME+DELAY)
+	{
+		logo_neko_->__index(2);
+		logo_neko_->SetParameter();
+	}
+	else
+	{
+		logo_timer_++;
 	}
 
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
 	{
-		if(next_scene_factory_ == nullptr)
-		{
-			next_scene_factory_ = new LogoFactory();
-		}
+		logo_timer_=0;
+		logo_neko_->__index((u32)0);
+		logo_neko_->SetParameter();
 	}
 
 }
@@ -76,17 +101,9 @@ void SceneTitle::Update(void)
 //=============================================================================
 // draw
 //=============================================================================
-void SceneTitle::Draw(void)
+void Logo::Draw(void)
 {
-	title_bg_->Draw();
-}
-
-//=============================================================================
-// create factory
-//=============================================================================
-SceneFactory* SceneTitle::CreateFactory(void)const
-{
-	return new TitleFactory();
+	logo_neko_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

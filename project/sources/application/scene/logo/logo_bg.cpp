@@ -1,41 +1,43 @@
 //*****************************************************************************
 //
-// scene title
+// title bg
 //
-// Author		: Kenji Kabutomori
+// Author		: taichi kitazawa
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "scene_title.h"
-#include "scene/factory/scene_factory.h"
-#include "title_bg.h"
+#include "logo_bg.h"
+#include "render/sprite.h"
 #include "system/system.h"
 
 //=============================================================================
 // constructor
 //=============================================================================
-SceneTitle::SceneTitle(void) :
-Scene(TYPE_TITLE)
+LogoBg::LogoBg(void)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-SceneTitle::~SceneTitle(void)
+LogoBg::~LogoBg(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool SceneTitle::Initialize(void)
+bool LogoBg::Initialize(void)
 {
-	title_bg_ = new TitleBg();
-	title_bg_->Initialize();
+	logo_bg_ = new Sprite();
+	logo_bg_->Initialize();
+	logo_bg_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
+	logo_bg_->__position(D3DXVECTOR2(0.0f,0.0f));
+	logo_bg_->__texture_id(Texture::TEXTURE_ID_LOGO_BG);
+	logo_bg_->SetParameter();
 
 	return true;
 }
@@ -43,50 +45,27 @@ bool SceneTitle::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void SceneTitle::Uninitialize(void)
+void LogoBg::Uninitialize(void)
 {
-	SafeRelease(title_bg_);
+	SafeRelease(logo_bg_);
+	SafeDelete(logo_bg_);
 
-	SafeDelete(next_scene_factory_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void SceneTitle::Update(void)
+void LogoBg::Update(void)
 {
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
-	{
-		if(next_scene_factory_ == nullptr)
-		{
-			next_scene_factory_ = new GameFactory();
-		}
-	}
-
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
-	{
-		if(next_scene_factory_ == nullptr)
-		{
-			next_scene_factory_ = new LogoFactory();
-		}
-	}
 
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void SceneTitle::Draw(void)
+void LogoBg::Draw(void)
 {
-	title_bg_->Draw();
-}
-
-//=============================================================================
-// create factory
-//=============================================================================
-SceneFactory* SceneTitle::CreateFactory(void)const
-{
-	return new TitleFactory();
+	logo_bg_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------
