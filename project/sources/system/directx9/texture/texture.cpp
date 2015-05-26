@@ -12,16 +12,6 @@
 #include "texture.h"
 #include "system/system.h"
 
-//*****************************************************************************
-// constant definition
-//*****************************************************************************
-const s8* Texture::TEXTURE_NAME[TEXTURE_ID_MAX] =
-{
-	"resources/texture/test.png",
-	"resources/texture/anim_test.png",
-	"resources/texture/title/title_bg.jpg"
-};
-
 //=============================================================================
 // constructor
 //=============================================================================
@@ -45,9 +35,9 @@ bool Texture::Initialize(void)
 {
 	device_ = GET_DIRECTX9_DEVICE;
 
-	for(u32 i = 0;i < TEXTURE_ID_MAX;++i)
+	for(u32 i = TEXTURE_ID_TEST;i < TEXTURE_ID_MAX;++i)
 	{
-		if(FAILED(D3DXCreateTextureFromFile(device_,TEXTURE_NAME[i],&texture_container_[i])))
+		if(FAILED(D3DXCreateTextureFromResource(device_,NULL,MAKEINTRESOURCE(i),&texture_container_[i - TEXTURE_ID_TEST])))
 		{
 			ASSERT("failed load texure");
 			return false;
@@ -62,7 +52,7 @@ bool Texture::Initialize(void)
 //=============================================================================
 void Texture::Uninitialize(void)
 {
-	for(u32 i = 0;i < TEXTURE_ID_MAX;++i)
+	for(u32 i = 0;i < TEXTURE_ID_MAX - TEXTURE_ID_TEST;++i)
 	{
 		SafeRelease(texture_container_[i]);
 	}
@@ -78,7 +68,7 @@ LPDIRECT3DTEXTURE9 Texture::GetTexture(const TEXTURE_ID& texture_id)const
 		return nullptr;
 	}
 
-	return texture_container_[texture_id];
+	return texture_container_[texture_id - TEXTURE_ID_TEST];
 }
 
 //---------------------------------- EOF --------------------------------------

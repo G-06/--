@@ -206,6 +206,8 @@ void DIPad::Update(void)
 			DEBUG_TOOL.__debug_display()->Print("%d,",i);
 		}
 	}
+
+	DEBUG_TOOL.__debug_display()->Print("\n");
 }
 
 //=============================================================================

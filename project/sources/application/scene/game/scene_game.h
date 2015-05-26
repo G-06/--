@@ -21,7 +21,8 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
+class Stage;
+class StageOffset;
 
 //*****************************************************************************
 // class definition
@@ -51,7 +52,8 @@ public:
 	SceneFactory* CreateFactory(void)const;
 
 private:
-	Sprite* sprite_;
+	Stage* stage_;
+	StageOffset* stage_offset_;
 };
 
 #endif	// _SCENE_GAME_H_

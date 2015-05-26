@@ -48,10 +48,15 @@ public:
 
 	// draw
 	void Draw(void);
+
+	// accessor
+	bool __is_error(void)const { return is_error_; }
+
 private:
 	Scene* current_scene_;
 	Scene* next_scene_;
 	Fade* fade_;
+	bool is_error_;
 };
 
 #endif	// _SCENE_MANAGER_H_

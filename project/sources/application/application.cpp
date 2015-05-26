@@ -12,8 +12,8 @@
 #include "application.h"
 #include "system/system.h"
 #include "scene/scene_manager.h"
-
 #include "frame/frame_controller.h"
+
 
 // HACK
 #include "system/directx9/font/font_texture.h"
@@ -52,47 +52,21 @@ bool Application::Initialize(void)
 	// initialize scene manager
 	if(!SafeInitialize(scene_manager_))
 	{
+		SafeRelease(scene_manager_);
 		ASSERT("failed initialize scene manager");
 		return false;
 	}
 
-	Animation::DATA data[] =
+	// create frame controller
+	frame_controller_ = new FrameController();
+
+	// initialize frame controller
+	if(!SafeInitialize(frame_controller_))
 	{
-		Animation::DATA(4,1,0),
-		Animation::DATA(2,2,1),
-		Animation::DATA(1,3,2),
-		Animation::DATA(2,4,3),
-		Animation::DATA(4,5,4),
-		Animation::DATA(2,6,5),
-		Animation::DATA(1,7,6),
-		Animation::DATA(2,8,7),
-		Animation::DATA(4,9,8),
-		Animation::DATA(2,0,9)
-	};
-	animation_ = new Animation();
-	animation_->Add(data,sizeof(data) / sizeof(Animation::DATA));
-	animation_->Start(0);
-
-	sprite_ = new Sprite();
-	sprite_->Initialize();
-	sprite_->__size(D3DXVECTOR2(100.0f,100.0f));
-	sprite_->__division_width(5);
-	sprite_->__division_height(2);
-	sprite_->__index(0);
-	sprite_->__texture_id(Texture::TEXTURE_ID_ANIM_TEST);
-	sprite_->SetParameter();
-
-	text_box_ = new TextBox(FontTexture::TYPE_MS_GOTHIC,32);
-	text_box_->Initialize();
-
-	text_box_->Print("フォントのテストです\n");
-	text_box_->Print("次の事を確認して下さい\n");
-	text_box_->Print("方向キーによる移動\n",D3DXCOLOR(1.0f,1.0f,0.0f,1.0f));
-	text_box_->Print("文字列に抜けが無いか\n");
-	text_box_->__font_color(D3DXCOLOR(1.0f,0.0f,1.0f,1.0f));
-	text_box_->Print("終了後のメモリーリーク\n");
-	text_box_->Print("Rキーでリセットされるか\n");
-	text_box_->Print("座標はリセットされません\n");
+		SafeRelease(scene_manager_);
+		SafeRelease(frame_controller_);
+		ASSERT("failed initialize frame controller");
+	}
 
 	//new Player();
 	player_ = new Player();
@@ -111,9 +85,9 @@ void Application::Uninitialize(void)
 	// release scene manager
 	SafeRelease(scene_manager_);
 
-	SafeRelease(text_box_);
-	SafeRelease(animation_);
-	SafeRelease(sprite_);
+	// release frame controller
+	SafeRelease(frame_controller_);
+
 }
 
 //=============================================================================
@@ -121,97 +95,82 @@ void Application::Uninitialize(void)
 //=============================================================================
 void Application::Update(void)
 {
-	FrameController* frame_controller = new FrameController();
-	frame_controller->Initialize();
+	// update frame controller
+	frame_controller_->Update();
 
-	while(is_loop_)
+	// print fps
+	DEBUG_TOOL.__debug_display()->Print("FPS : %d\n",frame_controller_->__fps());
+
+	// is loop window system
+	if(!GET_SYSTEM.__window()->__is_loop())
 	{
-		// update frame controller
-		frame_controller->Update();
+		is_loop_ = false;
+	}
 
-		// print fps
-		DEBUG_TOOL.__debug_display()->Print("FPS : %d\n",frame_controller->__fps());
+	// update direct input
+	GET_DIRECT_INPUT->Update();
 
-		// is loop window system
-		if(!GET_SYSTEM.__window()->__is_loop())
-		{
-			is_loop_ = false;
-		}
+	// update xaudio2
+	GET_XAUDIO2->Update();
 
-		// update direct input
-		GET_DIRECT_INPUT->Update();
+	// update debug tool
+	DEBUG_TOOL.Update();
 
-		// update debug tool
-		DEBUG_TOOL.Update();
+	if(!DEBUG_TOOL.__is_pause())
+	{
+		// update scene manager
+		scene_manager_->Update();
+	}
 
 		if(!DEBUG_TOOL.__is_pause())
 		{
 			// update scene manager
 			scene_manager_->Update();
 
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
-			{
-				sprite_->__is_flip(!sprite_->__is_flip());
-			}
-
-			animation_->Update();
 			player_->Update();
-			sprite_->__index(animation_->__number());
-			sprite_->SetParameter();
 
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT))
-			{
-				text_box_->__position(D3DXVECTOR2(text_box_->__position().x - 1.0f,text_box_->__position().y));
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT))
-			{
-				text_box_->__position(D3DXVECTOR2(text_box_->__position().x + 1.0f,text_box_->__position().y));
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_UP))
-			{
-				text_box_->__position(D3DXVECTOR2(text_box_->__position().x,text_box_->__position().y - 1.0f));
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_DOWN))
-			{
-				text_box_->__position(D3DXVECTOR2(text_box_->__position().x,text_box_->__position().y + 1.0f));
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_0))
-			{
-				text_box_->Restart();
-			}
+		
 		}
-
-		if(GET_SYSTEM.__directx9()->BeginDraw())
-		{
-			// draw scene manager
-			scene_manager_->Draw();
-
-			player_->Draw();
-
-			text_box_->Draw();
-
-			sprite_->Draw();
-
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
-			{
-				GET_DIRECTX9->ScreenShot();
-				DEBUG_TOOL.__debug_console()->Print("capture screen shot\n");
-			}
-
-			// draw debug tool
-			DEBUG_TOOL.Draw();
-
-			GET_SYSTEM.__directx9()->EndDraw();
-		}
-
-		frame_controller->Wait();
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LSHIFT))
+	{
+		GET_BGM->Play(BGM::BGM_ID_TEST);
 	}
 
-	SafeRelease(frame_controller);
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RSHIFT))
+	{
+		GET_BGM->Play(BGM::BGM_ID_TEST2);
+	}
+
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
+	{
+		GET_BGM->Stop();
+	}
+
+	if(GET_SYSTEM.__directx9()->BeginDraw())
+	{
+		// draw scene manager
+		scene_manager_->Draw();
+
+		player_->Draw();
+
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
+		{
+			GET_DIRECTX9->ScreenShot();
+			DEBUG_TOOL.__debug_trace()->Print("capture screen shot\n");
+		}
+
+		// draw debug tool
+		DEBUG_TOOL.Draw();
+
+		GET_SYSTEM.__directx9()->EndDraw();
+	}
+
+	if(scene_manager_->__is_error())
+	{
+		is_loop_ = true;
+	}
+
+	frame_controller_->Wait();
 }
 
 //---------------------------------- EOF --------------------------------------

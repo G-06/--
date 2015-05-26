@@ -17,6 +17,8 @@
   <ItemGroup>
     <ClCompile Include="sources\application\application.cpp" />
     <ClCompile Include="sources\application\object\player.cpp" />
+    <ClCompile Include="sources\application\object\stage.cpp" />
+    <ClCompile Include="sources\application\object\stage_offset.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
     <ClCompile Include="sources\application\scene\scene.cpp" />
     <ClCompile Include="sources\application\scene\scene_manager.cpp" />
@@ -59,10 +61,14 @@
     <ClCompile Include="sources\system\window\window.cpp" />
     <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp" />
     <ClCompile Include="sources\system\xaudio2\xaudio2.cpp" />
+    <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resources\resource.h" />
     <ClInclude Include="sources\application\application.h" />
     <ClInclude Include="sources\application\object\player.h" />
+    <ClInclude Include="sources\application\object\stage.h" />
+    <ClInclude Include="sources\application\object\stage_offset.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
     <ClInclude Include="sources\application\scene\scene.h" />
@@ -108,6 +114,10 @@
     <ClInclude Include="sources\system\window\window.h" />
     <ClInclude Include="sources\system\xaudio2\bgm\bgm.h" />
     <ClInclude Include="sources\system\xaudio2\xaudio2.h" />
+    <ClInclude Include="sources\system\xaudio2\xaudio2_sound.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D065D020-0DE1-4D84-929D-D472BD0380F4}</ProjectGuid>

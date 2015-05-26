@@ -12,6 +12,7 @@
 #include "scene_title.h"
 #include "scene/factory/scene_factory.h"
 #include "title_bg.h"
+#include "system/system.h"
 
 //=============================================================================
 // constructor
@@ -54,6 +55,13 @@ void SceneTitle::Uninitialize(void)
 //=============================================================================
 void SceneTitle::Update(void)
 {
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	{
+		if(next_scene_factory_ == nullptr)
+		{
+			next_scene_factory_ = new GameFactory();
+		}
+	}
 }
 
 //=============================================================================

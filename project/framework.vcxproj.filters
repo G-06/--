@@ -87,7 +87,13 @@
       <UniqueIdentifier>{2627231c-5bc2-4a2d-bc54-4d5f98050659}</UniqueIdentifier>
     </Filter>
     <Filter Include="sources\application\object">
-      <UniqueIdentifier>{1911babc-1b96-49fe-aa9f-62a94201bda7}</UniqueIdentifier>
+      <UniqueIdentifier>{af84194e-c08d-4506-9b81-495d2f95b3c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{1dc14815-e18c-4925-ba51-c1a6bcf900a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\xaudio2\bgm">
+      <UniqueIdentifier>{b906b185-bcb6-45fa-980d-7b9aacdad564}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -223,11 +229,23 @@
     <ClInclude Include="sources\system\xaudio2\xaudio2.h">
       <Filter>sources\system\xaudio2</Filter>
     </ClInclude>
-    <ClInclude Include="sources\system\xaudio2\bgm\bgm.h">
-      <Filter>sources\system\xaudio2</Filter>
-    </ClInclude>
     <ClInclude Include="sources\system\direct_input\device\di_pad.h">
       <Filter>sources\system\direct_input\device</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_offset.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\resource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\xaudio2\xaudio2_sound.h">
+      <Filter>sources\system\xaudio2</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\xaudio2\bgm\bgm.h">
+      <Filter>sources\system\xaudio2\bgm</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\object\player.h">
       <Filter>sources\application\object</Filter>
@@ -345,14 +363,28 @@
     <ClCompile Include="sources\system\xaudio2\xaudio2.cpp">
       <Filter>sources\system\xaudio2</Filter>
     </ClCompile>
-    <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp">
-      <Filter>sources\system\xaudio2</Filter>
-    </ClCompile>
     <ClCompile Include="sources\system\direct_input\device\di_pad.cpp">
       <Filter>sources\system\direct_input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_offset.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp">
+      <Filter>sources\system\xaudio2</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp">
+      <Filter>sources\system\xaudio2\bgm</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\object\player.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\resource.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

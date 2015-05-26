@@ -85,7 +85,7 @@ private:
 	DIMouse* di_mouse_;
 	DIPad* di_pad_;
 	DIVirtual* di_virtual_;
-	bool is_reset_;
+	bool is_use_;
 };
 
 #endif // _DIRECT_INPUT_H_

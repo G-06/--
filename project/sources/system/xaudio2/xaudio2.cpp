@@ -15,9 +15,11 @@
 // constructor
 //=============================================================================
 XAudio2::XAudio2(void)
+	:ixaudio2_(nullptr)
+	,ixaudio2_mastering_voice_(nullptr)
+	,volume_(1.0f)
+	,bgm_(nullptr)
 {
-	xaudio2_ = nullptr;
-	mastering_voice_ = nullptr;
 }
 
 //=============================================================================
@@ -32,20 +34,34 @@ XAudio2::~XAudio2(void)
 //=============================================================================
 bool XAudio2::Initialize(void)
 {
-	// initiialize COM
+	// initiialize
 	CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
 	// create xaudio2
-	if(FAILED(XAudio2Create(&xaudio2_,0)))
+	if(FAILED(XAudio2Create(&ixaudio2_,0)))
 	{
 		CoUninitialize();
 		return false;
 	}
 
 	// create master voice
-	if(FAILED(xaudio2_->CreateMasteringVoice(&mastering_voice_)))
+	if(FAILED(ixaudio2_->CreateMasteringVoice(&ixaudio2_mastering_voice_)))
 	{
-		SafeRelease(xaudio2_);
+		SafeRelease(ixaudio2_);
+		CoUninitialize();
+		return false;
+	}
+
+	bgm_ = new BGM(ixaudio2_);
+
+	if(!SafeInitialize(bgm_))
+	{
+		if(ixaudio2_mastering_voice_ != nullptr)
+		{
+			ixaudio2_mastering_voice_->DestroyVoice();
+			ixaudio2_mastering_voice_ = nullptr;
+		}
+		SafeRelease(ixaudio2_);
 		CoUninitialize();
 		return false;
 	}
@@ -58,112 +74,40 @@ bool XAudio2::Initialize(void)
 //=============================================================================
 void XAudio2::Uninitialize(void)
 {
-	if(mastering_voice_ != nullptr)
+	SafeRelease(bgm_);
+
+	if(ixaudio2_mastering_voice_ != nullptr)
 	{
-		mastering_voice_->DestroyVoice();
-		mastering_voice_ = nullptr;
+		ixaudio2_mastering_voice_->DestroyVoice();
+		ixaudio2_mastering_voice_ = nullptr;
 	}
 
-	SafeRelease(xaudio2_);
+	SafeRelease(ixaudio2_);
 
 	CoUninitialize();
 }
 
 //=============================================================================
-// load wave file
+// update
 //=============================================================================
-bool LoadWaveFile(const s8* filename)
+void XAudio2::Update(void)
 {
-	return true;
+	bgm_->Update();
 }
 
 //=============================================================================
-// チャンクのチェック
+// set volume
 //=============================================================================
-HRESULT XAudio2::CheckChunk(HANDLE hFile, DWORD format, DWORD *pChunkSize, DWORD *pChunkDataPosition)
+void XAudio2::SetVolume(const f32& volume)
 {
-	HRESULT hr = S_OK;
-	DWORD dwRead;
-	DWORD dwChunkType;
-	DWORD dwChunkDataSize;
-	DWORD dwRIFFDataSize = 0;
-	DWORD dwFileType;
-	DWORD dwBytesRead = 0;
-	DWORD dwOffset = 0;
-	
-	if(SetFilePointer(hFile, 0, NULL, FILE_BEGIN) == INVALID_SET_FILE_POINTER)
-	{// ファイルポインタを先頭に移動
-		return HRESULT_FROM_WIN32(GetLastError());
-	}
-	
-	while(hr == S_OK)
+	volume_ = volume;
+
+	if(volume_ < 0.0f)
 	{
-		if(ReadFile(hFile, &dwChunkType, sizeof(DWORD), &dwRead, NULL) == 0)
-		{// チャンクの読み込み
-			hr = HRESULT_FROM_WIN32(GetLastError());
-		}
-
-		if(ReadFile(hFile, &dwChunkDataSize, sizeof(DWORD), &dwRead, NULL) == 0)
-		{// チャンクデータの読み込み
-			hr = HRESULT_FROM_WIN32(GetLastError());
-		}
-
-		switch(dwChunkType)
-		{
-		case 'FFIR':
-			dwRIFFDataSize  = dwChunkDataSize;
-			dwChunkDataSize = 4;
-			if(ReadFile(hFile, &dwFileType, sizeof(DWORD), &dwRead, NULL) == 0)
-			{// ファイルタイプの読み込み
-				hr = HRESULT_FROM_WIN32(GetLastError());
-			}
-			break;
-
-		default:
-			if(SetFilePointer(hFile, dwChunkDataSize, NULL, FILE_CURRENT) == INVALID_SET_FILE_POINTER)
-			{// ファイルポインタをチャンクデータ分移動
-				return HRESULT_FROM_WIN32(GetLastError());
-			}
-		}
-
-		dwOffset += sizeof(DWORD) * 2;
-		if(dwChunkType == format)
-		{
-			*pChunkSize         = dwChunkDataSize;
-			*pChunkDataPosition = dwOffset;
-
-			return S_OK;
-		}
-
-		dwOffset += dwChunkDataSize;
-		if(dwBytesRead >= dwRIFFDataSize)
-		{
-			return S_FALSE;
-		}
+		volume_ = 0.0f;
 	}
-	
-	return S_OK;
+
+	ixaudio2_mastering_voice_->SetVolume(volume_);
 }
-
-//=============================================================================
-// チャンクデータの読み込み
-//=============================================================================
-HRESULT XAudio2::ReadChunkData(HANDLE hFile, void *pBuffer, DWORD dwBuffersize, DWORD dwBufferoffset)
-{
-	DWORD dwRead;
-	
-	if(SetFilePointer(hFile, dwBufferoffset, NULL, FILE_BEGIN) == INVALID_SET_FILE_POINTER)
-	{// ファイルポインタを指定位置まで移動
-		return HRESULT_FROM_WIN32(GetLastError());
-	}
-
-	if(ReadFile(hFile, pBuffer, dwBuffersize, &dwRead, NULL) == 0)
-	{// データの読み込み
-		return HRESULT_FROM_WIN32(GetLastError());
-	}
-	
-	return S_OK;
-}
-
 
 //---------------------------------- EOF --------------------------------------

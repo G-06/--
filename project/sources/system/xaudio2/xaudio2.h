@@ -17,6 +17,8 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
+#include "xaudio2_sound.h"
+#include "bgm/bgm.h"
 
 //*****************************************************************************
 // class definition
@@ -36,24 +38,22 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
-	// load wave file
-	bool LoadWaveFile(const s8* filename);
+	// update
+	void Update(void);
 
-	// チャンクのチェック
-	HRESULT CheckChunk(HANDLE h_file, DWORD format, DWORD *chunk_size, DWORD *chunk_data_position);
+	// set volume
+	void SetVolume(const f32& volume);
 
-	// チャンクデータの読み込み
-	HRESULT ReadChunkData(HANDLE h_file, void* buffer, DWORD buffer_size, DWORD buffer_offset);
-
-	// XAudio2の取得
-	IXAudio2* __xaudio2(void){return xaudio2_;}
-
-	// XAudio2の取得
-	IXAudio2MasteringVoice* __mastering_voice(void){return mastering_voice_;}
+	// accessor
+	const f32& __volume(void) { return volume_; }
+	BGM* __bgm(void)const { return bgm_; }
 
 private:
-	IXAudio2* xaudio2_;
-	IXAudio2MasteringVoice* mastering_voice_;
+	IXAudio2* ixaudio2_;
+	IXAudio2MasteringVoice* ixaudio2_mastering_voice_;
+	f32 volume_;
+	BGM* bgm_;
+
 };
 
 #endif // _XAUDIO2_H_
