@@ -21,7 +21,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const s8* DirectInput::SYSTEM_FILE_NAME = "resources/system/input.bin";
+const s8* DirectInput::SYSTEM_FILE_NAME = "data/system/input.bin";
 
 //=============================================================================
 // constructor
@@ -221,6 +221,22 @@ bool DirectInput::CheckRepeat(const INPUT_EVENT& input_event)
 s32 DirectInput::GetValue(const INPUT_EVENT_VALUE& input_event_value)
 {
 	return input_event_buffer_->GetValue(input_event_value);
+}
+
+//=============================================================================
+// get press
+//=============================================================================
+INPUT_EVENT DirectInput::GetPress(const INPUT_EVENT& begin_input_event,const INPUT_EVENT& end_input_event)
+{
+	for(u32 i = begin_input_event; i < end_input_event;++i)
+	{
+		if(input_event_buffer_->CheckPress((INPUT_EVENT)i))
+		{
+			return (INPUT_EVENT)i;
+		}
+	}
+
+	return INPUT_EVENT_MAX;
 }
 
 //=============================================================================

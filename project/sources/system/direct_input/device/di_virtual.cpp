@@ -76,9 +76,9 @@ void DIVirtual::Update(void)
 		// プレビューキーの保存
 		preview_key_[i] = press_key;
 
-		input_event_buffer_->SetPress(static_cast<INPUT_EVENT>(i + INPUT_EVENT_VIRTUAL_0),press_key);
-		input_event_buffer_->SetTrigger(static_cast<INPUT_EVENT>(i + INPUT_EVENT_VIRTUAL_0),trigger_key);
-		input_event_buffer_->SetRelease(static_cast<INPUT_EVENT>(i + INPUT_EVENT_VIRTUAL_0),release_key);
+		input_event_buffer_->SetPress(static_cast<INPUT_EVENT>(i + INPUT_EVENT_VIRTUAL_LEFT),press_key);
+		input_event_buffer_->SetTrigger(static_cast<INPUT_EVENT>(i + INPUT_EVENT_VIRTUAL_LEFT),trigger_key);
+		input_event_buffer_->SetRelease(static_cast<INPUT_EVENT>(i + INPUT_EVENT_VIRTUAL_LEFT),release_key);
 	}
 }
 
@@ -87,15 +87,43 @@ void DIVirtual::Update(void)
 //=============================================================================
 bool DIVirtual::Register(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event)
 {
-	u32 index = input_event_virtual - INPUT_EVENT_VIRTUAL_0;
+	u32 index = input_event_virtual - INPUT_EVENT_VIRTUAL_LEFT;
 
 	if(index >= 0 && index < KEY_MAX)
 	{
+		for(auto it = input_event_container_[index].begin();it != input_event_container_[index].end();++it)
+		{
+			if(*it == input_event)
+			{
+				return false;
+			}
+		}
+
 		input_event_container_[index].push_back(input_event);
 		return true;
 	}
 
 	return false;
+}
+
+//=============================================================================
+// unregister
+//=============================================================================
+bool DIVirtual::Unregister(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event)
+{
+	u32 index = input_event_virtual - INPUT_EVENT_VIRTUAL_LEFT;
+
+	if(index >= 0 && index < KEY_MAX)
+	{
+		for(auto it = input_event_container_[index].begin();it != input_event_container_[index].end();++it)
+		{
+			if(*it == input_event)
+			{
+				input_event_container_[index].erase(it);
+				break;
+			}
+		}
+	}
 }
 
 //=============================================================================

@@ -60,6 +60,29 @@ bool Application::Initialize(void)
 		ASSERT("failed initialize frame controller");
 	}
 
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LEFT,INPUT_EVENT_LEFT);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_RIGHT,INPUT_EVENT_RIGHT);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_UP,INPUT_EVENT_UP);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DOWN,INPUT_EVENT_DOWN);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LEFT,INPUT_EVENT_PAD_L_LEFT);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_RIGHT,INPUT_EVENT_PAD_L_RIGHT);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_UP,INPUT_EVENT_PAD_L_UP);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DOWN,INPUT_EVENT_PAD_L_DOWN);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LEFT,INPUT_EVENT_PAD_2);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_RIGHT,INPUT_EVENT_PAD_3);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_UP,INPUT_EVENT_PAD_0);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DOWN,INPUT_EVENT_PAD_1);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,INPUT_EVENT_Z);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,INPUT_EVENT_PAD_5);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_6,INPUT_EVENT_X);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_6,INPUT_EVENT_PAD_9);
+	//
+	//GET_DIRECT_INPUT->SaveInputEventVertual();
+
 	return true;
 }
 
@@ -75,7 +98,6 @@ void Application::Uninitialize(void)
 
 	// release frame controller
 	SafeRelease(frame_controller_);
-
 }
 
 //=============================================================================
@@ -108,21 +130,6 @@ void Application::Update(void)
 	{
 		// update scene manager
 		scene_manager_->Update();
-	}
-
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LSHIFT))
-	{
-		GET_BGM->Play(BGM::BGM_ID_TEST);
-	}
-
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RSHIFT))
-	{
-		GET_BGM->Play(BGM::BGM_ID_TEST2);
-	}
-
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
-	{
-		GET_BGM->Stop();
 	}
 
 	if(GET_SYSTEM.__directx9()->BeginDraw())

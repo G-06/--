@@ -165,7 +165,10 @@ void Window::WindowThread(Window* in_window)
 			}
 			else if(msg.message == WM_DEVICECHANGE)
 			{
-				GET_DIRECT_INPUT->ResetDevice();
+				if(GET_DIRECT_INPUT != nullptr)
+				{
+					GET_DIRECT_INPUT->ResetDevice();
+				}
 			}
 			//else if(msg.message == WM_SIZE)
 			//{

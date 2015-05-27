@@ -69,6 +69,9 @@ public:
 	// get value
 	s32 GetValue(const INPUT_EVENT_VALUE& input_event_value);
 
+	// get press
+	INPUT_EVENT GetPress(const INPUT_EVENT& begin_input_event,const INPUT_EVENT& end_input_event);
+
 	// register input event vertual
 	bool RegisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
 
