@@ -1,8 +1,9 @@
 //*****************************************************************************
 //
-// title bg
+// logo
 //
-// Author		: Kenji Kabutomori
+// Author		: taichi kitazawa
+//				: Kenji Kabutomori
 //
 //*****************************************************************************
 
@@ -17,6 +18,7 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
+#include "common/animation/animation.h"
 
 //*****************************************************************************
 // forward declaration
@@ -47,13 +49,23 @@ public:
 	// draw
 	void Draw(void);
 
+	// start
+	void Start(void);
 
-	bool __next_scene_flag(void){return next_scene_flag_;};
-
+	// accessor
+	bool __is_end(void) { return is_end_; }
+	bool __is_active(void) { return is_active_; }
 private:
+	static const D3DXVECTOR2 DEFAULT_POSITION;
+	static const D3DXVECTOR2 DEFAULT_SIZE;
+	static const u32 DEFAULT_DIVISION_WIDTH;
+	static const u32 DEFAULT_DIVISION_HEIGHT;
+	static const Animation::DATA ANIMATION_DATA[];
+
 	Sprite* logo_neko_;		//ロゴ
-	u32 logo_timer_;		//ロゴ切り替えタイマー
-	bool next_scene_flag_;	//タイトルに進むかな？
+	Animation* animation_;
+	bool is_end_;
+	bool is_active_;
 
 };
 

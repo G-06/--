@@ -52,7 +52,7 @@ public:
 	void Update(void);
 
 	// add
-	void Add(DATA* data,u32 size);
+	void Add(const DATA* data,u32 size);
 
 	// start
 	void Start(u32 index);
@@ -65,6 +65,7 @@ public:
 	const u32& __current_index(void)const { return current_index_; }
 	void __number(const u32& number) { number_ = number; frame_count_ = 0; }
 	const u32& __number(void)const { return number_; }
+	bool __is_end(void)const { return is_end_; }
 
 private:
 	u32 frame_count_;
@@ -72,6 +73,7 @@ private:
 	u32 number_;
 	std::vector<DATA> container_;
 	bool is_actitive;
+	bool is_end_;
 };
 
 #endif	// _ANIMATION_H_

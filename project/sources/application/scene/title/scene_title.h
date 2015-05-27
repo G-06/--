@@ -51,8 +51,9 @@ public:
 	SceneFactory* CreateFactory(void)const;
 
 private:
+	static const u32 GO_LOGO_FRAME;
 	TitleBg* title_bg_;
-	u32 go_logo_time_;		//ロゴに戻るカウンター
+	u32 frame_count_;		//ロゴに戻るカウンター
 };
 
 #endif	// _SCENE_TITLE_H_

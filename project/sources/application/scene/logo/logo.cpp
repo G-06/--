@@ -1,8 +1,9 @@
 //*****************************************************************************
 //
-// title bg
+// logo
 //
 // Author		: taichi kitazawa
+//				: Kenji Kabutomori
 //
 //*****************************************************************************
 
@@ -13,23 +14,28 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
-#define TIME			(120)			//ロゴが表示されてから切り替わるまで
-#define DELAY			(TIME+5)				//中割の表示時間
-#define GO_TITLE		(TIME+DELAY+30)	//タイトルに行く時間
-
-#define DEFAULT_POS_X	(400.0f)		//ロゴ位置
-#define DEFAULT_POS_Y	(200.0f)
-
-#define DEFAULT_SIZE_X	(400.0f)		//ロゴサイズ
-#define DEFAULT_SIZE_Y	(400.0f)
-
-#define DIVISION_X		(3)				//ロゴ枚数
-#define DIVISION_Y		(1)
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+const D3DXVECTOR2 Logo::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
+const D3DXVECTOR2 Logo::DEFAULT_SIZE = D3DXVECTOR2(400.0f,400.0f);
+const u32 Logo::DEFAULT_DIVISION_WIDTH = 3;
+const u32 Logo::DEFAULT_DIVISION_HEIGHT = 1;
+const Animation::DATA Logo::ANIMATION_DATA[] =
+{
+	Animation::DATA(5,1,0),
+	Animation::DATA(5,2,1),
+	Animation::DATA(5,2,2),
+};
 
 //=============================================================================
 // constructor
 //=============================================================================
 Logo::Logo(void)
+	:logo_neko_(nullptr)
+	,animation_(nullptr)
+	,is_end_(false)
+	,is_active_(false)
 {
 }
 
@@ -46,17 +52,32 @@ Logo::~Logo(void)
 bool Logo::Initialize(void)
 {
 	logo_neko_ = new Sprite();
-	logo_neko_->Initialize();
-	logo_neko_->__size(D3DXVECTOR2(DEFAULT_SIZE_X,DEFAULT_SIZE_Y));
-	logo_neko_->__position(D3DXVECTOR2(DEFAULT_POS_X,DEFAULT_POS_Y));
+
+	if(!SafeInitialize(logo_neko_))
+	{
+		return false;
+	}
+
+	logo_neko_->__size(DEFAULT_SIZE);
+	logo_neko_->__position(DEFAULT_POSITION);
 	logo_neko_->__texture_id(Texture::TEXTURE_ID_LOGO);
-	logo_neko_->__division_height(DIVISION_Y);
-	logo_neko_->__division_width(DIVISION_X);
+	logo_neko_->__division_width(DEFAULT_DIVISION_WIDTH);
+	logo_neko_->__division_height(DEFAULT_DIVISION_HEIGHT);
 	logo_neko_->__index((u32)0);
+	logo_neko_->__point(Sprite::POINT_CENTER);
 	logo_neko_->SetParameter();
 
-	logo_timer_=0;
-	next_scene_flag_ = false;
+	animation_ = new Animation();
+
+	if(!SafeInitialize(animation_))
+	{
+		return false;
+	}
+
+	animation_->Add(ANIMATION_DATA,sizeof(ANIMATION_DATA) / sizeof(Animation::DATA));
+
+	is_end_ = false;
+
 	return true;
 }
 
@@ -66,7 +87,7 @@ bool Logo::Initialize(void)
 void Logo::Uninitialize(void)
 {
 	SafeRelease(logo_neko_);
-	SafeDelete(logo_neko_);
+	SafeRelease(animation_);
 }
 
 //=============================================================================
@@ -74,22 +95,15 @@ void Logo::Uninitialize(void)
 //=============================================================================
 void Logo::Update(void)
 {
-	if(logo_timer_ == TIME)
-	{
-		logo_neko_->__index(1);
-		logo_neko_->SetParameter();
-	}
-	else if(logo_timer_ == DELAY)
-	{
-		logo_neko_->__index(2);
-		logo_neko_->SetParameter();
-	}
-	else if(logo_timer_ == GO_TITLE)
-	{
-		next_scene_flag_ = true;
-	}
+	animation_->Update();
 
-	logo_timer_++;
+	logo_neko_->__index(animation_->__current_index());
+	logo_neko_->SetParameter();
+
+	if(animation_->__is_end())
+	{
+		is_end_ = true;
+	}
 }
 
 //=============================================================================
@@ -98,6 +112,16 @@ void Logo::Update(void)
 void Logo::Draw(void)
 {
 	logo_neko_->Draw();
+}
+
+//=============================================================================
+// start
+//=============================================================================
+void Logo::Start(void)
+{
+	animation_->Start(0);
+	is_end_ = false;
+	is_active_ = true;
 }
 
 //---------------------------------- EOF --------------------------------------

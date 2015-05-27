@@ -14,13 +14,18 @@
 #include "title_bg.h"
 #include "system/system.h"
 
-#define GO_LOGO_TIME	(240)		//ƒƒS‚É–ß‚é‚Ü‚Å‚ÌŽžŠÔ
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+const u32 SceneTitle::GO_LOGO_FRAME = 600;		//ƒƒS‚É–ß‚é‚Ü‚Å‚ÌŽžŠÔ
 
 //=============================================================================
 // constructor
 //=============================================================================
-SceneTitle::SceneTitle(void) :
-Scene(TYPE_TITLE)
+SceneTitle::SceneTitle(void)
+	:Scene(TYPE_TITLE)
+	,title_bg_(nullptr)
+	,frame_count_(0)
 {
 }
 
@@ -39,7 +44,7 @@ bool SceneTitle::Initialize(void)
 	title_bg_ = new TitleBg();
 	title_bg_->Initialize();
 
-	go_logo_time_ = 0;
+	frame_count_ = 0;
 
 	return true;
 }
@@ -59,23 +64,30 @@ void SceneTitle::Uninitialize(void)
 //=============================================================================
 void SceneTitle::Update(void)
 {
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	if(is_fade_)
 	{
-		if(next_scene_factory_ == nullptr)
+	}
+	else
+	{
+		frame_count_++;
+
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
 		{
-			next_scene_factory_ = new GameFactory();
+			if(next_scene_factory_ == nullptr)
+			{
+				next_scene_factory_ = new GameFactory();
+			}
+		}
+
+		if(frame_count_ >= GO_LOGO_FRAME)
+		{
+			if(next_scene_factory_ == nullptr)
+			{
+				next_scene_factory_ = new LogoFactory();
+			}
 		}
 	}
 
-	if(go_logo_time_ == GO_LOGO_TIME)
-	{
-		if(next_scene_factory_ == nullptr)
-		{
-			next_scene_factory_ = new LogoFactory();
-		}
-	}
-
-	go_logo_time_++;
 }
 
 //=============================================================================

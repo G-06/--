@@ -84,6 +84,15 @@ void SceneManager::Update(void)
 		fade_->Start(Fade::TYPE_IN);
 	}
 
+	if(fade_->__type() == Fade::TYPE_NONE)
+	{
+		current_scene_->__is_fade(false);
+	}
+	else
+	{
+		current_scene_->__is_fade(true);
+	}
+
 	// update current scene
 	current_scene_->Update();
 

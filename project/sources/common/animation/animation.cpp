@@ -19,6 +19,7 @@ Animation::Animation(void)
 	,current_index_(0)
 	,number_(0)
 	,is_actitive(false)
+	,is_end_(false)
 {
 }
 
@@ -57,6 +58,10 @@ void Animation::Update(void)
 
 			if(frame_count_ >= container_[current_index_]._frame)
 			{
+				if(current_index_ == container_[current_index_]._next_index)
+				{
+					is_end_ = true;
+				}
 				current_index_ = container_[current_index_]._next_index;
 				number_ = container_[current_index_]._number;
 				frame_count_ = 0;
@@ -68,7 +73,7 @@ void Animation::Update(void)
 //=============================================================================
 // add
 //=============================================================================
-void Animation::Add(DATA* data,u32 size)
+void Animation::Add(const DATA* data,u32 size)
 {
 	for(u32 i = 0;i < size;++i)
 	{
@@ -82,6 +87,7 @@ void Animation::Add(DATA* data,u32 size)
 void Animation::Start(u32 index)
 {
 	is_actitive = true;
+	is_end_ = false;
 	current_index_ = index;
 }
 
@@ -91,6 +97,7 @@ void Animation::Start(u32 index)
 void Animation::Stop(void)
 {
 	is_actitive = false;
+	is_end_ = false;
 }
 
 //---------------------------------- EOF --------------------------------------

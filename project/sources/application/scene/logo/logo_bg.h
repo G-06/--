@@ -2,7 +2,8 @@
 //
 // logo bg
 //
-// Author		: Kenji Kabutomori
+// Author		: taichi kitazawa
+//				: Kenji Kabutomori
 //
 //*****************************************************************************
 

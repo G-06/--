@@ -3,6 +3,7 @@
 // scene logo
 //
 // Author		: taichi kitazawa
+//				: Kenji Kabutomori
 //
 //*****************************************************************************
 
@@ -52,9 +53,8 @@ public:
 	SceneFactory* CreateFactory(void)const;
 
 private:
-
-	Logo* Logo_neko_;
-	LogoBg* Logo_bg_;
+	Logo* logo_neko_;
+	LogoBg* logo_bg_;
 };
 
 #endif	// _SCENE_LOGO_H_

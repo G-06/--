@@ -17,9 +17,10 @@
 //=============================================================================
 // constructor
 //=============================================================================
-Application::Application(void) :
-scene_manager_(nullptr),
-is_loop_(false)
+Application::Application(void)
+	:scene_manager_(nullptr)
+	,frame_controller_(nullptr)
+	,is_loop_(false)
 {
 }
 
@@ -44,7 +45,7 @@ bool Application::Initialize(void)
 	// initialize scene manager
 	if(!SafeInitialize(scene_manager_))
 	{
-		SafeRelease(scene_manager_);
+		Uninitialize();
 		ASSERT("failed initialize scene manager");
 		return false;
 	}
@@ -55,8 +56,7 @@ bool Application::Initialize(void)
 	// initialize frame controller
 	if(!SafeInitialize(frame_controller_))
 	{
-		SafeRelease(scene_manager_);
-		SafeRelease(frame_controller_);
+		Uninitialize();
 		ASSERT("failed initialize frame controller");
 	}
 
@@ -144,7 +144,7 @@ void Application::Update(void)
 
 	if(scene_manager_->__is_error())
 	{
-		is_loop_ = true;
+		is_loop_ = false;
 	}
 
 	frame_controller_->Wait();

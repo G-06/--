@@ -3,6 +3,7 @@
 // scene logo
 //
 // Author		: taichi kitazawa
+//				: Kenji Kabutomori
 //
 //*****************************************************************************
 
@@ -20,6 +21,8 @@
 //=============================================================================
 SceneLogo::SceneLogo(void)
 	:Scene(TYPE_LOGO)
+	,logo_neko_(nullptr)
+	,logo_bg_(nullptr)
 {
 }
 
@@ -35,11 +38,19 @@ SceneLogo::~SceneLogo(void)
 //=============================================================================
 bool SceneLogo::Initialize(void)
 {
-	Logo_neko_ = new Logo;
-	Logo_neko_ ->Initialize();
+	logo_neko_ = new Logo;
 
-	Logo_bg_ = new LogoBg;
-	Logo_bg_ ->Initialize();
+	if(!SafeInitialize(logo_neko_))
+	{
+		return false;
+	}
+
+	logo_bg_ = new LogoBg;
+
+	if(!SafeInitialize(logo_bg_))
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -49,10 +60,9 @@ bool SceneLogo::Initialize(void)
 //=============================================================================
 void SceneLogo::Uninitialize(void)
 {
-	SafeRelease(Logo_neko_);
-	SafeRelease(Logo_bg_);
+	SafeRelease(logo_neko_);
+	SafeRelease(logo_bg_);
 	SafeDelete(next_scene_factory_);
-	
 }
 
 //=============================================================================
@@ -60,25 +70,38 @@ void SceneLogo::Uninitialize(void)
 //=============================================================================
 void SceneLogo::Update(void)
 {
-	Logo_neko_->Update();
-
-	//タイトルに行くタイミングを見計らっている
-	if(Logo_neko_->__next_scene_flag() == true)
+	if(is_fade_)
 	{
-		if(next_scene_factory_ == nullptr)
+	}
+	else
+	{
+		if(!logo_neko_->__is_active())
 		{
-			next_scene_factory_ = new TitleFactory();
+			logo_neko_->Start();
+		}
+
+		logo_neko_->Update();
+		logo_bg_->Update();
+
+		//タイトルに行くタイミングを見計らっている
+		if(logo_neko_->__is_end())
+		{
+			if(next_scene_factory_ == nullptr)
+			{
+				next_scene_factory_ = new TitleFactory();
+			}
 		}
 	}
 }
+
 //=============================================================================
 // draw
 //=============================================================================
 void SceneLogo::Draw(void)
 {
 	// draw stage
-	Logo_bg_->Draw();
-	Logo_neko_->Draw();
+	logo_bg_->Draw();
+	logo_neko_->Draw();
 }
 
 //=============================================================================
