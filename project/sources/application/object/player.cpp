@@ -15,6 +15,10 @@
 #include "system/system.h"
 #include "system/direct_input/input_event_buffer.h"
 
+const f32 Player::LIGHT_SPEED = (30.0f);
+const f32 Player::MAX_SPEED = (20.0f);
+const f32 Player::JUMP_SPEED = (-20.0f);
+
 const Animation::DATA Player::ANIMATION_DATA[] =
 {
 	Animation::DATA(2, 1, ANIMATION_RUN_START),
@@ -89,74 +93,88 @@ void Player::Update(void)
 {
 	old_position_ = position_;
 
-	move_.y += DEFAULT_GRAVITY;
-
-	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_3))
+	if(is_light_ == false)
 	{
-		is_right_ = true;
+		move_.y += DEFAULT_GRAVITY;
 
-		if(move_.x <= 0)
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_3))
 		{
-			move_.x = 1;
-			acceleration_counter_ = 0;
-			animation_->Start(ANIMATION_RUN_START);
+			is_right_ = true;
+
+			if(move_.x <= 0)
+			{
+				move_.x = 1;
+				acceleration_counter_ = 0;
+				animation_->Start(ANIMATION_RUN_START);
+			}
+
+			acceleration_counter_++;
+
+			if(acceleration_counter_ % 1 == 0 && move_.x < MAX_SPEED)
+			{
+				move_.x+=0.5f;
+			}
 		}
 
-		acceleration_counter_++;
-
-		if(acceleration_counter_ % 1 == 0 && move_.x < 20)
+		else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_2))
 		{
-			move_.x+=0.5f;
-		}
-	}
+			is_right_ = false;
 
-	else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_2))
+			if(move_.x >= 0)
+			{
+				move_.x = -1;
+				acceleration_counter_ = 0;
+				animation_->Start(ANIMATION_RUN_START);
+			}
+
+			acceleration_counter_++;
+
+			if(acceleration_counter_ % 1 == 0 && move_.x > -MAX_SPEED)
+			{
+				move_.x-=0.5f;
+			}
+		}
+
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_Z) && is_fly_ == false || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_4) && is_fly_ == false)
+		{
+			is_fly_ = true;
+			move_.y = JUMP_SPEED;
+		}
+
+		if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT) && 
+			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT) && 
+			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_3) &&
+			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_2) &&
+			move_.x != 0)
+		{
+			slowdown_counter_++;
+
+			if(move_.x > 0 && slowdown_counter_ % 1 == 0)
+			{
+				move_.x-=0.5f;
+			}
+
+			if(move_.x < 0 && slowdown_counter_ % 1 == 0)
+			{
+				move_.x+=0.5f;
+			}
+
+			if(move_.x == 0)
+			{
+				slowdown_counter_ = 0;
+				animation_->Stop();
+			}
+		}
+
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_X) && is_fly_ == false || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_9) && is_fly_ == false)
+		{
+			LightMode(true, is_right_);
+		}
+	}else
 	{
-		is_right_ = false;
-
-		if(move_.x >= 0)
+		if(GET_DIRECT_INPUT->CheckRelease(INPUT_EVENT_X) || GET_DIRECT_INPUT->CheckRelease(INPUT_EVENT_PAD_9))
 		{
-			move_.x = -1;
-			acceleration_counter_ = 0;
-			animation_->Start(ANIMATION_RUN_START);
-		}
-
-		acceleration_counter_++;
-
-		if(acceleration_counter_ % 1 == 0 && move_.x > -20)
-		{
-			move_.x-=0.5f;
-		}
-	}
-
-	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_Z) && is_fly_ == false || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_4) && is_fly_ == false)
-	{
-		is_fly_ = true;
-		move_.y = -20;
-	}
-
-	if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT) && 
-		!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT) && 
-		!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_3) &&
-		!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_2) &&
-		move_.x != 0)
-	{
-		slowdown_counter_++;
-
-		if(move_.x > 0 && slowdown_counter_ % 1 == 0)
-		{
-			move_.x-=0.5f;
-		}
-
-		if(move_.x < 0 && slowdown_counter_ % 1 == 0)
-		{
-			move_.x+=0.5f;
-		}
-
-		if(move_.x == 0)
-		{
-			slowdown_counter_ = 0;
-			animation_->Stop();
+			LightMode(false, is_right_);
 		}
 	}
 
@@ -199,12 +217,20 @@ void Player::Stagecollision(u32 mode, D3DXVECTOR2 stage_size)
 
 		case COLLISION_RIGHT:
 			position_.x = stage_size.x - size_.x;
+			if(is_light_)
+			{
+				LightMode(false, is_right_);
+			}
 			animation_->Stop();
 			player_->__index(ANIMATION_RUN_START);
 			player_->SetParameter();
 			break;
 
 		case COLLISION_LEFT:
+			if(is_light_)
+			{
+				LightMode(false, is_right_);
+			}
 			position_.x = 0.0f;
 			animation_->Stop();
 			player_->__index(ANIMATION_RUN_START);
@@ -213,6 +239,59 @@ void Player::Stagecollision(u32 mode, D3DXVECTOR2 stage_size)
 
 		default:
 			break;
+	}
+}
+
+//=============================================================================
+// lightmode
+//=============================================================================
+void Player::LightMode(bool is_light, bool is_right)
+{
+	if(is_light == true)
+	{
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_UP) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_0))
+		{
+			move_.y = -LIGHT_SPEED;
+		}
+
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_3))
+		{
+			move_.x = LIGHT_SPEED;
+		}
+		else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_2))
+		{
+			move_.x = -LIGHT_SPEED;
+		}
+
+		if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT) && 
+			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT) && 
+			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_3) &&
+			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_2) &&
+			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_UP) && 
+			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_0))
+		{
+			if(is_right == true)
+			{
+				move_.x = LIGHT_SPEED;
+			}
+			else
+			{
+				move_.x = -LIGHT_SPEED;
+			}
+		}
+
+		is_fly_ = true;
+		is_light_ = true;
+		// Žd—l•s–¾ ‚Æ‚è‚ ‚¦‚¸ÃŽ~
+		animation_->Stop();
+		animation_->__current_index(ANIMATION_RUN_START);
+	}
+	else
+	{
+		move_.x = 0;
+		move_.y = 0;
+
+		is_light_ = false;
 	}
 }
 

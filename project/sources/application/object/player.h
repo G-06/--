@@ -75,8 +75,13 @@ public:
 	const D3DXVECTOR2& __size(void)const{ return size_; }
 
 private:
+	void LightMode(bool is_light, bool is_right);
+
 	static const Animation::DATA ANIMATION_DATA[];
 	static const u32 ANIMATION_RUN_START = (0);
+	static const f32 LIGHT_SPEED;
+	static const f32 MAX_SPEED;
+	static const f32 JUMP_SPEED;
 	D3DXVECTOR2 position_;				// プレイヤー座標
 	D3DXVECTOR2 old_position_;			// プレイヤーの前回座標
 	D3DXVECTOR2 move_;					// プレイヤーの移動量
