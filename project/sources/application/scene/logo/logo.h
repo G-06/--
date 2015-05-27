@@ -46,10 +46,14 @@ public:
 
 	// draw
 	void Draw(void);
+
+
+	bool __next_scene_flag(void){return next_scene_flag_;};
+
 private:
-	Sprite* logo_neko_;
-	u32 index_num_;
-	u32 logo_timer_;
+	Sprite* logo_neko_;		//ロゴ
+	u32 logo_timer_;		//ロゴ切り替えタイマー
+	bool next_scene_flag_;	//タイトルに進むかな？
 
 };
 

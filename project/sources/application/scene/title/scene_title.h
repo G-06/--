@@ -52,6 +52,7 @@ public:
 
 private:
 	TitleBg* title_bg_;
+	u32 go_logo_time_;		//ロゴに戻るカウンター
 };
 
 #endif	// _SCENE_TITLE_H_

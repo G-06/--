@@ -13,16 +13,17 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
-#define TIME	(80)
-#define DELAY	(5)
+#define TIME			(120)			//ロゴが表示されてから切り替わるまで
+#define DELAY			(TIME+5)				//中割の表示時間
+#define GO_TITLE		(TIME+DELAY+30)	//タイトルに行く時間
 
-#define DEFAULT_POS_X	(400.0f)
+#define DEFAULT_POS_X	(400.0f)		//ロゴ位置
 #define DEFAULT_POS_Y	(200.0f)
 
-#define DEFAULT_SIZE_X	(400.0f)
+#define DEFAULT_SIZE_X	(400.0f)		//ロゴサイズ
 #define DEFAULT_SIZE_Y	(400.0f)
 
-#define DIVISION_X		(3)
+#define DIVISION_X		(3)				//ロゴ枚数
 #define DIVISION_Y		(1)
 
 //=============================================================================
@@ -54,9 +55,8 @@ bool Logo::Initialize(void)
 	logo_neko_->__index((u32)0);
 	logo_neko_->SetParameter();
 
-
-	index_num_=99;
 	logo_timer_=0;
+	next_scene_flag_ = false;
 	return true;
 }
 
@@ -79,23 +79,17 @@ void Logo::Update(void)
 		logo_neko_->__index(1);
 		logo_neko_->SetParameter();
 	}
-	if(logo_timer_ == TIME+DELAY)
+	else if(logo_timer_ == DELAY)
 	{
 		logo_neko_->__index(2);
 		logo_neko_->SetParameter();
 	}
-	else
+	else if(logo_timer_ == GO_TITLE)
 	{
-		logo_timer_++;
+		next_scene_flag_ = true;
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
-	{
-		logo_timer_=0;
-		logo_neko_->__index((u32)0);
-		logo_neko_->SetParameter();
-	}
-
+	logo_timer_++;
 }
 
 //=============================================================================

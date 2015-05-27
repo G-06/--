@@ -60,16 +60,16 @@ void SceneLogo::Uninitialize(void)
 //=============================================================================
 void SceneLogo::Update(void)
 {
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	Logo_neko_->Update();
+
+	//タイトルに行くタイミングを見計らっている
+	if(Logo_neko_->__next_scene_flag() == true)
 	{
 		if(next_scene_factory_ == nullptr)
 		{
 			next_scene_factory_ = new TitleFactory();
 		}
 	}
-
-	Logo_neko_->Update();
-
 }
 //=============================================================================
 // draw

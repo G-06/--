@@ -14,6 +14,8 @@
 #include "title_bg.h"
 #include "system/system.h"
 
+#define GO_LOGO_TIME	(240)		//ƒƒS‚É–ß‚é‚Ü‚Å‚ÌŽžŠÔ
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -36,6 +38,8 @@ bool SceneTitle::Initialize(void)
 {
 	title_bg_ = new TitleBg();
 	title_bg_->Initialize();
+
+	go_logo_time_ = 0;
 
 	return true;
 }
@@ -63,7 +67,7 @@ void SceneTitle::Update(void)
 		}
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_SPACE))
+	if(go_logo_time_ == GO_LOGO_TIME)
 	{
 		if(next_scene_factory_ == nullptr)
 		{
@@ -71,6 +75,7 @@ void SceneTitle::Update(void)
 		}
 	}
 
+	go_logo_time_++;
 }
 
 //=============================================================================
