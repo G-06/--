@@ -14,6 +14,7 @@
 #include "system/system.h"
 #include "application/object/stage.h"
 #include "application/object/stage_offset.h"
+#include "object/player.h"
 
 //=============================================================================
 // constructor
@@ -49,6 +50,13 @@ bool SceneGame::Initialize(void)
 		return false;
 	}
 
+	player_ = new Player();
+
+	if(!SafeInitialize(player_))
+	{
+		return false;
+	}
+
 	stage_offset_->__screen_size(D3DXVECTOR2((f32)GET_WINDOW->__width(),(f32)GET_WINDOW->__height()));
 	stage_offset_->__stage_size(stage_->__size());
 
@@ -67,6 +75,8 @@ void SceneGame::Uninitialize(void)
 
 	// release stage
 	SafeRelease(stage_);
+
+	SafeRelease(player_);
 }
 
 //=============================================================================
@@ -74,14 +84,35 @@ void SceneGame::Uninitialize(void)
 //=============================================================================
 void SceneGame::Update(void)
 {
+	player_->Update();
+
+	stage_offset_->__reference_position(player_->__position());
+
 	// update stage offset
 	stage_offset_->Update();
+
+	player_->__offset_position(stage_offset_->__position());
 
 	// set offset position
 	stage_->__offset_position(stage_offset_->__position());
 
 	// update stage
 	stage_->Update();
+
+	if(player_->__position().y + player_->__size().y > stage_->__size().y)
+	{
+		player_->HitStage(D3DXVECTOR2(player_->__position().x,stage_->__size().y - player_->__size().y),true);
+	}
+
+	if(player_->__position().x + player_->__size().x > stage_->__size().x)
+	{
+		player_->HitStage(D3DXVECTOR2(stage_->__size().x - player_->__size().x,player_->__position().y),false);
+	}
+
+	if(player_->__position().x < 0)
+	{
+		player_->HitStage(D3DXVECTOR2(0.0f,player_->__position().y),false);
+	}
 }
 
 //=============================================================================
@@ -91,6 +122,8 @@ void SceneGame::Draw(void)
 {
 	// draw stage
 	stage_->Draw();
+
+	player_->Draw();
 }
 
 //=============================================================================

@@ -109,7 +109,7 @@ bool DIVirtual::Register(const INPUT_EVENT& input_event_virtual,const INPUT_EVEN
 //=============================================================================
 // unregister
 //=============================================================================
-bool DIVirtual::Unregister(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event)
+void DIVirtual::Unregister(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event)
 {
 	u32 index = input_event_virtual - INPUT_EVENT_VIRTUAL_LEFT;
 

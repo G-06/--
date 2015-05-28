@@ -44,7 +44,7 @@ public:
 	bool Register(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
 
 	// unregister
-	bool Unregister(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
+	void Unregister(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
 
 	// load
 	bool Load(const s8* filename);

@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\application\application.cpp" />
+    <ClCompile Include="sources\application\object\player.cpp" />
     <ClCompile Include="sources\application\object\stage.cpp" />
     <ClCompile Include="sources\application\object\stage_offset.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
@@ -68,6 +69,7 @@
   <ItemGroup>
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="sources\application\application.h" />
+    <ClInclude Include="sources\application\object\player.h" />
     <ClInclude Include="sources\application\object\stage.h" />
     <ClInclude Include="sources\application\object\stage_offset.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
