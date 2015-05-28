@@ -81,6 +81,9 @@ bool Application::Initialize(void)
 	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_6,INPUT_EVENT_X);
 	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_6,INPUT_EVENT_PAD_9);
 	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_7,INPUT_EVENT_RETURN);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_7,INPUT_EVENT_PAD_9);
+	//
 	//GET_DIRECT_INPUT->SaveInputEventVertual();
 
 	return true;

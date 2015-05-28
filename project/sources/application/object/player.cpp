@@ -10,7 +10,6 @@
 // include
 //*****************************************************************************
 #include "player.h"
-
 #include "render/sprite.h"
 #include "system/system.h"
 #include "system/direct_input/input_event_buffer.h"
@@ -19,18 +18,25 @@
 // constant definition
 //*****************************************************************************
 const f32 Player::LIGHT_SPEED = (30.0f);
-const f32 Player::MAX_SPEED = (20.0f);
-const f32 Player::JUMP_SPEED = (-20.0f);
+const f32 Player::SPEED = (2.0f);
+const f32 Player::DECREMENT = (0.9f);
+const f32 Player::JUMP_SPEED = (-70.0f);
 const Animation::DATA Player::ANIMATION_DATA[] =
 {
-	Animation::DATA(2, 1, 0),
-	Animation::DATA(2, 2, 1),
-	Animation::DATA(2, 3, 2),
-	Animation::DATA(2, 4, 3),
-	Animation::DATA(2, 5, 4),
-	Animation::DATA(2, 0, 5),
+	Animation::DATA(4, 1, 0),
+	Animation::DATA(4, 2, 1),
+	Animation::DATA(4, 3, 2),
+	Animation::DATA(4, 4, 3),
+	Animation::DATA(4, 5, 4),
+	Animation::DATA(4, 0, 5),
 	Animation::DATA(2, 6, 0),
-	Animation::DATA(2, 7, 1),
+	Animation::DATA(2, 7, 0),
+};
+const Player::ANIMATION_TEXTURE_DATA Player::TEXTURE_DATA[ANIMATION_TYPE_MAX] =
+{
+	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_PLAYER,3,2),
+	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_PLAYER,3,2),
+	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_LIGHT,1,1),
 };
 
 //=============================================================================
@@ -97,42 +103,15 @@ void Player::Update(void)
 	{
 		move_.y += DEFAULT_GRAVITY;
 
-		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_3))
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 		{
 			is_left_ = false;
-
-			if(move_.x <= 0)
-			{
-				move_.x = 1;
-				acceleration_counter_ = 0;
-				animation_->Start(ANIMATION_RUN_START);
-			}
-
-			acceleration_counter_++;
-
-			if(acceleration_counter_ % 1 == 0 && move_.x < MAX_SPEED)
-			{
-				move_.x+=0.5f;
-			}
+			move_.x += SPEED;
 		}
-
-		else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_2))
+		else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
 		{
 			is_left_ = true;
-
-			if(move_.x >= 0)
-			{
-				move_.x = -1;
-				acceleration_counter_ = 0;
-				animation_->Start(ANIMATION_RUN_START);
-			}
-
-			acceleration_counter_++;
-
-			if(acceleration_counter_ % 1 == 0 && move_.x > -MAX_SPEED)
-			{
-				move_.x-=0.5f;
-			}
+			move_.x -= SPEED;
 		}
 
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
@@ -144,32 +123,9 @@ void Player::Update(void)
 			}
 		}
 
-		if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT) && 
-			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT) && 
-			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_3) &&
-			!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_PAD_2) &&
-			move_.x != 0)
+		if(move_.x <= 0.9f && move_.x >= -0.9f)
 		{
-			slowdown_counter_++;
-
-			if(move_.x > 0 && slowdown_counter_ % 1 == 0)
-			{
-				move_.x-=0.5f;
-			}
-
-			if(move_.x < 0 && slowdown_counter_ % 1 == 0)
-			{
-				move_.x+=0.5f;
-			}
-
-			if(move_.x == 0)
-			{
-				slowdown_counter_ = 0;
-			}
-		}
-
-		if(move_.x == 0)
-		{
+			move_.x = 0.0f;
 			if(animation_type_ != ANIMATION_TYPE_WAIT)
 			{
 				animation_type_ = ANIMATION_TYPE_WAIT;
@@ -187,14 +143,35 @@ void Player::Update(void)
 
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6))
 		{
-			LightMode(true,is_left_);
+			D3DXVECTOR2 vector = D3DXVECTOR2(0.0f,0.0f);
+
+			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_UP))
+			{
+				vector.y = -1.0f;
+			}
+			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_DOWN))
+			{
+				vector.y = 1.0f;
+			}
+			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
+			{
+				vector.x = -1.0f;
+			}
+			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
+			{
+				vector.x = 1.0f;
+			}
+			ChangeLightMode(vector);
 		}
 
-	}else
+		move_ *= DECREMENT;
+
+	}
+	else
 	{
 		if(GET_DIRECT_INPUT->CheckRelease(INPUT_EVENT_VIRTUAL_6))
 		{
-			LightMode(false,is_left_);
+			StopLightMode();
 		}
 	}
 
@@ -202,6 +179,9 @@ void Player::Update(void)
 	position_ += move_;
 
 	animation_->Update();
+	player_->__texture_id((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._texture_id);
+	player_->__division_width((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._division_width);
+	player_->__division_height((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._division_height);
 	player_->__index(animation_->__current_index());
 	player_->__is_flip(is_left_);
 	player_->SetParameter();
@@ -226,6 +206,7 @@ void Player::HitStage(const D3DXVECTOR2& position,bool is_floor)
 	position_.y = position.y;
 
 	is_light_ = false;
+
 	if(is_floor)
 	{
 		is_fly_ = false;
@@ -234,53 +215,48 @@ void Player::HitStage(const D3DXVECTOR2& position,bool is_floor)
 }
 
 //=============================================================================
-// lightmode
+// change light mode
 //=============================================================================
-void Player::LightMode(bool is_light, bool is_right)
+void Player::ChangeLightMode(const D3DXVECTOR2& vector)
 {
-	if(is_light == true)
+	if(is_enable_light_)
 	{
-		if(is_enable_light_)
+		D3DXVECTOR2 normalize_vector;
+		is_enable_light_ = false;
+		is_light_ = true;
+		D3DXVec2Normalize(&normalize_vector,&vector);
+
+		if(normalize_vector.x == 0.0f && normalize_vector.y == 0.0f)
 		{
-			move_.y = 0.0f;
-			if(is_right == false)
+			if(is_left_)
 			{
-				move_.x = LIGHT_SPEED;
+				move_.x = -LIGHT_SPEED;
+				move_.y = 0.0f;
 			}
 			else
 			{
-				move_.x = -LIGHT_SPEED;
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_UP))
-			{
-				move_.y = -LIGHT_SPEED;
-				move_.x = 0.0f;
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
-			{
 				move_.x = LIGHT_SPEED;
-			}
-			else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
-			{
-				move_.x = -LIGHT_SPEED;
-			}
-
-			is_fly_ = true;
-			is_light_ = true;
-			is_enable_light_ = false;
-			if(animation_type_ != ANIMATION_TYPE_LIGHT)
-			{
-				animation_type_ = ANIMATION_TYPE_LIGHT;
-				animation_->Start(ANIMATION_LIGHT_START);
+				move_.y = 0.0f;
 			}
 		}
+		else
+		{
+			move_ = normalize_vector * LIGHT_SPEED;
+		}
+		if(animation_type_ != ANIMATION_TYPE_LIGHT)
+		{
+			animation_type_ = ANIMATION_TYPE_LIGHT;
+			animation_->Start(ANIMATION_LIGHT_START);
+		}
 	}
-	else
-	{
-		is_light_ = false;
-	}
+}
+
+//=============================================================================
+// stop light mode
+//=============================================================================
+void Player::StopLightMode(void)
+{
+	is_light_ = false;
 }
 
 //---------------------------------- EOF --------------------------------------

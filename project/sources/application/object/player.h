@@ -53,10 +53,16 @@ public:
 	// update
 	void Update(void);
 
-	// Draw
+	// draw
 	void Draw(void);
 
 	void HitStage(const D3DXVECTOR2& position,bool is_floor = false);
+
+	// change light mode
+	void ChangeLightMode(const D3DXVECTOR2& vector);
+
+	// stop light mode
+	void StopLightMode(void);
 
 	// ステージ衝突後処理
 	void Stagecollision(u32 mode, D3DXVECTOR2 stage_size);
@@ -85,13 +91,29 @@ private:
 		ANIMATION_TYPE_LIGHT,
 		ANIMATION_TYPE_MAX
 	};
+
+	struct ANIMATION_TEXTURE_DATA
+	{
+		u32 _texture_id;
+		u16 _division_width;
+		u16 _division_height;
+
+		ANIMATION_TEXTURE_DATA(u32 texture_id,u16 division_width,u16 division_height)
+			:_texture_id(texture_id)
+			,_division_width(division_width)
+			,_division_height(division_height)
+		{}
+	};
+
 	static const Animation::DATA ANIMATION_DATA[];
 	static const u32 ANIMATION_RUN_START = (0);
 	static const u32 ANIMATION_WAIT_START = (6);
 	static const u32 ANIMATION_LIGHT_START = (7);
 	static const f32 LIGHT_SPEED;
-	static const f32 MAX_SPEED;
+	static const f32 SPEED;
+	static const f32 DECREMENT;
 	static const f32 JUMP_SPEED;
+	static const ANIMATION_TEXTURE_DATA TEXTURE_DATA[ANIMATION_TYPE_MAX];
 
 	D3DXVECTOR2 position_;				// プレイヤー座標
 	D3DXVECTOR2 old_position_;			// プレイヤーの前回座標
