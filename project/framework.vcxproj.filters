@@ -265,6 +265,9 @@
     <ClInclude Include="sources\application\scene\title\title_logo.h">
       <Filter>sources\application\scene\title</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\option.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -407,6 +410,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\title\title_logo.cpp">
       <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
