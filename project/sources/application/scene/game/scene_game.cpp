@@ -114,6 +114,13 @@ void SceneGame::Update(void)
 	{
 		player_->HitStage(D3DXVECTOR2(0.0f,player_->__position().y),false);
 	}
+
+	if(player_->__position().y < 0.0f)
+	{
+		D3DXVECTOR2 vector = player_->__move();
+		vector.y *= -1;
+		player_->ChangeDirection(vector);
+	}
 }
 
 //=============================================================================

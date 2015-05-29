@@ -89,6 +89,7 @@ public:
 	// ƒTƒCƒYŽæ“¾
 	const D3DXVECTOR2& __size(void)const{ return size_; }
 
+	const D3DXVECTOR2& __move(void)const { return move_; }
 private:
 	void LightMode(bool is_light, bool is_right);
 

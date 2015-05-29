@@ -296,7 +296,7 @@ void Player::StopLightMode(void)
 //=============================================================================
 void Player::ChangeDirection(const D3DXVECTOR2& vector)
 {
-	if(is_enable_light_)
+	if(is_light_)
 	{
 		D3DXVECTOR2 normalize_vector;
 		D3DXVec2Normalize(&normalize_vector,&vector);
