@@ -22,6 +22,11 @@ int APIENTRY WinMain(HINSTANCE hinstance, HINSTANCE preview_hinstance, LPSTR com
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // _RELEASE
 
+	// HACK ‚Æ‚è‚ ‚¦‚¸–³‚¢‚ÆƒEƒCƒ‹ƒX‚É‚È‚é
+	//FILE* file = nullptr;
+	//fopen_s(&file,"framework.exe","rb");
+	//fclose(file);
+
 	// setup system
 	if(!System::Setup(hinstance))
 	{
@@ -33,11 +38,7 @@ int APIENTRY WinMain(HINSTANCE hinstance, HINSTANCE preview_hinstance, LPSTR com
 		return 0;
 	}
 
-
-	if(!DebugTool::Setup())
-	{
-		ASSERT("failed setup debug tool");
-	}
+	ASSERT_EXP(!DebugTool::Setup(),"failed setup debug tool");
 
 	// create application
 	Application* application = new Application();
@@ -56,8 +57,12 @@ int APIENTRY WinMain(HINSTANCE hinstance, HINSTANCE preview_hinstance, LPSTR com
 		return 0;
 	}
 
-	// update application
-	application->Update();
+	// main loop
+	while(application->__is_loop())
+	{
+		// update application
+		application->Update();
+	}
 
 	// release application
 	SafeRelease(application);

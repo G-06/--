@@ -20,7 +20,7 @@ Fade::Fade(void) :
 sprite_(nullptr),
 alpha_(0.0f),
 rate_(0.0f),
-frame_(180),
+frame_(60),
 type_(TYPE_NONE)
 {
 }

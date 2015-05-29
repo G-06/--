@@ -31,7 +31,8 @@ class Scene : public Basic
 public:
 	enum TYPE
 	{
-		TYPE_TITLE = 0,		// タイトル
+		TYPE_LOGO = 0,		// タイトル前のロゴ
+		TYPE_TITLE,			// タイトル
 		TYPE_GAME,			// ゲーム
 		TYPE_RESULT,		// リザルト
 		TYPE_MAX			// タイプの最大数
@@ -61,9 +62,11 @@ public:
 	// accessor
 	const TYPE& __type(void)const { return type_; }
 	SceneFactory* __next_scene_factory(void)const { return next_scene_factory_; }
+	void __is_fade(bool is_fade) { is_fade_ = is_fade; }
 
 protected:
 	SceneFactory* next_scene_factory_;
+	bool is_fade_;
 
 private:
 	TYPE type_;

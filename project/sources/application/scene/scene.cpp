@@ -15,9 +15,10 @@
 //=============================================================================
 // constructor
 //=============================================================================
-Scene::Scene(const TYPE& type) :
-type_(type),
-next_scene_factory_(nullptr)
+Scene::Scene(const TYPE& type)
+	:type_(type)
+	,next_scene_factory_(nullptr)
+	,is_fade_(false)
 {
 }
 

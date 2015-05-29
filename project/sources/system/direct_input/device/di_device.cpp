@@ -46,7 +46,12 @@ bool DIDevice::Initialize(void)
 //=============================================================================
 void DIDevice::Uninitialize(void)
 {
-	
+	if(direct_input_device_ != nullptr)
+	{
+		direct_input_device_->Unacquire();
+		direct_input_device_->Release();
+		direct_input_device_ = nullptr;
+	}
 }
 
 //---------------------------------- EOF --------------------------------------

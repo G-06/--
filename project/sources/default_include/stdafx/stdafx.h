@@ -46,6 +46,11 @@
 #pragma comment (lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
+#include <wbemidl.h>
+#include <oleauto.h>
+#include <XInput.h>
+#pragma comment(lib,"xinput.lib")
+
 #endif // _STDAFX_H_
 
 //-----------------------------------EOF---------------------------------------

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// direct input keyboad
+// direct input keyboard
 //
 // Author		: Kenji Kabutomori
 //
@@ -77,12 +77,7 @@ bool DIKeyboard::Initialize(void)
 //=============================================================================
 void DIKeyboard::Uninitialize(void)
 {
-	if(direct_input_device_ != nullptr)
-	{
-		direct_input_device_->Unacquire();
-		direct_input_device_->Release();
-		direct_input_device_ = nullptr;
-	}
+	DIDevice::Uninitialize();
 }
 
 //=============================================================================

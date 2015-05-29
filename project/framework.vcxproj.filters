@@ -71,14 +71,32 @@
     <Filter Include="sources\system\direct_input\device">
       <UniqueIdentifier>{5325bfd7-b16a-4c0e-a6cd-4a1d65ab07d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="sources\common">
-      <UniqueIdentifier>{38d3639b-0606-433b-8c16-5b0056e3fa08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sources\common\basic">
-      <UniqueIdentifier>{472b3053-a584-4a10-b862-b27b95d9bbcd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="sources\system\directx9\font">
       <UniqueIdentifier>{2a20fc97-c24d-4c84-840b-95832b97c173}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\xaudio2">
+      <UniqueIdentifier>{2627231c-5bc2-4a2d-bc54-4d5f98050659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\object">
+      <UniqueIdentifier>{af84194e-c08d-4506-9b81-495d2f95b3c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{1dc14815-e18c-4925-ba51-c1a6bcf900a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\xaudio2\bgm">
+      <UniqueIdentifier>{b906b185-bcb6-45fa-980d-7b9aacdad564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\scene\logo">
+      <UniqueIdentifier>{57656ad4-2b89-44b4-aa6d-15a982f8180b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\common">
+      <UniqueIdentifier>{38d3639b-0606-433b-8c16-5b0056e3fa08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\common\basic">
+      <UniqueIdentifier>{472b3053-a584-4a10-b862-b27b95d9bbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\common\animation">
+      <UniqueIdentifier>{1c3a907c-c99d-4590-83fa-34590e798ccd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -191,7 +209,7 @@
       <Filter>sources\system\direct_input</Filter>
     </ClInclude>
     <ClInclude Include="sources\common\basic\basic.h">
-      <Filter>sources\common\basic</Filter>
+      <Filter>sources\default_include\common\basic</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\scene\title\scene_title.h">
       <Filter>sources\application\scene\title</Filter>
@@ -204,6 +222,48 @@
     </ClInclude>
     <ClInclude Include="sources\render\text_box.h">
       <Filter>sources\render</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\direct_input\device\di_virtual.h">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\common\animation\animation.h">
+      <Filter>sources\default_include\common\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\xaudio2\xaudio2.h">
+      <Filter>sources\system\xaudio2</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\direct_input\device\di_pad.h">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_offset.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\resource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\xaudio2\xaudio2_sound.h">
+      <Filter>sources\system\xaudio2</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\xaudio2\bgm\bgm.h">
+      <Filter>sources\system\xaudio2\bgm</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\logo\scene_logo.h">
+      <Filter>sources\application\scene\logo</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\logo\logo.h">
+      <Filter>sources\application\scene\logo</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\logo\logo_bg.h">
+      <Filter>sources\application\scene\logo</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\player.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\title\title_logo.h">
+      <Filter>sources\application\scene\title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -309,5 +369,49 @@
     <ClCompile Include="sources\render\text_box.cpp">
       <Filter>sources\render</Filter>
     </ClCompile>
+    <ClCompile Include="sources\system\direct_input\device\di_virtual.cpp">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\common\animation\animation.cpp">
+      <Filter>sources\default_include\common\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\xaudio2\xaudio2.cpp">
+      <Filter>sources\system\xaudio2</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\direct_input\device\di_pad.cpp">
+      <Filter>sources\system\direct_input\device</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_offset.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp">
+      <Filter>sources\system\xaudio2</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp">
+      <Filter>sources\system\xaudio2\bgm</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\logo\scene_logo.cpp">
+      <Filter>sources\application\scene\logo</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\logo\logo.cpp">
+      <Filter>sources\application\scene\logo</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\logo\logo_bg.cpp">
+      <Filter>sources\application\scene\logo</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\player.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\title\title_logo.cpp">
+      <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\resource.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

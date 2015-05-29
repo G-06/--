@@ -10,7 +10,6 @@
 // include guard
 //*****************************************************************************
 #pragma once
-
 #ifndef _APPLICATION_H_
 #define _APPLICATION_H_
 
@@ -22,13 +21,8 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class ApplicationSystemManager;
 class SceneManager;
-
-// HACK
-class FontTexture;
-class Sprite;
-class TextBox;
+class FrameController;
 
 //*****************************************************************************
 // class definition
@@ -51,17 +45,11 @@ public:
 	// update
 	void Update(void);
 
+	bool __is_loop(void)const { return is_loop_; }
 private:
-	// scene manager
 	SceneManager* scene_manager_;
-
-	// is loop
+	FrameController* frame_controller_;
 	bool is_loop_;
-
-	// HACK
-	Sprite* sprite_;
-	FontTexture* font_texture_;
-	TextBox* text_box_;
 };
 
 #endif	// _APPLICATION_H_

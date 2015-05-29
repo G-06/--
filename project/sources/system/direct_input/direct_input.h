@@ -25,6 +25,10 @@
 class DIDevice;
 class Window;
 class InputEventBuffer;
+class DIVirtual;
+class DIKeyboard;
+class DIMouse;
+class DIPad;
 
 //*****************************************************************************
 // class definition
@@ -47,6 +51,9 @@ public:
 	// update
 	void Update(void);
 
+	// reset device
+	void ResetDevice(void);
+
 	// check press
 	bool CheckPress(const INPUT_EVENT& input_event);
 
@@ -62,12 +69,26 @@ public:
 	// get value
 	s32 GetValue(const INPUT_EVENT_VALUE& input_event_value);
 
+	// get press
+	INPUT_EVENT GetPress(const INPUT_EVENT& begin_input_event,const INPUT_EVENT& end_input_event);
+
+	// register input event vertual
+	bool RegisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
+
+	// save input event vertual
+	void SaveInputEventVertual(void);
+
 private:
+	static const s8* SYSTEM_FILE_NAME;
 	LPDIRECTINPUT8 direct_input_;
 	std::list<DIDevice*> device_list_;
 	Window* window_;
 	InputEventBuffer* input_event_buffer_;
-
+	DIKeyboard* di_keyboard_;
+	DIMouse* di_mouse_;
+	DIPad* di_pad_;
+	DIVirtual* di_virtual_;
+	bool is_use_;
 };
 
 #endif // _DIRECT_INPUT_H_

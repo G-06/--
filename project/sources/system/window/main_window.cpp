@@ -79,26 +79,38 @@ LRESULT CALLBACK MainWindow::WindowProcedure(HWND in_hwnd, UINT in_message, WPAR
 {
 	switch(in_message)
 	{
-	case WM_DESTROY:			// ウィンドウを破棄
-		PostQuitMessage(0);
-		break;
-
-	case WM_KEYDOWN:			// キー入力
-		switch(in_wparam)
+		case WM_DESTROY:			// ウィンドウを破棄
 		{
-		case VK_ESCAPE:			// エスケープキー
-			// ウィンドウの破棄
-			DestroyWindow(in_hwnd);
-			break;
-		case VK_INSERT:			// インサートキー
+			PostQuitMessage(0);
 			break;
 		}
-		break;
-	case WM_SIZE:
-		//PostMessage(in_hwnd,in_message,in_wparam,in_lparam);
-		break;
-	default:
-		break;
+		case WM_KEYDOWN:			// キー入力
+		{
+			switch(in_wparam)
+			{
+				case VK_ESCAPE:			// エスケープキー
+					// ウィンドウの破棄
+					DestroyWindow(in_hwnd);
+					break;
+				case VK_INSERT:			// インサートキー
+					break;
+			}
+			break;
+		}
+		case WM_SIZE:
+		{
+			//PostMessage(in_hwnd,in_message,in_wparam,in_lparam);
+			break;
+		}
+		case WM_DEVICECHANGE:
+		{
+			PostMessage(in_hwnd,in_message,in_wparam,in_lparam);
+			break;
+		}
+		default:
+		{
+			break;
+		}
 	}
 
 	return DefWindowProc(in_hwnd,in_message,in_wparam,in_lparam);

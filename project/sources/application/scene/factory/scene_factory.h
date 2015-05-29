@@ -17,8 +17,11 @@
 // include
 //*****************************************************************************
 #include "scene/scene.h"
+
+#include "scene/logo/scene_logo.h"
 #include "scene/title/scene_title.h"
 #include "scene/game/scene_game.h"
+
 
 //*****************************************************************************
 // class definition
@@ -40,6 +43,23 @@ public:
 private:
 	Scene::TYPE type_;
 };
+
+//*****************************************************************************
+// logo factory
+//*****************************************************************************
+class LogoFactory : public SceneFactory
+{
+public:
+	// constructor
+	LogoFactory(void) : SceneFactory(Scene::TYPE_LOGO){}
+
+	// destructor
+	virtual ~LogoFactory(void){}
+
+	// create
+	Scene* Create(void)const { return new SceneLogo(); }
+};
+
 
 //*****************************************************************************
 // title factory

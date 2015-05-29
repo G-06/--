@@ -22,6 +22,7 @@
 // forward declaration
 //*****************************************************************************
 class TitleBg;
+class TitleLogo;
 
 //*****************************************************************************
 // class definition
@@ -51,7 +52,10 @@ public:
 	SceneFactory* CreateFactory(void)const;
 
 private:
+	static const u32 GO_LOGO_FRAME;
 	TitleBg* title_bg_;
+	TitleLogo* title_logo_;
+	u32 frame_count_;		//ロゴに戻るカウンター
 };
 
 #endif	// _SCENE_TITLE_H_

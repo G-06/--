@@ -80,6 +80,12 @@ public:
 	const Texture::TEXTURE_ID& __texture_id(void)const { return texture_id_; }
 	void __texture_id(const Texture::TEXTURE_ID& texture_id) { texture_id_ = texture_id; }
 	void __texture(LPDIRECT3DTEXTURE9 texture) { texture_ = texture; }
+	void __index(const s32& index) { index_ = index; }
+	void __division_width(const u32& division_width) { division_width_ = division_width; }
+	void __division_height(const u32& division_height) { division_height_ = division_height; }
+	bool __is_flip(void)const { return is_flip_; }
+	void __is_flip(bool is_flip) { is_flip_ = is_flip; }
+
 
 private:
 	LPDIRECT3DDEVICE9 device_;
@@ -103,6 +109,10 @@ private:
 	f32 top_;
 	f32 bottom_;
 	Texture::TEXTURE_ID texture_id_;
+	s32 index_;
+	u32 division_width_;
+	u32 division_height_;
+	bool is_flip_;
 };
 
 #endif	// _SPRITE_H_

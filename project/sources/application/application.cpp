@@ -12,20 +12,15 @@
 #include "application.h"
 #include "system/system.h"
 #include "scene/scene_manager.h"
-
 #include "frame/frame_controller.h"
-
-// HACK
-#include "system/directx9/font/font_texture.h"
-#include "render/sprite.h"
-#include "render/text_box.h"
 
 //=============================================================================
 // constructor
 //=============================================================================
-Application::Application(void) :
-scene_manager_(nullptr),
-is_loop_(false)
+Application::Application(void)
+	:scene_manager_(nullptr)
+	,frame_controller_(nullptr)
+	,is_loop_(false)
 {
 }
 
@@ -50,21 +45,49 @@ bool Application::Initialize(void)
 	// initialize scene manager
 	if(!SafeInitialize(scene_manager_))
 	{
+		Uninitialize();
 		ASSERT("failed initialize scene manager");
 		return false;
 	}
 
-	text_box_ = new TextBox(FontTexture::TYPE_MS_GOTHIC,32);
-	text_box_->Initialize();
+	// create frame controller
+	frame_controller_ = new FrameController();
 
-	text_box_->Print("フォントのテストです\n");
-	text_box_->Print("次の事を確認して下さい\n");
-	text_box_->Print("方向キーによる移動\n",D3DXCOLOR(1.0f,1.0f,0.0f,1.0f));
-	text_box_->Print("文字列に抜けが無いか\n");
-	text_box_->__font_color(D3DXCOLOR(1.0f,0.0f,1.0f,1.0f));
-	text_box_->Print("終了後のメモリーリーク\n");
-	text_box_->Print("Rキーでリセットされるか\n");
-	text_box_->Print("座標はリセットされません\n");
+	// initialize frame controller
+	if(!SafeInitialize(frame_controller_))
+	{
+		Uninitialize();
+		ASSERT("failed initialize frame controller");
+	}
+
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LEFT,INPUT_EVENT_LEFT);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_RIGHT,INPUT_EVENT_RIGHT);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_UP,INPUT_EVENT_UP);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DOWN,INPUT_EVENT_DOWN);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LEFT,INPUT_EVENT_PAD_L_LEFT);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_RIGHT,INPUT_EVENT_PAD_L_RIGHT);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_UP,INPUT_EVENT_PAD_L_UP);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DOWN,INPUT_EVENT_PAD_L_DOWN);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LEFT,INPUT_EVENT_PAD_2);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_RIGHT,INPUT_EVENT_PAD_3);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_UP,INPUT_EVENT_PAD_0);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DOWN,INPUT_EVENT_PAD_1);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,INPUT_EVENT_Z);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,INPUT_EVENT_PAD_5);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_6,INPUT_EVENT_X);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_6,INPUT_EVENT_PAD_9);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_7,INPUT_EVENT_RETURN);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_7,INPUT_EVENT_PAD_6);
+	//
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_8,INPUT_EVENT_P);
+	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_8,INPUT_EVENT_PAD_13);
+	//
+	//GET_DIRECT_INPUT->SaveInputEventVertual();
 
 	return true;
 }
@@ -79,7 +102,8 @@ void Application::Uninitialize(void)
 	// release scene manager
 	SafeRelease(scene_manager_);
 
-	SafeRelease(text_box_);
+	// release frame controller
+	SafeRelease(frame_controller_);
 }
 
 //=============================================================================
@@ -87,83 +111,56 @@ void Application::Uninitialize(void)
 //=============================================================================
 void Application::Update(void)
 {
-	FrameController* frame_controller = new FrameController();
-	frame_controller->Initialize();
+	// update frame controller
+	frame_controller_->Update();
 
-	while(is_loop_)
+	// print fps
+	DEBUG_TOOL.__debug_display()->Print("FPS : %d\n",frame_controller_->__fps());
+
+	// is loop window system
+	if(!GET_SYSTEM.__window()->__is_loop())
 	{
-		// update frame controller
-		frame_controller->Update();
-
-		// is loop window system
-		if(!GET_SYSTEM.__window()->__is_loop())
-		{
-			is_loop_ = false;
-		}
-
-		// update direct input
-		GET_DIRECT_INPUT->Update();
-
-		// update debug tool
-		DEBUG_TOOL.Update();
-
-		// print fps
-		DEBUG_TOOL.__debug_display()->Print("FPS : %d\n",frame_controller->__fps());
-
-		if(!DEBUG_TOOL.__is_pause())
-		{
-			// update scene manager
-			scene_manager_->Update();
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_LEFT))
-			{
-				text_box_->__position(D3DXVECTOR2(text_box_->__position().x - 1.0f,text_box_->__position().y));
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RIGHT))
-			{
-				text_box_->__position(D3DXVECTOR2(text_box_->__position().x + 1.0f,text_box_->__position().y));
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_UP))
-			{
-				text_box_->__position(D3DXVECTOR2(text_box_->__position().x,text_box_->__position().y - 1.0f));
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_DOWN))
-			{
-				text_box_->__position(D3DXVECTOR2(text_box_->__position().x,text_box_->__position().y + 1.0f));
-			}
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_R))
-			{
-				text_box_->Restart();
-			}
-		}
-
-		if(GET_SYSTEM.__directx9()->BeginDraw())
-		{
-			// draw scene manager
-			scene_manager_->Draw();
-
-			text_box_->Draw();
-
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
-			{
-				GET_DIRECTX9->ScreenShot();
-				DEBUG_TOOL.__debug_console()->Print("capture screen shot\n");
-			}
-
-			// draw debug tool
-			DEBUG_TOOL.Draw();
-
-			GET_SYSTEM.__directx9()->EndDraw();
-		}
-
-		frame_controller->Wait();
+		is_loop_ = false;
 	}
 
-	SafeRelease(frame_controller);
+	// update direct input
+	GET_DIRECT_INPUT->Update();
+
+	// update xaudio2
+	GET_XAUDIO2->Update();
+
+	// update debug tool
+	DEBUG_TOOL.Update();
+
+	if(!DEBUG_TOOL.__is_pause())
+	{
+		// update scene manager
+		scene_manager_->Update();
+	}
+
+	if(GET_SYSTEM.__directx9()->BeginDraw())
+	{
+		// draw scene manager
+		scene_manager_->Draw();
+
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
+		{
+			GET_DIRECTX9->ScreenShot();
+			DEBUG_TOOL.__debug_trace()->Print("capture screen shot\n");
+		}
+
+		// draw debug tool
+		DEBUG_TOOL.Draw();
+
+		GET_SYSTEM.__directx9()->EndDraw();
+	}
+
+	if(scene_manager_->__is_error())
+	{
+		is_loop_ = false;
+	}
+
+	frame_controller_->Wait();
 }
 
 //---------------------------------- EOF --------------------------------------

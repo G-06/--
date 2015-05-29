@@ -16,15 +16,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\application\application.cpp" />
+    <ClCompile Include="sources\application\object\player.cpp" />
+    <ClCompile Include="sources\application\object\stage.cpp" />
+    <ClCompile Include="sources\application\object\stage_offset.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
+    <ClCompile Include="sources\application\scene\logo\logo.cpp" />
+    <ClCompile Include="sources\application\scene\logo\logo_bg.cpp" />
+    <ClCompile Include="sources\application\scene\logo\scene_logo.cpp" />
     <ClCompile Include="sources\application\scene\scene.cpp" />
     <ClCompile Include="sources\application\scene\scene_manager.cpp" />
     <ClCompile Include="sources\application\scene\title\scene_title.cpp" />
     <ClCompile Include="sources\application\scene\title\title_bg.cpp" />
+    <ClCompile Include="sources\application\scene\title\title_logo.cpp" />
     <ClCompile Include="sources\collision\collision.cpp" />
     <ClCompile Include="sources\collision\collision_circle.cpp" />
     <ClCompile Include="sources\collision\collision_line.cpp" />
     <ClCompile Include="sources\collision\collision_point.cpp" />
+    <ClCompile Include="sources\common\animation\animation.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\assert.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\debug_console.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\debug_display.cpp" />
@@ -46,6 +54,8 @@
     <ClCompile Include="sources\system\direct_input\device\di_device.cpp" />
     <ClCompile Include="sources\system\direct_input\device\di_keyboard.cpp" />
     <ClCompile Include="sources\system\direct_input\device\di_mouse.cpp" />
+    <ClCompile Include="sources\system\direct_input\device\di_pad.cpp" />
+    <ClCompile Include="sources\system\direct_input\device\di_virtual.cpp" />
     <ClCompile Include="sources\system\direct_input\direct_input.cpp" />
     <ClCompile Include="sources\system\direct_input\input_event_buffer.cpp" />
     <ClCompile Include="sources\system\system.cpp" />
@@ -53,19 +63,31 @@
     <ClCompile Include="sources\system\timer\timer.cpp" />
     <ClCompile Include="sources\system\window\main_window.cpp" />
     <ClCompile Include="sources\system\window\window.cpp" />
+    <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp" />
+    <ClCompile Include="sources\system\xaudio2\xaudio2.cpp" />
+    <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resources\resource.h" />
     <ClInclude Include="sources\application\application.h" />
+    <ClInclude Include="sources\application\object\player.h" />
+    <ClInclude Include="sources\application\object\stage.h" />
+    <ClInclude Include="sources\application\object\stage_offset.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
+    <ClInclude Include="sources\application\scene\logo\logo.h" />
+    <ClInclude Include="sources\application\scene\logo\logo_bg.h" />
+    <ClInclude Include="sources\application\scene\logo\scene_logo.h" />
     <ClInclude Include="sources\application\scene\scene.h" />
     <ClInclude Include="sources\application\scene\scene_manager.h" />
     <ClInclude Include="sources\application\scene\title\scene_title.h" />
     <ClInclude Include="sources\application\scene\title\title_bg.h" />
+    <ClInclude Include="sources\application\scene\title\title_logo.h" />
     <ClInclude Include="sources\collision\collision.h" />
     <ClInclude Include="sources\collision\collision_circle.h" />
     <ClInclude Include="sources\collision\collision_line.h" />
     <ClInclude Include="sources\collision\collision_point.h" />
+    <ClInclude Include="sources\common\animation\animation.h" />
     <ClInclude Include="sources\common\basic\basic.h" />
     <ClInclude Include="sources\default_include\debug_tool\assert.h" />
     <ClInclude Include="sources\default_include\debug_tool\debug_console.h" />
@@ -88,6 +110,8 @@
     <ClInclude Include="sources\system\direct_input\device\di_device.h" />
     <ClInclude Include="sources\system\direct_input\device\di_keyboard.h" />
     <ClInclude Include="sources\system\direct_input\device\di_mouse.h" />
+    <ClInclude Include="sources\system\direct_input\device\di_pad.h" />
+    <ClInclude Include="sources\system\direct_input\device\di_virtual.h" />
     <ClInclude Include="sources\system\direct_input\direct_input.h" />
     <ClInclude Include="sources\system\direct_input\input_alias.h" />
     <ClInclude Include="sources\system\direct_input\input_event_buffer.h" />
@@ -96,6 +120,12 @@
     <ClInclude Include="sources\system\timer\timer.h" />
     <ClInclude Include="sources\system\window\main_window.h" />
     <ClInclude Include="sources\system\window\window.h" />
+    <ClInclude Include="sources\system\xaudio2\bgm\bgm.h" />
+    <ClInclude Include="sources\system\xaudio2\xaudio2.h" />
+    <ClInclude Include="sources\system\xaudio2\xaudio2_sound.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D065D020-0DE1-4D84-929D-D472BD0380F4}</ProjectGuid>
