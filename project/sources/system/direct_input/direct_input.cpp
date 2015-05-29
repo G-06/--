@@ -158,7 +158,7 @@ void DirectInput::Update(void)
 //=============================================================================
 void DirectInput::ResetDevice(void)
 {
-	while(!is_use_);
+	while(is_use_);
 
 	is_use_ = true;
 
