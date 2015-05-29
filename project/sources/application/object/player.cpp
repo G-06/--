@@ -3,6 +3,7 @@
 // player
 //
 // Author		: Ryotaro Arai
+//				: Kenji Kabutomori
 //
 //*****************************************************************************
 
@@ -43,6 +44,8 @@ const Player::ANIMATION_TEXTURE_DATA Player::TEXTURE_DATA[ANIMATION_TYPE_MAX] =
 // constructor
 //=============================================================================
 Player::Player(void)
+	:player_(nullptr)
+	,animation_(nullptr)
 {
 }
 
@@ -67,7 +70,7 @@ bool Player::Initialize(void)
 	slowdown_counter_		= 0;
 	is_left_				= false;
 	is_light_				= false;
-	is_fly_					= false;
+	is_fly_					= true;
 	is_enable_light_		= true;
 	player_= new Sprite();
 	animation_ = new Animation();
@@ -161,6 +164,7 @@ void Player::Update(void)
 			{
 				vector.x = 1.0f;
 			}
+
 			ChangeLightMode(vector);
 		}
 
@@ -243,6 +247,7 @@ void Player::ChangeLightMode(const D3DXVECTOR2& vector)
 		{
 			move_ = normalize_vector * LIGHT_SPEED;
 		}
+
 		if(animation_type_ != ANIMATION_TYPE_LIGHT)
 		{
 			animation_type_ = ANIMATION_TYPE_LIGHT;

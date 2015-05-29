@@ -71,7 +71,7 @@ void SceneTitle::Update(void)
 	{
 		frame_count_++;
 
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_7) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_8))
 		{
 			if(next_scene_factory_ == nullptr)
 			{
@@ -87,7 +87,6 @@ void SceneTitle::Update(void)
 			}
 		}
 	}
-
 }
 
 //=============================================================================

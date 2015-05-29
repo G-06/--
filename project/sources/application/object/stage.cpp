@@ -13,6 +13,9 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
 const D3DXVECTOR2 Stage::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
 
 //=============================================================================

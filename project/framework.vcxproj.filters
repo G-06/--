@@ -71,17 +71,8 @@
     <Filter Include="sources\system\direct_input\device">
       <UniqueIdentifier>{5325bfd7-b16a-4c0e-a6cd-4a1d65ab07d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="sources\common">
-      <UniqueIdentifier>{38d3639b-0606-433b-8c16-5b0056e3fa08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sources\common\basic">
-      <UniqueIdentifier>{472b3053-a584-4a10-b862-b27b95d9bbcd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="sources\system\directx9\font">
       <UniqueIdentifier>{2a20fc97-c24d-4c84-840b-95832b97c173}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sources\common\animation">
-      <UniqueIdentifier>{1c3a907c-c99d-4590-83fa-34590e798ccd}</UniqueIdentifier>
     </Filter>
     <Filter Include="sources\system\xaudio2">
       <UniqueIdentifier>{2627231c-5bc2-4a2d-bc54-4d5f98050659}</UniqueIdentifier>
@@ -97,6 +88,15 @@
     </Filter>
     <Filter Include="sources\application\scene\logo">
       <UniqueIdentifier>{57656ad4-2b89-44b4-aa6d-15a982f8180b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\common">
+      <UniqueIdentifier>{38d3639b-0606-433b-8c16-5b0056e3fa08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\common\basic">
+      <UniqueIdentifier>{472b3053-a584-4a10-b862-b27b95d9bbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\default_include\common\animation">
+      <UniqueIdentifier>{1c3a907c-c99d-4590-83fa-34590e798ccd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -209,7 +209,7 @@
       <Filter>sources\system\direct_input</Filter>
     </ClInclude>
     <ClInclude Include="sources\common\basic\basic.h">
-      <Filter>sources\common\basic</Filter>
+      <Filter>sources\default_include\common\basic</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\scene\title\scene_title.h">
       <Filter>sources\application\scene\title</Filter>
@@ -227,7 +227,7 @@
       <Filter>sources\system\direct_input\device</Filter>
     </ClInclude>
     <ClInclude Include="sources\common\animation\animation.h">
-      <Filter>sources\common\animation</Filter>
+      <Filter>sources\default_include\common\animation</Filter>
     </ClInclude>
     <ClInclude Include="sources\system\xaudio2\xaudio2.h">
       <Filter>sources\system\xaudio2</Filter>
@@ -370,7 +370,7 @@
       <Filter>sources\system\direct_input\device</Filter>
     </ClCompile>
     <ClCompile Include="sources\common\animation\animation.cpp">
-      <Filter>sources\common\animation</Filter>
+      <Filter>sources\default_include\common\animation</Filter>
     </ClCompile>
     <ClCompile Include="sources\system\xaudio2\xaudio2.cpp">
       <Filter>sources\system\xaudio2</Filter>
