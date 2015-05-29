@@ -254,6 +254,7 @@ void Player::ChangeLightMode(const D3DXVECTOR2& vector)
 		D3DXVECTOR2 normalize_vector;
 		is_enable_light_ = false;
 		is_light_ = true;
+		is_fly_ = true;
 		D3DXVec2Normalize(&normalize_vector,&vector);
 
 		if(normalize_vector.x == 0.0f && normalize_vector.y == 0.0f)
