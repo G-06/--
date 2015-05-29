@@ -105,24 +105,51 @@ void Player::Uninitialize(void)
 //=============================================================================
 void Player::Update(void)
 {
-	if(is_light_ == false)
+	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 	{
-		move_.y += DEFAULT_GRAVITY;
+		Move(1.0);
+	}
+	else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
+	{
+		Move(-1.0);
+	}
 
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+	{
+		Jump();
+	}
+
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6))
+	{
+		D3DXVECTOR2 vector = D3DXVECTOR2(0.0f,0.0f);
+
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_UP))
+		{
+			vector.y = -1.0f;
+		}
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_DOWN))
+		{
+			vector.y = 1.0f;
+		}
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
+		{
+			vector.x = -1.0f;
+		}
 		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 		{
-			Move(1.0);
-		}
-		else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
-		{
-			Move(-1.0);
+			vector.x = 1.0f;
 		}
 
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
-		{
-			Jump();
-		}
+		ChangeLightMode(vector);
+	}
 
+	if(GET_DIRECT_INPUT->CheckRelease(INPUT_EVENT_VIRTUAL_6))
+	{
+		StopLightMode();
+	}
+
+	if(is_light_ == false)
+	{
 		if(move_.x <= 0.9f && move_.x >= -0.9f)
 		{
 			move_.x = 0.0f;
@@ -141,41 +168,12 @@ void Player::Update(void)
 			}
 		}
 
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6))
-		{
-			D3DXVECTOR2 vector = D3DXVECTOR2(0.0f,0.0f);
-
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_UP))
-			{
-				vector.y = -1.0f;
-			}
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_DOWN))
-			{
-				vector.y = 1.0f;
-			}
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
-			{
-				vector.x = -1.0f;
-			}
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
-			{
-				vector.x = 1.0f;
-			}
-
-			ChangeLightMode(vector);
-		}
-
+		move_.y += DEFAULT_GRAVITY;
 		move_ *= DECREMENT;
 
 	}
-	else
-	{
-		if(GET_DIRECT_INPUT->CheckRelease(INPUT_EVENT_VIRTUAL_6))
-		{
-			StopLightMode();
-		}
-	}
 
+	is_fly_ = true;
 	old_position_ = position_;
 	position_ += move_;
 
@@ -202,15 +200,18 @@ void Player::Draw(void)
 //=============================================================================
 void Player::Move(f32 vector)
 {
-	if(vector > 0.0f)
+	if(!is_light_)
 	{
-		is_left_ = false;
-		move_.x += SPEED;
-	}
-	else
-	{
-		is_left_ = true;
-		move_.x -= SPEED;
+		if(vector > 0.0f)
+		{
+			is_left_ = false;
+			move_.x += SPEED;
+		}
+		else
+		{
+			is_left_ = true;
+			move_.x -= SPEED;
+		}
 	}
 }
 
