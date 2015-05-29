@@ -12,6 +12,7 @@
 #include "scene_title.h"
 #include "scene/factory/scene_factory.h"
 #include "title_bg.h"
+#include "title_logo.h"
 #include "system/system.h"
 
 //*****************************************************************************
@@ -25,6 +26,7 @@ const u32 SceneTitle::GO_LOGO_FRAME = 600;		//ƒƒS‚É–ß‚é‚Ü‚Å‚ÌŽžŠÔ
 SceneTitle::SceneTitle(void)
 	:Scene(TYPE_TITLE)
 	,title_bg_(nullptr)
+	,title_logo_(nullptr)
 	,frame_count_(0)
 {
 }
@@ -44,6 +46,8 @@ bool SceneTitle::Initialize(void)
 	title_bg_ = new TitleBg();
 	title_bg_->Initialize();
 
+	title_logo_ = new TitleLogo();
+	title_logo_->Initialize();
 	frame_count_ = 0;
 
 	return true;
@@ -55,6 +59,8 @@ bool SceneTitle::Initialize(void)
 void SceneTitle::Uninitialize(void)
 {
 	SafeRelease(title_bg_);
+
+	SafeRelease(title_logo_);
 
 	SafeDelete(next_scene_factory_);
 }
@@ -95,6 +101,7 @@ void SceneTitle::Update(void)
 void SceneTitle::Draw(void)
 {
 	title_bg_->Draw();
+	title_logo_->Draw();
 }
 
 //=============================================================================

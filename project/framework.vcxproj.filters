@@ -262,6 +262,9 @@
     <ClInclude Include="sources\application\object\player.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\title\title_logo.h">
+      <Filter>sources\application\scene\title</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -401,6 +404,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\player.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\title\title_logo.cpp">
+      <Filter>sources\application\scene\title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,9 @@ const f32 Player::LIGHT_SPEED = (30.0f);
 const f32 Player::SPEED = (2.0f);
 const f32 Player::DECREMENT = (0.9f);
 const f32 Player::JUMP_SPEED = (-70.0f);
+const u32 Player::ANIMATION_RUN_START = (0);
+const u32 Player::ANIMATION_WAIT_START = (6);
+const u32 Player::ANIMATION_LIGHT_START = (7);
 const Animation::DATA Player::ANIMATION_DATA[] =
 {
 	Animation::DATA(4, 1, 0),
@@ -108,22 +111,16 @@ void Player::Update(void)
 
 		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 		{
-			is_left_ = false;
-			move_.x += SPEED;
+			Move(1.0);
 		}
 		else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
 		{
-			is_left_ = true;
-			move_.x -= SPEED;
+			Move(-1.0);
 		}
 
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 		{
-			if(!is_fly_)
-			{
-				is_fly_ = true;
-				move_.y = JUMP_SPEED;
-			}
+			Jump();
 		}
 
 		if(move_.x <= 0.9f && move_.x >= -0.9f)
@@ -201,6 +198,35 @@ void Player::Draw(void)
 }
 
 //=============================================================================
+// move
+//=============================================================================
+void Player::Move(f32 vector)
+{
+	if(vector > 0.0f)
+	{
+		is_left_ = false;
+		move_.x += SPEED;
+	}
+	else
+	{
+		is_left_ = true;
+		move_.x -= SPEED;
+	}
+}
+
+//=============================================================================
+// jump
+//=============================================================================
+void Player::Jump(void)
+{
+	if(!is_fly_)
+	{
+		is_fly_ = true;
+		move_.y = JUMP_SPEED;
+	}
+}
+
+//=============================================================================
 // hit stage
 //=============================================================================
 void Player::HitStage(const D3DXVECTOR2& position,bool is_floor)
@@ -262,6 +288,19 @@ void Player::ChangeLightMode(const D3DXVECTOR2& vector)
 void Player::StopLightMode(void)
 {
 	is_light_ = false;
+}
+
+//=============================================================================
+// change direction
+//=============================================================================
+void Player::ChangeDirection(const D3DXVECTOR2& vector)
+{
+	if(is_enable_light_)
+	{
+		D3DXVECTOR2 normalize_vector;
+		D3DXVec2Normalize(&normalize_vector,&vector);
+		move_ = normalize_vector * LIGHT_SPEED;
+	}
 }
 
 //---------------------------------- EOF --------------------------------------

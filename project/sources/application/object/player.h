@@ -57,6 +57,13 @@ public:
 	// draw
 	void Draw(void);
 
+	// move
+	void Move(f32 vector);
+
+	// jump
+	void Jump(void);
+
+	// hit stage
 	void HitStage(const D3DXVECTOR2& position,bool is_floor = false);
 
 	// change light mode
@@ -65,8 +72,8 @@ public:
 	// stop light mode
 	void StopLightMode(void);
 
-	// ステージ衝突後処理
-	void Stagecollision(u32 mode, D3DXVECTOR2 stage_size);
+	// change direction
+	void ChangeDirection(const D3DXVECTOR2& vector);
 
 	// 座標の取得
 	const D3DXVECTOR2& __position(void)const{ return position_; }
@@ -107,9 +114,9 @@ private:
 	};
 
 	static const Animation::DATA ANIMATION_DATA[];
-	static const u32 ANIMATION_RUN_START = (0);
-	static const u32 ANIMATION_WAIT_START = (6);
-	static const u32 ANIMATION_LIGHT_START = (7);
+	static const u32 ANIMATION_RUN_START;
+	static const u32 ANIMATION_WAIT_START;
+	static const u32 ANIMATION_LIGHT_START;
 	static const f32 LIGHT_SPEED;
 	static const f32 SPEED;
 	static const f32 DECREMENT;

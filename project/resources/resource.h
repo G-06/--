@@ -14,9 +14,10 @@
 #define TEXTURE_PLAYER			102
 #define TEXTURE_LIGHT			103
 #define TEXTURE_TITLE_BG		104
-#define TEXTURE_STAGE_BG		105
-#define TEXTURE_LOGO			106
-#define TEXTURE_LOGO_BG			107
+#define TEXTURE_TITLE_LOGO		105
+#define TEXTURE_STAGE_BG		106
+#define TEXTURE_LOGO			107
+#define TEXTURE_LOGO_BG			108
 
 //*****************************************************************************
 // bgm

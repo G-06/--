@@ -99,6 +99,7 @@ void SceneGame::Update(void)
 	// update stage
 	stage_->Update();
 
+	// collision
 	if(player_->__position().y + player_->__size().y > stage_->__size().y)
 	{
 		player_->HitStage(D3DXVECTOR2(player_->__position().x,stage_->__size().y - player_->__size().y),true);
