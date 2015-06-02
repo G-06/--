@@ -18,6 +18,7 @@
 #define TEXTURE_STAGE_BG		106
 #define TEXTURE_LOGO			107
 #define TEXTURE_LOGO_BG			108
+#define TEXTURE_OPTION_BG		109
 
 //*****************************************************************************
 // bgm

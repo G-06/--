@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-// texture
+// option menu
 //
-// Author		: Kenji Kabutomori
+// Author		: Ryotaro Arai
 //
 //*****************************************************************************
 
@@ -10,42 +10,38 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _TEXTURE_H_
-#define _TEXTURE_H_
+#ifndef _OPTION_MENU_H_
+#define _OPTION_MENU_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
 #include "basic/basic.h"
-#include "../resources/resource.h"
+
+//*****************************************************************************
+// forward declaration
+//*****************************************************************************
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Texture : public Basic
+class OptionMenu : public Basic
 {
 public:
-	enum TEXTURE_ID
+	static const D3DXVECTOR2 DEFAULT_MENU_SIZE;
+	static const D3DXVECTOR2 EXPAND_MENU_SIZE;
+	enum OPTION_TYPE
 	{
-		TEXTURE_ID_NONE = -1,
-		TEXTURE_ID_TEST = TEXTURE_TEST,
-		TEXTURE_ID_ANIM_TEST,
-		TEXTURE_ID_PLAYER,
-		TEXTURE_ID_LIGHT,
-		TEXTURE_ID_TITLE_BG,
-		TEXTURE_ID_TITLE_LOGO,
-		TEXTURE_ID_STAGE_BG,
-		TEXTURE_ID_LOGO,
-		TEXTURE_ID_LOGO_BG,
-		TEXTURE_ID_OPTION_BG,
-		TEXTURE_ID_MAX
+		OPTION_TYPE_CONFIG = 0,
+		OPTION_TYPE_VOLUME,
+		OPTION_TYPE_MAX
 	};
-
 	// constructor
-	Texture(void);
+	OptionMenu(void);
 
 	// destructor
-	virtual ~Texture(void);
+	virtual ~OptionMenu(void);
 
 	// initialize
 	bool Initialize(void);
@@ -53,14 +49,20 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
-	// get texture
-	LPDIRECT3DTEXTURE9 GetTexture(const TEXTURE_ID& texture_id)const;
+	// update
+	void Update(void);
+
+	// draw
+	void Draw(void);
+
+	// ‘I‘ð
+	void Select(u32 menu);
 
 private:
-	LPDIRECT3DDEVICE9 device_;
-	LPDIRECT3DTEXTURE9 texture_container_[TEXTURE_ID_MAX - TEXTURE_ID_TEST];
+	Sprite* menu_config_;
+	Sprite* menu_volume_;
 };
 
-#endif	// _TEXTURE_H_
+#endif	// _OPTION_MENU_H_
 
 //---------------------------------- EOF --------------------------------------

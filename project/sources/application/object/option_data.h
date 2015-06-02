@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// option
+// option data
 //
 // Author		: Ryotaro Arai
 //
@@ -11,48 +11,38 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _OPTION_H_
-#define _OPTION_H_
+#ifndef _OPTION_DATA_H_
+#define _OPTION_DATA_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
+
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class OptionBg;
-class OptionMenu;
+
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Option : public Basic
-{
-public:
-	// constructor
-	Option(void);
+enum KEY_CODE
+	{
+		KEY_CODE_OK = 0,
+		KEY_CODE_NO,
+		KEY_CODE_JUMP,
+		KEY_CODE_LIGHT,
+		KEY_CODE_MAX
+	};
 
-	// destructor
-	virtual ~Option(void);
+	struct KEY_CONFIG
+	{
+		bool		is_occupied_;
+		KEY_CODE	key_code_;
+		u32			key_number_;
+	};
 
-	// initialize
-	bool Initialize(void);
-
-	// uninitialize
-	void Uninitialize(void);
-
-	void Update(void);
-
-	void Draw(void);
-
-	private:
-	OptionBg* option_bg_;
-	OptionMenu* option_menu_;
-
-};
-
-#endif	// _OPTION_H_
+#endif	// _OPTION_DATA_H_
 
 //---------------------------------- EOF --------------------------------------

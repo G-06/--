@@ -1,76 +1,67 @@
 //*****************************************************************************
 //
-// option
+// option bg
 //
 // Author		: Ryotaro Arai
-//
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "option.h"
 #include "option_bg.h"
-#include "option_menu.h"
+#include "render/sprite.h"
 #include "system/system.h"
-#include "system/direct_input/input_event_buffer.h"
-
-//*****************************************************************************
-// constant definition
-//*****************************************************************************
-
 
 //=============================================================================
 // constructor
 //=============================================================================
-Option::Option(void)
+OptionBg::OptionBg(void)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-Option::~Option(void)
+OptionBg::~OptionBg(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool Option::Initialize(void)
+bool OptionBg::Initialize(void)
 {
-	option_bg_ = new OptionBg();
-	option_bg_->Initialize();
-
-	option_menu_ = new OptionMenu();
-	option_menu_->Initialize();
-
+	sprite_ = new Sprite();
+	sprite_->Initialize();
+	sprite_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
+	sprite_->__position(D3DXVECTOR2(0.0f,0.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	sprite_->SetParameter();
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void Option::Uninitialize(void)
+void OptionBg::Uninitialize(void)
 {
-	SafeRelease(option_bg_);
-	SafeRelease(option_menu_);
+	SafeRelease(sprite_);
 }
 
 //=============================================================================
-// Update
+// update
 //=============================================================================
-void Option::Update(void)
+void OptionBg::Update(void)
 {
-	
 }
 
 //=============================================================================
-// Draw
+// draw
 //=============================================================================
-void Option::Draw(void)
+void OptionBg::Draw(void)
 {
-	option_bg_->Draw();
-	option_menu_->Draw();
+	sprite_->Draw();
 }
+
+//---------------------------------- EOF --------------------------------------
