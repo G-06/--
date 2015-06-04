@@ -277,6 +277,9 @@
     <ClInclude Include="sources\application\object\option_data.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\option_config_menu.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -427,6 +430,9 @@
       <Filter>sources\application\object</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\object\option_menu.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option_config_menu.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>

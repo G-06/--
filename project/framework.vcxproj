@@ -18,6 +18,7 @@
     <ClCompile Include="sources\application\application.cpp" />
     <ClCompile Include="sources\application\object\option.cpp" />
     <ClCompile Include="sources\application\object\option_bg.cpp" />
+    <ClCompile Include="sources\application\object\option_config_menu.cpp" />
     <ClCompile Include="sources\application\object\option_menu.cpp" />
     <ClCompile Include="sources\application\object\player.cpp" />
     <ClCompile Include="sources\application\object\stage.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="sources\application\application.h" />
     <ClInclude Include="sources\application\object\option.h" />
     <ClInclude Include="sources\application\object\option_bg.h" />
+    <ClInclude Include="sources\application\object\option_config_menu.h" />
     <ClInclude Include="sources\application\object\option_menu.h" />
     <ClInclude Include="sources\application\object\option_data.h" />
     <ClInclude Include="sources\application\object\player.h" />

@@ -66,10 +66,20 @@ void Option::Uninitialize(void)
 //=============================================================================
 void Option::Update(void)
 {
-	/*if()
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
 	{
+		cursor_++;
+	}
 
-	}*/
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+	{
+		cursor_--;
+	}
+
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6))
+	{
+		
+	}
 
 	switch(option_scene_)
 	{
