@@ -20,6 +20,7 @@
     <ClCompile Include="sources\application\object\option_bg.cpp" />
     <ClCompile Include="sources\application\object\option_config_menu.cpp" />
     <ClCompile Include="sources\application\object\option_menu.cpp" />
+    <ClCompile Include="sources\application\object\option_volume.cpp" />
     <ClCompile Include="sources\application\object\player.cpp" />
     <ClCompile Include="sources\application\object\stage.cpp" />
     <ClCompile Include="sources\application\object\stage_offset.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="sources\application\object\option_config_menu.h" />
     <ClInclude Include="sources\application\object\option_menu.h" />
     <ClInclude Include="sources\application\object\option_data.h" />
+    <ClInclude Include="sources\application\object\option_volume.h" />
     <ClInclude Include="sources\application\object\player.h" />
     <ClInclude Include="sources\application\object\stage.h" />
     <ClInclude Include="sources\application\object\stage_offset.h" />

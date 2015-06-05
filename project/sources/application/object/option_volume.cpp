@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// option menu
+// option volume
 //
 // Author		: Ryotaro Arai
 //
@@ -9,7 +9,7 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "option_menu.h"
+#include "option_volume.h"
 #include "render/sprite.h"
 #include "system/system.h"
 #include "option.h"
@@ -17,89 +17,66 @@
 //=============================================================================
 // constructor
 //=============================================================================
-OptionMenu::OptionMenu(void)
+OptionVolume::OptionVolume(void)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-OptionMenu::~OptionMenu(void)
+OptionVolume::~OptionVolume(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool OptionMenu::Initialize(void)
+bool OptionVolume::Initialize(void)
 {
-	menu_config_ = new Sprite();
-	menu_config_->Initialize();
-	menu_config_->__size(Option::DEFAULT_MENU_SIZE);
-	menu_config_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,300.0f));
-	menu_config_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
-	menu_config_->SetParameter();
-
-	menu_volume_ = new Sprite();
-	menu_volume_->Initialize();
-	menu_volume_->__size(Option::DEFAULT_MENU_SIZE);
-	menu_volume_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,600.0f));
-	menu_volume_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
-	menu_volume_->SetParameter();
+	volume_gage_ = new Sprite();
+	volume_gage_->Initialize();
+	volume_gage_->__size(Option::DEFAULT_MENU_SIZE);
+	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
+	volume_gage_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	volume_gage_->__point(Sprite::POINT_CENTER);
+	volume_gage_->__division_height(2);
+	volume_gage_->__division_width(5);
+	volume_gage_->__index(0);
+	volume_gage_->SetParameter();
+	
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void OptionMenu::Uninitialize(void)
+void OptionVolume::Uninitialize(void)
 {
-	SafeRelease(menu_config_);
-	SafeRelease(menu_volume_);
+	SafeRelease(volume_gage_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void OptionMenu::Update(void)
+void OptionVolume::Update(void)
 {
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void OptionMenu::Draw(void)
+void OptionVolume::Draw(void)
 {
-	menu_config_->Draw();
-	menu_volume_->Draw();
+	volume_gage_->Draw();
 }
 
 //=============================================================================
 // select
 //=============================================================================
-void OptionMenu::Select(u32 menu)
+void OptionVolume::Adjustvolume(u32 volume)
 {
-	switch(menu)
-	{
-		case OPTION_TYPE_CONFIG:
-			menu_config_->__size(Option::EXPAND_MENU_SIZE);
-			menu_volume_->__size(Option::DEFAULT_MENU_SIZE);
-
-			menu_config_->SetParameter();
-			menu_volume_->SetParameter();
-		break;
-
-		case OPTION_TYPE_VOLUME:
-			menu_volume_->__size(Option::EXPAND_MENU_SIZE);
-			menu_config_->__size(Option::DEFAULT_MENU_SIZE);
-
-			menu_config_->SetParameter();
-			menu_volume_->SetParameter();
-		break;
-
-		default:
-			break;
-	}
+	volume_gage_->__index(volume);
+	volume_gage_->SetParameter();
 }
 
 //---------------------------------- EOF --------------------------------------

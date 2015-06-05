@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// option config menu
+// option volume
 //
 // Author		: Ryotaro Arai
 //
@@ -10,8 +10,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _OPTION_CONFIG_MENU_H_
-#define _OPTION_CONFIG_MENU_H_
+#ifndef _OPTION_VOLUME_H_
+#define _OPTION_VOLUME_H_
 
 //*****************************************************************************
 // include
@@ -26,12 +26,14 @@ class Sprite;
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class OptionConfigMenu : public Basic
+class OptionVolume : public Basic
 {
 public:
+	const static u32 MAX_VOLUME = (9);
+	const static u32 MIN_VOLUME = (0);
+
 	enum OPTION_TYPE
 	{
-		BUTTON_MIN = -1,
 		SELECT_BUTTON = 0,
 		CANCEL_BUTTON,
 		LIGHT_BUTTON,
@@ -39,10 +41,10 @@ public:
 		BUTTON_MAX
 	};
 	// constructor
-	OptionConfigMenu(void);
+	OptionVolume(void);
 
 	// destructor
-	virtual ~OptionConfigMenu(void);
+	virtual ~OptionVolume(void);
 
 	// initialize
 	bool Initialize(void);
@@ -56,27 +58,11 @@ public:
 	// draw
 	void Draw(void);
 
-	// ëIë
-	void Select(u32 menu);
-
-	const bool __is_select(void)const{ return is_select_;}
-
-	void __is_select(const bool flag){ is_select_ = flag; }
+	// í≤êÆ
+	void Adjustvolume(u32 volume);
 
 private:
-	Sprite* select_button_;
-	Sprite* cancel_button_;
-	Sprite* light_button_;
-	Sprite* jump_button_;
-
-	Sprite* key_1_;
-	Sprite* key_2_;
-	Sprite* key_3_;
-	Sprite* key_4_;
-	Sprite* key_5_;
-	Sprite* key_6_;
-
-	bool is_select_;
+	Sprite* volume_gage_;
 };
 
 #endif	// _OPTION_MENU_H_

@@ -24,6 +24,8 @@
 //*****************************************************************************
 class OptionBg;
 class OptionMenu;
+class OptionConfigMenu;
+class OptionVolume;
 
 //*****************************************************************************
 // class definition
@@ -31,12 +33,12 @@ class OptionMenu;
 class Option : public Basic
 {
 public:
+	static const D3DXVECTOR2 DEFAULT_MENU_SIZE;
+	static const D3DXVECTOR2 EXPAND_MENU_SIZE;
 	enum OPTION_SCENE
 	{
-		OPTION_MIN = -1,
 		OPTION_MENU = 0,
-		OPTION_CONFIG_1,
-		OPTION_CONFIG_2,
+		OPTION_KEY_CONFIG,
 		OPTION_VOLUME,
 		OPTION_MAX
 	};
@@ -67,6 +69,8 @@ public:
 	private:
 	OptionBg* option_bg_;
 	OptionMenu* option_menu_;
+	OptionConfigMenu* option_config_menu_;
+	OptionVolume* option_volume_;
 	OPTION_SCENE option_scene_;
 	u32 cursor_;
 };
