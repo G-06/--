@@ -23,6 +23,8 @@
 //*****************************************************************************
 class TitleBg;
 class TitleLogo;
+class TitleSelect;
+class TitleSelectFrame;
 
 //*****************************************************************************
 // class definition
@@ -52,10 +54,20 @@ public:
 	SceneFactory* CreateFactory(void)const;
 
 private:
+
+	typedef struct _TITLE_SELECT{
+		TitleSelect*	select_;
+		TitleSelect*	frame_;
+	} TITLE_SELECT;
+
 	static const u32 GO_LOGO_FRAME;
+	static const u32 SELECT_MAX = 3;
 	TitleBg* title_bg_;
 	TitleLogo* title_logo_;
-	u32 frame_count_;		//ロゴに戻るカウンター
+	TITLE_SELECT title_select_[SELECT_MAX];
+
+	u32 frame_count_;		// ロゴに戻るカウンター
+	s32 current_select_;	// 選択中の選択肢
 };
 
 #endif	// _SCENE_TITLE_H_
