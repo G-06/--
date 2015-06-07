@@ -16,6 +16,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\application\application.cpp" />
+    <ClCompile Include="sources\application\object\message_sprite_smooth.cpp" />
+    <ClCompile Include="sources\application\object\message_window.cpp" />
     <ClCompile Include="sources\application\object\player.cpp" />
     <ClCompile Include="sources\application\object\stage.cpp" />
     <ClCompile Include="sources\application\object\stage_offset.cpp" />
@@ -29,7 +31,6 @@
     <ClCompile Include="sources\application\scene\title\title_bg.cpp" />
     <ClCompile Include="sources\application\scene\title\title_logo.cpp" />
     <ClCompile Include="sources\application\scene\title\title_select.cpp" />
-    <ClCompile Include="sources\application\scene\title\title_select_frame.cpp" />
     <ClCompile Include="sources\collision\collision.cpp" />
     <ClCompile Include="sources\collision\collision_circle.cpp" />
     <ClCompile Include="sources\collision\collision_line.cpp" />
@@ -72,6 +73,8 @@
   <ItemGroup>
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="sources\application\application.h" />
+    <ClInclude Include="sources\application\object\message_sprite_smooth.h" />
+    <ClInclude Include="sources\application\object\message_window.h" />
     <ClInclude Include="sources\application\object\player.h" />
     <ClInclude Include="sources\application\object\stage.h" />
     <ClInclude Include="sources\application\object\stage_offset.h" />
@@ -86,7 +89,6 @@
     <ClInclude Include="sources\application\scene\title\title_bg.h" />
     <ClInclude Include="sources\application\scene\title\title_logo.h" />
     <ClInclude Include="sources\application\scene\title\title_select.h" />
-    <ClInclude Include="sources\application\scene\title\title_select_frame.h" />
     <ClInclude Include="sources\collision\collision.h" />
     <ClInclude Include="sources\collision\collision_circle.h" />
     <ClInclude Include="sources\collision\collision_line.h" />

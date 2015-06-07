@@ -265,11 +265,14 @@
     <ClInclude Include="sources\application\scene\title\title_logo.h">
       <Filter>sources\application\scene\title</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\title\title_select_frame.h">
-      <Filter>sources\application\scene\title</Filter>
-    </ClInclude>
     <ClInclude Include="sources\application\scene\title\title_select.h">
       <Filter>sources\application\scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\message_window.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\message_sprite_smooth.h">
+      <Filter>sources\application\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -414,11 +417,14 @@
     <ClCompile Include="sources\application\scene\title\title_logo.cpp">
       <Filter>sources\application\scene\title</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\title\title_select_frame.cpp">
-      <Filter>sources\application\scene\title</Filter>
-    </ClCompile>
     <ClCompile Include="sources\application\scene\title\title_select.cpp">
       <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\message_sprite_smooth.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\message_window.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

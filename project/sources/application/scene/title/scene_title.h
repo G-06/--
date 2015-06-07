@@ -24,7 +24,7 @@
 class TitleBg;
 class TitleLogo;
 class TitleSelect;
-class TitleSelectFrame;
+class MessageWindow;
 
 //*****************************************************************************
 // class definition
@@ -62,12 +62,22 @@ private:
 
 	static const u32 GO_LOGO_FRAME;
 	static const u32 SELECT_MAX = 3;
+
+	// bg
 	TitleBg* title_bg_;
+
+	// tittle_logo
 	TitleLogo* title_logo_;
+
+	// select
 	TITLE_SELECT title_select_[SELECT_MAX];
+
+	// message_window
+	MessageWindow* message_window_;
 
 	u32 frame_count_;		// ロゴに戻るカウンター
 	s32 current_select_;	// 選択中の選択肢
+
 };
 
 #endif	// _SCENE_TITLE_H_
