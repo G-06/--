@@ -35,9 +35,9 @@ bool OptionVolume::Initialize(void)
 {
 	volume_gage_ = new Sprite();
 	volume_gage_->Initialize();
-	volume_gage_->__size(Option::DEFAULT_MENU_SIZE);
-	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
-	volume_gage_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	volume_gage_->__size(D3DXVECTOR2(50.f, 200.f));
+	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,300.f));
+	volume_gage_->__texture_id(Texture::TEXTURE_ID_VOLUME);
 	volume_gage_->__point(Sprite::POINT_CENTER);
 	volume_gage_->__division_height(2);
 	volume_gage_->__division_width(5);

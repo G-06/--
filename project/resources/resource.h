@@ -19,6 +19,13 @@
 #define TEXTURE_LOGO			107
 #define TEXTURE_LOGO_BG			108
 #define TEXTURE_OPTION_BG		109
+#define TEXTURE_VOLUME			110
+#define TEXTURE_CONFIG_BUTTON	111
+#define TEXTURE_VOLUME_BUTTON	112
+#define TEXTURE_OK_BUTTON		113
+#define TEXTURE_CANCEL_BUTTON	114
+#define TEXTURE_LIGHT_BUTTON	115
+#define TEXTURE_JUMP_BUTTON		116
 
 //*****************************************************************************
 // bgm

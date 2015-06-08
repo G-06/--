@@ -36,15 +36,17 @@ bool OptionMenu::Initialize(void)
 	menu_config_ = new Sprite();
 	menu_config_->Initialize();
 	menu_config_->__size(Option::DEFAULT_MENU_SIZE);
-	menu_config_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,300.0f));
-	menu_config_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	menu_config_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,200.0f));
+	menu_config_->__texture_id(Texture::TEXTURE_ID_CONFIG_BUTTON);
+	menu_config_->__point(Sprite::POINT_CENTER);
 	menu_config_->SetParameter();
 
 	menu_volume_ = new Sprite();
 	menu_volume_->Initialize();
 	menu_volume_->__size(Option::DEFAULT_MENU_SIZE);
-	menu_volume_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,600.0f));
-	menu_volume_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	menu_volume_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,400.0f));
+	menu_volume_->__texture_id(Texture::TEXTURE_ID_VOLUME_BUTTON);
+	menu_volume_->__point(Sprite::POINT_CENTER);
 	menu_volume_->SetParameter();
 	return true;
 }

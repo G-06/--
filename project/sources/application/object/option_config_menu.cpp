@@ -37,7 +37,7 @@ bool OptionConfigMenu::Initialize(void)
 	select_button_->Initialize();
 	select_button_->__size(Option::DEFAULT_MENU_SIZE);
 	select_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
-	select_button_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	select_button_->__texture_id(Texture::TEXTURE_ID_OK_BUTTON);
 	select_button_->__point(Sprite::POINT_CENTER);
 	select_button_->SetParameter();
 
@@ -45,7 +45,7 @@ bool OptionConfigMenu::Initialize(void)
 	cancel_button_->Initialize();
 	cancel_button_->__size(Option::DEFAULT_MENU_SIZE);
 	cancel_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,200.0f));
-	cancel_button_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	cancel_button_->__texture_id(Texture::TEXTURE_ID_CANCEL_BUTTON);
 	cancel_button_->__point(Sprite::POINT_CENTER);
 	cancel_button_->SetParameter();
 
@@ -53,7 +53,7 @@ bool OptionConfigMenu::Initialize(void)
 	light_button_->Initialize();
 	light_button_->__size(Option::DEFAULT_MENU_SIZE);
 	light_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,300.0f));
-	light_button_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	light_button_->__texture_id(Texture::TEXTURE_ID_LIGHT_BUTTON);
 	light_button_->__point(Sprite::POINT_CENTER);
 	light_button_->SetParameter();
 
@@ -61,7 +61,7 @@ bool OptionConfigMenu::Initialize(void)
 	jump_button_->Initialize();
 	jump_button_->__size(Option::DEFAULT_MENU_SIZE);
 	jump_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,400.0f));
-	jump_button_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	jump_button_->__texture_id(Texture::TEXTURE_ID_JUMP_BUTTON);
 	jump_button_->__point(Sprite::POINT_CENTER);
 	jump_button_->SetParameter();
 
@@ -126,12 +126,12 @@ void OptionConfigMenu::Uninitialize(void)
 	SafeRelease(light_button_);
 	SafeRelease(jump_button_);
 
-	SafeRelease(key_1_);
+	/*SafeRelease(key_1_);
 	SafeRelease(key_2_);
 	SafeRelease(key_3_);
 	SafeRelease(key_4_);
 	SafeRelease(key_5_);
-	SafeRelease(key_6_);
+	SafeRelease(key_6_);*/
 
 }
 

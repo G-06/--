@@ -13,6 +13,9 @@
 #include "system/system.h"
 #include "scene/scene_manager.h"
 #include "frame/frame_controller.h"
+#include "object/option.h"
+
+Option* g_Option;
 
 //=============================================================================
 // constructor
@@ -41,6 +44,17 @@ bool Application::Initialize(void)
 
 	// create scene manager
 	scene_manager_ = new SceneManager();
+
+	//test
+	g_Option = new Option();
+	if(!SafeInitialize(g_Option))
+	{
+		Uninitialize();
+		ASSERT("failed initialize option");
+		return false;
+	}
+	//test
+
 
 	// initialize scene manager
 	if(!SafeInitialize(scene_manager_))
@@ -104,6 +118,10 @@ void Application::Uninitialize(void)
 
 	// release frame controller
 	SafeRelease(frame_controller_);
+
+	//test
+	SafeRelease(g_Option);
+	//test
 }
 
 //=============================================================================
@@ -135,13 +153,21 @@ void Application::Update(void)
 	if(!DEBUG_TOOL.__is_pause())
 	{
 		// update scene manager
-		scene_manager_->Update();
+		//scene_manager_->Update();
+
+		//test
+		g_Option->Update();
+		//test
 	}
 
 	if(GET_SYSTEM.__directx9()->BeginDraw())
 	{
 		// draw scene manager
-		scene_manager_->Draw();
+		//scene_manager_->Draw();
+
+		//test
+		g_Option->Draw();
+		//test
 
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
 		{

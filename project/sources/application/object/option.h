@@ -72,7 +72,8 @@ public:
 	OptionConfigMenu* option_config_menu_;
 	OptionVolume* option_volume_;
 	OPTION_SCENE option_scene_;
-	u32 cursor_;
+	u32 button_counter_;
+	s32 cursor_;
 };
 
 #endif	// _OPTION_H_

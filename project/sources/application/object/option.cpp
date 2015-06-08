@@ -78,17 +78,17 @@ void Option::Uninitialize(void)
 //=============================================================================
 void Option::Update(void)
 {
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
 	{
 		cursor_++;
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
 	{
 		cursor_--;
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_X))
 	{
 		switch(option_scene_)
 		{
@@ -98,10 +98,36 @@ void Option::Update(void)
 					cursor_ = 0;
 					option_scene_ = OPTION_KEY_CONFIG;
 				}
+				else if(cursor_ == 1)
+				{
+					cursor_ = 0;
+					option_scene_ = OPTION_VOLUME;
+				}
 				break;
 
+			case Option::OPTION_KEY_CONFIG:
+				break;
 
 			case Option::OPTION_VOLUME:
+				break;
+		}
+	}
+
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_7) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_Z))
+	{
+		switch(option_scene_)
+		{
+			case Option::OPTION_MENU:
+				break;
+
+			case Option::OPTION_KEY_CONFIG:
+				cursor_ = 0;
+				option_scene_ = OPTION_MENU;
+				break;
+
+			case Option::OPTION_VOLUME:
+				cursor_ = 0;
+				option_scene_ = OPTION_MENU;
 				break;
 		}
 	}
@@ -123,11 +149,11 @@ void Option::Update(void)
 		case Option::OPTION_KEY_CONFIG:
 			if(cursor_ >= OptionConfigMenu::BUTTON_MAX)
 			{
-				cursor_ = Option::MENU_MIN + 1;
+				cursor_ = OptionConfigMenu::BUTTON_MIN + 1;
 			}
 			else if(cursor_ <= Option::MENU_MIN)
 			{
-				cursor_ = Option::MENU_MAX - 1;
+				cursor_ = OptionConfigMenu::BUTTON_MAX - 1;
 			}
 			option_config_menu_->Select(cursor_);
 			break;
@@ -137,7 +163,7 @@ void Option::Update(void)
 			{
 				cursor_ = 9;
 			}
-			else if(cursor_ < 0)
+			if(cursor_ < 0)
 			{
 				cursor_ = 0;
 			}
