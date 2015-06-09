@@ -16,14 +16,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\application\application.cpp" />
+    <ClCompile Include="sources\application\object\keyconfig_logo.cpp" />
+    <ClCompile Include="sources\application\object\key_config_cancel.cpp" />
+    <ClCompile Include="sources\application\object\key_config_jump.cpp" />
+    <ClCompile Include="sources\application\object\key_config_pause.cpp" />
+    <ClCompile Include="sources\application\object\key_config_special.cpp" />
     <ClCompile Include="sources\application\object\option.cpp" />
     <ClCompile Include="sources\application\object\option_bg.cpp" />
-    <ClCompile Include="sources\application\object\option_config_menu.cpp" />
-    <ClCompile Include="sources\application\object\option_menu.cpp" />
-    <ClCompile Include="sources\application\object\option_volume.cpp" />
+    <ClCompile Include="sources\application\object\key_config_ok.cpp" />
+    <ClCompile Include="sources\application\object\bgm_volume.cpp" />
+    <ClCompile Include="sources\application\object\option_logo.cpp" />
     <ClCompile Include="sources\application\object\player.cpp" />
+    <ClCompile Include="sources\application\object\se_volume.cpp" />
     <ClCompile Include="sources\application\object\stage.cpp" />
     <ClCompile Include="sources\application\object\stage_offset.cpp" />
+    <ClCompile Include="sources\application\object\volume_logo.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
     <ClCompile Include="sources\application\scene\logo\logo.cpp" />
     <ClCompile Include="sources\application\scene\logo\logo_bg.cpp" />
@@ -75,15 +82,22 @@
   <ItemGroup>
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="sources\application\application.h" />
+    <ClInclude Include="sources\application\object\keyconfig_logo.h" />
+    <ClInclude Include="sources\application\object\key_config_cancel.h" />
+    <ClInclude Include="sources\application\object\key_config_jump.h" />
+    <ClInclude Include="sources\application\object\key_config_pause.h" />
+    <ClInclude Include="sources\application\object\key_config_special.h" />
     <ClInclude Include="sources\application\object\option.h" />
     <ClInclude Include="sources\application\object\option_bg.h" />
-    <ClInclude Include="sources\application\object\option_config_menu.h" />
-    <ClInclude Include="sources\application\object\option_menu.h" />
+    <ClInclude Include="sources\application\object\key_config_ok.h" />
     <ClInclude Include="sources\application\object\option_data.h" />
-    <ClInclude Include="sources\application\object\option_volume.h" />
+    <ClInclude Include="sources\application\object\bgm_volume.h" />
+    <ClInclude Include="sources\application\object\option_logo.h" />
     <ClInclude Include="sources\application\object\player.h" />
+    <ClInclude Include="sources\application\object\se_volume.h" />
     <ClInclude Include="sources\application\object\stage.h" />
     <ClInclude Include="sources\application\object\stage_offset.h" />
+    <ClInclude Include="sources\application\object\volume_logo.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
     <ClInclude Include="sources\application\scene\logo\logo.h" />

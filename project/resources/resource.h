@@ -26,6 +26,10 @@
 #define TEXTURE_CANCEL_BUTTON	114
 #define TEXTURE_LIGHT_BUTTON	115
 #define TEXTURE_JUMP_BUTTON		116
+#define TEXTURE_PAUSE_BUTTON	117
+#define TEXTURE_BGM_LOGO		118
+#define TEXTURE_OPTION_LOGO		119
+#define TEXTURE_SE_LOGO			120
 
 //*****************************************************************************
 // bgm

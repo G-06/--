@@ -12,9 +12,16 @@
 //*****************************************************************************
 #include "option.h"
 #include "option_bg.h"
-#include "option_menu.h"
-#include "option_config_menu.h"
-#include "option_volume.h"
+#include "key_config_ok.h"
+#include "key_config_cancel.h"
+#include "key_config_special.h"
+#include "key_config_jump.h"
+#include "key_config_pause.h"
+#include "bgm_volume.h"
+#include "se_volume.h"
+#include "option_logo.h"
+#include "volume_logo.h"
+#include "keyconfig_logo.h"
 #include "system/system.h"
 #include "system/direct_input/input_event_buffer.h"
 
@@ -47,17 +54,38 @@ bool Option::Initialize(void)
 	option_bg_ = new OptionBg();
 	option_bg_->Initialize();
 
-	option_menu_ = new OptionMenu();
-	option_menu_->Initialize();
+	key_config_ok_ = new KeyConfigOk();
+	key_config_ok_->Initialize();
 
-	option_config_menu_ = new OptionConfigMenu();
-	option_config_menu_->Initialize();
+	key_config_cancel_ = new KeyConfigCancel();
+	key_config_cancel_->Initialize();
 
-	option_volume_ = new OptionVolume();
-	option_volume_->Initialize();
+	key_config_special_ = new KeyConfigSpecial();
+	key_config_special_->Initialize();
 
-	option_scene_ = OPTION_MENU;
-	cursor_ = 0;
+	key_config_pause_ = new KeyConfigPause();
+	key_config_pause_->Initialize();
+
+	key_config_jump_ = new KeyConfigJump();
+	key_config_jump_->Initialize();
+
+	option_logo_ = new OptionLogo();
+	option_logo_->Initialize();
+
+	volume_logo_ = new VolumeLogo();
+	volume_logo_->Initialize();
+
+	keyconfig_logo_ = new KeyconfigLogo();
+	keyconfig_logo_->Initialize();
+
+	bgm_volume_ = new BgmVolume();
+	bgm_volume_->Initialize();
+
+	se_volume_ = new SeVolume();
+	se_volume_->Initialize();
+
+	cursor_x_ = 0;
+	cursor_y_ = OPTION_VOLUME_BGM;
 
 	return true;
 }
@@ -68,9 +96,16 @@ bool Option::Initialize(void)
 void Option::Uninitialize(void)
 {
 	SafeRelease(option_bg_);
-	SafeRelease(option_menu_);
-	SafeRelease(option_config_menu_);
-	SafeRelease(option_volume_);
+	SafeRelease(key_config_ok_);
+	SafeRelease(key_config_cancel_);
+	SafeRelease(key_config_special_);
+	SafeRelease(key_config_pause_);
+	SafeRelease(key_config_jump_);
+	SafeRelease(option_logo_);
+	SafeRelease(volume_logo_);
+	SafeRelease(keyconfig_logo_);
+	SafeRelease(bgm_volume_);
+	SafeRelease(se_volume_);
 }
 
 //=============================================================================
@@ -78,96 +113,75 @@ void Option::Uninitialize(void)
 //=============================================================================
 void Option::Update(void)
 {
+	cursor_x_ = 0;
+	key_config_ok_->Select(false);
+	key_config_cancel_->Select(false);
+	key_config_special_->Select(false);
+	key_config_pause_->Select(false);
+	key_config_jump_->Select(false);
+	bgm_volume_->Select(false);
+	se_volume_->Select(false);
+
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
 	{
-		cursor_++;
+		cursor_y_++;
 	}
 
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
 	{
-		cursor_--;
+		cursor_y_--;
+	}
+
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
+	{
+		cursor_x_ = -1;
+	}
+
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
+	{
+		cursor_x_ = 1;
 	}
 
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_X))
 	{
-		switch(option_scene_)
-		{
-			case Option::OPTION_MENU:
-				if(cursor_ == 0)
-				{
-					cursor_ = 0;
-					option_scene_ = OPTION_KEY_CONFIG;
-				}
-				else if(cursor_ == 1)
-				{
-					cursor_ = 0;
-					option_scene_ = OPTION_VOLUME;
-				}
-				break;
-
-			case Option::OPTION_KEY_CONFIG:
-				break;
-
-			case Option::OPTION_VOLUME:
-				break;
-		}
+		
 	}
 
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_7) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_Z))
 	{
-		switch(option_scene_)
-		{
-			case Option::OPTION_MENU:
-				break;
-
-			case Option::OPTION_KEY_CONFIG:
-				cursor_ = 0;
-				option_scene_ = OPTION_MENU;
-				break;
-
-			case Option::OPTION_VOLUME:
-				cursor_ = 0;
-				option_scene_ = OPTION_MENU;
-				break;
-		}
+		
 	}
 
 	switch(option_scene_)
 	{
-		case Option::OPTION_MENU:
-			if(cursor_ >= Option::MENU_MAX)
-			{
-				cursor_ = Option::MENU_MIN + 1;
-			}
-			else if(cursor_ <= Option::MENU_MIN)
-			{
-				cursor_ = Option::MENU_MAX - 1;
-			}
-			option_menu_->Select(cursor_);
+		case Option::OPTION_VOLUME_BGM:
+			bgm_volume_->Select(true);
+			bgm_volume_->Adjustvolume(cursor_x_);
 			break;
 
-		case Option::OPTION_KEY_CONFIG:
-			if(cursor_ >= OptionConfigMenu::BUTTON_MAX)
-			{
-				cursor_ = OptionConfigMenu::BUTTON_MIN + 1;
-			}
-			else if(cursor_ <= Option::MENU_MIN)
-			{
-				cursor_ = OptionConfigMenu::BUTTON_MAX - 1;
-			}
-			option_config_menu_->Select(cursor_);
+		case Option::OPTION_VOLUME_SE:
+			se_volume_->Select(true);
+			se_volume_->Adjustvolume(cursor_x_);
 			break;
 
-		case Option::OPTION_VOLUME:
-			if(cursor_ > 9)
-			{
-				cursor_ = 9;
-			}
-			if(cursor_ < 0)
-			{
-				cursor_ = 0;
-			}
-			option_volume_->Adjustvolume(cursor_);
+		case Option::OPTION_KEY_CONFIG_OK:
+			key_config_ok_->Select(true);
+			break;
+
+		case Option::OPTION_KEY_CONFIG_CANCEL:
+			key_config_cancel_->Select(true);
+			break;
+
+		case Option::OPTION_KEY_CONFIG_SPECIAL:
+			key_config_special_->Select(true);
+			break;
+
+		case Option::OPTION_KEY_CONFIG_PAUSE:
+			key_config_pause_->Select(true);
+			break;
+
+		case Option::OPTION_KEY_CONFIG_JUMP:
+			key_config_jump_->Select(true);
 			break;
 
 		default:
@@ -181,23 +195,14 @@ void Option::Update(void)
 void Option::Draw(void)
 {
 	option_bg_->Draw();
-
-	switch(option_scene_)
-	{
-		case Option::OPTION_MENU:
-			option_menu_->Draw();
-			break;
-
-		case Option::OPTION_KEY_CONFIG:
-			option_config_menu_->Draw();
-			break;
-
-		case Option::OPTION_VOLUME:
-			option_volume_->Draw();
-			break;
-
-		default:
-			break;
-	}
-
+	key_config_ok_->Draw();
+	key_config_cancel_->Draw();
+	key_config_special_->Draw();
+	key_config_pause_->Draw();
+	key_config_jump_->Draw();
+	option_logo_->Draw();
+	volume_logo_->Draw();
+	keyconfig_logo_->Draw();
+	bgm_volume_->Draw();
+	se_volume_->Draw();
 }

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// option volume
+// volume logo
 //
 // Author		: Ryotaro Arai
 //
@@ -9,74 +9,59 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "option_volume.h"
+#include "volume_logo.h"
 #include "render/sprite.h"
 #include "system/system.h"
-#include "option.h"
 
 //=============================================================================
 // constructor
 //=============================================================================
-OptionVolume::OptionVolume(void)
+VolumeLogo::VolumeLogo(void)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-OptionVolume::~OptionVolume(void)
+VolumeLogo::~VolumeLogo(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool OptionVolume::Initialize(void)
+bool VolumeLogo::Initialize(void)
 {
-	volume_gage_ = new Sprite();
-	volume_gage_->Initialize();
-	volume_gage_->__size(D3DXVECTOR2(50.f, 200.f));
-	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,300.f));
-	volume_gage_->__texture_id(Texture::TEXTURE_ID_VOLUME);
-	volume_gage_->__point(Sprite::POINT_CENTER);
-	volume_gage_->__division_height(2);
-	volume_gage_->__division_width(5);
-	volume_gage_->__index(0);
-	volume_gage_->SetParameter();
-	
+	sprite_ = new Sprite();
+	sprite_->Initialize();
+	sprite_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/3*2,(f32)GET_SYSTEM.__window()->__height()/5*4));
+	sprite_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/6+100.0f,(f32)GET_SYSTEM.__window()->__height()/10+100.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_VOLUME_BUTTON);
+	sprite_->SetParameter();
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void OptionVolume::Uninitialize(void)
+void VolumeLogo::Uninitialize(void)
 {
-	SafeRelease(volume_gage_);
+	SafeRelease(sprite_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void OptionVolume::Update(void)
+void VolumeLogo::Update(void)
 {
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void OptionVolume::Draw(void)
+void VolumeLogo::Draw(void)
 {
-	volume_gage_->Draw();
-}
-
-//=============================================================================
-// select
-//=============================================================================
-void OptionVolume::Adjustvolume(u32 volume)
-{
-	volume_gage_->__index(volume);
-	volume_gage_->SetParameter();
+	sprite_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

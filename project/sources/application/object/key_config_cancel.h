@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// option menu
+// key config cancel
 //
 // Author		: Ryotaro Arai
 //
@@ -10,8 +10,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _OPTION_MENU_H_
-#define _OPTION_MENU_H_
+#ifndef _KEY_CONFIG_CANCEL_H_
+#define _KEY_CONFIG_CANCEL_H_
 
 //*****************************************************************************
 // include
@@ -26,20 +26,14 @@ class Sprite;
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class OptionMenu : public Basic
+class KeyConfigCancel : public Basic
 {
 public:
-	enum OPTION_TYPE
-	{
-		OPTION_TYPE_CONFIG = 0,
-		OPTION_TYPE_VOLUME,
-		OPTION_TYPE_MAX
-	};
 	// constructor
-	OptionMenu(void);
+	KeyConfigCancel(void);
 
 	// destructor
-	virtual ~OptionMenu(void);
+	virtual ~KeyConfigCancel(void);
 
 	// initialize
 	bool Initialize(void);
@@ -54,11 +48,12 @@ public:
 	void Draw(void);
 
 	// ‘I‘ð
-	void Select(u32 menu);
+	void Select(bool is_select);
 
 private:
-	Sprite* menu_config_;
-	Sprite* menu_volume_;
+	Sprite* cancel_button_;
+
+	u32 current_key_event_;
 };
 
 #endif	// _OPTION_MENU_H_

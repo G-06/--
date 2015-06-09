@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// option bg
+// keyconfig logo
 //
 // Author		: Ryotaro Arai
 //
@@ -9,34 +9,34 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "option_bg.h"
+#include "keyconfig_logo.h"
 #include "render/sprite.h"
 #include "system/system.h"
 
 //=============================================================================
 // constructor
 //=============================================================================
-OptionBg::OptionBg(void)
+KeyconfigLogo::KeyconfigLogo(void)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-OptionBg::~OptionBg(void)
+KeyconfigLogo::~KeyconfigLogo(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool OptionBg::Initialize(void)
+bool KeyconfigLogo::Initialize(void)
 {
 	sprite_ = new Sprite();
 	sprite_->Initialize();
 	sprite_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/3*2,(f32)GET_SYSTEM.__window()->__height()/5*4));
 	sprite_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/6,(f32)GET_SYSTEM.__window()->__height()/10));
-	sprite_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
+	sprite_->__texture_id(Texture::TEXTURE_ID_CONFIG_BUTTON);
 	sprite_->SetParameter();
 	return true;
 }
@@ -44,7 +44,7 @@ bool OptionBg::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void OptionBg::Uninitialize(void)
+void KeyconfigLogo::Uninitialize(void)
 {
 	SafeRelease(sprite_);
 }
@@ -52,14 +52,14 @@ void OptionBg::Uninitialize(void)
 //=============================================================================
 // update
 //=============================================================================
-void OptionBg::Update(void)
+void KeyconfigLogo::Update(void)
 {
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void OptionBg::Draw(void)
+void KeyconfigLogo::Draw(void)
 {
 	sprite_->Draw();
 }

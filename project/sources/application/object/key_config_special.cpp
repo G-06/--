@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// option bg
+// key config special
 //
 // Author		: Ryotaro Arai
 //
@@ -9,59 +9,80 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "option_bg.h"
+#include "key_config_special.h"
 #include "render/sprite.h"
 #include "system/system.h"
+#include "option.h"
 
 //=============================================================================
 // constructor
 //=============================================================================
-OptionBg::OptionBg(void)
+KeyConfigSpecial::KeyConfigSpecial(void)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-OptionBg::~OptionBg(void)
+KeyConfigSpecial::~KeyConfigSpecial(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool OptionBg::Initialize(void)
+bool KeyConfigSpecial::Initialize(void)
 {
-	sprite_ = new Sprite();
-	sprite_->Initialize();
-	sprite_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/3*2,(f32)GET_SYSTEM.__window()->__height()/5*4));
-	sprite_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/6,(f32)GET_SYSTEM.__window()->__height()/10));
-	sprite_->__texture_id(Texture::TEXTURE_ID_OPTION_BG);
-	sprite_->SetParameter();
+	special_button_ = new Sprite();
+	special_button_->Initialize();
+	special_button_->__size(Option::DEFAULT_MENU_SIZE);
+	special_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
+	special_button_->__texture_id(Texture::TEXTURE_ID_LIGHT_BUTTON);
+	special_button_->__point(Sprite::POINT_CENTER);
+	special_button_->SetParameter();
+
+	current_key_event_ = NULL;
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void OptionBg::Uninitialize(void)
+void KeyConfigSpecial::Uninitialize(void)
 {
-	SafeRelease(sprite_);
+	SafeRelease(special_button_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void OptionBg::Update(void)
+void KeyConfigSpecial::Update(void)
 {
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void OptionBg::Draw(void)
+void KeyConfigSpecial::Draw(void)
 {
-	sprite_->Draw();
+	special_button_->Draw();
+}
+
+//=============================================================================
+// select
+//=============================================================================
+void KeyConfigSpecial::Select(bool is_select)
+{
+	if(is_select == true)
+	{
+		special_button_->__size(Option::EXPAND_MENU_SIZE);
+	}
+	else
+	{
+		special_button_->__size(Option::DEFAULT_MENU_SIZE);
+	}
+	
+	special_button_->SetParameter();
 }
 
 //---------------------------------- EOF --------------------------------------

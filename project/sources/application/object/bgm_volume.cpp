@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// option menu
+// bgm volume
 //
 // Author		: Ryotaro Arai
 //
@@ -9,7 +9,7 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "option_menu.h"
+#include "bgm_volume.h"
 #include "render/sprite.h"
 #include "system/system.h"
 #include "option.h"
@@ -17,91 +17,91 @@
 //=============================================================================
 // constructor
 //=============================================================================
-OptionMenu::OptionMenu(void)
+BgmVolume::BgmVolume(void)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-OptionMenu::~OptionMenu(void)
+BgmVolume::~BgmVolume(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool OptionMenu::Initialize(void)
+bool BgmVolume::Initialize(void)
 {
-	menu_config_ = new Sprite();
-	menu_config_->Initialize();
-	menu_config_->__size(Option::DEFAULT_MENU_SIZE);
-	menu_config_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,200.0f));
-	menu_config_->__texture_id(Texture::TEXTURE_ID_CONFIG_BUTTON);
-	menu_config_->__point(Sprite::POINT_CENTER);
-	menu_config_->SetParameter();
+	bgm_volume_ = 5;
 
-	menu_volume_ = new Sprite();
-	menu_volume_->Initialize();
-	menu_volume_->__size(Option::DEFAULT_MENU_SIZE);
-	menu_volume_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,400.0f));
-	menu_volume_->__texture_id(Texture::TEXTURE_ID_VOLUME_BUTTON);
-	menu_volume_->__point(Sprite::POINT_CENTER);
-	menu_volume_->SetParameter();
+	volume_gage_ = new Sprite();
+	volume_gage_->Initialize();
+	volume_gage_->__size(D3DXVECTOR2(bgm_volume_*30.f, 30.f));
+	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,300.f));
+	volume_gage_->SetParameter();
+
+	bgm_button_ = new Sprite();
+	bgm_button_->Initialize();
+	bgm_button_->__size(Option::DEFAULT_MENU_SIZE);
+	bgm_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
+	bgm_button_->__texture_id(Texture::TEXTURE_ID_BGM_LOGO);
+	bgm_button_->__point(Sprite::POINT_CENTER);
+	bgm_button_->SetParameter();
+
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void OptionMenu::Uninitialize(void)
+void BgmVolume::Uninitialize(void)
 {
-	SafeRelease(menu_config_);
-	SafeRelease(menu_volume_);
+	SafeRelease(volume_gage_);
+	SafeRelease(bgm_button_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void OptionMenu::Update(void)
+void BgmVolume::Update(void)
 {
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void OptionMenu::Draw(void)
+void BgmVolume::Draw(void)
 {
-	menu_config_->Draw();
-	menu_volume_->Draw();
+	volume_gage_->Draw();
+}
+
+//=============================================================================
+// Adjustvolume
+//=============================================================================
+void BgmVolume::Adjustvolume(u32 volume)
+{
+	bgm_volume_ += volume;
+	volume_gage_->__size(D3DXVECTOR2(bgm_volume_*30.f, 30.0f));
+	volume_gage_->SetParameter();
 }
 
 //=============================================================================
 // select
 //=============================================================================
-void OptionMenu::Select(u32 menu)
+void BgmVolume::Select(bool is_select)
 {
-	switch(menu)
+	if(is_select == true)
 	{
-		case OPTION_TYPE_CONFIG:
-			menu_config_->__size(Option::EXPAND_MENU_SIZE);
-			menu_volume_->__size(Option::DEFAULT_MENU_SIZE);
-
-			menu_config_->SetParameter();
-			menu_volume_->SetParameter();
-		break;
-
-		case OPTION_TYPE_VOLUME:
-			menu_volume_->__size(Option::EXPAND_MENU_SIZE);
-			menu_config_->__size(Option::DEFAULT_MENU_SIZE);
-
-			menu_config_->SetParameter();
-			menu_volume_->SetParameter();
-		break;
-
-		default:
-			break;
+		bgm_button_->__size(Option::EXPAND_MENU_SIZE);
 	}
+	else
+	{
+		bgm_button_->__size(Option::DEFAULT_MENU_SIZE);
+	}
+	
+	bgm_button_->SetParameter();
 }
+
 
 //---------------------------------- EOF --------------------------------------

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// option volume
+// key config jump
 //
 // Author		: Ryotaro Arai
 //
@@ -10,8 +10,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _OPTION_VOLUME_H_
-#define _OPTION_VOLUME_H_
+#ifndef _KEY_CONFIG_JUMP_H_
+#define _KEY_CONFIG_JUMP_H_
 
 //*****************************************************************************
 // include
@@ -26,25 +26,14 @@ class Sprite;
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class OptionVolume : public Basic
+class KeyConfigJump : public Basic
 {
 public:
-	const static u32 MAX_VOLUME = (9);
-	const static u32 MIN_VOLUME = (0);
-
-	enum OPTION_TYPE
-	{
-		SELECT_BUTTON = 0,
-		CANCEL_BUTTON,
-		LIGHT_BUTTON,
-		JUMP_BUTTON,
-		BUTTON_MAX
-	};
 	// constructor
-	OptionVolume(void);
+	KeyConfigJump(void);
 
 	// destructor
-	virtual ~OptionVolume(void);
+	virtual ~KeyConfigJump(void);
 
 	// initialize
 	bool Initialize(void);
@@ -58,11 +47,13 @@ public:
 	// draw
 	void Draw(void);
 
-	// í≤êÆ
-	void Adjustvolume(u32 volume);
+	// ëIë
+	void Select(bool is_select);
 
 private:
-	Sprite* volume_gage_;
+	Sprite* jump_button_;
+
+	u32 current_key_event_;
 };
 
 #endif	// _OPTION_MENU_H_
