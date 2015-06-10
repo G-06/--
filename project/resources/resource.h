@@ -22,6 +22,9 @@
 #define TEXTURE_TITLE_SELECT_FRAME_000	110
 #define TEXTURE_TITLE_SELECT_FRAME_001	111
 #define TEXTURE_TITLE_STRING_TEST_A		112
+#define TEXTURE_GENERAL_WINDOW			113
+#define TEXTURE_STRING_YES				114
+#define TEXTURE_STRING_NO				115
 
 //*****************************************************************************
 // bgm

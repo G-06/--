@@ -30,6 +30,7 @@
     <ClCompile Include="sources\application\scene\title\scene_title.cpp" />
     <ClCompile Include="sources\application\scene\title\title_bg.cpp" />
     <ClCompile Include="sources\application\scene\title\title_logo.cpp" />
+    <ClCompile Include="sources\application\scene\title\title_push_start.cpp" />
     <ClCompile Include="sources\application\scene\title\title_select.cpp" />
     <ClCompile Include="sources\collision\collision.cpp" />
     <ClCompile Include="sources\collision\collision_circle.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="sources\application\scene\title\scene_title.h" />
     <ClInclude Include="sources\application\scene\title\title_bg.h" />
     <ClInclude Include="sources\application\scene\title\title_logo.h" />
+    <ClInclude Include="sources\application\scene\title\title_push_start.h" />
     <ClInclude Include="sources\application\scene\title\title_select.h" />
     <ClInclude Include="sources\collision\collision.h" />
     <ClInclude Include="sources\collision\collision_circle.h" />

@@ -21,8 +21,9 @@ const D3DXVECTOR2 MessageSpriteSmooth::DEFAULT_POSITION = D3DXVECTOR2(0.0f, 0.0f
 const D3DXVECTOR2 MessageSpriteSmooth::DEFAULT_SIZE = D3DXVECTOR2(0.0f, 0.0f);
 
 const D3DXVECTOR2 CLEAR_VECTOR2 = D3DXVECTOR2(0.0f, 0.0f);
-const D3DCOLOR CLEAR_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+const D3DXCOLOR CLEAR_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 const f32 HALF_PI = D3DX_PI / 2.0f;
+
 
 //=============================================================================
 // constructor
@@ -87,9 +88,6 @@ void MessageSpriteSmooth::Update(void)
 
 			const D3DXVECTOR2 position = old_position_ + target_position_ * s;
 			const D3DXVECTOR2 size = old_size_ + target_size_ * s;
-//			const D3DXCOLOR color = (D3DXCOLOR)old_color_ + (D3DXCOLOR)target_color_ * s;
-			const D3DXCOLOR col = sprite_->__color();
-//			const u32 alpha = sprite_->__color();
 			const D3DXCOLOR color = (D3DXCOLOR)old_color_ + (D3DXCOLOR)target_color_ * s;
 
 			sprite_->__position(position);
@@ -132,7 +130,7 @@ void MessageSpriteSmooth::StartMove(void)
 	now_frame_			= 0;
 	target_position_	= dest_position_ - sprite_->__position();
 	target_size_		= dest_size_ - sprite_->__size();
-	target_color_		= dest_color_ - sprite_->__color();
+	target_color_		= dest_color_ - (D3DXCOLOR)sprite_->__color();
 	old_position_		= sprite_->__position();
 	old_size_			= sprite_->__size();
 	old_color_			= sprite_->__color();
@@ -204,7 +202,7 @@ const D3DXVECTOR2& MessageSpriteSmooth::__size(void)const
 //=============================================================================
 // __color
 //=============================================================================
-void MessageSpriteSmooth::__color(const D3DCOLOR& color)
+void MessageSpriteSmooth::__color(const D3DXCOLOR& color)
 {
 	sprite_->__color(color);
 	sprite_->SetParameter();

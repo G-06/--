@@ -274,6 +274,9 @@
     <ClInclude Include="sources\application\object\message_sprite_smooth.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\title\title_push_start.h">
+      <Filter>sources\application\scene\title</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -425,6 +428,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\message_window.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\title\title_push_start.cpp">
+      <Filter>sources\application\scene\title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

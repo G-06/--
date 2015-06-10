@@ -54,9 +54,10 @@ public:
 private:
 	static const D3DXVECTOR2 DEFAULT_POSITION;
 	static const D3DXVECTOR2 DEFAULT_SIZE;
+
 	Sprite* sprite_;
 };
 
-#endif	// _TITLE_BG_H_
+#endif	// _TITLE_SELECT_H_
 
 //---------------------------------- EOF --------------------------------------

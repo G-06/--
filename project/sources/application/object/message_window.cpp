@@ -24,7 +24,9 @@ const u32 DEST_FRAME_COUNT = 30;
 const s32 DEFAULT_SELECT = 1;
 const D3DXCOLOR CLEAR_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
 const D3DXCOLOR SHOW_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-const D3DXVECTOR2 WINDOW_SIZE = D3DXVECTOR2(700.0f, 300.0f);
+
+const D3DXVECTOR2 WINDOW_SCALE = D3DXVECTOR2(1.4f, 1.0f);
+const D3DXVECTOR2 WINDOW_SIZE = D3DXVECTOR2(512.f * WINDOW_SCALE.x, 512.0f * WINDOW_SCALE.y);
 const D3DXVECTOR2 TITLE_SIZE = D3DXVECTOR2(500.0f, 60.0f);
 const D3DXVECTOR2 SELECT_SIZE = D3DXVECTOR2(270.0f, 80.0f);
 
@@ -33,8 +35,8 @@ const D3DXVECTOR2 TITLE_POSITION_OFFSET = D3DXVECTOR2(0.0f, -80.0f);
 
 // string texture_id
 const Texture::TEXTURE_ID SELECT_STRING_TEXTURE[] = {
-	Texture::TEXTURE_ID_TITLE_STRING_TEST_A,
-	Texture::TEXTURE_ID_TITLE_STRING_TEST_A };
+	Texture::TEXTURE_ID_STRING_YES,
+	Texture::TEXTURE_ID_STRING_NO };
 
 //=============================================================================
 // constructor
@@ -70,6 +72,7 @@ bool MessageWindow::Initialize(void)
 	// window
 	window_ = new MessageSpriteSmooth();
 	window_->Initialize();
+	window_->__texture_id(Texture::TEXTURE_ID_GENERAL_WINDOW);
 
 	// title
 	title_ = new MessageSpriteSmooth();
@@ -128,10 +131,6 @@ void MessageWindow::Update(void)
 	if(is_move_ == true && is_move == false){
 		is_move_ = false;
 	}
-
-		//bool show = false;
-		//if(window_->__move_flag_()) show = true;
-		//if(show == false) is_show_ = false;	}
 }
 
 //=============================================================================

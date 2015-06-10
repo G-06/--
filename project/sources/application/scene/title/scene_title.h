@@ -23,6 +23,7 @@
 //*****************************************************************************
 class TitleBg;
 class TitleLogo;
+class TitlePushStart;
 class TitleSelect;
 class MessageWindow;
 
@@ -53,31 +54,61 @@ public:
 	// create factory
 	SceneFactory* CreateFactory(void)const;
 
+	// 選択肢種類
+	enum SELECT_TYPE{
+		SELECT_START = 0,
+		SELECT_OPTION,
+		SELECT_END,
+		SELECT_MAX
+	};
+
+	// モード種類
+	enum MODE{
+		MODE_NONE = -1,
+		MODE_PUSH,
+		MODE_SELECT,
+		MODE_MESSAGE,
+		MODE_MAX
+	};
+
 private:
+
+	static const u32 GO_LOGO_FRAME;
 
 	typedef struct _TITLE_SELECT{
 		TitleSelect*	select_;
 		TitleSelect*	frame_;
 	} TITLE_SELECT;
 
-	static const u32 GO_LOGO_FRAME;
-	static const u32 SELECT_MAX = 3;
+	// モード別Update
+	void _UpdatePush(void);
+	void _UpdateSelect(void);
+	void _UpdateMessage(void);
 
 	// bg
-	TitleBg* title_bg_;
+	TitleBg* bg_;
 
 	// tittle_logo
-	TitleLogo* title_logo_;
+	TitleLogo* logo_;
+
+	// title push_shtart
+	TitlePushStart* push_;
+	TitlePushStart* push_frame_;
 
 	// select
-	TITLE_SELECT title_select_[SELECT_MAX];
+	TITLE_SELECT select_[SELECT_MAX];
 
 	// message_window
 	MessageWindow* message_window_;
 
-	u32 frame_count_;		// ロゴに戻るカウンター
-	s32 current_select_;	// 選択中の選択肢
+	// ロゴに戻るカウンター
+	u32 frame_count_;
 
+	// 選択中の選択肢
+	s32 current_select_;
+
+	// 現在のモード
+	MODE mode_;
 };
 
 #endif	// _SCENE_TITLE_H_
