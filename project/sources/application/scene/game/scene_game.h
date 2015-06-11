@@ -23,7 +23,7 @@
 //*****************************************************************************
 class Stage;
 class StageOffset;
-class Player;
+class GamePlayer;
 
 //*****************************************************************************
 // class definition
@@ -55,7 +55,7 @@ public:
 private:
 	Stage* stage_;
 	StageOffset* stage_offset_;
-	Player* player_;
+	GamePlayer* player_;
 };
 
 #endif	// _SCENE_GAME_H_

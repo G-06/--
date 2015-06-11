@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// player
+// game player
 //
 // Author		: Ryotaro Arai
 //				: Kenji Kabutomori
@@ -10,64 +10,43 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "player.h"
-#include "render/sprite.h"
+#include "game_player.h"
+#include "application/object/object_player.h"
 #include "system/system.h"
 #include "system/direct_input/input_event_buffer.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const f32 Player::LIGHT_SPEED = (30.0f);
-const f32 Player::SPEED = (2.0f);
-const f32 Player::DECREMENT = (0.9f);
-const f32 Player::JUMP_SPEED = (-70.0f);
-const u32 Player::ANIMATION_RUN_START = (0);
-const u32 Player::ANIMATION_WAIT_START = (6);
-const u32 Player::ANIMATION_LIGHT_START = (7);
-const Animation::DATA Player::ANIMATION_DATA[] =
-{
-	Animation::DATA(4, 1, 0),
-	Animation::DATA(4, 2, 1),
-	Animation::DATA(4, 3, 2),
-	Animation::DATA(4, 4, 3),
-	Animation::DATA(4, 5, 4),
-	Animation::DATA(4, 0, 5),
-	Animation::DATA(2, 6, 0),
-	Animation::DATA(2, 7, 0),
-};
-const Player::ANIMATION_TEXTURE_DATA Player::TEXTURE_DATA[ANIMATION_TYPE_MAX] =
-{
-	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_PLAYER,3,2),
-	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_PLAYER,3,2),
-	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_LIGHT,1,1),
-};
+const f32 GamePlayer::LIGHT_SPEED = (30.0f);
+const f32 GamePlayer::SPEED = (2.0f);
+const f32 GamePlayer::DECREMENT = (0.9f);
+const f32 GamePlayer::JUMP_SPEED = (-70.0f);
 
 //=============================================================================
 // constructor
 //=============================================================================
-Player::Player(void)
+GamePlayer::GamePlayer(void)
 	:player_(nullptr)
-	,animation_(nullptr)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-Player::~Player(void)
+GamePlayer::~GamePlayer(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool Player::Initialize(void)
+bool GamePlayer::Initialize(void)
 {
 	position_				= D3DXVECTOR2(0, 0);
 	old_position_			= position_;
 	move_					= D3DXVECTOR2(0, 0);
-	size_					= D3DXVECTOR2(256, 256);
+	size_					= D3DXVECTOR2(200, 200);
 	offset_position_		= D3DXVECTOR2(0, 0);
 	acceleration_counter_	= 0;
 	slowdown_counter_		= 0;
@@ -75,18 +54,9 @@ bool Player::Initialize(void)
 	is_light_				= false;
 	is_fly_					= true;
 	is_enable_light_		= true;
-	player_= new Sprite();
-	animation_ = new Animation();
-	animation_->Add(ANIMATION_DATA, sizeof(ANIMATION_DATA));
-	animation_type_ = ANIMATION_TYPE_WAIT;
+	player_= new ObjectPlayer();
 	player_->Initialize();
-	player_->__size(size_);
 	player_->__position(position_);
-	player_->__texture_id(Texture::TEXTURE_ID_PLAYER);
-	player_->__division_height(2);
-	player_->__division_width(3);
-	player_->__index(ANIMATION_RUN_START);
-	player_->SetParameter();
 
 	return true;
 }
@@ -94,16 +64,15 @@ bool Player::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void Player::Uninitialize(void)
+void GamePlayer::Uninitialize(void)
 {
 	SafeRelease(player_);
-	SafeRelease(animation_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void Player::Update(void)
+void GamePlayer::Update(void)
 {
 	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 	{
@@ -153,19 +122,11 @@ void Player::Update(void)
 		if(move_.x <= 0.9f && move_.x >= -0.9f)
 		{
 			move_.x = 0.0f;
-			if(animation_type_ != ANIMATION_TYPE_WAIT)
-			{
-				animation_type_ = ANIMATION_TYPE_WAIT;
-				animation_->Start(ANIMATION_WAIT_START);
-			}
+			player_->Wait();
 		}
 		else
 		{
-			if(animation_type_ != ANIMATION_TYPE_RUN)
-			{
-				animation_type_ = ANIMATION_TYPE_RUN;
-				animation_->Start(ANIMATION_RUN_START);
-			}
+			player_->Run();
 		}
 
 		move_.y += DEFAULT_GRAVITY;
@@ -177,19 +138,14 @@ void Player::Update(void)
 	old_position_ = position_;
 	position_ += move_;
 
-	animation_->Update();
-	player_->__texture_id((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._texture_id);
-	player_->__division_width((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._division_width);
-	player_->__division_height((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._division_height);
-	player_->__index(animation_->__current_index());
 	player_->__is_flip(is_left_);
-	player_->SetParameter();
+	player_->Update();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void Player::Draw(void)
+void GamePlayer::Draw(void)
 {
 	player_->__position(position_ - offset_position_);
 	player_->Draw();
@@ -198,7 +154,7 @@ void Player::Draw(void)
 //=============================================================================
 // move
 //=============================================================================
-void Player::Move(f32 vector)
+void GamePlayer::Move(f32 vector)
 {
 	if(!is_light_)
 	{
@@ -218,7 +174,7 @@ void Player::Move(f32 vector)
 //=============================================================================
 // jump
 //=============================================================================
-void Player::Jump(void)
+void GamePlayer::Jump(void)
 {
 	if(!is_fly_)
 	{
@@ -230,7 +186,7 @@ void Player::Jump(void)
 //=============================================================================
 // hit stage
 //=============================================================================
-void Player::HitStage(const D3DXVECTOR2& position,bool is_floor)
+void GamePlayer::HitStage(const D3DXVECTOR2& position,bool is_floor)
 {
 	position_.x = position.x;
 
@@ -248,7 +204,7 @@ void Player::HitStage(const D3DXVECTOR2& position,bool is_floor)
 //=============================================================================
 // change light mode
 //=============================================================================
-void Player::ChangeLightMode(const D3DXVECTOR2& vector)
+void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 {
 	if(is_enable_light_)
 	{
@@ -276,18 +232,14 @@ void Player::ChangeLightMode(const D3DXVECTOR2& vector)
 			move_ = normalize_vector * LIGHT_SPEED;
 		}
 
-		if(animation_type_ != ANIMATION_TYPE_LIGHT)
-		{
-			animation_type_ = ANIMATION_TYPE_LIGHT;
-			animation_->Start(ANIMATION_LIGHT_START);
-		}
+		player_->Light();
 	}
 }
 
 //=============================================================================
 // stop light mode
 //=============================================================================
-void Player::StopLightMode(void)
+void GamePlayer::StopLightMode(void)
 {
 	is_light_ = false;
 }
@@ -295,7 +247,7 @@ void Player::StopLightMode(void)
 //=============================================================================
 // change direction
 //=============================================================================
-void Player::ChangeDirection(const D3DXVECTOR2& vector)
+void GamePlayer::ChangeDirection(const D3DXVECTOR2& vector)
 {
 	if(is_light_)
 	{

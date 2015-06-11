@@ -14,7 +14,7 @@
 #include "system/system.h"
 #include "application/object/stage.h"
 #include "application/object/stage_offset.h"
-#include "object/player.h"
+#include "game_player.h"
 
 //=============================================================================
 // constructor
@@ -50,7 +50,7 @@ bool SceneGame::Initialize(void)
 		return false;
 	}
 
-	player_ = new Player();
+	player_ = new GamePlayer();
 
 	if(!SafeInitialize(player_))
 	{

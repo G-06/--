@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// player
+// object player
 //
 // Author		: Ryotaro Arai
 //				: Kenji Kabutomori
@@ -11,8 +11,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
+#ifndef _OBJECT_PLAYER_H_
+#define _OBJECT_PLAYER_H_
 
 //*****************************************************************************
 // include
@@ -28,22 +28,14 @@ class Sprite;
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Player : public Basic
+class ObjectPlayer : public Basic
 {
 public:
-	enum COLLISION_MODE
-	{
-		COLLISION_DOWN = 0,
-		COLLISION_RIGHT,
-		COLLISION_LEFT,
-		COLLISION_MAX
-	};
-
 	// constructor
-	Player(void);
+	ObjectPlayer(void);
 
 	// destructor
-	virtual ~Player(void);
+	virtual ~ObjectPlayer(void);
 
 	// initialize
 	bool Initialize(void);
@@ -57,39 +49,23 @@ public:
 	// draw
 	void Draw(void);
 
-	// move
-	void Move(f32 vector);
-
 	// jump
 	void Jump(void);
 
-	// hit stage
-	void HitStage(const D3DXVECTOR2& position,bool is_floor = false);
+	// run
+	void Run(void);
 
-	// change light mode
-	void ChangeLightMode(const D3DXVECTOR2& vector);
+	// stop
+	void Wait(void);
 
-	// stop light mode
-	void StopLightMode(void);
-
-	// change direction
-	void ChangeDirection(const D3DXVECTOR2& vector);
+	// light
+	void Light(void);
 
 	// 座標の取得
 	const D3DXVECTOR2& __position(void)const{ return position_; }
-
 	void __position(const D3DXVECTOR2& position){ position_ = position; }
+	void __is_flip(bool is_flip) { is_flip_ = is_flip; }
 
-	// 前回座標の取得
-	const D3DXVECTOR2& __old_position(void)const{ return old_position_; }
-
-	// オフセット座標の設定
-	void __offset_position(const D3DXVECTOR2& offset){ offset_position_ = offset; }
-
-	// サイズ取得
-	const D3DXVECTOR2& __size(void)const{ return size_; }
-
-	const D3DXVECTOR2& __move(void)const { return move_; }
 private:
 	void LightMode(bool is_light, bool is_right);
 
@@ -118,28 +94,15 @@ private:
 	static const u32 ANIMATION_RUN_START;
 	static const u32 ANIMATION_WAIT_START;
 	static const u32 ANIMATION_LIGHT_START;
-	static const f32 LIGHT_SPEED;
-	static const f32 SPEED;
-	static const f32 DECREMENT;
-	static const f32 JUMP_SPEED;
 	static const ANIMATION_TEXTURE_DATA TEXTURE_DATA[ANIMATION_TYPE_MAX];
 
-	D3DXVECTOR2 position_;				// プレイヤー座標
-	D3DXVECTOR2 old_position_;			// プレイヤーの前回座標
-	D3DXVECTOR2 move_;					// プレイヤーの移動量
-	D3DXVECTOR2 size_;					// プレイヤーサイズ
-	D3DXVECTOR2 offset_position_;		// オフセット座標
-	u32			acceleration_counter_;	// 加速カウンター
-	u32			slowdown_counter_;		// 減速カウンター
-	bool		is_left_;				// プレイヤーの向き
-	bool		is_light_;				// 光化フラグ
-	bool		is_fly_;				// 空中フラグ
-	bool		is_enable_light_;
+	D3DXVECTOR2 position_;
+	bool		is_flip_;				// プレイヤーの向き
 	Sprite*		player_;				// プレイヤースプライト
 	Animation*	animation_;
 	ANIMATION_TYPE animation_type_;
 };
 
-#endif	// _PLAYER_H_
+#endif	// _OBJECT_PLAYER_H_
 
 //---------------------------------- EOF --------------------------------------

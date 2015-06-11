@@ -259,9 +259,6 @@
     <ClInclude Include="sources\application\scene\logo\logo_bg.h">
       <Filter>sources\application\scene\logo</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\player.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
     <ClInclude Include="sources\application\scene\title\title_logo.h">
       <Filter>sources\application\scene\title</Filter>
     </ClInclude>
@@ -315,6 +312,12 @@
     </ClInclude>
     <ClInclude Include="sources\application\scene\title\title_push_start.h">
       <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_player.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\game_player.h">
+      <Filter>sources\application\scene\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -453,9 +456,6 @@
     <ClCompile Include="sources\application\scene\logo\logo_bg.cpp">
       <Filter>sources\application\scene\logo</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\player.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
     <ClCompile Include="sources\application\scene\title\title_logo.cpp">
       <Filter>sources\application\scene\title</Filter>
     </ClCompile>
@@ -506,6 +506,12 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\title\title_push_start.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_player.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\game_player.cpp">
+      <Filter>sources\application\scene\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
