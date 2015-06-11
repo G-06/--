@@ -36,7 +36,7 @@ bool KeyConfigOk::Initialize(void)
 	select_button_ = new Sprite();
 	select_button_->Initialize();
 	select_button_->__size(Option::DEFAULT_MENU_SIZE);
-	select_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
+	select_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,375.0f));
 	select_button_->__texture_id(Texture::TEXTURE_ID_OK_BUTTON);
 	select_button_->__point(Sprite::POINT_CENTER);
 	select_button_->SetParameter();

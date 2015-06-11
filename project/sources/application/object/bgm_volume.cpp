@@ -38,13 +38,13 @@ bool BgmVolume::Initialize(void)
 	volume_gage_ = new Sprite();
 	volume_gage_->Initialize();
 	volume_gage_->__size(D3DXVECTOR2(bgm_volume_*30.f, 30.f));
-	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,300.f));
+	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,225.f));
 	volume_gage_->SetParameter();
 
 	bgm_button_ = new Sprite();
 	bgm_button_->Initialize();
 	bgm_button_->__size(Option::DEFAULT_MENU_SIZE);
-	bgm_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
+	bgm_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,225.f));
 	bgm_button_->__texture_id(Texture::TEXTURE_ID_BGM_LOGO);
 	bgm_button_->__point(Sprite::POINT_CENTER);
 	bgm_button_->SetParameter();
@@ -73,6 +73,7 @@ void BgmVolume::Update(void)
 //=============================================================================
 void BgmVolume::Draw(void)
 {
+	bgm_button_->Draw();
 	volume_gage_->Draw();
 }
 
@@ -81,9 +82,12 @@ void BgmVolume::Draw(void)
 //=============================================================================
 void BgmVolume::Adjustvolume(u32 volume)
 {
-	bgm_volume_ += volume;
-	volume_gage_->__size(D3DXVECTOR2(bgm_volume_*30.f, 30.0f));
-	volume_gage_->SetParameter();
+	if(bgm_volume_ + volume <= 9 && bgm_volume_ + volume >= 0)
+	{
+		bgm_volume_ += volume;
+		volume_gage_->__size(D3DXVECTOR2(bgm_volume_*30.f, 30.0f));
+		volume_gage_->SetParameter();
+	}
 }
 
 //=============================================================================

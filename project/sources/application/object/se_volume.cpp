@@ -38,13 +38,13 @@ bool SeVolume::Initialize(void)
 	volume_gage_ = new Sprite();
 	volume_gage_->Initialize();
 	volume_gage_->__size(D3DXVECTOR2(se_volume_*30.f, 30.f));
-	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,300.f));
+	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,275.f));
 	volume_gage_->SetParameter();
 
 	se_button_ = new Sprite();
 	se_button_->Initialize();
 	se_button_->__size(Option::DEFAULT_MENU_SIZE);
-	se_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
+	se_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,275.0f));
 	se_button_->__texture_id(Texture::TEXTURE_ID_SE_LOGO);
 	se_button_->__point(Sprite::POINT_CENTER);
 	se_button_->SetParameter();
@@ -73,6 +73,7 @@ void SeVolume::Update(void)
 //=============================================================================
 void SeVolume::Draw(void)
 {
+	se_button_->Draw();
 	volume_gage_->Draw();
 }
 
@@ -81,9 +82,12 @@ void SeVolume::Draw(void)
 //=============================================================================
 void SeVolume::Adjustvolume(u32 volume)
 {
-	se_volume_ += volume;
-	volume_gage_->__size(D3DXVECTOR2(se_volume_*30.f, 30.0f));
-	volume_gage_->SetParameter();
+	if(se_volume_ + volume <= 9 && se_volume_ + volume >= 0)
+	{
+		se_volume_ += volume;
+		volume_gage_->__size(D3DXVECTOR2(se_volume_*30.f, 30.0f));
+		volume_gage_->SetParameter();
+	}
 }
 
 //=============================================================================

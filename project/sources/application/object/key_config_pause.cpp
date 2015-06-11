@@ -36,7 +36,7 @@ bool KeyConfigPause::Initialize(void)
 	pause_button_ = new Sprite();
 	pause_button_->Initialize();
 	pause_button_->__size(Option::DEFAULT_MENU_SIZE);
-	pause_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
+	pause_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,575.0f));
 	pause_button_->__texture_id(Texture::TEXTURE_ID_PAUSE_BUTTON);
 	pause_button_->__point(Sprite::POINT_CENTER);
 	pause_button_->SetParameter();

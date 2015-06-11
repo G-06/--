@@ -36,7 +36,7 @@ bool KeyConfigCancel::Initialize(void)
 	cancel_button_ = new Sprite();
 	cancel_button_->Initialize();
 	cancel_button_->__size(Option::DEFAULT_MENU_SIZE);
-	cancel_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
+	cancel_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,425.0f));
 	cancel_button_->__texture_id(Texture::TEXTURE_ID_CANCEL_BUTTON);
 	cancel_button_->__point(Sprite::POINT_CENTER);
 	cancel_button_->SetParameter();

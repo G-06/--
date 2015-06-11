@@ -36,7 +36,7 @@ bool KeyConfigSpecial::Initialize(void)
 	special_button_ = new Sprite();
 	special_button_->Initialize();
 	special_button_->__size(Option::DEFAULT_MENU_SIZE);
-	special_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
+	special_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,475.0f));
 	special_button_->__texture_id(Texture::TEXTURE_ID_LIGHT_BUTTON);
 	special_button_->__point(Sprite::POINT_CENTER);
 	special_button_->SetParameter();

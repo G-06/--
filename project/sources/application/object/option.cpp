@@ -28,8 +28,8 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 Option::DEFAULT_MENU_SIZE = D3DXVECTOR2(200.f, 50.f);
-const D3DXVECTOR2 Option::EXPAND_MENU_SIZE = D3DXVECTOR2(300.f, 100.f);
+const D3DXVECTOR2 Option::DEFAULT_MENU_SIZE = D3DXVECTOR2(300.f, 100.f);
+const D3DXVECTOR2 Option::EXPAND_MENU_SIZE = D3DXVECTOR2(450.f, 150.f);
 
 
 //=============================================================================
@@ -87,6 +87,7 @@ bool Option::Initialize(void)
 	cursor_x_ = 0;
 	cursor_y_ = OPTION_VOLUME_BGM;
 
+
 	return true;
 }
 
@@ -125,11 +126,19 @@ void Option::Update(void)
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
 	{
 		cursor_y_++;
+		if(cursor_y_ >= OPTION_MAX)
+		{
+			cursor_y_ = OPTION_MIN + 1;
+		}
 	}
 
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
 	{
 		cursor_y_--;
+		if(cursor_y_ <= OPTION_MIN)
+		{
+			cursor_y_ = OPTION_MAX - 1;
+		}
 	}
 
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
@@ -152,7 +161,7 @@ void Option::Update(void)
 		
 	}
 
-	switch(option_scene_)
+	switch(cursor_y_)
 	{
 		case Option::OPTION_VOLUME_BGM:
 			bgm_volume_->Select(true);
@@ -176,13 +185,15 @@ void Option::Update(void)
 			key_config_special_->Select(true);
 			break;
 
+		case Option::OPTION_KEY_CONFIG_JUMP:
+			key_config_jump_->Select(true);
+			break;
+		
 		case Option::OPTION_KEY_CONFIG_PAUSE:
 			key_config_pause_->Select(true);
 			break;
 
-		case Option::OPTION_KEY_CONFIG_JUMP:
-			key_config_jump_->Select(true);
-			break;
+		
 
 		default:
 			break;

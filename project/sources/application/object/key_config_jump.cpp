@@ -36,7 +36,7 @@ bool KeyConfigJump::Initialize(void)
 	jump_button_ = new Sprite();
 	jump_button_->Initialize();
 	jump_button_->__size(Option::DEFAULT_MENU_SIZE);
-	jump_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,100.0f));
+	jump_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,525.0f));
 	jump_button_->__texture_id(Texture::TEXTURE_ID_JUMP_BUTTON);
 	jump_button_->__point(Sprite::POINT_CENTER);
 	jump_button_->SetParameter();

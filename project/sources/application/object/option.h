@@ -44,6 +44,7 @@ public:
 	static const D3DXVECTOR2 EXPAND_MENU_SIZE;
 	enum OPTION_SCENE
 	{
+		OPTION_MIN = -1,
 		OPTION_VOLUME_BGM = 0,
 		OPTION_VOLUME_SE,
 		OPTION_KEY_CONFIG_OK,
@@ -82,9 +83,6 @@ public:
 	KeyconfigLogo* keyconfig_logo_;
 	BgmVolume* bgm_volume_;
 	SeVolume* se_volume_;
-
-
-	OPTION_SCENE option_scene_;
 
 	s32 cursor_x_;
 	s32 cursor_y_;

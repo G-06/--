@@ -34,8 +34,9 @@ bool VolumeLogo::Initialize(void)
 {
 	sprite_ = new Sprite();
 	sprite_->Initialize();
-	sprite_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/3*2,(f32)GET_SYSTEM.__window()->__height()/5*4));
-	sprite_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/6+100.0f,(f32)GET_SYSTEM.__window()->__height()/10+100.0f));
+	sprite_->__size(D3DXVECTOR2(350, 100));
+	sprite_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 300,175.f));
+	sprite_->__point(Sprite::POINT_CENTER);
 	sprite_->__texture_id(Texture::TEXTURE_ID_VOLUME_BUTTON);
 	sprite_->SetParameter();
 	return true;
