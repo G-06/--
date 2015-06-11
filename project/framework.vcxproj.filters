@@ -265,6 +265,9 @@
     <ClInclude Include="sources\application\scene\title\title_logo.h">
       <Filter>sources\application\scene\title</Filter>
     </ClInclude>
+    <ClInclude Include="sources\collision\collision_map.h">
+      <Filter>sources\collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -407,6 +410,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\title\title_logo.cpp">
       <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\collision\collision_map.cpp">
+      <Filter>sources\collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

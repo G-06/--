@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// collision
+// collision line
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,62 +10,43 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _COLLISION_H_
-#define _COLLISION_H_
+#ifndef _COLLISION_LINE_H_
+#define _COLLISION_LINE_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
+#include "collision.h"
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Collision : public Basic
+class CollisionMap
 {
 public:
-	enum TYPE
-	{
-		TYPE_POINT = 0,
-		TYPE_CIRCLE,
-		TYPE_LINE,
-		TYPE_MAP,
-		TYPE_MAX
-	};
-
 	// constructor
-	Collision(const TYPE& type);
+	CollisionMap(void);
 
 	// destructor
-	virtual ~Collision(void);
-
-	// initialize
-	bool Initialize(void) { return true; }
-
-	// uninitialize
-	void Uninitialize(void) {}
+	virtual ~CollisionMap(void);
 
 	// is hit
-	virtual bool IsHit(const Collision* collision)const = 0;
-
-	// is hit point
-	virtual bool IsHitPoint(const D3DXVECTOR2& position)const = 0;
-
-	// is hit circle
-	virtual bool IsHitCircle(const D3DXVECTOR2& position,const f32& radius)const = 0;
-
-	// is hit line
-	virtual bool IsHitLine(const D3DXVECTOR2& position,const D3DXVECTOR2& start,const D3DXVECTOR2& end)const = 0;
+	bool IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECTOR2 chippos,float playerlengthx,float playerlengthy,float chiplengthx,float chiplengthy);
+	
 
 	// accessor
-	const TYPE& __type(void)const { return type_; }
-
-protected:
+	const D3DXVECTOR2&  __position(void)const { return position_; }
+	void __position(const D3DXVECTOR2& position) { position_ = position; }
 
 private:
-	TYPE type_;
+	D3DXVECTOR2 position_;
+	float pushlengthx_;
+	float pushlengthy_;
+	D3DXVECTOR2 pushposition_;
+	D3DXMATRIX matrix_;
+
 };
 
-#endif	// _COLLISION_H_
+#endif	// _COLLISION_LINE_H_
 
 //---------------------------------- EOF --------------------------------------

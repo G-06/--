@@ -31,6 +31,7 @@
     <ClCompile Include="sources\collision\collision.cpp" />
     <ClCompile Include="sources\collision\collision_circle.cpp" />
     <ClCompile Include="sources\collision\collision_line.cpp" />
+    <ClCompile Include="sources\collision\collision_map.cpp" />
     <ClCompile Include="sources\collision\collision_point.cpp" />
     <ClCompile Include="sources\common\animation\animation.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\assert.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="sources\collision\collision.h" />
     <ClInclude Include="sources\collision\collision_circle.h" />
     <ClInclude Include="sources\collision\collision_line.h" />
+    <ClInclude Include="sources\collision\collision_map.h" />
     <ClInclude Include="sources\collision\collision_point.h" />
     <ClInclude Include="sources\common\animation\animation.h" />
     <ClInclude Include="sources\common\basic\basic.h" />
@@ -168,6 +170,7 @@
     <TargetName>$(ProjectName)</TargetName>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath);$(SolutionDir)sources;$(SolutionDir)sources\interface;$(SolutionDir)sources\interface\character;$(SolutionDir)sources\interface\graphic;$(SolutionDir)sources\interface\input;$(SolutionDir)sources\interface\sound;$(SolutionDir)sources\common;$(SolutionDir)sources\application;$(SolutionDir)sources\application;$(SolutionDir)sources\interface;$(SolutionDir)sources\interface\character</IncludePath>
     <IntDir>$(Configuration)\</IntDir>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">
     <LinkIncremental>true</LinkIncremental>
