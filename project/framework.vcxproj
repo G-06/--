@@ -16,12 +16,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\application\application.cpp" />
-   <ClCompile Include="sources\application\object\message_sprite_smooth.cpp" />
-    <ClCompile Include="sources\application\object\message_window.cpp" />
-    <ClCompile Include="sources\application\object\map.cpp" />
+    <ClCompile Include="sources\application\object\keyconfig_logo.cpp" />
+    <ClCompile Include="sources\application\object\key_config_cancel.cpp" />
+    <ClCompile Include="sources\application\object\key_config_jump.cpp" />
+    <ClCompile Include="sources\application\object\key_config_pause.cpp" />
+    <ClCompile Include="sources\application\object\key_config_special.cpp" />
+    <ClCompile Include="sources\application\object\option.cpp" />
+    <ClCompile Include="sources\application\object\option_bg.cpp" />
+    <ClCompile Include="sources\application\object\key_config_ok.cpp" />
+    <ClCompile Include="sources\application\object\bgm_volume.cpp" />
+    <ClCompile Include="sources\application\object\option_logo.cpp" />
     <ClCompile Include="sources\application\object\player.cpp" />
+    <ClCompile Include="sources\application\object\se_volume.cpp" />
     <ClCompile Include="sources\application\object\stage.cpp" />
     <ClCompile Include="sources\application\object\stage_offset.cpp" />
+    <ClCompile Include="sources\application\object\volume_logo.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
     <ClCompile Include="sources\application\scene\logo\logo.cpp" />
     <ClCompile Include="sources\application\scene\logo\logo_bg.cpp" />
@@ -31,8 +40,6 @@
     <ClCompile Include="sources\application\scene\title\scene_title.cpp" />
     <ClCompile Include="sources\application\scene\title\title_bg.cpp" />
     <ClCompile Include="sources\application\scene\title\title_logo.cpp" />
-    <ClCompile Include="sources\application\scene\title\title_push_start.cpp" />
-    <ClCompile Include="sources\application\scene\title\title_select.cpp" />
     <ClCompile Include="sources\collision\collision.cpp" />
     <ClCompile Include="sources\collision\collision_circle.cpp" />
     <ClCompile Include="sources\collision\collision_line.cpp" />
@@ -51,7 +58,6 @@
     <ClCompile Include="sources\frame\frame_controller.cpp" />
     <ClCompile Include="sources\main.cpp" />
     <ClCompile Include="sources\render\fade.cpp" />
-    <ClCompile Include="sources\render\mesh_sprite.cpp" />
     <ClCompile Include="sources\render\sprite.cpp" />
     <ClCompile Include="sources\render\text_box.cpp" />
     <ClCompile Include="sources\system\directx9\directx9.cpp" />
@@ -76,12 +82,22 @@
   <ItemGroup>
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="sources\application\application.h" />
-    <ClInclude Include="sources\application\object\message_sprite_smooth.h" />
-    <ClInclude Include="sources\application\object\message_window.h" />
-    <ClInclude Include="sources\application\object\map.h" />
+    <ClInclude Include="sources\application\object\keyconfig_logo.h" />
+    <ClInclude Include="sources\application\object\key_config_cancel.h" />
+    <ClInclude Include="sources\application\object\key_config_jump.h" />
+    <ClInclude Include="sources\application\object\key_config_pause.h" />
+    <ClInclude Include="sources\application\object\key_config_special.h" />
+    <ClInclude Include="sources\application\object\option.h" />
+    <ClInclude Include="sources\application\object\option_bg.h" />
+    <ClInclude Include="sources\application\object\key_config_ok.h" />
+    <ClInclude Include="sources\application\object\option_data.h" />
+    <ClInclude Include="sources\application\object\bgm_volume.h" />
+    <ClInclude Include="sources\application\object\option_logo.h" />
     <ClInclude Include="sources\application\object\player.h" />
+    <ClInclude Include="sources\application\object\se_volume.h" />
     <ClInclude Include="sources\application\object\stage.h" />
     <ClInclude Include="sources\application\object\stage_offset.h" />
+    <ClInclude Include="sources\application\object\volume_logo.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
     <ClInclude Include="sources\application\scene\logo\logo.h" />
@@ -92,8 +108,6 @@
     <ClInclude Include="sources\application\scene\title\scene_title.h" />
     <ClInclude Include="sources\application\scene\title\title_bg.h" />
     <ClInclude Include="sources\application\scene\title\title_logo.h" />
-    <ClInclude Include="sources\application\scene\title\title_push_start.h" />
-    <ClInclude Include="sources\application\scene\title\title_select.h" />
     <ClInclude Include="sources\collision\collision.h" />
     <ClInclude Include="sources\collision\collision_circle.h" />
     <ClInclude Include="sources\collision\collision_line.h" />
@@ -113,7 +127,6 @@
     <ClInclude Include="sources\frame\frame_controller.h" />
     <ClInclude Include="sources\main.h" />
     <ClInclude Include="sources\render\fade.h" />
-    <ClInclude Include="sources\render\mesh_sprite.h" />
     <ClInclude Include="sources\render\sprite.h" />
     <ClInclude Include="sources\render\text_box.h" />
     <ClInclude Include="sources\system\directx9\directx9.h" />

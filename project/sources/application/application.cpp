@@ -13,6 +13,8 @@
 #include "system/system.h"
 #include "scene/scene_manager.h"
 #include "frame/frame_controller.h"
+#include "object/option.h"
+
 
 //=============================================================================
 // constructor
@@ -41,6 +43,7 @@ bool Application::Initialize(void)
 
 	// create scene manager
 	scene_manager_ = new SceneManager();
+
 
 	// initialize scene manager
 	if(!SafeInitialize(scene_manager_))
@@ -104,6 +107,7 @@ void Application::Uninitialize(void)
 
 	// release frame controller
 	SafeRelease(frame_controller_);
+
 }
 
 //=============================================================================
@@ -135,13 +139,15 @@ void Application::Update(void)
 	if(!DEBUG_TOOL.__is_pause())
 	{
 		// update scene manager
-		scene_manager_->Update();
+		//scene_manager_->Update();
+
 	}
 
 	if(GET_SYSTEM.__directx9()->BeginDraw())
 	{
 		// draw scene manager
-		scene_manager_->Draw();
+		//scene_manager_->Draw();
+
 
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
 		{
