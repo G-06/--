@@ -15,7 +15,6 @@
 #include "frame/frame_controller.h"
 #include "object/option.h"
 
-
 //=============================================================================
 // constructor
 //=============================================================================
@@ -139,14 +138,14 @@ void Application::Update(void)
 	if(!DEBUG_TOOL.__is_pause())
 	{
 		// update scene manager
-		//scene_manager_->Update();
+		scene_manager_->Update();
 
 	}
 
 	if(GET_SYSTEM.__directx9()->BeginDraw())
 	{
 		// draw scene manager
-		//scene_manager_->Draw();
+		scene_manager_->Draw();
 
 
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_0))
