@@ -277,6 +277,12 @@
     <ClInclude Include="sources\application\scene\title\title_push_start.h">
       <Filter>sources\application\scene\title</Filter>
     </ClInclude>
+    <ClInclude Include="sources\render\mesh_sprite.h">
+      <Filter>sources\render</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\map.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -431,6 +437,12 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\title\title_push_start.cpp">
       <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\render\mesh_sprite.cpp">
+      <Filter>sources\render</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\map.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

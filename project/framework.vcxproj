@@ -16,8 +16,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\application\application.cpp" />
-    <ClCompile Include="sources\application\object\message_sprite_smooth.cpp" />
+   <ClCompile Include="sources\application\object\message_sprite_smooth.cpp" />
     <ClCompile Include="sources\application\object\message_window.cpp" />
+    <ClCompile Include="sources\application\object\map.cpp" />
     <ClCompile Include="sources\application\object\player.cpp" />
     <ClCompile Include="sources\application\object\stage.cpp" />
     <ClCompile Include="sources\application\object\stage_offset.cpp" />
@@ -50,6 +51,7 @@
     <ClCompile Include="sources\frame\frame_controller.cpp" />
     <ClCompile Include="sources\main.cpp" />
     <ClCompile Include="sources\render\fade.cpp" />
+    <ClCompile Include="sources\render\mesh_sprite.cpp" />
     <ClCompile Include="sources\render\sprite.cpp" />
     <ClCompile Include="sources\render\text_box.cpp" />
     <ClCompile Include="sources\system\directx9\directx9.cpp" />
@@ -76,6 +78,7 @@
     <ClInclude Include="sources\application\application.h" />
     <ClInclude Include="sources\application\object\message_sprite_smooth.h" />
     <ClInclude Include="sources\application\object\message_window.h" />
+    <ClInclude Include="sources\application\object\map.h" />
     <ClInclude Include="sources\application\object\player.h" />
     <ClInclude Include="sources\application\object\stage.h" />
     <ClInclude Include="sources\application\object\stage_offset.h" />
@@ -110,6 +113,7 @@
     <ClInclude Include="sources\frame\frame_controller.h" />
     <ClInclude Include="sources\main.h" />
     <ClInclude Include="sources\render\fade.h" />
+    <ClInclude Include="sources\render\mesh_sprite.h" />
     <ClInclude Include="sources\render\sprite.h" />
     <ClInclude Include="sources\render\text_box.h" />
     <ClInclude Include="sources\system\directx9\directx9.h" />
