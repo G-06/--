@@ -98,6 +98,9 @@
     <Filter Include="sources\default_include\common\animation">
       <UniqueIdentifier>{1c3a907c-c99d-4590-83fa-34590e798ccd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\application\object\stage_select">
+      <UniqueIdentifier>{eaad040a-94b7-430d-b846-a04888dff142}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -271,6 +274,39 @@
     <ClInclude Include="sources\application\object\map.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_arrow.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_arrow_left.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_arrow_right.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_bg.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_flame.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_stage_image.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_stage_name.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_region.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_record.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_number.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -419,6 +455,39 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\map.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_arrow.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_arrow_left.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_arrow_right.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_bg.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_flame.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_stage_image.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_stage_name.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_region.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_record.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_number.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

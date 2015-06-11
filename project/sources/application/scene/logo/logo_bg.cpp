@@ -40,6 +40,7 @@ bool LogoBg::Initialize(void)
 	logo_bg_->__texture_id(Texture::TEXTURE_ID_LOGO_BG);
 	logo_bg_->SetParameter();
 
+
 	return true;
 }
 
