@@ -57,6 +57,12 @@ public:
 	// set volume
 	void SetVolume(const f32& volume);
 
+	// create clone ixaudio2 source voice
+	IXAudio2SourceVoice* CreateCloneIXAudio2SourceVoice(void);
+
+	// clone xaudio2 buffer
+	void CloneXAudio2Buffer(XAUDIO2_BUFFER* xaudio2_buffer);
+
 	// accesor
 	const f32& __volume(void)const { return volume_; }
 	bool __is_play(void)const { return is_play_; }
@@ -69,7 +75,7 @@ private:
 	bool is_pause_;
 	bool is_play_;
 	f32 volume_;
-
+	WAVEFORMATEX waveformatex_;
 	bool ReadWaveData(const s8* data);
 };
 
