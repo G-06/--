@@ -61,7 +61,7 @@ public:
 	const TYPE& __type(void)const { return type_; }
 
 protected:
-
+	
 private:
 	TYPE type_;
 };

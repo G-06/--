@@ -24,6 +24,7 @@
 class Stage;
 class StageOffset;
 class Player;
+class CollisionMap;
 
 //*****************************************************************************
 // class definition
@@ -56,6 +57,7 @@ private:
 	Stage* stage_;
 	StageOffset* stage_offset_;
 	Player* player_;
+	CollisionMap* collision_;
 };
 
 #endif	// _SCENE_GAME_H_

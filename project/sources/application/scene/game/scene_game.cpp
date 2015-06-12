@@ -15,7 +15,7 @@
 #include "application/object/stage.h"
 #include "application/object/stage_offset.h"
 #include "object/player.h"
-
+#include "collision/collision_map.h"
 //=============================================================================
 // constructor
 //=============================================================================
@@ -53,6 +53,13 @@ bool SceneGame::Initialize(void)
 	player_ = new Player();
 
 	if(!SafeInitialize(player_))
+	{
+		return false;
+	}
+
+	collision_ = new CollisionMap();
+
+	if(!SafeInitialize(collision_))
 	{
 		return false;
 	}
@@ -100,6 +107,11 @@ void SceneGame::Update(void)
 	stage_->Update();
 
 	// collision
+
+	if(collision_->IsHit(player_->__position(),player_->__old_position(),D3DXVECTOR2(400,0),(player_->__size().x/2),(player_->__size().y/2),200,200))
+	{
+		
+	}
 	if(player_->__position().y + player_->__size().y > stage_->__size().y)
 	{
 		player_->HitStage(D3DXVECTOR2(player_->__position().x,stage_->__size().y - player_->__size().y),true);

@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-// collision line
+// collision Map
 //
-// Author		: Kenji Kabutomori
+// Author		: Haruki Saitou
 //
 //*****************************************************************************
 
@@ -26,11 +26,23 @@ CollisionMap::~CollisionMap(void)
 }
 
 //=============================================================================
+// initialize
+//=============================================================================
+bool CollisionMap::Initialize(void)
+{
+	position_				= D3DXVECTOR2(0, 0);
+	pushposition_			= D3DXVECTOR2(0, 0);
+	pushlengthx_			= 0;
+	pushlengthy_			= 0;
+	return true;
+}
+
+//=============================================================================
 // is hit
 //=============================================================================
 bool CollisionMap::IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECTOR2 chippos,float playerlengthx,float playerlengthy,float chiplengthx,float chiplengthy)
 {
-	float a,b,c;
+	f32 a,b,c;
 
 	//プレイヤーのベクトルを求める
 	D3DXVECTOR2 playerAxisX,playerAxisY,chipAxisX,chipAxisY,v;
@@ -44,6 +56,7 @@ bool CollisionMap::IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECT
 
 	playerAxisY.x = matrix_._21;
 	playerAxisY.y = matrix_._22;
+
 	// 対象のベクトルを求める
 	D3DXMatrixIdentity(&matrix_);
 	D3DXMatrixTranslation(&translationMatrix,chippos.x,chippos.y,0);
@@ -53,14 +66,14 @@ bool CollisionMap::IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECT
 	chipAxisX.y = matrix_._12;
 	chipAxisY.x = matrix_._21;
 	chipAxisY.y = matrix_._22;
-
+	
+	// あたり判定処理（当たってない場合抜ける）
 	v = playerpos - chippos;
-
 	a = playerlengthx;
 	b = abs(D3DXVec2Dot(&(chipAxisX * chiplengthx),&playerAxisX))+
 		abs(D3DXVec2Dot(&(chipAxisY * chiplengthy),&playerAxisX));
 	c = abs(D3DXVec2Dot(&v, &playerAxisX));
-	float maxLengthX = playerlengthx + chiplengthx;
+	f32 maxLengthX = playerlengthx + chiplengthx;
 	if( (a + b) < c)
 	{
 		
@@ -71,7 +84,7 @@ bool CollisionMap::IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECT
 	b = abs(D3DXVec2Dot(&(chipAxisX * chiplengthx),&playerAxisY))+
 		abs(D3DXVec2Dot(&(chipAxisY * chiplengthy),&playerAxisY));
 	c = abs(D3DXVec2Dot(&v, &playerAxisY));
-	float maxLengthY = playerlengthy + chiplengthy;
+	f32 maxLengthY = playerlengthy + chiplengthy;
 	if( (a + b) < c)
 	{
 		return false;
@@ -92,16 +105,17 @@ bool CollisionMap::IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECT
 	{
 		return false;
 	}
+	// めり込み距離の計算
 	c = abs(D3DXVec2Dot(&v, &chipAxisX));
 	pushlengthx_ = maxLengthX - c;
 	c = abs(D3DXVec2Dot(&v, &chipAxisY));
 	pushlengthy_ = maxLengthY - c;
 
+	// 押し出したポジションの計算
 	D3DXVECTOR2 pv;
 	pv = playerpos - oldplayerpos;
 	if(pv.x < 0)
 	{
-		pushlengthx_ *= -1;
 	}
 	else if(pv.x == 0)
 	{
@@ -109,6 +123,7 @@ bool CollisionMap::IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECT
 	}
 	else if(pv.x > 0)
 	{
+		pushlengthx_ *= -1;
 	}
 	if(pv.y < 0)
 	{
@@ -120,6 +135,14 @@ bool CollisionMap::IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECT
 	else if(pv.y > 0)
 	{
 		pushlengthy_ *= -1;
+	}
+	if(abs(pv.x)>abs(pv.y))
+	{
+		pushlengthy_ = 0;
+	}
+	else if(abs(pv.y)>abs(pv.x))
+	{
+		pushlengthx_ = 0;
 	}
 
 	pushposition_ = D3DXVECTOR2(playerpos.x + pushlengthx_,playerpos.y + pushlengthy_);
