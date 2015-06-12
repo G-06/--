@@ -56,7 +56,7 @@ void SelectRecord::Uninitialize(void)
 {
 	for(int i=0;i<4;i++)
 	{
-		SafeDelete(number_[i]);
+		SafeRelease(number_[i]);
 	}
 }
 

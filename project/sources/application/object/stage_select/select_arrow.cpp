@@ -51,8 +51,8 @@ bool SelectArrow::Initialize(void)
 //=============================================================================
 void SelectArrow::Uninitialize(void)
 {
-	SafeDelete(arrow_right_);
-	SafeDelete(arrow_left_);
+	SafeRelease(arrow_right_);
+	SafeRelease(arrow_left_);
 }
 
 //=============================================================================
