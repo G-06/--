@@ -18,6 +18,7 @@
 #include "object/message_window.h"
 #include "system/system.h"
 #include "system/directx9/texture/texture.h"
+#include "object/option.h"
 
 //*****************************************************************************
 // constant definition
@@ -56,6 +57,7 @@ SceneTitle::SceneTitle(void)
 	,current_select_(0)
 //	,mode_(MODE_SELECT)
 	,mode_(MODE_PUSH)
+	,option_(nullptr)
 {
 	memset(select_, 0, sizeof(select_));
 }
@@ -108,6 +110,9 @@ bool SceneTitle::Initialize(void)
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
+	option_ = new Option();
+	option_->Initialize();
+
 	frame_count_ = 0;
 	current_select_ = 0;
 
@@ -126,6 +131,8 @@ void SceneTitle::Uninitialize(void)
 	SafeRelease(push_);
 
 	SafeRelease(push_frame_);
+
+	SafeRelease(option_);
 
 	for(int i = 0 ; i < SELECT_MAX ; i++){
 		SafeRelease(select_[i].frame_);
@@ -175,6 +182,7 @@ void SceneTitle::Update(void)
 		{
 			_UpdateMessage();
 		}
+		option_->Update();
 		message_window_->Update();
 
 	}
@@ -201,6 +209,7 @@ void SceneTitle::Draw(void)
 			select_[i].select_->Draw();
 		}
 	}
+	option_->Draw();
 
 	message_window_->Draw();
 }

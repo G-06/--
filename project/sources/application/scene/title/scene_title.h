@@ -26,6 +26,7 @@ class TitleLogo;
 class TitlePushStart;
 class TitleSelect;
 class MessageWindow;
+class Option;
 
 //*****************************************************************************
 // class definition
@@ -109,6 +110,8 @@ private:
 
 	// åªç›ÇÃÉÇÅ[Éh
 	MODE mode_;
+
+	Option* option_;
 };
 
 #endif	// _SCENE_TITLE_H_

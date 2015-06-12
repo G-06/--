@@ -98,6 +98,9 @@
     <Filter Include="sources\default_include\common\animation">
       <UniqueIdentifier>{1c3a907c-c99d-4590-83fa-34590e798ccd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\application\object\stage_select">
+      <UniqueIdentifier>{eaad040a-94b7-430d-b846-a04888dff142}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -262,43 +265,55 @@
     <ClInclude Include="sources\application\scene\title\title_logo.h">
       <Filter>sources\application\scene\title</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\keyconfig_logo.h">
+    <ClInclude Include="sources\render\mesh_sprite.h">
+      <Filter>sources\render</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\map.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\bgm_volume.h">
+    <ClInclude Include="sources\application\object\stage_select\select_arrow.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_arrow_left.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_arrow_right.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_bg.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_flame.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_stage_image.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_stage_name.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_cancel.h">
+    <ClInclude Include="sources\application\object\stage_region.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_jump.h">
-      <Filter>sources\application\object</Filter>
+    <ClInclude Include="sources\application\object\stage_select\select_record.h">
+      <Filter>sources\application\object\stage_select</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_ok.h">
-      <Filter>sources\application\object</Filter>
+    <ClInclude Include="sources\application\object\stage_select\select_number.h">
+      <Filter>sources\application\object\stage_select</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_pause.h">
-      <Filter>sources\application\object</Filter>
+    <ClInclude Include="sources\application\scene\game\game_player.h">
+      <Filter>sources\application\scene\game</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_special.h">
-      <Filter>sources\application\object</Filter>
+    <ClInclude Include="sources\application\scene\title\title_push_start.h">
+      <Filter>sources\application\scene\title</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\option.h">
-      <Filter>sources\application\object</Filter>
+    <ClInclude Include="sources\application\scene\title\title_select.h">
+      <Filter>sources\application\scene\title</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\option_bg.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\object\option_data.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\object\option_logo.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\object\se_volume.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\object\volume_logo.h">
+    <ClInclude Include="sources\application\object\object_player.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\object\message_window.h">
@@ -307,17 +322,41 @@
     <ClInclude Include="sources\application\object\message_sprite_smooth.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\title\title_select.h">
+    <ClInclude Include="sources\application\object\option.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\title\title_push_start.h">
+    <ClInclude Include="sources\application\object\se_volume.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\object_player.h">
+    <ClInclude Include="sources\application\object\bgm_volume.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\game\game_player.h">
-      <Filter>sources\application\scene\game</Filter>
+    <ClInclude Include="sources\application\object\keyconfig_logo.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\volume_logo.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option_logo.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\key_config_jump.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\key_config_pause.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\key_config_special.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\key_config_cancel.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\key_config_ok.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option_bg.h">
+      <Filter>sources\application\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -459,40 +498,55 @@
     <ClCompile Include="sources\application\scene\title\title_logo.cpp">
       <Filter>sources\application\scene\title</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\volume_logo.cpp">
+    <ClCompile Include="sources\render\mesh_sprite.cpp">
+      <Filter>sources\render</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\map.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\bgm_volume.cpp">
+    <ClCompile Include="sources\application\object\stage_select\select_arrow.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_arrow_left.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_arrow_right.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_bg.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_flame.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_stage_image.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_stage_name.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_region.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_cancel.cpp">
+    <ClCompile Include="sources\application\object\stage_select.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_jump.cpp">
-      <Filter>sources\application\object</Filter>
+    <ClCompile Include="sources\application\object\stage_select\select_record.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_ok.cpp">
-      <Filter>sources\application\object</Filter>
+    <ClCompile Include="sources\application\object\stage_select\select_number.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_pause.cpp">
-      <Filter>sources\application\object</Filter>
+    <ClCompile Include="sources\application\scene\game\game_player.cpp">
+      <Filter>sources\application\scene\game</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_special.cpp">
-      <Filter>sources\application\object</Filter>
+    <ClCompile Include="sources\application\scene\title\title_push_start.cpp">
+      <Filter>sources\application\scene\title</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\keyconfig_logo.cpp">
-      <Filter>sources\application\object</Filter>
+    <ClCompile Include="sources\application\scene\title\title_select.cpp">
+      <Filter>sources\application\scene\title</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\option.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\option_bg.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\option_logo.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\se_volume.cpp">
+    <ClCompile Include="sources\application\object\object_player.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\object\message_window.cpp">
@@ -501,17 +555,41 @@
     <ClCompile Include="sources\application\object\message_sprite_smooth.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\title\title_select.cpp">
+    <ClCompile Include="sources\application\object\option.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\title\title_push_start.cpp">
+    <ClCompile Include="sources\application\object\se_volume.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\object_player.cpp">
+    <ClCompile Include="sources\application\object\bgm_volume.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\game\game_player.cpp">
-      <Filter>sources\application\scene\game</Filter>
+    <ClCompile Include="sources\application\object\keyconfig_logo.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\volume_logo.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option_logo.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\key_config_jump.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\key_config_pause.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\key_config_special.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\key_config_cancel.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\key_config_ok.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option_bg.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
