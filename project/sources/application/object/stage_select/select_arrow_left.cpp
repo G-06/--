@@ -14,8 +14,6 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
-
-
 //=============================================================================
 // constructor
 //=============================================================================
@@ -87,19 +85,5 @@ void ArrowLeft::Draw(void)
 {
 	arrow_left_->Draw();
 }
-
-void ArrowLeft::__Alpha_On(void)
-{
-	alpha_ = 255;
-	arrow_left_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
-	arrow_left_->SetParameter();
-}
-void ArrowLeft::__Alpha_Off(void)
-{
-	alpha_ = 0;
-	arrow_left_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
-	arrow_left_->SetParameter();
-}
-
 
 //---------------------------------- EOF --------------------------------------
