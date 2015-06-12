@@ -43,7 +43,7 @@ bool Number::Initialize(void)
 	number_->Initialize();
 	number_->__size(D3DXVECTOR2((f32)50.0f,(f32)100.0f));
 	number_->__position(position_);
-	number_->__texture_id(Texture::TEXTURE_ID_NUMBER);
+	number_->__texture_id(Texture::TEXTURE_ID_GENERAL_NUMBER);
 	number_->__division_height(1);
 	number_->__division_width(10);
 	number_->__index(index_);

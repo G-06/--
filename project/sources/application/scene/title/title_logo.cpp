@@ -2,7 +2,7 @@
 //
 // title logo
 //
-// Author		: Kenji Kabutomori
+// Author	: masato masuda
 //
 //*****************************************************************************
 
@@ -16,8 +16,10 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 TitleLogo::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,200.0f);
-const D3DXVECTOR2 TitleLogo::DEFAULT_SIZE = D3DXVECTOR2(480.0f,80.0f);
+const float scale = 1.6f;
+const D3DXVECTOR2 TitleLogo::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,220.0f);
+const D3DXVECTOR2 TitleLogo::DEFAULT_SIZE = D3DXVECTOR2(540.0f * scale, 251.0f * scale);
+
 
 //=============================================================================
 // constructor

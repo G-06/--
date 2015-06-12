@@ -51,7 +51,7 @@ bool SelectFrame::Initialize(void)
 
 	frame_->__size(DEFAULT_SIZE);
 	frame_->__position(DEFAULT_POSITION);
-	frame_->__texture_id(Texture::TEXTURE_ID_SLECT_FRAME_TST);
+	frame_->__texture_id(Texture::TEXTURE_ID_SELECT_STAGE_WINDOW);
 	frame_->__index((u32)0);
 	frame_->__point(Sprite::POINT_CENTER);
 	frame_->SetParameter();

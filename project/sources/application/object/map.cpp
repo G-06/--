@@ -119,7 +119,7 @@ bool Map::LoadFromMemory(const u8* memory)
 	map_->__height(128);
 	map_->__division_width(2);
 	map_->__division_height(2);
-	map_->__texture_id(Texture::TEXTURE_ID_TEST);
+	map_->__texture_id(Texture::TEXTURE_ID_DOT);
 	for(u32 i = 0;i < height;++i)
 	{
 		for(u32 j = 0;j < width;++j)

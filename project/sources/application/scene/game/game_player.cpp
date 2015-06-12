@@ -133,7 +133,7 @@ void GamePlayer::Update(void)
 		}
 		else
 		{
-			player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_FALL);
+			player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JUMP);
 		}
 
 		move_.y += DEFAULT_GRAVITY;

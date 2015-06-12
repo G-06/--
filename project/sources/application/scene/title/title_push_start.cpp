@@ -47,7 +47,7 @@ bool TitlePushStart::Initialize(void)
 	sprite_->__size(DEFAULT_SIZE);
 	sprite_->__position(DEFAULT_POSITION);
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__texture_id(Texture::TEXTURE_ID_TITLE_STRING_TEST_A);
+	sprite_->__texture_id(Texture::TEXTURE_ID_TITLE_STRING_PUSH_START);
 	sprite_->SetParameter();
 	return true;
 }

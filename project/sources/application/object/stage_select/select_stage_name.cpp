@@ -52,7 +52,7 @@ bool StageName::Initialize(void)
 
 	name_->__size(DEFAULT_SIZE);
 	name_->__position(DEFAULT_POSITION);
-	name_->__texture_id(Texture::TEXTURE_ID_STAGE_NAME_TST);
+	name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_1);
 	name_->__index((u32)0);
 	name_->__point(Sprite::POINT_CENTER);
 	name_->SetParameter();
@@ -96,16 +96,16 @@ void StageName::__set_name_texture(STAGE_ID stage)
 	case STAGE_ID_MAX:
 	default:
 		//ステージ名がよくわからないものはすべてテストテクスチャで表示
-		name_->__texture_id(Texture::TEXTURE_ID_STAGE_NAME_TST);
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_1);
 		name_->SetParameter();
 		break;
 
 	case STAGE_ID_0:
-		name_->__texture_id(Texture::TEXTURE_ID_STAGE_NAME_TST1);
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_1);
 		name_->SetParameter();
 		break;
 	case STAGE_ID_1:
-		name_->__texture_id(Texture::TEXTURE_ID_STAGE_NAME_TST2);
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_2);
 		name_->SetParameter();
 		break;
 	}

@@ -37,7 +37,8 @@ bool LogoBg::Initialize(void)
 	logo_bg_->Initialize();
 	logo_bg_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
 	logo_bg_->__position(D3DXVECTOR2(0.0f,0.0f));
-	logo_bg_->__texture_id(Texture::TEXTURE_ID_LOGO_BG);
+	logo_bg_->__color(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+//	logo_bg_->__texture_id(Texture::TEXTURE_ID_LOGO_BG);
 	logo_bg_->SetParameter();
 
 

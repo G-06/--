@@ -2,7 +2,7 @@
 //
 // title logo
 //
-// Author		: Kenji Kabutomori
+// Author	: masato masuda
 //
 //*****************************************************************************
 

@@ -48,7 +48,7 @@ bool Stage::Initialize(void)
 		return false;
 	}
 
-	bg_->__texture_id(Texture::TEXTURE_ID_STAGE_BG);
+	bg_->__texture_id(Texture::TEXTURE_ID_SELECT_BG);
 	bg_->__size(STAGE_SIZE);
 	bg_->SetParameter();
 

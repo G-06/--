@@ -52,7 +52,7 @@ bool StageImage::Initialize(void)
 
 	image_->__size(DEFAULT_SIZE);
 	image_->__position(DEFAULT_POSITION);
-	image_->__texture_id(Texture::TEXTURE_ID_STAGE_IMAGE_TST);
+	image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_1);
 	image_->__index((u32)0);
 	image_->__point(Sprite::POINT_CENTER);
 	image_->SetParameter();
@@ -97,7 +97,7 @@ void StageImage::__set_image_texture(STAGE_ID stage)
 	case STAGE_ID_MAX:
 	default:
 		//ステージイメージがよくわからないものの時はすべてテストテクスチャで表示
-		image_->__texture_id(Texture::TEXTURE_ID_STAGE_IMAGE_TST);
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_1);
 		image_->SetParameter();
 
 		break;

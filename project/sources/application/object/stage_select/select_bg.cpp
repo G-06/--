@@ -37,7 +37,7 @@ bool SelectBg::Initialize(void)
 	bg_->Initialize();
 	bg_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
 	bg_->__position(D3DXVECTOR2(0.0f,0.0f));
-	bg_->__texture_id(Texture::TEXTURE_ID_LOGO_BG);
+	bg_->__texture_id(Texture::TEXTURE_ID_SELECT_BG);
 	bg_->SetParameter();
 
 
