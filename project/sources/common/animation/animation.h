@@ -60,6 +60,9 @@ public:
 	// stop
 	void Stop(void);
 
+	// clear
+	void Clear(void);
+
 	// accessor
 	void __current_index(const u32& current_index) { current_index_ = current_index; frame_count_ = 0; }
 	const u32& __current_index(void)const { return current_index_; }
@@ -72,7 +75,7 @@ private:
 	u32 current_index_;
 	u32 number_;
 	std::vector<DATA> container_;
-	bool is_actitive;
+	bool is_actitive_;
 	bool is_end_;
 };
 

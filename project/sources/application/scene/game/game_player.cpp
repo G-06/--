@@ -119,14 +119,21 @@ void GamePlayer::Update(void)
 
 	if(is_light_ == false)
 	{
-		if(move_.x <= 0.9f && move_.x >= -0.9f)
+		if(is_fly_ == false)
 		{
-			move_.x = 0.0f;
-			player_->Wait();
+			if(move_.x <= 0.9f && move_.x >= -0.9f)
+			{
+				move_.x = 0.0f;
+				player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
+			}
+			else
+			{
+				player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
+			}
 		}
 		else
 		{
-			player_->Run();
+			player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_FALL);
 		}
 
 		move_.y += DEFAULT_GRAVITY;
@@ -180,6 +187,7 @@ void GamePlayer::Jump(void)
 	{
 		is_fly_ = true;
 		move_.y = JUMP_SPEED;
+		player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JUMP);
 	}
 }
 
@@ -232,7 +240,7 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 			move_ = normalize_vector * LIGHT_SPEED;
 		}
 
-		player_->Light();
+		player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
 	}
 }
 
