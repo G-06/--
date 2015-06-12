@@ -47,15 +47,28 @@ public:
 	// draw
 	void Draw(void);
 
+	// get index
+	u32 GetIndex(const D3DXVECTOR2& position,D3DXVECTOR2* index_position = nullptr);
+
 	// load from file
 	bool LoadFromFile(const s8* filename);
 
 	// load from memory
 	bool LoadFromMemory(const u8* memory);
 
-private:
-	MeshSprite* map_;
+	// accessor
+	void __position(const D3DXVECTOR2& position) { position_ = position; }
 
+private:
+	static const D3DXVECTOR2 SIZE;
+	static const u32 DIVISION_WIDTH;
+	static const u32 DIVISION_HEIGHT;
+
+	MeshSprite* map_;
+	u32 width_;
+	u32 height_;
+	u32* indexs_;
+	D3DXVECTOR2 position_;
 };
 
 #endif	// _MAP_H_

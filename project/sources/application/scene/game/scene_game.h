@@ -27,6 +27,7 @@ class StageOffset;
 class GamePlayer;
 class StageSelect;
 class Fade;
+class Map;
 
 //*****************************************************************************
 // class definition
@@ -65,6 +66,7 @@ private:
 	Stage* stage_;
 	StageOffset* stage_offset_;
 	GamePlayer* player_;
+	Map* map_;
 	StageSelect* stage_select_;
 	Fade* fade_;
 

@@ -16,7 +16,7 @@
 #include "application/object/stage_offset.h"
 #include "game_player.h"
 #include "render/fade.h"
-
+#include "object/map.h"
 
 STAGE_ID SceneGame:: next_stage_;		// 今いるステージ（ステージ選択含む）
 
@@ -31,6 +31,7 @@ SceneGame::SceneGame(void)
 	,stage_select_(nullptr)
 	,stage_offset_(nullptr)
 	,stage_(nullptr)
+	,map_(nullptr)
 {
 }
 
@@ -79,6 +80,7 @@ void SceneGame::Uninitialize(void)
 		// release stage
 		SafeRelease(stage_);
 		SafeRelease(player_);
+		SafeRelease(map_);
 		break;
 	}
 
@@ -112,7 +114,6 @@ void SceneGame::Update(void)
 
 	// update fade
 	fade_->Update();
-
 
 	//今のステージ更新
 	switch(current_stage_)
@@ -183,6 +184,7 @@ void SceneGame::Draw(void)
 	case STAGE_ID_2:
 		// draw stage
 		stage_->Draw();
+		map_->Draw();
 		player_->Draw();
 		break;
 	}
@@ -222,7 +224,7 @@ bool SceneGame::ChangeNextStage(void)
 			// release stage
 			SafeRelease(stage_);
 			SafeRelease(player_);
-
+			SafeRelease(map_);
 			break;
 		}
 
@@ -258,6 +260,16 @@ bool SceneGame::ChangeNextStage(void)
 			player_ = new GamePlayer();
 
 			if(!SafeInitialize(player_))
+			{
+				return false;
+			}
+
+			map_ = new Map();
+			if(!SafeInitialize(map_))
+			{
+				return false;
+			}
+			if(!map_->LoadFromFile("data/map/map.bin"))
 			{
 				return false;
 			}
