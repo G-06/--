@@ -166,6 +166,7 @@ bool ObjectPlayer::Initialize(void)
 	player_->__division_height(2);
 	player_->__division_width(3);
 	player_->__index(0);
+	player_->__point(Sprite::POINT_CENTER);
 	player_->SetParameter();
 
 	return true;

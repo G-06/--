@@ -140,22 +140,22 @@ void SceneGame::Update(void)
 		stage_->Update();
 
 		// collision
-		if(player_->__position().y + player_->__size().y > stage_->__size().y)
+		if(player_->__position().y + player_->__size().y * 0.5f > stage_->__size().y)
 		{
-			player_->HitStage(D3DXVECTOR2(player_->__position().x,stage_->__size().y - player_->__size().y),true);
+			player_->HitStage(D3DXVECTOR2(player_->__position().x,stage_->__size().y - player_->__size().y * 0.5f),true);
 		}
 
-		if(player_->__position().x + player_->__size().x > stage_->__size().x)
+		if(player_->__position().x + player_->__size().x * 0.5f > stage_->__size().x)
 		{
-			player_->HitStage(D3DXVECTOR2(stage_->__size().x - player_->__size().x,player_->__position().y),false);
+			player_->HitStage(D3DXVECTOR2(stage_->__size().x - player_->__size().x * 0.5f,player_->__position().y),false);
 		}
 
-		if(player_->__position().x < 0)
+		if(player_->__position().x - player_->__size().x * 0.5f < 0.0f)
 		{
-			player_->HitStage(D3DXVECTOR2(0.0f,player_->__position().y),false);
+			player_->HitStage(D3DXVECTOR2(player_->__size().x * 0.5f,player_->__position().y),false);
 		}
 
-		if(player_->__position().y < 0.0f)
+		if(player_->__position().y - player_->__size().y * 0.5f < 0.0f)
 		{
 			D3DXVECTOR2 vector = player_->__move();
 			vector.y *= -1;
