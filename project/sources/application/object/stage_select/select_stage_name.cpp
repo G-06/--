@@ -88,26 +88,26 @@ void StageName::Draw(void)
 //=============================================================================
 //ステージ名テクスチャの設定
 //=============================================================================
-void StageName::__set_name_texture(STAGE_ID stage)
+void StageName::__set_name_texture(u32 stage)
 {
 	switch(stage)
 	{
-	case STAGE_ID_SELECT:
-	case STAGE_ID_MAX:
+	//case STAGE_ID_SELECT:
+	//case STAGE_ID_MAX:
 	default:
 		//ステージ名がよくわからないものはすべてテストテクスチャで表示
 		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_1);
 		name_->SetParameter();
 		break;
 
-	case STAGE_ID_0:
-		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_1);
-		name_->SetParameter();
-		break;
-	case STAGE_ID_1:
-		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_2);
-		name_->SetParameter();
-		break;
+//	case STAGE_ID_0:
+//		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_1);
+//		name_->SetParameter();
+//		break;
+//	case STAGE_ID_1:
+//		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_2);
+//		name_->SetParameter();
+//		break;
 	}
 }
 

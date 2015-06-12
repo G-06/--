@@ -19,31 +19,19 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
-
+#include "stage.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
 class StageRegion;
 class SelectBg;
 class SelectArrow;
 
-enum STAGE_ID
-{
-	STAGE_ID_SELECT = -1,
-	STAGE_ID_0,		//チュートリアル
-	STAGE_ID_1,		//ステージ1
-	STAGE_ID_2,		//ステージ2
-
-	STAGE_ID_MAX
-};
-
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class StageSelect : public Basic
+class StageSelect : public Stage
 {
 public:
 	// constructor
@@ -64,14 +52,16 @@ public:
 	// draw
 	void Draw(void);
 
+	// create factory
+	StageFactory* CreateFactory(void)const;
 	// accessor
 	//void __size(const D3DXVECTOR2& size) { size_ = size; }
 	//const D3DXVECTOR2& __size(void)const { return size_; }
 	//void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
 
-protected:
+private:
 
-	StageRegion* regions_[STAGE_ID_MAX];
+	StageRegion* regions_[TYPE_MAX - 1];
 
 	SelectBg*	select_bg_;
 

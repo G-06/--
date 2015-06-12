@@ -17,7 +17,6 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
-#include "stage_select.h"
 
 //*****************************************************************************
 // forward declaration
@@ -60,7 +59,7 @@ public:
 	//指定位置に移動
 	void __set_region_distpos(D3DXVECTOR2 offset_pos);
 	//ステージID設定
-	void __set_stage_id(STAGE_ID stage);
+	void __set_stage_id(u32 stage);
 	void __set_time(u32 time);
 
 protected:

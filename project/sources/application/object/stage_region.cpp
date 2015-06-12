@@ -66,7 +66,7 @@ bool StageRegion::Initialize(void)
 	{
 		return false;
 	}
-	stage_name_->__set_name_texture(STAGE_ID_MAX);
+	stage_name_->__set_name_texture(2);
 
 	//ステージSSテクスチャ
 	stage_image_ = new StageImage();
@@ -74,7 +74,7 @@ bool StageRegion::Initialize(void)
 	{
 		return false;
 	}
-	stage_image_->__set_image_texture(STAGE_ID_MAX);
+	stage_image_->__set_image_texture(2);
 
 	//レコード受け取り？
 
@@ -149,7 +149,7 @@ void StageRegion::__set_region_distpos(D3DXVECTOR2 offset_pos)
 //=============================================================================
 //ステージID設定
 //=============================================================================
-void StageRegion::__set_stage_id(STAGE_ID stage)
+void StageRegion::__set_stage_id(u32 stage)
 {
 	stage_name_->__set_name_texture(stage);
 	stage_image_->__set_image_texture(stage);

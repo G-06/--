@@ -104,6 +104,9 @@
     <Filter Include="sources\application\object\option">
       <UniqueIdentifier>{afe71d4d-8584-4a0d-b4a3-9fb8c121214e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\application\scene\game\stage">
+      <UniqueIdentifier>{a3ccc940-6715-445f-a23e-cdd1694a390a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -244,9 +247,6 @@
     <ClInclude Include="sources\application\object\stage_offset.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\stage.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
     <ClInclude Include="resources\resource.h">
       <Filter>resources</Filter>
     </ClInclude>
@@ -294,9 +294,6 @@
     </ClInclude>
     <ClInclude Include="sources\application\object\stage_select\select_stage_name.h">
       <Filter>sources\application\object\stage_select</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\object\stage_select.h">
-      <Filter>sources\application\object</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\object\stage_region.h">
       <Filter>sources\application\object</Filter>
@@ -366,6 +363,18 @@
     </ClInclude>
     <ClInclude Include="sources\application\scene\title\title_luminescence.h">
       <Filter>sources\application\scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_manager.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_factory.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_select.h">
+      <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -486,9 +495,6 @@
     <ClCompile Include="sources\application\object\stage_offset.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\stage.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
     <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp">
       <Filter>sources\system\xaudio2</Filter>
     </ClCompile>
@@ -535,9 +541,6 @@
       <Filter>sources\application\object\stage_select</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\object\stage_region.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\stage_select.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\object\stage_select\select_record.cpp">
@@ -602,6 +605,15 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\title\title_luminescence.cpp">
       <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_manager.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

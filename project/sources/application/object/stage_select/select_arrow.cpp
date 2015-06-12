@@ -60,12 +60,12 @@ void SelectArrow::Uninitialize(void)
 //=============================================================================
 void SelectArrow::Update(void)
 {
-	if(stage_id_ == STAGE_ID_0)
+	if(stage_id_ == 0)
 	{
 		arrow_left_->__Alpha_Off();
 		arrow_right_->Update();
 	}
-	else if(stage_id_ == STAGE_ID_MAX-1)
+	else if(stage_id_ == 2-1)
 	{
 		arrow_right_->__Alpha_Off();
 		arrow_left_->Update();

@@ -1,9 +1,8 @@
 //*****************************************************************************
 //
-// ステージセレクトのステージの枠
+// stage manager
 //
-// Author		: kitazawa taichi
-//
+// Author		: Kenji Kabutomori
 //
 //*****************************************************************************
 
@@ -11,8 +10,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _SELECT_FRAME_H_
-#define _SELECT_FRAME_H_
+#ifndef _STAGE_MANAGER_H_
+#define _STAGE_MANAGER_H_
 
 //*****************************************************************************
 // include
@@ -22,19 +21,21 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
+class Stage;
+class StageFactory;
+class Fade;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class SelectFrame : public Basic
+class StageManager : public Basic
 {
 public:
 	// constructor
-	SelectFrame(void);
+	StageManager(void);
 
 	// destructor
-	virtual ~SelectFrame(void);
+	virtual ~StageManager(void);
 
 	// initialize
 	bool Initialize(void);
@@ -49,20 +50,15 @@ public:
 	void Draw(void);
 
 	// accessor
-	//void __size(const D3DXVECTOR2& size) { size_ = size; }
-	const D3DXVECTOR2& __size(void)const { return size_; }
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
+	bool __is_error(void)const { return is_error_; }
 
-protected:
-	static const D3DXVECTOR2 DEFAULT_POSITION;
-	static const D3DXVECTOR2 DEFAULT_SIZE;
-	static const D3DXVECTOR2 STAGE_SIZE;
-
-	D3DXVECTOR2 size_;
-	D3DXVECTOR2 offset_position_;
-	Sprite* frame_;
+private:
+	Stage* current_stage_;
+	Stage* next_stage_;
+	Fade* fade_;
+	bool is_error_;
 };
 
-#endif	// _PLAYER_H_
+#endif	// _STAGE_MANAGER_H_
 
 //---------------------------------- EOF --------------------------------------
