@@ -209,7 +209,7 @@ void SceneTitle::Draw(void)
 			select_[i].select_->Draw();
 		}
 	}
-	option_->Draw();
+	//option_->Draw();
 
 	message_window_->Draw();
 }

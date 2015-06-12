@@ -117,7 +117,16 @@ void SceneGame::Update(void)
 	//今のステージ更新
 	switch(current_stage_)
 	{
+	case STAGE_ID_END:
+		//タイトルに戻るとき
+		if(next_scene_factory_ == nullptr)
+		{
+			next_scene_factory_ = new TitleFactory();
+		}
+
+		break;
 	case STAGE_ID_SELECT:
+		//ステージセレクト
 		stage_select_->Update();
 
 		break;

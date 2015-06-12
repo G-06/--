@@ -29,9 +29,12 @@ class Sprite;
 class StageRegion;
 class SelectBg;
 class SelectArrow;
+class MessageWindow;
+
 
 enum STAGE_ID
 {
+	STAGE_ID_END = -2,
 	STAGE_ID_SELECT = -1,
 	STAGE_ID_0,		//チュートリアル
 	STAGE_ID_1,		//ステージ1
@@ -46,6 +49,14 @@ enum STAGE_ID
 class StageSelect : public Basic
 {
 public:
+	enum UPDATE_TYPE
+	{
+		UPDATE_TYPE_SELECT,		//ステージ選択してるとき
+		UPDATE_TYPE_MASSAGE,	//タイトルに戻るか聞いてるとき
+		UPDATE_TYPE_YORN,		//ホントにこのステージで遊ぶか聞いてるとき
+		UPDATE_TYPE＿MAX
+	};
+
 	// constructor
 	StageSelect(void);
 
@@ -71,6 +82,10 @@ public:
 
 protected:
 
+	void SelectUpdate();	// ステージを選んでるときの更新
+	void MassageUpdate();	// メッセージウィンドウが出てるときの更新
+	void YorNUpdate();		// ホントにこのステージで遊ぶか聞いてるときの更新
+
 	StageRegion* regions_[STAGE_ID_MAX];
 
 	SelectBg*	select_bg_;
@@ -78,6 +93,13 @@ protected:
 	SelectArrow* select_arrow_;
 
 	u32	current_stage_;
+
+	// message_window
+	MessageWindow* message_window_;
+	bool massage_flag_;		//メッセージウィンドウの出てるかどうか
+	UPDATE_TYPE update_type_;
+
+
 };
 
 #endif	// _STAGE_H_

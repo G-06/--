@@ -23,7 +23,8 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 StageRegion::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
-
+const f32 MOVE_SPEED = 6;				// まとまりの移動速度 フレーム数で指定
+const f32 MOVE_FREAM = 600.0f/MOVE_SPEED;
 
 //=============================================================================
 // constructor
@@ -105,22 +106,22 @@ void StageRegion::Uninitialize(void)
 //=============================================================================
 void StageRegion::Update(void)
 {
+	//まとまりの移動
 	if(region_pos_.x>region_distpos_.x)
 	{
-		region_pos_.x -= 100.0f;
+		region_pos_.x -= MOVE_FREAM;
 	}
 	if(region_pos_.x<region_distpos_.x)
 	{
-		region_pos_.x += 100.0f;
+		region_pos_.x += MOVE_FREAM;
 	}
-
+	//移動先を子に伝達
 	select_frame_->__offset_position(region_pos_);
 	stage_name_->__offset_position(region_pos_);
 	stage_image_->__offset_position(region_pos_);
 	record_->__offset_position(region_pos_);
 
-
-
+	//子の更新
 	select_frame_->Update();
 	stage_name_->Update();
 	stage_image_->Update();
@@ -136,14 +137,6 @@ void StageRegion::Draw(void)
 	stage_name_->Draw();
 	stage_image_->Draw();
 	record_ ->Draw();
-}
-
-//=============================================================================
-//指定位置に移動
-//=============================================================================
-void StageRegion::__set_region_distpos(D3DXVECTOR2 offset_pos)
-{
-	region_distpos_ += offset_pos;
 }
 
 //=============================================================================

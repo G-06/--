@@ -14,6 +14,8 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
+const u32 DIVISION_HEIGHT = 1;	// テクスチャの縦
+const u32 DIVISION_WIDTH = 10;	//テクスチャの横コマ数
 
 
 //=============================================================================
@@ -37,15 +39,14 @@ bool Number::Initialize(void)
 {
 	index_ = 0;
 
-
-	position_ = D3DXVECTOR2(400.0f,400.0f);
+	position_ = D3DXVECTOR2(400.0f,400.0f);	//デフォルト位置
 	number_ = new Sprite();
 	number_->Initialize();
 	number_->__size(D3DXVECTOR2((f32)50.0f,(f32)100.0f));
 	number_->__position(position_);
 	number_->__texture_id(Texture::TEXTURE_ID_NUMBER);
-	number_->__division_height(1);
-	number_->__division_width(10);
+	number_->__division_height(DIVISION_HEIGHT);
+	number_->__division_width(DIVISION_WIDTH);
 	number_->__index(index_);
 
 	number_->__point(Sprite::POINT_CENTER);

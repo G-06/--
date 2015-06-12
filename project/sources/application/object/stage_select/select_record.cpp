@@ -15,12 +15,16 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
+const u32 NUMBER_SIZE_X = 50;	//”Žš1‚Â‚Ì‰¡•
+const f32 DEFAULT_POSX = 400;	//¶’[‚Ì”Žš‚ÌX
+const f32 DEFAULT_POSY = 500;	//¶’[‚Ì”Žš‚ÌY
+
+
 //=============================================================================
 // constructor
 //=============================================================================
 SelectRecord::SelectRecord(void)
 {
-
 }
 
 //=============================================================================
@@ -40,7 +44,7 @@ bool SelectRecord::Initialize(void)
 	{
 		number_[i] = new Number();
 		number_[i] -> Initialize();
-		number_[i] ->__Set_position(D3DXVECTOR2((f32)50*i+400,500));
+		number_[i] ->__Set_position(D3DXVECTOR2((f32)NUMBER_SIZE_X*i+DEFAULT_POSX,DEFAULT_POSY));
 	}
 	offset_position_ = D3DXVECTOR2(0,0);
 	time_ =0;
@@ -65,14 +69,11 @@ void SelectRecord::Uninitialize(void)
 //=============================================================================
 void SelectRecord::Update(void)
 {
-
-
 	for(int i=0;i<4;i++)
 	{
 		number_[i] ->__Set_position(D3DXVECTOR2(50*i+400 + offset_position_.x,500));
 		number_[i]->Update();
 	}
-
 }
 
 //=============================================================================

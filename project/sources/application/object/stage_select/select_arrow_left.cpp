@@ -14,6 +14,11 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
+const f32 DEFAULT_POS_X = 81.0f;				// デフォルトポジションX
+const f32 DEFAULT_POS_Y = 400.0f;				// デフォルトポジションY
+
+const u32 ARROW_FLASH_TIME = 10;				// 矢印の点滅速度
+
 
 
 //=============================================================================
@@ -41,7 +46,7 @@ bool ArrowLeft::Initialize(void)
 	arrow_left_ = new Sprite();
 	arrow_left_->Initialize();
 	arrow_left_->__size(D3DXVECTOR2((f32)81.0f,(f32)140.0f));
-	arrow_left_->__position(D3DXVECTOR2(81.0f,400.0f));
+	arrow_left_->__position(D3DXVECTOR2(DEFAULT_POS_X,DEFAULT_POS_Y));
 	arrow_left_->__texture_id(Texture::TEXTURE_ID_SELECT_ARROW_LEFT);
 	arrow_left_->__point(Sprite::POINT_CENTER);
 	arrow_left_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
@@ -64,7 +69,7 @@ void ArrowLeft::Update(void)
 {
 	time_++;
 
-	if(time_==10)
+	if(time_==ARROW_FLASH_TIME)
 	{
 		if(alpha_==255)
 		{
@@ -87,19 +92,5 @@ void ArrowLeft::Draw(void)
 {
 	arrow_left_->Draw();
 }
-
-void ArrowLeft::__Alpha_On(void)
-{
-	alpha_ = 255;
-	arrow_left_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
-	arrow_left_->SetParameter();
-}
-void ArrowLeft::__Alpha_Off(void)
-{
-	alpha_ = 0;
-	arrow_left_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
-	arrow_left_->SetParameter();
-}
-
 
 //---------------------------------- EOF --------------------------------------
