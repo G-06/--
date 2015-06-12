@@ -40,7 +40,7 @@ enum KEY_CODE
 	{
 		bool		is_occupied_;
 		KEY_CODE	key_code_;
-		u32			key_number_;
+		s32			key_number_;
 	};
 
 #endif	// _OPTION_DATA_H_

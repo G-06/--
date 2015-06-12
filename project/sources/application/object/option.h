@@ -18,6 +18,7 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
+#include "option_data.h"
 
 //*****************************************************************************
 // forward declaration
@@ -71,6 +72,11 @@ public:
 
 	void Draw(void);
 
+	void Exchange(KEY_CODE code, s32 virtual_key);
+
+	void __is_indication(const bool indication){ is_indication_ = indication;}
+	const bool __is_indication(void)const{ return is_indication_;}
+
 	private:
 	OptionBg* option_bg_;
 	KeyConfigOk* key_config_ok_;
@@ -86,8 +92,14 @@ public:
 
 	s32 cursor_x_;
 	s32 cursor_y_;
+	bool is_indication_;
+
+	static const KEY_CONFIG* key_config_data_[8];
+	static const s32 volume_size_bgm_;
+	static const s32 volume_size_se_;
 };
 
 #endif	// _OPTION_H_
 
 //---------------------------------- EOF --------------------------------------
+

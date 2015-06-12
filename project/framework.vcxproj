@@ -113,6 +113,7 @@
     <ClInclude Include="sources\application\object\object_player.h" />
     <ClInclude Include="sources\application\object\option.h" />
     <ClInclude Include="sources\application\object\option_bg.h" />
+    <ClInclude Include="sources\application\object\option_data.h" />
     <ClInclude Include="sources\application\object\option_logo.h" />
     <ClInclude Include="sources\application\object\se_volume.h" />
     <ClInclude Include="sources\application\object\stage_region.h" />
