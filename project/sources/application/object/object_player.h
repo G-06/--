@@ -71,6 +71,7 @@ public:
 	const D3DXVECTOR2& __position(void)const{ return position_; }
 	void __position(const D3DXVECTOR2& position){ position_ = position; }
 	void __is_flip(bool is_flip) { is_flip_ = is_flip; }
+	const ANIMATION_TYPE& __animation_type(void)const { return animation_type_; }
 
 private:
 	struct ANIMATION_TEXTURE_DATA
