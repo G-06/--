@@ -33,9 +33,9 @@ const u32 ObjectPlayer::ANIMATION_DATA_SIZE[ANIMATION_TYPE_MAX] =
 
 const Animation::DATA ObjectPlayer::WAIT_ANIMATION_DATA[ANIMATION_DATA_SIZE_WAIT] =
 {
-	Animation::DATA(1,1,0),
-	Animation::DATA(1,2,1),
-	Animation::DATA(1,0,2),
+	Animation::DATA(12,1,0),
+	Animation::DATA(12,2,1),
+	Animation::DATA(12,0,2),
 };
 
 const Animation::DATA ObjectPlayer::RUN_ANIMATION_DATA[ANIMATION_DATA_SIZE_RUN] =
@@ -50,12 +50,12 @@ const Animation::DATA ObjectPlayer::RUN_ANIMATION_DATA[ANIMATION_DATA_SIZE_RUN] 
 
 const Animation::DATA ObjectPlayer::JUMP_ANIMATION_DATA[ANIMATION_DATA_SIZE_JUMP] =
 {
-	Animation::DATA(4,1,0),
-	Animation::DATA(4,2,1),
-	Animation::DATA(4,3,2),
-	Animation::DATA(4,4,3),
-	Animation::DATA(4,5,4),
-	Animation::DATA(4,0,5),
+	Animation::DATA(2,1,0),
+	Animation::DATA(2,2,1),
+	Animation::DATA(2,3,2),
+	Animation::DATA(2,4,3),
+	Animation::DATA(2,5,4),
+	Animation::DATA(2,0,5),
 };
 
 const Animation::DATA ObjectPlayer::FALL_ANIMATION_DATA[ANIMATION_DATA_SIZE_FALL] =
