@@ -41,16 +41,6 @@ bool SceneGame::Initialize(void)
 		return false;
 	}
 
-	//// 今いるステージを設定
-	//current_stage_ = STAGE_ID_MAX;
-	////次行くステージ
-	//__next_stage(STAGE_ID_SELECT);
-	//
-	//// create fade
-	//fade_ = new Fade();
-	//// initialize fade
-	//fade_->Initialize();
-
 	return true;
 }
 

@@ -370,10 +370,10 @@
     <ClInclude Include="sources\application\scene\game\stage\stage_manager.h">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\game\stage\stage_factory.h">
+    <ClInclude Include="sources\application\scene\game\stage\stage_tutorial.h">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\game\stage\stage_select.h">
+    <ClInclude Include="sources\application\scene\game\stage\stage_factory.h">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
   </ItemGroup>
@@ -609,10 +609,10 @@
     <ClCompile Include="sources\application\scene\game\stage\stage.cpp">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\game\stage\stage_manager.cpp">
+    <ClCompile Include="sources\application\scene\game\stage\stage_tutorial.cpp">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
+    <ClCompile Include="sources\application\scene\game\stage\stage_manager.cpp">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
   </ItemGroup>

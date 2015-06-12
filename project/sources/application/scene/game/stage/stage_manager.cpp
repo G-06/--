@@ -37,7 +37,7 @@ StageManager::~StageManager(void)
 bool StageManager::Initialize(void)
 {
 	// create current stage
-	current_stage_ = new StageSelect();
+	current_stage_ = new StageTutorial();
 
 	// initialize current stage
 	if(!SafeInitialize(current_stage_))

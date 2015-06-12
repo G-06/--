@@ -17,8 +17,8 @@
 // include
 //*****************************************************************************
 #include "stage.h"
-#include "stage_select.h"
-//#include "stage_tutorial.h"
+//#include "stage_select.h"
+#include "stage_tutorial.h"
 
 //*****************************************************************************
 // class definition
@@ -44,35 +44,35 @@ private:
 //*****************************************************************************
 // select factory
 //*****************************************************************************
-class SelectFactory : public StageFactory
-{
-public:
-	// constructor
-	SelectFactory(void) : StageFactory(Stage::TYPE_SELECT) {}
-
-	// destructor
-	virtual ~SelectFactory(void) {}
-
-	// create
-	Stage* Create(void)const { return new StageSelect(); }
-};
+//class SelectFactory : public StageFactory
+//{
+//public:
+//	// constructor
+//	SelectFactory(void) : StageFactory(Stage::TYPE_SELECT) {}
+//
+//	// destructor
+//	virtual ~SelectFactory(void) {}
+//
+//	// create
+//	Stage* Create(void)const { return new StageSelect(); }
+//};
 
 
 //*****************************************************************************
 // tutorial factory
 //*****************************************************************************
-//class TutorialFactory : public StageFactory
-//{
-//public:
-//	// constructor
-//	TutorialFactory(void) : StageFactory(Stage::TYPE_TUTORIAL) {}
-//
-//	// destructor
-//	virtual ~TutorialFactory(void) {}
-//
-//	// create
-//	Stage* Create(void)const { return new StageTutorial(); }
-//};
+class TutorialFactory : public StageFactory
+{
+public:
+	// constructor
+	TutorialFactory(void) : StageFactory(Stage::TYPE_TUTORIAL) {}
+
+	// destructor
+	virtual ~TutorialFactory(void) {}
+
+	// create
+	Stage* Create(void)const { return new StageTutorial(); }
+};
 
 //*****************************************************************************
 // game factory
