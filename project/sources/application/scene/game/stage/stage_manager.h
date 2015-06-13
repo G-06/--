@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// map
+// stage manager
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,8 +10,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _MAP_H_
-#define _MAP_H_
+#ifndef _STAGE_MANAGER_H_
+#define _STAGE_MANAGER_H_
 
 //*****************************************************************************
 // include
@@ -21,19 +21,22 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class MeshSprite;
+class Stage;
+class StageFactory;
+class Fade;
+class SceneFactory;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Map : public Basic
+class StageManager : public Basic
 {
 public:
 	// constructor
-	Map(void);
+	StageManager(void);
 
 	// destructor
-	virtual ~Map(void);
+	virtual ~StageManager(void);
 
 	// initialize
 	bool Initialize(void);
@@ -47,32 +50,18 @@ public:
 	// draw
 	void Draw(void);
 
-	// get index
-	u32 GetIndex(const D3DXVECTOR2& position,D3DXVECTOR2* index_position = nullptr);
-
-	// load from file
-	bool LoadFromFile(const s8* filename);
-
-	// load from memory
-	bool LoadFromMemory(const u8* memory);
-
 	// accessor
-	void __position(const D3DXVECTOR2& position) { position_ = position; }
-	const D3DXVECTOR2& __size(void) { return size_; }
+	bool __is_error(void)const { return is_error_; }
+	SceneFactory* __next_scene_factory(void) { return next_scene_factory_; }
 
 private:
-	static const D3DXVECTOR2 SIZE;
-	static const u32 DIVISION_WIDTH;
-	static const u32 DIVISION_HEIGHT;
-
-	MeshSprite* map_;
-	u32 width_;
-	u32 height_;
-	u32* indexs_;
-	D3DXVECTOR2 position_;
-	D3DXVECTOR2 size_;
+	Stage* current_stage_;
+	Stage* next_stage_;
+	Fade* fade_;
+	bool is_error_;
+	SceneFactory* next_scene_factory_;
 };
 
-#endif	// _MAP_H_
+#endif	// _STAGE_MANAGER_H_
 
 //---------------------------------- EOF --------------------------------------

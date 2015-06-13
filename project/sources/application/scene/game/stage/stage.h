@@ -21,7 +21,8 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
+class StageFactory;
+class SceneFactory;
 
 //*****************************************************************************
 // class definition
@@ -29,34 +30,47 @@ class Sprite;
 class Stage : public Basic
 {
 public:
+	enum TYPE
+	{
+		TYPE_SELECT = 0,
+		TYPE_TUTORIAL,
+		TYPE_MAX
+	};
+
 	// constructor
-	Stage(void);
+	Stage(const TYPE& type);
 
 	// destructor
 	virtual ~Stage(void);
 
 	// initialize
-	bool Initialize(void);
+	virtual bool Initialize(void) = 0;
 
 	// uninitialize
-	void Uninitialize(void);
+	virtual void Uninitialize(void) = 0;
 
 	// update
-	void Update(void);
+	virtual void Update(void) = 0;
 
 	// draw
-	void Draw(void);
+	virtual void Draw(void) = 0;
+
+	// create factory
+	virtual StageFactory* CreateFactory(void)const = 0;
 
 	// accessor
-	//void __size(const D3DXVECTOR2& size) { size_ = size; }
-	const D3DXVECTOR2& __size(void)const { return size_; }
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
+	const TYPE& __type(void)const { return type_; }
+	StageFactory* __next_stage_factory(void)const { return next_stage_factory_; }
+	void __is_fade(bool is_fade) { is_fade_ = is_fade; }
+	SceneFactory* __next_scene_factory(void)const { return next_scene_factory_; }
 
 protected:
-	static const D3DXVECTOR2 STAGE_SIZE;
-	D3DXVECTOR2 size_;
-	D3DXVECTOR2 offset_position_;
-	Sprite* bg_;
+	SceneFactory* next_scene_factory_;
+	StageFactory* next_stage_factory_;
+	bool is_fade_;
+
+private:
+	TYPE type_;
 };
 
 #endif	// _STAGE_H_

@@ -17,17 +17,11 @@
 // include
 //*****************************************************************************
 #include "scene/scene.h"
-#include "application/object/stage_select.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Stage;
-class StageOffset;
-class GamePlayer;
-class StageSelect;
-class Fade;
-class Map;
+class StageManager;
 
 //*****************************************************************************
 // class definition
@@ -56,22 +50,8 @@ public:
 	// create factory
 	SceneFactory* CreateFactory(void)const;
 
-	//次のステージ
-	static void __next_stage(STAGE_ID next){next_stage_ = next;};
-
-	//ステージの切り替え
-	bool ChangeNextStage(void);
-
 private:
-	Stage* stage_;
-	StageOffset* stage_offset_;
-	GamePlayer* player_;
-	Map* map_;
-	StageSelect* stage_select_;
-	Fade* fade_;
-
-	STAGE_ID current_stage_;		// 今いるステージ（ステージ選択含む）
-	static STAGE_ID next_stage_;		// 今いるステージ（ステージ選択含む）
+	StageManager* stage_manager_;
 
 };
 

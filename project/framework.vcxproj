@@ -34,9 +34,7 @@
     <ClCompile Include="sources\application\object\option\volume_logo.cpp" />
     <ClCompile Include="sources\application\object\record.cpp" />
     <ClCompile Include="sources\application\object\stage_region.cpp" />
-    <ClCompile Include="sources\application\object\stage.cpp" />
     <ClCompile Include="sources\application\object\stage_offset.cpp" />
-    <ClCompile Include="sources\application\object\stage_select.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_arrow.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_arrow_left.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_arrow_right.cpp" />
@@ -48,6 +46,9 @@
     <ClCompile Include="sources\application\object\stage_select\select_stage_name.cpp" />
     <ClCompile Include="sources\application\scene\game\game_player.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
+    <ClCompile Include="sources\application\scene\game\stage\stage.cpp" />
+    <ClCompile Include="sources\application\scene\game\stage\stage_manager.cpp" />
+    <ClCompile Include="sources\application\scene\game\stage\stage_tutorial.cpp" />
     <ClCompile Include="sources\application\scene\logo\logo.cpp" />
     <ClCompile Include="sources\application\scene\logo\logo_bg.cpp" />
     <ClCompile Include="sources\application\scene\logo\scene_logo.cpp" />
@@ -121,9 +122,7 @@
     <ClInclude Include="sources\application\object\option\volume_logo.h" />
     <ClInclude Include="sources\application\object\record.h" />
     <ClInclude Include="sources\application\object\stage_region.h" />
-    <ClInclude Include="sources\application\object\stage.h" />
     <ClInclude Include="sources\application\object\stage_offset.h" />
-    <ClInclude Include="sources\application\object\stage_select.h" />
     <ClInclude Include="sources\application\object\stage_select\select_arrow.h" />
     <ClInclude Include="sources\application\object\stage_select\select_arrow_left.h" />
     <ClInclude Include="sources\application\object\stage_select\select_arrow_right.h" />
@@ -136,6 +135,10 @@
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\game_player.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
+    <ClInclude Include="sources\application\scene\game\stage\stage.h" />
+    <ClInclude Include="sources\application\scene\game\stage\stage_factory.h" />
+    <ClInclude Include="sources\application\scene\game\stage\stage_manager.h" />
+    <ClInclude Include="sources\application\scene\game\stage\stage_tutorial.h" />
     <ClInclude Include="sources\application\scene\logo\logo.h" />
     <ClInclude Include="sources\application\scene\logo\logo_bg.h" />
     <ClInclude Include="sources\application\scene\logo\scene_logo.h" />

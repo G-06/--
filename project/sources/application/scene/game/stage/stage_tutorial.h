@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// map
+// stage tutorial
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,30 +10,32 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _MAP_H_
-#define _MAP_H_
+#ifndef _STAGE_TUTORIAL_H_
+#define _STAGE_TUTORIAL_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
+#include "stage.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class MeshSprite;
+class GamePlayer;
+class Map;
+class StageOffset;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Map : public Basic
+class StageTutorial : public Stage
 {
 public:
 	// constructor
-	Map(void);
+	StageTutorial(void);
 
 	// destructor
-	virtual ~Map(void);
+	virtual ~StageTutorial(void);
 
 	// initialize
 	bool Initialize(void);
@@ -47,32 +49,17 @@ public:
 	// draw
 	void Draw(void);
 
-	// get index
-	u32 GetIndex(const D3DXVECTOR2& position,D3DXVECTOR2* index_position = nullptr);
-
-	// load from file
-	bool LoadFromFile(const s8* filename);
-
-	// load from memory
-	bool LoadFromMemory(const u8* memory);
+	// create factory
+	StageFactory* CreateFactory(void)const;
 
 	// accessor
-	void __position(const D3DXVECTOR2& position) { position_ = position; }
-	const D3DXVECTOR2& __size(void) { return size_; }
 
 private:
-	static const D3DXVECTOR2 SIZE;
-	static const u32 DIVISION_WIDTH;
-	static const u32 DIVISION_HEIGHT;
-
-	MeshSprite* map_;
-	u32 width_;
-	u32 height_;
-	u32* indexs_;
-	D3DXVECTOR2 position_;
-	D3DXVECTOR2 size_;
+	GamePlayer* game_player_;
+	Map* map_;
+	StageOffset* stage_offset_;
 };
 
-#endif	// _MAP_H_
+#endif	// _STAGE_TUTORIAL_H_
 
 //---------------------------------- EOF --------------------------------------
