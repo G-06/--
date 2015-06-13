@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// title push_start
+// record
 //
 // Author	: masato masuda
 //
@@ -9,105 +9,164 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "title_push_start.h"
-#include "render/sprite.h"
+#include "record.h"
 #include "system/system.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const f32 DEFAULT_ALPHA_SPEED = -0.03f;
-const f32 SIZE_SCAL = 1.2f;
-const D3DXVECTOR2 TitlePushStart::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 450.0f + 100.0f);
-const D3DXVECTOR2 TitlePushStart::DEFAULT_SIZE = D3DXVECTOR2(324.0f * SIZE_SCAL, 71.0f * SIZE_SCAL);
+const u32 CLEAR_NUMBER = 0;
 
 //=============================================================================
 // constructor
 //=============================================================================
-TitlePushStart::TitlePushStart(void)
-	:sprite_(nullptr)
-	,alpha_speed_(DEFAULT_ALPHA_SPEED)
-	,alpha_(2.0f)
+Record::Record(void)
+	: stage_num_(0)
+	, record_(nullptr)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-TitlePushStart::~TitlePushStart(void)
+Record::~Record(void)
 {
+	delete[] record_;
+	record_ = nullptr;
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool TitlePushStart::Initialize(void)
+bool Record::Initialize(void)
 {
-	sprite_ = new Sprite();
-	sprite_->Initialize();
-	sprite_->__size(DEFAULT_SIZE);
-	sprite_->__position(DEFAULT_POSITION);
-	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__texture_id(Texture::TEXTURE_ID_TITLE_STRING_PUSH_START);
-	sprite_->SetParameter();
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void TitlePushStart::Uninitialize(void)
-{
-	SafeRelease(sprite_);
-}
-
-//=============================================================================
-// update
-//=============================================================================
-void TitlePushStart::Update(void)
+void Record::Uninitialize(void)
 {
 }
 
 //=============================================================================
-// draw
+// __record(getter)
+//-----------------------------------------------------------------------------
+// エラーの時は-1が変えるよ
 //=============================================================================
-void TitlePushStart::Draw(void)
+s32 Record::__record(const u32 stage_num)
 {
-	sprite_->Draw();
+	// error
+	if(record_ != nullptr) return -1;
+	if(stage_num < 0 && stage_num >= stage_num_) return -1;
+
+	return record_[stage_num];
 }
 
 //=============================================================================
-// __color
+// __record(setter)
+//-----------------------------------------------------------------------------
+// エラーの時はfalseになるよ
 //=============================================================================
-void TitlePushStart::__color(const D3DXCOLOR& color)
+bool Record::__record(const u32 stage_num, const u32 record)
 {
-	sprite_->__color(color);
-	sprite_->SetParameter();
+	// error
+	if(record_ != nullptr) return false;
+	if(stage_num < 0 && stage_num >= stage_num_) return false;
+
+	record_[stage_num] = record;
+	return true;
 }
 
 //=============================================================================
-// __color
+// LoadFile
 //=============================================================================
-const D3DXCOLOR TitlePushStart::__color(void)
+bool Record::LoadFile(const s8* file_name)
 {
-	return (D3DXCOLOR)sprite_->__color();
+	FILE* file = nullptr;
+
+	fopen_s(&file,file_name,"rb");
+
+	if(file == nullptr)
+	{
+		return false;
+	}
+
+	// ステージ数読込
+	fread(&stage_num_, sizeof(u32), 1, file);
+
+	if(stage_num_ <= 0)
+	{
+		return false;
+	}
+
+	// レコード数生成
+	record_ = new u32[ stage_num_ ];
+	memset(record_, 0, sizeof(record_));
+
+	// レコード読込
+	for(u32 i = 0 ; i < stage_num_ ; i++)
+	{
+		fread(&record_[i], sizeof(u32), 1, file);
+	}
+
+	fclose(file);
+
+	return true;
 }
 
 //=============================================================================
-// ResetAlphaSpeed
+// SaveFile
 //=============================================================================
-void TitlePushStart::ResetAlphaSpeed(void)
+bool Record::SaveFile(const s8* file_name)
 {
-	alpha_speed_ = DEFAULT_ALPHA_SPEED;
+	FILE* file = nullptr;
+
+	fopen_s(&file,file_name,"wb");
+
+	// ステージ数保存
+	fwrite(&stage_num_, sizeof(u32), 1, file);
+
+	// レコード保存
+	for(u32 i = 0; i < stage_num_ ; i++)
+	{
+		fwrite(&record_[i], sizeof(u32), 1, file);
+	}
+
+	fclose(file);
+
+	return true;
 }
 
 //=============================================================================
-// __texture_id
+// SaveFileClear
 //=============================================================================
-void TitlePushStart::__texture_id(const Texture::TEXTURE_ID& texture_id)
+bool Record::SaveFileClear(const s8* file_name, const u32 stage_num)
 {
-	sprite_->__texture_id(texture_id);
-	sprite_->SetParameter();
+	FILE* file = nullptr;
+
+	fopen_s(&file,file_name,"wb");
+
+	if(file == nullptr)
+	{
+		return false;
+	}
+
+	// ステージ数保存
+	fwrite(&stage_num, sizeof(u32), 1, file);
+
+	// レコード保存
+	for(u32 i = 0; i < stage_num ; i++)
+	{
+		const u32 record = CLEAR_NUMBER;
+		fwrite(&record, sizeof(u32), 1, file);
+	}
+
+	fclose(file);
+
+	return true;
 }
+
 
 //---------------------------------- EOF --------------------------------------

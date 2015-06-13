@@ -16,6 +16,7 @@
 #include "system/system.h"
 #include "scene/game/scene_game.h"
 #include "stage_select/select_arrow.h"
+#include "record.h"
 
 //*****************************************************************************
 // constant definition

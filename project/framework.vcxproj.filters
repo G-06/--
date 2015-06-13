@@ -367,6 +367,9 @@
     <ClInclude Include="sources\application\scene\title\title_luminescence.h">
       <Filter>sources\application\scene\title</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\record.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -602,6 +605,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\title\title_luminescence.cpp">
       <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\record.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

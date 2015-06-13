@@ -28,8 +28,13 @@ const u32 SceneTitle::GO_LOGO_FRAME = 60 * 30;	// ロゴに戻るまでの時間
 const u32 DEST_FRAME_COUNT = 20;				// ウィンドウ開閉の時間
 const u32 DESIDE_INTERVAL_COUNT = 30;			// 決定ボタン後の余韻
 
+// push_startの点滅数値
 const f32 PUSH_START_ALPHA_MAX = 1.25f;
 const f32 PUSH_START_ALPHA_MIN = 0.0f;
+
+// luminesceneの点滅数値
+const f32 LUMINESCENCE_ALPHA_MAX = 1.1f;
+const f32 LUMINESCENCE_ALPHA_MIN = 0.2f;
 
 // select position
 const f32 SELECT_OFFSET_Y = 100.0f;
@@ -277,7 +282,6 @@ void SceneTitle::_UpdatePush(void)
 	// モード変更
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
 	{
-//		mode_ = MODE_SELECT;
 		decide_interval_ = DESIDE_INTERVAL_COUNT;
 		mode_ = MODE_PUSH_INTERVAL;
 
@@ -290,6 +294,7 @@ void SceneTitle::_UpdatePush(void)
 		push_frame_->__alpha(DEFAULT_COLOR.a);
 		push_frame_->__color(DEFAULT_COLOR);
 
+		// 決定枠テクスチャ
 		push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 	}
 }
@@ -413,14 +418,14 @@ void SceneTitle::_UpdateLuminescence(void)
 	// アルファ値加算
 	alpha += luminescence_->__alpha_speed();
 
-	if( alpha > PUSH_START_ALPHA_MAX )
+	if( alpha > LUMINESCENCE_ALPHA_MAX )
 	{
-		alpha = PUSH_START_ALPHA_MAX;
+		alpha = LUMINESCENCE_ALPHA_MAX;
 		luminescence_->InverseAlphaSpeed();
 	}
-	else if( alpha < PUSH_START_ALPHA_MIN )
+	else if( alpha < LUMINESCENCE_ALPHA_MIN )
 	{
-		alpha  = PUSH_START_ALPHA_MIN;
+		alpha  = LUMINESCENCE_ALPHA_MIN;
 		luminescence_->InverseAlphaSpeed();
 	}
 
