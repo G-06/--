@@ -47,6 +47,7 @@ bool StageTutorial::Initialize(void)
 	{
 		return false;
 	}
+	game_player_->__position(D3DXVECTOR2(100.0f,0.0f));
 
 	map_ = new Map();
 
@@ -54,6 +55,8 @@ bool StageTutorial::Initialize(void)
 	{
 		return false;
 	}
+
+	map_->LoadFromFile("data/map/map.bin");
 
 	stage_offset_ = new StageOffset();
 
@@ -63,6 +66,7 @@ bool StageTutorial::Initialize(void)
 	}
 
 	stage_offset_->__screen_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,(f32)DEFAULT_SCREEN_HEIGHT));
+	stage_offset_->__stage_size(map_->__size());
 
 	return true;
 }
@@ -90,6 +94,20 @@ void StageTutorial::Update(void)
 	stage_offset_->Update();
 
 	game_player_->__offset_position(stage_offset_->__position());
+
+	map_->__position(-stage_offset_->__position());
+	D3DXVECTOR2 player_position = game_player_->__position();
+	D3DXVECTOR2 index_position;
+	u32 index = map_->GetIndex(player_position,&index_position);
+
+	if(index != 0)
+	{
+		if(player_position.y >= index_position.y - 64)
+		{
+			player_position.y = index_position.y - 64;
+			game_player_->HitStage(player_position,true);
+		}
+	}
 }
 
 //=============================================================================

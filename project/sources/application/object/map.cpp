@@ -27,6 +27,7 @@ Map::Map(void)
 	:map_(nullptr)
 	,indexs_(nullptr)
 	,position_(0.0f,0.0f)
+	,size_(0.0f,0.0f)
 {
 }
 
@@ -81,15 +82,15 @@ u32 Map::GetIndex(const D3DXVECTOR2& position,D3DXVECTOR2* index_position)
 	s32 index_y = (s32)(position.y / SIZE.y);
 	s32 index = index_y * width_ + index_x;
 
-	if(index < 0 || index > width_ * height_)
+	if(index < 0 || index >= width_ * height_)
 	{
 		return 0;
 	}
 
 	if(index_position != nullptr)
 	{
-		index_position->x = SIZE.x * index_x + SIZE.x * 0.5f;
-		index_position->y = SIZE.y * index_y + SIZE.y * 0.5f;
+		index_position->x = SIZE.x * index_x + SIZE.x * 0.5f + 0.5f;
+		index_position->y = SIZE.y * index_y + SIZE.y * 0.5f + 0.5f;
 	}
 
 	return indexs_[index];
@@ -140,6 +141,7 @@ bool Map::LoadFromMemory(const u8* memory)
 	indexs_ = new u32[width_ * height_];
 	memcpy(indexs_,memory + offset,sizeof(u32) * width_ * height_);
 
+	size_ = D3DXVECTOR2(width_ * SIZE.x,height_ * SIZE.y);
 	map_ = new MeshSprite(width_,height_);
 	map_->Initialize();
 	map_->__width(SIZE.x);
@@ -147,6 +149,7 @@ bool Map::LoadFromMemory(const u8* memory)
 	map_->__division_width(DIVISION_WIDTH);
 	map_->__division_height(DIVISION_HEIGHT);
 	map_->__texture_id(Texture::TEXTURE_ID_DOT);
+
 	for(u32 i = 0;i < height_;++i)
 	{
 		for(u32 j = 0;j < width_;++j)
