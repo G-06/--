@@ -48,16 +48,10 @@ public:
 	// draw
 	void Draw(void);
 
-	//透明にしたりしなかったり
-	void __Alpha_On(void);
-	void __Alpha_Off(void);
-
 private:
 	Sprite* arrow_right_;
 	u32 time_;		//点滅する時間をみるもの
 	u32 alpha_;		//アルファ値
-
-
 };
 
 #endif	// _select_BG_H_

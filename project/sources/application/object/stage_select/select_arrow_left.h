@@ -48,10 +48,6 @@ public:
 	// draw
 	void Draw(void);
 
-	//“§–¾‚É‚µ‚½‚è‚µ‚È‚©‚Á‚½‚è
-	void __Alpha_On(void);
-	void __Alpha_Off(void);
-
 private:
 	Sprite* arrow_left_;
 	u32 time_;		//“_–Å‚·‚éŽžŠÔ‚ð‚Ý‚é‚à‚Ì

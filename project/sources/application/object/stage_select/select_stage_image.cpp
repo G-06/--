@@ -89,12 +89,12 @@ void StageImage::Draw(void)
 //=============================================================================
 //ステージイメージテクスチャの設定
 //=============================================================================
-void StageImage::__set_image_texture(STAGE_ID stage)
+void StageImage::__set_image_texture(Stage::TYPE stage)
 {
 	switch(stage)
 	{
-	case STAGE_ID_SELECT:
-	case STAGE_ID_MAX:
+	case Stage::TYPE_TUTORIAL:	//チュートリアル
+	case Stage::TYPE_MAX:
 	default:
 		//ステージイメージがよくわからないものの時はすべてテストテクスチャで表示
 		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_1);

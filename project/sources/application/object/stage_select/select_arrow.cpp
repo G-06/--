@@ -60,23 +60,8 @@ void SelectArrow::Uninitialize(void)
 //=============================================================================
 void SelectArrow::Update(void)
 {
-	if(stage_id_ == STAGE_ID_0)
-	{
-		arrow_left_->__Alpha_Off();
-		arrow_right_->Update();
-	}
-	else if(stage_id_ == STAGE_ID_MAX-1)
-	{
-		arrow_right_->__Alpha_Off();
-		arrow_left_->Update();
-	}
-	else
-	{
-		//arrow_left_->__Alpha_On();
-		//arrow_right_->__Alpha_On();
-		arrow_left_->Update();
-		arrow_right_->Update();
-	}
+	arrow_left_->Update();
+	arrow_right_->Update();
 }
 
 //=============================================================================
@@ -84,8 +69,19 @@ void SelectArrow::Update(void)
 //=============================================================================
 void SelectArrow::Draw(void)
 {
-	arrow_right_->Draw();
-	arrow_left_->Draw();
+	if(stage_id_ == Stage::TYPE_TUTORIAL)
+	{
+		arrow_right_->Draw();
+	}
+	else if(stage_id_ == Stage::TYPE_MAX-1)
+	{
+		arrow_left_->Draw();
+	}
+	else
+	{
+		arrow_right_->Draw();
+		arrow_left_->Draw();
+	}
 }
 
 //---------------------------------- EOF --------------------------------------

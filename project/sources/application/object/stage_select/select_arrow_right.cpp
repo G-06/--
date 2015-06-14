@@ -14,6 +14,10 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
+const f32 DEFAULT_POS_X = 1181.0f;				// デフォルトポジションX
+const f32 DEFAULT_POS_Y = 400.0f;				// デフォルトポジションY
+const u32 ARROW_FLASH_TIME = 10;				// 矢印の点滅速度
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -39,13 +43,11 @@ bool ArrowRight::Initialize(void)
 	arrow_right_ = new Sprite();
 	arrow_right_->Initialize();
 	arrow_right_->__size(D3DXVECTOR2((f32)81.0f,(f32)140.0f));
-	arrow_right_->__position(D3DXVECTOR2(1180.0f,400.0f));
+	arrow_right_->__position(D3DXVECTOR2(DEFAULT_POS_X,DEFAULT_POS_Y));
 	arrow_right_->__texture_id(Texture::TEXTURE_ID_SELECT_ARROW_RIGHT);
 	arrow_right_->__point(Sprite::POINT_CENTER);
 	arrow_right_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
 	arrow_right_->SetParameter();
-
-
 	return true;
 }
 
@@ -86,20 +88,6 @@ void ArrowRight::Update(void)
 void ArrowRight::Draw(void)
 {
 	arrow_right_->Draw();
-}
-
-
-void ArrowRight::__Alpha_On(void)
-{
-	alpha_ = 255;
-	arrow_right_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
-	arrow_right_->SetParameter();
-}
-void ArrowRight::__Alpha_Off(void)
-{
-	alpha_ = 0;
-	arrow_right_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
-	arrow_right_->SetParameter();
 }
 
 //---------------------------------- EOF --------------------------------------

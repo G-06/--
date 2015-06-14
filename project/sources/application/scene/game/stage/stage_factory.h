@@ -17,7 +17,7 @@
 // include
 //*****************************************************************************
 #include "stage.h"
-//#include "stage_select.h"
+#include "stage_select.h"
 #include "stage_tutorial.h"
 
 //*****************************************************************************
@@ -44,18 +44,18 @@ private:
 //*****************************************************************************
 // select factory
 //*****************************************************************************
-//class SelectFactory : public StageFactory
-//{
-//public:
-//	// constructor
-//	SelectFactory(void) : StageFactory(Stage::TYPE_SELECT) {}
-//
-//	// destructor
-//	virtual ~SelectFactory(void) {}
-//
-//	// create
-//	Stage* Create(void)const { return new StageSelect(); }
-//};
+class SelectFactory : public StageFactory
+{
+public:
+	// constructor
+	SelectFactory(void) : StageFactory(Stage::TYPE_SELECT) {}
+
+	// destructor
+	virtual ~SelectFactory(void) {}
+
+	// create
+	Stage* Create(void)const { return new StageSelect(); }
+};
 
 
 //*****************************************************************************

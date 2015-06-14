@@ -34,8 +34,10 @@ public:
 	{
 		TYPE_SELECT = 0,
 		TYPE_TUTORIAL,
+		TYPE_STAGE1,
 		TYPE_MAX
 	};
+
 
 	// constructor
 	Stage(const TYPE& type);
