@@ -24,6 +24,7 @@
 class GamePlayer;
 class Map;
 class StageOffset;
+class ObjectStartPoint;
 
 //*****************************************************************************
 // class definition
@@ -58,6 +59,8 @@ private:
 	GamePlayer* game_player_;
 	Map* map_;
 	StageOffset* stage_offset_;
+	u32 time_count_;
+	ObjectStartPoint* object_start_point_;
 };
 
 #endif	// _STAGE_TUTORIAL_H_

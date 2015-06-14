@@ -20,6 +20,7 @@
     <ClCompile Include="sources\application\object\message_sprite_smooth.cpp" />
     <ClCompile Include="sources\application\object\message_window.cpp" />
     <ClCompile Include="sources\application\object\object_player.cpp" />
+    <ClCompile Include="sources\application\object\object_start_point.cpp" />
     <ClCompile Include="sources\application\object\option.cpp" />
     <ClCompile Include="sources\application\object\option\bgm_volume.cpp" />
     <ClCompile Include="sources\application\object\option\keyconfig_logo.cpp" />
@@ -63,6 +64,7 @@
     <ClCompile Include="sources\collision\collision.cpp" />
     <ClCompile Include="sources\collision\collision_circle.cpp" />
     <ClCompile Include="sources\collision\collision_line.cpp" />
+    <ClCompile Include="sources\collision\collision_map.cpp" />
     <ClCompile Include="sources\collision\collision_point.cpp" />
     <ClCompile Include="sources\common\animation\animation.cpp" />
     <ClCompile Include="sources\default_include\debug_tool\assert.cpp" />
@@ -107,6 +109,7 @@
     <ClInclude Include="sources\application\object\message_sprite_smooth.h" />
     <ClInclude Include="sources\application\object\message_window.h" />
     <ClInclude Include="sources\application\object\object_player.h" />
+    <ClInclude Include="sources\application\object\object_start_point.h" />
     <ClInclude Include="sources\application\object\option.h" />
     <ClInclude Include="sources\application\object\option\bgm_volume.h" />
     <ClInclude Include="sources\application\object\option\keyconfig_logo.h" />
@@ -153,6 +156,7 @@
     <ClInclude Include="sources\collision\collision.h" />
     <ClInclude Include="sources\collision\collision_circle.h" />
     <ClInclude Include="sources\collision\collision_line.h" />
+    <ClInclude Include="sources\collision\collision_map.h" />
     <ClInclude Include="sources\collision\collision_point.h" />
     <ClInclude Include="sources\common\animation\animation.h" />
     <ClInclude Include="sources\common\basic\basic.h" />

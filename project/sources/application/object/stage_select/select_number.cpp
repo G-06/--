@@ -14,8 +14,6 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
-
-
 //=============================================================================
 // constructor
 //=============================================================================
@@ -36,7 +34,6 @@ Number::~Number(void)
 bool Number::Initialize(void)
 {
 	index_ = 0;
-
 
 	position_ = D3DXVECTOR2(400.0f,400.0f);
 	number_ = new Sprite();
@@ -71,7 +68,6 @@ void Number::Update(void)
 	number_->__position(position_);
 	number_->__index(index_);
 	number_->SetParameter();
-
 }
 
 //=============================================================================

@@ -84,7 +84,7 @@ u32 Map::GetIndex(const D3DXVECTOR2& position,D3DXVECTOR2* index_position)
 	s32 index_y = (s32)(position.y / SIZE.y);
 	s32 index = index_y * width_ + index_x;
 
-	if(index < 0 || index >= width_ * height_)
+	if(index_x < 0 || index_x >= width_ || index_y < 0 || index_y >= height_)
 	{
 		return 0;
 	}
@@ -154,7 +154,7 @@ bool Map::LoadFromMemory(const u8* memory)
 	map_->__height(SIZE.y);
 	map_->__division_width(DIVISION_WIDTH);
 	map_->__division_height(DIVISION_HEIGHT);
-	map_->__texture_id(Texture::TEXTURE_ID_DOT);
+	map_->__texture_id(Texture::TEXTURE_ID_MAP_GROUND);
 
 	for(u32 i = 0;i < height_;++i)
 	{

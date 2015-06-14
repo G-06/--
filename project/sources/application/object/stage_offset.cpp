@@ -51,6 +51,7 @@ void StageOffset::Uninitialize(void)
 void StageOffset::Update(void)
 {
 	position_.x = reference_position_.x - screen_size_.x * 0.5f;
+	position_.y = reference_position_.y - screen_size_.y * 0.5f;
 
 	if(position_.x < 0.0f)
 	{
@@ -61,6 +62,17 @@ void StageOffset::Update(void)
 	{
 		position_.x = stage_size_.x - screen_size_.x;
 	}
+
+	if(position_.y < 0.0f)
+	{
+		position_.y = 0.0f;
+	}
+
+	if(position_.y > stage_size_.y - screen_size_.y)
+	{
+		position_.y = stage_size_.y - screen_size_.y;
+	}
+
 }
 
 //---------------------------------- EOF --------------------------------------

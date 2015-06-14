@@ -379,6 +379,12 @@
     <ClInclude Include="sources\application\scene\game\stage\stage_manager.h">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\object_start_point.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\collision\collision_map.h">
+      <Filter>sources\collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -620,6 +626,12 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\stage\stage_manager.cpp">
       <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_start_point.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\collision\collision_map.cpp">
+      <Filter>sources\collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
