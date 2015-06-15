@@ -49,6 +49,7 @@
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_start_point.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
+    <ClCompile Include="sources\application\scene\game\stage\normal_stage.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage_manager.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage_tutorial.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
+    <ClInclude Include="sources\application\scene\game\stage\normal_stage.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage_factory.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage_manager.h" />

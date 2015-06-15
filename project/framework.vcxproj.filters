@@ -394,6 +394,9 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h">
       <Filter>sources\application\scene\game\gimmick</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\normal_stage.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -647,6 +650,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick.cpp">
       <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\normal_stage.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// stage tutorial
+// stage
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,51 +10,65 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _STAGE_TUTORIAL_H_
-#define _STAGE_TUTORIAL_H_
+#ifndef _NORMAL_STAGE_H_
+#define _NORMAL_STAGE_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "normal_stage.h"
+#include "stage.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
+class GamePlayer;
+class Map;
+class StageOffset;
+class Gimmick;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class StageTutorial : public NormalStage
+class NormalStage : public Stage
 {
 public:
 	// constructor
-	StageTutorial(void);
+	NormalStage(const TYPE& type);
 
 	// destructor
-	virtual ~StageTutorial(void);
+	virtual ~NormalStage(void);
 
 	// initialize
-	bool Initialize(void);
+	virtual bool Initialize(void);
 
 	// uninitialize
-	void Uninitialize(void);
+	virtual void Uninitialize(void);
 
 	// update
-	void Update(void);
+	virtual void Update(void);
 
 	// draw
-	void Draw(void);
+	virtual void Draw(void);
 
 	// create factory
-	StageFactory* CreateFactory(void)const;
+	virtual StageFactory* CreateFactory(void)const = 0;
+
+	// load from file
+	bool LoadFromFile(const s8* filename);
+
+	// load from memory
+	bool LoadFromMemory(const u8* data);
 
 	// accessor
 
-private:
-
+protected:
+	GamePlayer* game_player_;
+	Map* map_;
+	StageOffset* stage_offset_;
+	std::list<Gimmick*> gimmick_container_;
+	u32 time_count_;
 };
 
-#endif	// _STAGE_TUTORIAL_H_
+#endif	// _NORMAL_STAGE_H_
 
 //---------------------------------- EOF --------------------------------------
