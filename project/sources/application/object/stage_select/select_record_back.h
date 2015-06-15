@@ -1,11 +1,9 @@
 //*****************************************************************************
 //
-// ステージセレクト画面の偉い奴
-//ここから各ステージのまとまり(stage_region)を作る
-//stage_regionは枠、ステージイメージ、ステージ名、レコードをまとめたもの
-//stage_regionはステージの数だけ作る
+// ステージセレクトのステージの枠
 //
 // Author		: kitazawa taichi
+//
 //
 //*****************************************************************************
 
@@ -13,44 +11,31 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _STAGE_SELECT_H_
-#define _STAGE_SELECT_H_
+#ifndef _SELECT_RECORD_BACK_H_
+#define _SELECT_RECORD_BACK_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
 #include "basic/basic.h"
 
-
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
 class Sprite;
-class StageRegion;
-class SelectBg;
-class SelectArrow;
-
-enum STAGE_ID
-{
-	STAGE_ID_SELECT = -1,
-	STAGE_ID_0,		//チュートリアル
-	STAGE_ID_1,		//ステージ1
-	STAGE_ID_2,		//ステージ2
-
-	STAGE_ID_MAX
-};
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class StageSelect : public Basic
+class RecordBack : public Basic
 {
 public:
+
 	// constructor
-	StageSelect(void);
+	RecordBack(void);
 
 	// destructor
-	virtual ~StageSelect(void);
+	virtual ~RecordBack(void);
 
 	// initialize
 	bool Initialize(void);
@@ -66,20 +51,20 @@ public:
 
 	// accessor
 	//void __size(const D3DXVECTOR2& size) { size_ = size; }
-	//const D3DXVECTOR2& __size(void)const { return size_; }
-	//void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
+	const D3DXVECTOR2& __size(void)const { return size_; }
+	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
+
 
 protected:
+	static const D3DXVECTOR2 DEFAULT_POSITION;
+	static const D3DXVECTOR2 DEFAULT_SIZE;
+	static const D3DXVECTOR2 STAGE_SIZE;
 
-	StageRegion* regions_[STAGE_ID_MAX];
-
-	SelectBg*	select_bg_;
-
-	SelectArrow* select_arrow_;
-
-	u32	current_stage_;
+	D3DXVECTOR2 size_;
+	D3DXVECTOR2 offset_position_;
+	Sprite* record_back_;
 };
 
-#endif	// _STAGE_H_
+#endif	// _PLAYER_H_
 
 //---------------------------------- EOF --------------------------------------

@@ -18,7 +18,7 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
-#include "application/object/stage_select.h"
+#include "application/scene/game/stage/stage_select.h"
 
 
 //*****************************************************************************

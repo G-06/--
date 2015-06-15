@@ -13,6 +13,9 @@
 #include "select_bg.h"
 #include "render/sprite.h"
 #include "system/system.h"
+const f32 MOVE_SPEED = 3.f;				// まとまりの移動速度 フレーム数で指定
+const f32 MOVE_FREAM = 0.6f/MOVE_SPEED;
+
 
 //=============================================================================
 // constructor
@@ -38,9 +41,13 @@ bool SelectBg::Initialize(void)
 	bg_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
 	bg_->__position(D3DXVECTOR2(0.0f,0.0f));
 	bg_->__texture_id(Texture::TEXTURE_ID_SELECT_BG);
+	bg_->__is_flip(true);
+	bg_->__left(0.0f);
+	bg_->__right(1.0f);
 	bg_->SetParameter();
-
-
+	uv_ = D3DXVECTOR2(0.f,1.0f);
+	move_=0.f;
+	distmove_=0.f;
 	return true;
 }
 
@@ -57,6 +64,17 @@ void SelectBg::Uninitialize(void)
 //=============================================================================
 void SelectBg::Update(void)
 {
+	if(move_<distmove_)
+	{
+		move_+=MOVE_FREAM;
+	}
+	if(move_>distmove_)
+	{
+		move_-=MOVE_FREAM;
+	}
+	bg_->__left(uv_.x+move_);
+	bg_->__right(uv_.y+move_);
+	bg_->SetParameter();
 }
 
 //=============================================================================

@@ -164,7 +164,7 @@ bool NormalStage::LoadFromFile(const s8* filename)
 	FILE* file = nullptr;
 	u32 size;
 
-	fopen_s(&file,filename,"rb");
+	fopen_s(&file,filename,"rt");
 
 	if(file == nullptr)
 	{

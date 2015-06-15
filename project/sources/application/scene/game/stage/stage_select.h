@@ -1,6 +1,9 @@
 //*****************************************************************************
 //
-// 選ばれるステージのまとまり
+// ステージセレクト画面の偉い奴
+//ここから各ステージのまとまり(stage_region)を作る
+//stage_regionは枠、ステージイメージ、ステージ名、レコードをまとめたもの
+//stage_regionはステージの数だけ作る
 //
 // Author		: kitazawa taichi
 //
@@ -10,35 +13,51 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _STAGE_REGION_H_
-#define _STAGE_REGION_H_
+#ifndef _STAGE_SELECT_H_
+#define _STAGE_SELECT_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
-#include "application/scene/game/stage/stage_select.h"
+#include "stage.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
 class Sprite;
-class SelectFrame;
-class StageName;
-class StageImage;
-class SelectRecord;
+class StageRegion;
+class SelectBg;
+class SelectArrow;
+class MessageWindow;
+class Record;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class StageRegion : public Basic
+class StageSelect : public Stage
 {
 public:
+
+	typedef struct REGIONS
+	{
+		StageRegion* region_;
+		D3DXVECTOR2 position_;
+		TYPE type_;
+	};
+
+	enum UPDATE_TYPE
+	{
+		UPDATE_TYPE_SELECT,		//ステージ選択してるとき
+		UPDATE_TYPE_MASSAGE,	//タイトルに戻るか聞いてるとき
+		UPDATE_TYPE_YORN,		//ホントにこのステージで遊ぶか聞いてるとき
+		UPDATE_TYPE＿MAX
+	};
+
 	// constructor
-	StageRegion(void);
+	StageSelect(void);
 
 	// destructor
-	virtual ~StageRegion(void);
+	virtual ~StageSelect(void);
 
 	// initialize
 	bool Initialize(void);
@@ -52,32 +71,31 @@ public:
 	// draw
 	void Draw(void);
 
-	// accessor
-	//void __size(const D3DXVECTOR2& size) { size_ = size; }
-	const D3DXVECTOR2& __size(void)const { return size_; }
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
+	// create factory
+	StageFactory* CreateFactory(void)const;
 
-	//指定位置に移動
-	void __set_region_distpos(D3DXVECTOR2 offset_pos);
-	//ステージID設定
-	void __set_stage_id(Stage::TYPE stage);
-	void __set_time(u32 time);
-	void __set_position(D3DXVECTOR2 pos){region_pos_ = pos;region_distpos_ = pos;};
+	// accessor
 
 protected:
-	static const D3DXVECTOR2 STAGE_SIZE;
-	D3DXVECTOR2 size_;
-	D3DXVECTOR2 offset_position_;
 
-	D3DXVECTOR2 region_pos_;		//まとまり全体の位置
-	D3DXVECTOR2 region_distpos_;		//まとまり全体の生きたい位置
+	void SelectUpdate();	// ステージを選んでるときの更新
+	void MassageUpdate();	// メッセージウィンドウが出てるときの更新
+	void YorNUpdate();		// ホントにこのステージで遊ぶか聞いてるときの更新
 
+	REGIONS regions_[TYPE_MAX-1];
 
-	SelectFrame* select_frame_;		//枠
-	StageName* stage_name_;			//名前
-	StageImage* stage_image_;		//イメージ画像
-	SelectRecord* record_;
+	SelectBg*	select_bg_;
 
+	SelectArrow* select_arrow_;
+
+	u32	current_stage_;
+
+	Record* record_;
+
+	// message_window
+	MessageWindow* message_window_;
+	bool massage_flag_;		//メッセージウィンドウの出てるかどうか
+	UPDATE_TYPE update_type_;
 
 };
 

@@ -23,6 +23,8 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 StageRegion::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
+const f32 MOVE_SPEED = 6.f;				// まとまりの移動速度 フレーム数で指定
+const f32 MOVE_FREAM = 1098.0f/MOVE_SPEED;
 
 
 //=============================================================================
@@ -66,7 +68,7 @@ bool StageRegion::Initialize(void)
 	{
 		return false;
 	}
-	stage_name_->__set_name_texture(STAGE_ID_MAX);
+	stage_name_->__set_name_texture(Stage::TYPE_MAX);
 
 	//ステージSSテクスチャ
 	stage_image_ = new StageImage();
@@ -74,7 +76,7 @@ bool StageRegion::Initialize(void)
 	{
 		return false;
 	}
-	stage_image_->__set_image_texture(STAGE_ID_MAX);
+	stage_image_->__set_image_texture(Stage::TYPE_MAX);
 
 	//レコード受け取り？
 
@@ -107,11 +109,11 @@ void StageRegion::Update(void)
 {
 	if(region_pos_.x>region_distpos_.x)
 	{
-		region_pos_.x -= 100.0f;
+		region_pos_.x -= MOVE_FREAM;
 	}
 	if(region_pos_.x<region_distpos_.x)
 	{
-		region_pos_.x += 100.0f;
+		region_pos_.x += MOVE_FREAM;
 	}
 
 	select_frame_->__offset_position(region_pos_);
@@ -132,9 +134,9 @@ void StageRegion::Update(void)
 //=============================================================================
 void StageRegion::Draw(void)
 {
+	stage_image_->Draw();
 	select_frame_->Draw();
 	stage_name_->Draw();
-	stage_image_->Draw();
 	record_ ->Draw();
 }
 
@@ -149,7 +151,7 @@ void StageRegion::__set_region_distpos(D3DXVECTOR2 offset_pos)
 //=============================================================================
 //ステージID設定
 //=============================================================================
-void StageRegion::__set_stage_id(STAGE_ID stage)
+void StageRegion::__set_stage_id(Stage::TYPE stage)
 {
 	stage_name_->__set_name_texture(stage);
 	stage_image_->__set_image_texture(stage);
@@ -159,6 +161,5 @@ void StageRegion::__set_time(u32 time)
 {
 	record_->__set_time(time);
 }
-
 
 //---------------------------------- EOF --------------------------------------

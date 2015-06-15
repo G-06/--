@@ -18,7 +18,7 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
-#include "application/object/stage_select.h"
+#include "application/scene/game/stage/stage_select.h"
 
 //*****************************************************************************
 // forward declaration
@@ -51,13 +51,13 @@ public:
 	void Draw(void);
 
 	//
-	void __set_stage_id(STAGE_ID id){stage_id_ = id;};
+	void __set_stage_id(Stage::TYPE id){stage_id_ = id;};
 
 private:
 	ArrowRight* arrow_right_;
 	ArrowLeft* arrow_left_;
 
-	STAGE_ID stage_id_;
+	Stage::TYPE stage_id_;
 };
 
 #endif	// _select_BG_H_

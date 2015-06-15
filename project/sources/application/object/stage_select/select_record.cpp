@@ -14,6 +14,7 @@
 #include "select_number.h"
 #include "render/sprite.h"
 #include "system/system.h"
+#include "select_record_back.h"
 
 //=============================================================================
 // constructor
@@ -40,8 +41,11 @@ bool SelectRecord::Initialize(void)
 	{
 		number_[i] = new Number();
 		number_[i] -> Initialize();
-		number_[i] ->__Set_position(D3DXVECTOR2((f32)50*i+400,500));
+		number_[i] ->__Set_position(D3DXVECTOR2((f32)50*i+540,600));
 	}
+	record_back_ = new RecordBack();
+	record_back_->Initialize();
+
 	offset_position_ = D3DXVECTOR2(0,0);
 	time_ =0;
 	__set_time(time_);
@@ -58,6 +62,7 @@ void SelectRecord::Uninitialize(void)
 	{
 		SafeRelease(number_[i]);
 	}
+	SafeRelease(record_back_);
 }
 
 //=============================================================================
@@ -65,14 +70,13 @@ void SelectRecord::Uninitialize(void)
 //=============================================================================
 void SelectRecord::Update(void)
 {
-
-
+	record_back_ ->__offset_position(offset_position_);
+	record_back_ ->Update();
 	for(int i=0;i<4;i++)
 	{
-		number_[i] ->__Set_position(D3DXVECTOR2(50*i+400 + offset_position_.x,500));
+		number_[i] ->__Set_position(D3DXVECTOR2(50*i+540 + offset_position_.x,600));
 		number_[i]->Update();
 	}
-
 }
 
 //=============================================================================
@@ -80,13 +84,12 @@ void SelectRecord::Update(void)
 //=============================================================================
 void SelectRecord::Draw(void)
 {
+	record_back_->Draw();
 	for(int i=0;i<4;i++)
 	{
 		number_[i]->Draw();
 	}
-
 }
-
 
 void SelectRecord::__set_time(u32 time)
 {
@@ -107,7 +110,6 @@ void SelectRecord::__set_time(u32 time)
 	workA-=sec;
 	//‚Ó‚ñ‚ðŠ„‚èo‚·
 	min=workA/60;
-
 
 	workA = min;
 	//•ª@‚P‚O‚ÌˆÊ
@@ -134,7 +136,6 @@ void SelectRecord::__set_time(u32 time)
 	number_[2]->__Set_index((u32)workB);
 	workA -= (u32)workB;
 	workA /= 10;
-
 }
 
 //---------------------------------- EOF --------------------------------------

@@ -58,7 +58,7 @@ void Record::Uninitialize(void)
 s32 Record::__record(const u32 stage_num)
 {
 	// error
-	if(record_ != nullptr) return -1;
+	if(record_ == nullptr) return -1;
 	if(stage_num < 0 && stage_num >= stage_num_) return -1;
 
 	return record_[stage_num];
@@ -72,7 +72,7 @@ s32 Record::__record(const u32 stage_num)
 bool Record::__record(const u32 stage_num, const u32 record)
 {
 	// error
-	if(record_ != nullptr) return false;
+	if(record_ == nullptr) return false;
 	if(stage_num < 0 && stage_num >= stage_num_) return false;
 
 	record_[stage_num] = record;
