@@ -115,7 +115,7 @@ void StageTutorial::Update(void)
 
 	if(index != 0)
 	{
-		if(collision_map.IsHit(player_position,player_old_position,index_position,game_player_->__size().x,game_player_->__size().y,128,128))
+		if(collision_map.IsHit(player_position,player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 		{
 			game_player_->HitStage(collision_map.__position(),true);
 		}
@@ -125,7 +125,7 @@ void StageTutorial::Update(void)
 
 	if(index != 0)
 	{
-		if(collision_map.IsHit(player_position,player_old_position,index_position,game_player_->__size().x,game_player_->__size().y,128,128))
+		if(collision_map.IsHit(player_position,player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 		{
 			game_player_->HitStage(collision_map.__position(),true);
 		}
@@ -135,7 +135,7 @@ void StageTutorial::Update(void)
 
 	if(index != 0)
 	{
-		if(collision_map.IsHit(player_position,player_old_position,index_position,game_player_->__size().x,game_player_->__size().y,128,128))
+		if(collision_map.IsHit(player_position,player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 		{
 			game_player_->HitStage(collision_map.__position(),true);
 		}
@@ -145,7 +145,7 @@ void StageTutorial::Update(void)
 
 	if(index != 0)
 	{
-		if(collision_map.IsHit(player_position,player_old_position,index_position,game_player_->__size().x,game_player_->__size().y,128,128))
+		if(collision_map.IsHit(player_position,player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 		{
 			game_player_->HitStage(D3DXVECTOR2(collision_map.__position().x,collision_map.__position().y),true);
 		}
