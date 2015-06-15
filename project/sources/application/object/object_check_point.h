@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// gimmick start point
+// object check point
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,30 +10,30 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _GIMMICK_START_POINT_H_
-#define _GIMMICK_START_POINT_H_
+#ifndef _OBJECT_CHECK_POINT_H_
+#define _OBJECT_CHECK_POINT_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "gimmick.h"
+#include "basic/basic.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class ObjectStartPoint;
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class GimmickStartPoint : public Gimmick
+class ObjectCheckPoint : public Basic
 {
 public:
 	// constructor
-	GimmickStartPoint(void);
+	ObjectCheckPoint(void);
 
 	// destructor
-	virtual ~GimmickStartPoint(void);
+	virtual ~ObjectCheckPoint(void);
 
 	// initialize
 	bool Initialize(void);
@@ -48,11 +48,19 @@ public:
 	void Draw(void);
 
 	// accessor
+	void __position(const D3DXVECTOR2& position) { position_ = position; }
+	const D3DXVECTOR2& __size(void) { return size_; }
 
 private:
-	ObjectStartPoint* object_start_point_;
+	static const D3DXVECTOR2 SIZE;
+	static const u32 DIVISION_WIDTH;
+	static const u32 DIVISION_HEIGHT;
+
+	Sprite* object_check_point_;
+	D3DXVECTOR2 position_;
+	D3DXVECTOR2 size_;
 };
 
-#endif	// _GIMMICK_START_POINT_H_
+#endif	// _OBJECT_CHECK_POINT_H_
 
 //---------------------------------- EOF --------------------------------------

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// gimmick start point
+// gimmick check point
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,8 +9,8 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "gimmick_start_point.h"
-#include "object/object_start_point.h"
+#include "gimmick_check_point.h"
+#include "object/object_check_point.h"
 
 //*****************************************************************************
 // constant definition
@@ -19,25 +19,25 @@
 //=============================================================================
 // constructor
 //=============================================================================
-GimmickStartPoint::GimmickStartPoint(void)
-	:Gimmick(TYPE_START_POINT)
+GimmickCheckPoint::GimmickCheckPoint(void)
+	:Gimmick(TYPE_CHECK_POINT)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-GimmickStartPoint::~GimmickStartPoint(void)
+GimmickCheckPoint::~GimmickCheckPoint(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool GimmickStartPoint::Initialize(void)
+bool GimmickCheckPoint::Initialize(void)
 {
-	object_start_point_ = new ObjectStartPoint();
-	object_start_point_->Initialize();
+	object_check_point_ = new ObjectCheckPoint();
+	object_check_point_->Initialize();
 
 	return true;
 }
@@ -45,26 +45,26 @@ bool GimmickStartPoint::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void GimmickStartPoint::Uninitialize(void)
+void GimmickCheckPoint::Uninitialize(void)
 {
-	SafeRelease(object_start_point_);
+	SafeRelease(object_check_point_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void GimmickStartPoint::Update(void)
+void GimmickCheckPoint::Update(void)
 {
-	object_start_point_->Update();
+	object_check_point_->Update();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void GimmickStartPoint::Draw(void)
+void GimmickCheckPoint::Draw(void)
 {
-	object_start_point_->__position(position_ - offset_position_);
-	object_start_point_->Draw();
+	object_check_point_->__position(position_ - offset_position_);
+	object_check_point_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

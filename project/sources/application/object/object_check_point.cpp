@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// gimmick start point
+// object check point
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,35 +9,47 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "gimmick_start_point.h"
-#include "object/object_start_point.h"
+#include "object_check_point.h"
+#include "render/sprite.h"
+#include "system/system.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
+const D3DXVECTOR2 ObjectCheckPoint::SIZE	= D3DXVECTOR2(128.0f,128.0f);
+const u32 ObjectCheckPoint::DIVISION_WIDTH	= 1;
+const u32 ObjectCheckPoint::DIVISION_HEIGHT	= 1;
 
 //=============================================================================
 // constructor
 //=============================================================================
-GimmickStartPoint::GimmickStartPoint(void)
-	:Gimmick(TYPE_START_POINT)
+ObjectCheckPoint::ObjectCheckPoint(void)
+	:object_check_point_(nullptr)
+	,position_(0.0f,0.0f)
+	,size_(0.0f,0.0f)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-GimmickStartPoint::~GimmickStartPoint(void)
+ObjectCheckPoint::~ObjectCheckPoint(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool GimmickStartPoint::Initialize(void)
+bool ObjectCheckPoint::Initialize(void)
 {
-	object_start_point_ = new ObjectStartPoint();
-	object_start_point_->Initialize();
+	object_check_point_ = new Sprite();
+	object_check_point_->Initialize();
+	object_check_point_->__point(Sprite::POINT_CENTER);
+	object_check_point_->__division_width(DIVISION_WIDTH);
+	object_check_point_->__division_height(DIVISION_HEIGHT);
+	object_check_point_->__size(SIZE);
+	object_check_point_->__texture_id(Texture::TEXTURE_ID_GAME_START_POINT);
+	object_check_point_->SetParameter();
 
 	return true;
 }
@@ -45,26 +57,25 @@ bool GimmickStartPoint::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void GimmickStartPoint::Uninitialize(void)
+void ObjectCheckPoint::Uninitialize(void)
 {
-	SafeRelease(object_start_point_);
+	SafeRelease(object_check_point_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void GimmickStartPoint::Update(void)
+void ObjectCheckPoint::Update(void)
 {
-	object_start_point_->Update();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void GimmickStartPoint::Draw(void)
+void ObjectCheckPoint::Draw(void)
 {
-	object_start_point_->__position(position_ - offset_position_);
-	object_start_point_->Draw();
+	object_check_point_->__position(position_);
+	object_check_point_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

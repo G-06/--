@@ -51,6 +51,8 @@ bool StageTutorial::Initialize(void)
 
 	stage_offset_->__stage_size(map_->__size());
 
+	LoadFromFile("data/script/script.csv");
+
 	return true;
 }
 

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// gimmick start point
+// gimmick check point
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,8 +10,8 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _GIMMICK_START_POINT_H_
-#define _GIMMICK_START_POINT_H_
+#ifndef _GIMMICK_CHECK_POINT_H_
+#define _GIMMICK_CHECK_POINT_H_
 
 //*****************************************************************************
 // include
@@ -21,19 +21,19 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class ObjectStartPoint;
+class ObjectCheckPoint;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class GimmickStartPoint : public Gimmick
+class GimmickCheckPoint : public Gimmick
 {
 public:
 	// constructor
-	GimmickStartPoint(void);
+	GimmickCheckPoint(void);
 
 	// destructor
-	virtual ~GimmickStartPoint(void);
+	virtual ~GimmickCheckPoint(void);
 
 	// initialize
 	bool Initialize(void);
@@ -50,9 +50,9 @@ public:
 	// accessor
 
 private:
-	ObjectStartPoint* object_start_point_;
+	ObjectCheckPoint* object_check_point_;
 };
 
-#endif	// _GIMMICK_START_POINT_H_
+#endif	// _GIMMICK_CHECK_POINT_H_
 
 //---------------------------------- EOF --------------------------------------

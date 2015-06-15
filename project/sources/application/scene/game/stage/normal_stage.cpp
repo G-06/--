@@ -17,6 +17,8 @@
 #include "../../factory/scene_factory.h"
 #include "system/system.h"
 #include "../gimmick/gimmick_start_point.h"
+#include "../gimmick/gimmick_check_point.h"
+#include "../gimmick/gimmick_goal_point.h"
 #include "collision/collision_map.h"
 
 //=============================================================================
@@ -87,6 +89,12 @@ void NormalStage::Update(void)
 
 	map_->__position(-stage_offset_->__position());
 
+	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+	{
+		(*it)->Update();
+		(*it)->__offset_position(stage_offset_->__position());
+	}
+
 	D3DXVECTOR2 player_position = game_player_->__position();
 	D3DXVECTOR2 player_old_position = game_player_->__old_position();
 	D3DXVECTOR2 index_position;
@@ -149,9 +157,15 @@ void NormalStage::Update(void)
 //=============================================================================
 void NormalStage::Draw(void)
 {
+	map_->Draw();
+
+	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+	{
+		(*it)->Draw();
+	}
+
 	game_player_->Draw();
 
-	map_->Draw();
 }
 
 
@@ -160,7 +174,7 @@ void NormalStage::Draw(void)
 //=============================================================================
 bool NormalStage::LoadFromFile(const s8* filename)
 {
-	u8* data;
+	s8* data;
 	FILE* file = nullptr;
 	u32 size;
 
@@ -177,25 +191,118 @@ bool NormalStage::LoadFromFile(const s8* filename)
 	fseek(file,0,SEEK_SET);
 
 	// read data
-	data = new u8[size];
+	data = new s8[size + 1];
 	fread(data,1,size,file);
+	data[size] = '\n';
 
 	// close file
 	fclose(file);
 
-	LoadFromMemory(data);
+	s8 word[256];
+	u32 count = 0;
+
+	for(u32 i = 0;i < size;++i)
+	{
+		if(data[i] == '/')
+		{
+			if(data[i + 1] == '/')
+			{
+				i += FindWord(word,&data[i],"\n");
+				count = 0;
+			}
+		}
+		else if(data[i] == ',')
+		{
+			word[count] = '\0';
+
+			u32 type = atoi(word);
+			i++;
+			switch(type)
+			{
+				case Gimmick::TYPE_START_POINT:
+				{
+					i += FindWord(word,&data[i],",\n\0");
+					f32 x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 y = atof(word);
+
+					GimmickStartPoint* gimmick = new GimmickStartPoint();
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick_container_.push_back(gimmick);
+					game_player_->__position(D3DXVECTOR2(x,y));
+					game_player_->__return_position(D3DXVECTOR2(x,y));
+					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
+				case Gimmick::TYPE_CHECK_POINT:
+				{
+					i += FindWord(word,&data[i],",\n\0");
+					f32 x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 y = atof(word);
+
+					GimmickCheckPoint* gimmick = new GimmickCheckPoint();
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
+				case Gimmick::TYPE_GOAL_POINT:
+				{
+					i += FindWord(word,&data[i],",\n\0");
+					f32 x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 y = atof(word);
+
+					GimmickGoalPoint* gimmick = new GimmickGoalPoint();
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			}
+			count = 0;
+		}
+		else
+		{
+			word[count] = data[i];
+			count++;
+		}
+	}
 
 	SafeDeleteArray(data);
 
 	return true;
 }
 
-//=============================================================================
-// load from memory
-//=============================================================================
-bool NormalStage::LoadFromMemory(const u8* data)
+u32 NormalStage::FindWord(s8* dest,const s8* source,s8* words)
 {
-	return true;
+	u32 count = 0;
+	u32 length = strlen(words);
+
+	while(1)
+	{
+		for(u32 i = 0;i < length;++i)
+		{
+			if(source[count] == words[i])
+			{
+				dest[count] = '\0';
+				return count;
+			}
+		}
+		dest[count] = source[count];
+		count++;
+	}
 }
 
 //---------------------------------- EOF --------------------------------------

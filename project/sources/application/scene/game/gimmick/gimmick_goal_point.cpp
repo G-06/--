@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// gimmick start point
+// gimmick goal point
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,8 +9,8 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "gimmick_start_point.h"
-#include "object/object_start_point.h"
+#include "gimmick_goal_point.h"
+#include "object/object_goal_point.h"
 
 //*****************************************************************************
 // constant definition
@@ -19,25 +19,25 @@
 //=============================================================================
 // constructor
 //=============================================================================
-GimmickStartPoint::GimmickStartPoint(void)
-	:Gimmick(TYPE_START_POINT)
+GimmickGoalPoint::GimmickGoalPoint(void)
+	:Gimmick(TYPE_GOAL_POINT)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-GimmickStartPoint::~GimmickStartPoint(void)
+GimmickGoalPoint::~GimmickGoalPoint(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool GimmickStartPoint::Initialize(void)
+bool GimmickGoalPoint::Initialize(void)
 {
-	object_start_point_ = new ObjectStartPoint();
-	object_start_point_->Initialize();
+	object_goal_point_ = new ObjectGoalPoint();
+	object_goal_point_->Initialize();
 
 	return true;
 }
@@ -45,26 +45,26 @@ bool GimmickStartPoint::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void GimmickStartPoint::Uninitialize(void)
+void GimmickGoalPoint::Uninitialize(void)
 {
-	SafeRelease(object_start_point_);
+	SafeRelease(object_goal_point_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void GimmickStartPoint::Update(void)
+void GimmickGoalPoint::Update(void)
 {
-	object_start_point_->Update();
+	object_goal_point_->Update();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void GimmickStartPoint::Draw(void)
+void GimmickGoalPoint::Draw(void)
 {
-	object_start_point_->__position(position_ - offset_position_);
-	object_start_point_->Draw();
+	object_goal_point_->__position(position_ - offset_position_);
+	object_goal_point_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

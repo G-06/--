@@ -57,7 +57,9 @@ public:
 	bool LoadFromFile(const s8* filename);
 
 	// load from memory
-	bool LoadFromMemory(const u8* data);
+	bool LoadFromMemory(const s8* data);
+
+	u32 FindWord(s8* dest,const s8* source,s8* words);
 
 	// accessor
 
