@@ -46,6 +46,8 @@
     <ClCompile Include="sources\application\object\stage_select\select_stage_image.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_stage_name.cpp" />
     <ClCompile Include="sources\application\scene\game\game_player.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_start_point.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage_manager.cpp" />
@@ -137,6 +139,8 @@
     <ClInclude Include="sources\application\object\stage_select\select_stage_name.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\game_player.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage_factory.h" />

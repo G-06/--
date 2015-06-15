@@ -16,7 +16,7 @@
 #include "object/stage_offset.h"
 #include "../../factory/scene_factory.h"
 #include "system/system.h"
-#include "object/object_start_point.h"
+#include "../gimmick/gimmick_start_point.h"
 #include "collision/collision_map.h"
 
 //*****************************************************************************
@@ -73,8 +73,9 @@ bool StageTutorial::Initialize(void)
 	stage_offset_->__screen_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,(f32)DEFAULT_SCREEN_HEIGHT));
 	stage_offset_->__stage_size(map_->__size());
 
-	object_start_point_ = new ObjectStartPoint();
-	object_start_point_->Initialize();
+	gimmick_start_point_ = new GimmickStartPoint();
+	gimmick_start_point_->Initialize();
+
 	return true;
 }
 
@@ -83,6 +84,8 @@ bool StageTutorial::Initialize(void)
 //=============================================================================
 void StageTutorial::Uninitialize(void)
 {
+	SafeRelease(gimmick_start_point_);
+
 	SafeRelease(game_player_);
 
 	SafeRelease(map_);
@@ -105,6 +108,9 @@ void StageTutorial::Update(void)
 	game_player_->__offset_position(stage_offset_->__position());
 
 	map_->__position(-stage_offset_->__position());
+
+	gimmick_start_point_->__offset_position(stage_offset_->__position());
+
 	D3DXVECTOR2 player_position = game_player_->__position();
 	D3DXVECTOR2 player_old_position = game_player_->__old_position();
 	D3DXVECTOR2 index_position;
@@ -167,7 +173,7 @@ void StageTutorial::Update(void)
 //=============================================================================
 void StageTutorial::Draw(void)
 {
-	object_start_point_->Draw();
+	gimmick_start_point_->Draw();
 	game_player_->Draw();
 
 	map_->Draw();

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// stage tutorial
+// object start point
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,33 +10,30 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _STAGE_TUTORIAL_H_
-#define _STAGE_TUTORIAL_H_
+#ifndef _GIMMICK_START_POINT_H_
+#define _GIMMICK_START_POINT_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "stage.h"
+#include "gimmick.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class GamePlayer;
-class Map;
-class StageOffset;
-class GimmickStartPoint;
+class ObjectStartPoint;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class StageTutorial : public Stage
+class GimmickStartPoint : public Gimmick
 {
 public:
 	// constructor
-	StageTutorial(void);
+	GimmickStartPoint(void);
 
 	// destructor
-	virtual ~StageTutorial(void);
+	virtual ~GimmickStartPoint(void);
 
 	// initialize
 	bool Initialize(void);
@@ -50,19 +47,12 @@ public:
 	// draw
 	void Draw(void);
 
-	// create factory
-	StageFactory* CreateFactory(void)const;
-
 	// accessor
 
 private:
-	GamePlayer* game_player_;
-	Map* map_;
-	StageOffset* stage_offset_;
-	u32 time_count_;
-	GimmickStartPoint* gimmick_start_point_;
+	ObjectStartPoint* object_start_point_;
 };
 
-#endif	// _STAGE_TUTORIAL_H_
+#endif	// _GIMMICK_START_POINT_H_
 
 //---------------------------------- EOF --------------------------------------

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// stage tutorial
+// gimmick
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,59 +10,61 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _STAGE_TUTORIAL_H_
-#define _STAGE_TUTORIAL_H_
+#ifndef _GIMMICK_H_
+#define _GIMMICK_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "stage.h"
+#include "basic/basic.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class GamePlayer;
-class Map;
-class StageOffset;
-class GimmickStartPoint;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class StageTutorial : public Stage
+class Gimmick : public Basic
 {
 public:
+	enum TYPE
+	{
+		TYPE_START_POINT = 0,
+		TYPE_CHECK_POINT,
+		TYPE_GOAL_POINT,
+		TYPE_MAX,
+	};
+
 	// constructor
-	StageTutorial(void);
+	Gimmick(TYPE type);
 
 	// destructor
-	virtual ~StageTutorial(void);
+	virtual ~Gimmick(void);
 
 	// initialize
-	bool Initialize(void);
+	virtual bool Initialize(void);
 
 	// uninitialize
-	void Uninitialize(void);
+	virtual void Uninitialize(void);
 
 	// update
-	void Update(void);
+	virtual void Update(void);
 
 	// draw
-	void Draw(void);
-
-	// create factory
-	StageFactory* CreateFactory(void)const;
+	virtual void Draw(void);
 
 	// accessor
+	void __position(const D3DXVECTOR2& position) { position_ = position; }
+	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
+	TYPE __type(void)const { return type_; }
 
-private:
-	GamePlayer* game_player_;
-	Map* map_;
-	StageOffset* stage_offset_;
-	u32 time_count_;
-	GimmickStartPoint* gimmick_start_point_;
+protected:
+	D3DXVECTOR2 position_;
+	D3DXVECTOR2 offset_position_;
+	TYPE type_;
 };
 
-#endif	// _STAGE_TUTORIAL_H_
+#endif	// _OBJECT_START_POINT_H_
 
 //---------------------------------- EOF --------------------------------------
