@@ -33,14 +33,16 @@ enum KEY_CODE
 		KEY_CODE_NO,
 		KEY_CODE_JUMP,
 		KEY_CODE_LIGHT,
+		KEY_CODE_PAUSE,
 		KEY_CODE_MAX
 	};
 
 	struct KEY_CONFIG
 	{
-		bool		is_occupied_;
 		KEY_CODE	key_code_;
-		s32			key_number_;
+		INPUT_EVENT	virtual_num_;
+		INPUT_EVENT	key_num_;
+		bool		is_competition_;
 	};
 
 #endif	// _OPTION_DATA_H_

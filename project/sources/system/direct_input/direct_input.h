@@ -75,6 +75,8 @@ public:
 	// register input event vertual
 	bool RegisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
 
+	void UnregisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
+
 	// save input event vertual
 	void SaveInputEventVertual(void);
 

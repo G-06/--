@@ -248,6 +248,15 @@ bool DirectInput::RegisterInputEventVertual(const INPUT_EVENT& input_event_virtu
 }
 
 //=============================================================================
+// register input event vertual
+//=============================================================================
+void DirectInput::UnregisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event)
+{
+	di_virtual_->Unregister(input_event_virtual,input_event);
+}
+
+
+//=============================================================================
 // save input event vertual
 //=============================================================================
 void DirectInput::SaveInputEventVertual(void)

@@ -30,7 +30,6 @@
 //*****************************************************************************
 const D3DXVECTOR2 Option::DEFAULT_MENU_SIZE = D3DXVECTOR2(300.f, 100.f);
 const D3DXVECTOR2 Option::EXPAND_MENU_SIZE = D3DXVECTOR2(450.f, 150.f);
-const KEY_CONFIG* Option::key_config_data_[8] = {};
 
 
 //=============================================================================
@@ -88,6 +87,48 @@ bool Option::Initialize(void)
 	cursor_x_ = 0;
 	cursor_y_ = OPTION_VOLUME_BGM;
 	is_indication_ = false;
+	is_exchange_ = false;
+
+	FILE* fp = fopen("resource/option_data.bin", "rb");
+
+	if(fp == NULL)
+	{
+		fclose(fp);
+		
+		key_config_data_[0]->key_code_ = KEY_CODE_OK;
+		key_config_data_[0]->virtual_num_ = INPUT_EVENT_VIRTUAL_6;
+		key_config_data_[0]->key_num_ = INPUT_EVENT_PAD_6;
+		key_config_data_[0]->is_competition_ = false;
+
+		key_config_data_[1]->key_code_ = KEY_CODE_NO;
+		key_config_data_[1]->virtual_num_ = INPUT_EVENT_VIRTUAL_CANCEL;
+		key_config_data_[1]->key_num_ = INPUT_EVENT_PAD_5;
+		key_config_data_[1]->is_competition_ = false;
+
+		key_config_data_[2]->key_code_ = KEY_CODE_LIGHT;
+		key_config_data_[2]->virtual_num_ = INPUT_EVENT_VIRTUAL_6;
+		key_config_data_[2]->key_num_ = INPUT_EVENT_PAD_6;
+		key_config_data_[2]->is_competition_ = true;
+
+		key_config_data_[3]->key_code_ = KEY_CODE_JUMP;
+		key_config_data_[3]->virtual_num_ = INPUT_EVENT_VIRTUAL_CANCEL;
+		key_config_data_[3]->key_num_ = INPUT_EVENT_PAD_5;
+		key_config_data_[3]->is_competition_ = true;
+
+		key_config_data_[4]->key_code_ = KEY_CODE_PAUSE;
+		key_config_data_[4]->virtual_num_ = INPUT_EVENT_VIRTUAL_8;
+		key_config_data_[4]->key_num_ = INPUT_EVENT_PAD_13;
+		key_config_data_[4]->is_competition_ = true;
+
+		volume_size_bgm_ = 5;
+		volume_size_se_ = 5;
+		bgm_volume_ ->Adjustvolume(volume_size_bgm_);
+		se_volume_ ->Adjustvolume(volume_size_se_);
+	}
+	else
+	{
+		// freadで読み込む
+	}
 
 	return true;
 }
@@ -126,7 +167,7 @@ void Option::Update(void)
 		bgm_volume_->Select(false);
 		se_volume_->Select(false);
 
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
 		{
 			cursor_y_++;
 			if(cursor_y_ >= OPTION_MAX)
@@ -135,7 +176,7 @@ void Option::Update(void)
 			}
 		}
 
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
 		{
 			cursor_y_--;
 			if(cursor_y_ <= OPTION_MIN)
@@ -154,14 +195,14 @@ void Option::Update(void)
 			cursor_x_ = 1;
 		}
 
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_X))
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6))
 		{
-		
+			is_exchange_ = true;
 		}
 
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_7) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_Z))
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 		{
-		
+			__is_indication(false);
 		}
 
 		switch(cursor_y_)
@@ -228,28 +269,56 @@ void Option::Draw(void)
 //=============================================================================
 // Exchange
 //=============================================================================
-void Option::Exchange(KEY_CODE code, s32 virtual_key)
+void Option::Exchange(KEY_CODE code, INPUT_EVENT key_num)
 {
-	const KEY_CONFIG* temp, *temp2;
-	s32 data_num1,data_num2;
+	s32 data_num;
+	INPUT_EVENT temp;
 
-	for(s32 i = 0; i < 8; i++)
+	for(s32 i = 0; i < 5; i++)
 	{
-		if(code == key_config_data_[i]->key_code_)
+		if(key_config_data_[i]->key_code_ == code)
 		{
-			temp = key_config_data_[i];
-			data_num1 = i;
-		}
-		if(virtual_key == key_config_data_[i]->key_number_)
-		{
-			temp2 = key_config_data_[i];
-			data_num2 = i;
+			data_num = i;
 		}
 	}
 
-	//GET_DIRECT_INPUT->RegisterInputEventVertual(設定されるバーチャルキー, 設定するキーイベント);
-	//GET_DIRECT_INPUT->SaveInputEventVertual();
+	for(s32 i = 0; i < 5; i++)
+	{
+		if(key_config_data_[i]->key_num_ == key_num)
+		{
+			if(key_config_data_[i]->key_code_ == KEY_CODE_PAUSE || 
+				key_config_data_[i]->is_competition_ == key_config_data_[data_num]->is_competition_)
+			{
+				temp = key_config_data_[data_num]->key_num_;
 
-	key_config_data_[data_num1] = temp2;
-	key_config_data_[data_num2] = temp;
+				GET_DIRECT_INPUT->UnregisterInputEventVertual(key_config_data_[data_num]->virtual_num_, key_config_data_[data_num]->key_num_);
+				GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_data_[data_num]->virtual_num_, key_config_data_[i]->key_num_);
+
+				key_config_data_[data_num]->key_num_ = key_config_data_[i]->key_num_;
+
+				GET_DIRECT_INPUT->UnregisterInputEventVertual(key_config_data_[i]->virtual_num_, key_config_data_[i]->key_num_);
+				GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_data_[i]->virtual_num_, temp);
+				GET_DIRECT_INPUT->SaveInputEventVertual();
+				
+				key_config_data_[i]->key_num_ = temp;
+			}
+			else
+			{
+				GET_DIRECT_INPUT->UnregisterInputEventVertual(key_config_data_[i]->virtual_num_,key_config_data_[i]->key_num_);
+				GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_data_[data_num]->virtual_num_, key_config_data_[i]->key_num_);
+				GET_DIRECT_INPUT->SaveInputEventVertual();
+
+				key_config_data_[i]->key_num_ = key_num;
+			}
+		}
+	}
+		
+	FILE* fp = fopen("resource/option_data.bin", "rb");
+
+	fwrite(&volume_size_bgm_, sizeof(u32), 1, fp);
+	fwrite(&volume_size_se_, sizeof(u32), 1, fp);
+	fwrite(&key_config_data_[0], sizeof(KEY_CONFIG), 5, fp);
+
+	fclose(fp);
+
 }

@@ -18,6 +18,7 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
+#include "system/direct_input/direct_input.h"
 #include "option_data.h"
 
 //*****************************************************************************
@@ -72,7 +73,7 @@ public:
 
 	void Draw(void);
 
-	void Exchange(KEY_CODE code, s32 virtual_key);
+	void Exchange(KEY_CODE code, INPUT_EVENT key_num);
 
 	void __is_indication(const bool indication){ is_indication_ = indication;}
 	const bool __is_indication(void)const{ return is_indication_;}
@@ -93,10 +94,11 @@ public:
 	s32 cursor_x_;
 	s32 cursor_y_;
 	bool is_indication_;
+	bool is_exchange_;
 
-	static const KEY_CONFIG* key_config_data_[8];
-	static const s32 volume_size_bgm_;
-	static const s32 volume_size_se_;
+	KEY_CONFIG* key_config_data_[5];
+	u32 volume_size_bgm_;
+	u32 volume_size_se_;
 };
 
 #endif	// _OPTION_H_
