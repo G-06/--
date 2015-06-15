@@ -15,7 +15,7 @@
 #include "system/system.h"
 
 const f32 DEFAULT_POS_X = 81.0f;				// デフォルトポジションX
-const f32 DEFAULT_POS_Y = 400.0f;				// デフォルトポジションY
+const f32 DEFAULT_POS_Y = 350.0f;				// デフォルトポジションY
 const u32 ARROW_FLASH_TIME = 10;				// 矢印の点滅速度
 
 //=============================================================================

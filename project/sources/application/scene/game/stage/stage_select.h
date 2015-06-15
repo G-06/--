@@ -28,6 +28,8 @@ class Sprite;
 class StageRegion;
 class SelectBg;
 class SelectArrow;
+class MessageWindow;
+class Record;
 
 //*****************************************************************************
 // class definition
@@ -35,6 +37,22 @@ class SelectArrow;
 class StageSelect : public Stage
 {
 public:
+
+	typedef struct REGIONS
+	{
+		StageRegion* region_;
+		D3DXVECTOR2 position_;
+		TYPE type_;
+	};
+
+	enum UPDATE_TYPE
+	{
+		UPDATE_TYPE_SELECT,		//ステージ選択してるとき
+		UPDATE_TYPE_MASSAGE,	//タイトルに戻るか聞いてるとき
+		UPDATE_TYPE_YORN,		//ホントにこのステージで遊ぶか聞いてるとき
+		UPDATE_TYPE＿MAX
+	};
+
 	// constructor
 	StageSelect(void);
 
@@ -56,25 +74,13 @@ public:
 	// create factory
 	StageFactory* CreateFactory(void)const;
 
-
 	// accessor
-	//void __size(const D3DXVECTOR2& size) { size_ = size; }
-	//const D3DXVECTOR2& __size(void)const { return size_; }
-	//void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
-
-	typedef struct REGIONS
-	{
-		StageRegion* region_;
-		D3DXVECTOR2 position_;
-		TYPE type_;
-	};
-
-
-
-
 
 protected:
 
+	void SelectUpdate();	// ステージを選んでるときの更新
+	void MassageUpdate();	// メッセージウィンドウが出てるときの更新
+	void YorNUpdate();		// ホントにこのステージで遊ぶか聞いてるときの更新
 
 	REGIONS regions_[TYPE_MAX-1];
 
@@ -83,6 +89,14 @@ protected:
 	SelectArrow* select_arrow_;
 
 	u32	current_stage_;
+
+	Record* record_;
+
+	// message_window
+	MessageWindow* message_window_;
+	bool massage_flag_;		//メッセージウィンドウの出てるかどうか
+	UPDATE_TYPE update_type_;
+
 };
 
 #endif	// _STAGE_H_

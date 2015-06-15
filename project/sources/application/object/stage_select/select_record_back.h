@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-// stage select reko-do
+// ステージセレクトのステージの枠
 //
-// Author		: taichi kitazawa
+// Author		: kitazawa taichi
 //
 //
 //*****************************************************************************
@@ -11,32 +11,31 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _SELECT_RECORD_H_
-#define _SELECT_RECORD_H_
+#ifndef _SELECT_RECORD_BACK_H_
+#define _SELECT_RECORD_BACK_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
 #include "basic/basic.h"
-#include "application/scene/game/stage/stage_select.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Number;
-class RecordBack;
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class SelectRecord : public Basic
+class RecordBack : public Basic
 {
 public:
+
 	// constructor
-	SelectRecord(void);
+	RecordBack(void);
 
 	// destructor
-	virtual ~SelectRecord(void);
+	virtual ~RecordBack(void);
 
 	// initialize
 	bool Initialize(void);
@@ -50,24 +49,22 @@ public:
 	// draw
 	void Draw(void);
 
-	//
-	void __set_stage_id(Stage::TYPE id){stage_id_ = id;};
+	// accessor
+	//void __size(const D3DXVECTOR2& size) { size_ = size; }
+	const D3DXVECTOR2& __size(void)const { return size_; }
 	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
-	void __set_time(u32 time);
 
-private:
 
-	Stage::TYPE stage_id_;
+protected:
+	static const D3DXVECTOR2 DEFAULT_POSITION;
+	static const D3DXVECTOR2 DEFAULT_SIZE;
+	static const D3DXVECTOR2 STAGE_SIZE;
 
-	u32 time_;			//reko-do
-	Number* number_[4];	//jikann 
+	D3DXVECTOR2 size_;
 	D3DXVECTOR2 offset_position_;
-	RecordBack* record_back_;
-	D3DXVECTOR2 def_position;
-
-
+	Sprite* record_back_;
 };
 
-#endif	// _select_BG_H_
+#endif	// _PLAYER_H_
 
 //---------------------------------- EOF --------------------------------------

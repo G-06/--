@@ -1,93 +1,89 @@
 //*****************************************************************************
 //
-// stage select bg
+// ステージ名のテクスチャ
+//	中心座標		player_->__point(
 //
-// Author		: taichi kitazawa
-//
+// Author		: kitazawa taichi
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "select_arrow_right.h"
+#include "select_record_back.h"
 #include "render/sprite.h"
 #include "system/system.h"
 
-const f32 DEFAULT_POS_X = 1181.0f;				// デフォルトポジションX
-const f32 DEFAULT_POS_Y = 350.0f;				// デフォルトポジションY
-const u32 ARROW_FLASH_TIME = 10;				// 矢印の点滅速度
+
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+const D3DXVECTOR2 RecordBack::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
+const D3DXVECTOR2 RecordBack::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,580);
+const D3DXVECTOR2 RecordBack::DEFAULT_SIZE = D3DXVECTOR2(300.0f,75.0f);
 
 //=============================================================================
 // constructor
 //=============================================================================
-ArrowRight::ArrowRight(void)
+RecordBack::RecordBack(void)
+	:size_(STAGE_SIZE)
+	,offset_position_(0.0f,0.0f)
+	,record_back_(nullptr)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-ArrowRight::~ArrowRight(void)
+RecordBack::~RecordBack(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool ArrowRight::Initialize(void)
+bool RecordBack::Initialize(void)
 {
-	time_ = 0;
-	alpha_ = 255;
+	record_back_ = new Sprite();
 
-	arrow_right_ = new Sprite();
-	arrow_right_->Initialize();
-	arrow_right_->__size(D3DXVECTOR2((f32)81.0f,(f32)140.0f));
-	arrow_right_->__position(D3DXVECTOR2(DEFAULT_POS_X,DEFAULT_POS_Y));
-	arrow_right_->__texture_id(Texture::TEXTURE_ID_SELECT_ARROW_RIGHT);
-	arrow_right_->__point(Sprite::POINT_CENTER);
-	arrow_right_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
-	arrow_right_->SetParameter();
+	if(!SafeInitialize(record_back_))
+	{
+		return false;
+	}
+
+	record_back_->__size(DEFAULT_SIZE);
+	record_back_->__position(DEFAULT_POSITION);
+	record_back_->__texture_id(Texture::TEXTURE_ID_SELECT_TIME_FRAME);
+	record_back_->__index((u32)0);
+	record_back_->__point(Sprite::POINT_CENTER);
+	record_back_->SetParameter();
+
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void ArrowRight::Uninitialize(void)
+void RecordBack::Uninitialize(void)
 {
-	SafeRelease(arrow_right_);
+	SafeRelease(record_back_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void ArrowRight::Update(void)
+void RecordBack::Update(void)
 {
-	time_++;
-
-	if(time_==10)
-	{
-		if(alpha_==255)
-		{
-			alpha_ = 0;
-		}
-		else if(alpha_ == 0)
-		{
-			alpha_ = 255;
-		}
-		arrow_right_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));
-		arrow_right_->SetParameter();
-		time_ = 0;
-	}
+	record_back_->__position(D3DXVECTOR2(DEFAULT_POSITION.x + offset_position_.x,DEFAULT_POSITION.y + offset_position_.y));
+	record_back_->SetParameter();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void ArrowRight::Draw(void)
+void RecordBack::Draw(void)
 {
-	arrow_right_->Draw();
+	record_back_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

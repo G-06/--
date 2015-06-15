@@ -382,6 +382,9 @@
     <ClInclude Include="sources\application\scene\game\stage\stage_select.h">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_record_back.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -626,6 +629,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
       <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_record_back.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

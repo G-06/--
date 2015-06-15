@@ -10,6 +10,8 @@
 // include
 //*****************************************************************************
 #include "stage_select.h"
+#include "stage_factory.h"
+#include "stage_manager.h"
 #include "application/object/stage_select/select_bg.h"
 #include "application/object/stage_region.h"
 #include "render/sprite.h"
@@ -17,13 +19,13 @@
 #include "scene/game/scene_game.h"
 #include "application/object/stage_select/select_arrow.h"
 #include "application/object/record.h"
-#include "stage_factory.h"
-
-
+#include "application/object/message_window.h"
+#include "scene/factory/scene_factory.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
+const u32 DEST_FRAME_COUNT = 20;				// ウィンドウ開閉の時間
 
 //=============================================================================
 // constructor
@@ -61,6 +63,21 @@ bool StageSelect::Initialize(void)
 		return false;
 	}
 
+	//レコード読み込み初期化
+	record_ = new Record();
+	record_->Initialize();
+
+	//レコードファイル読み込み
+	record_->LoadFile("data/stage/record.bin");
+
+	//レコード保存（てきとー）
+	record_->__record(0,180);
+	record_->__record(1,181);
+
+	//レコードファイル出力
+	record_->SaveFileClear("data/stage/record.bin",2);
+
+
 	////セレクト枠xステージ数
 	for(u32 i=0;i<TYPE_MAX-1;i++)
 	{
@@ -70,9 +87,19 @@ bool StageSelect::Initialize(void)
 		regions_[i].region_->__set_position(regions_[i].position_);
 		regions_[i].type_ = ((TYPE)(i+1));
 		regions_[i].region_->__set_stage_id(regions_[i].type_);
-		regions_[i].region_->__set_time(181);
+		regions_[i].region_->__set_time(record_->__record(i));
 	}
 
+	// message_window
+	message_window_ = new MessageWindow();
+	message_window_->Initialize();
+	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_SELECT_STRING_RETURN_TITLE);
+	massage_flag_ = false;
+
+	update_type_ = UPDATE_TYPE_SELECT;
+
+	//今のステージ
 	current_stage_ = TYPE_TUTORIAL;
 
 	return true;
@@ -85,7 +112,8 @@ void StageSelect::Uninitialize(void)
 {
 	SafeRelease(select_bg_);
 	SafeRelease(select_arrow_);	
-
+	SafeRelease(message_window_);
+	SafeRelease(record_);
 	for(u32 i=0;i<TYPE_MAX-1;i++)
 	{
 		SafeRelease(regions_[i].region_);
@@ -97,7 +125,42 @@ void StageSelect::Uninitialize(void)
 //=============================================================================
 void StageSelect::Update(void)
 {
+	switch(update_type_)
+	{
+	case UPDATE_TYPE_SELECT:		//遊びたいステージを選ぶ
+		SelectUpdate();
+		break;
+	case UPDATE_TYPE_MASSAGE:		//タイトルに戻る？
+		MassageUpdate();
+		break;
+	case UPDATE_TYPE_YORN:			//このステージで遊ぶ?
+		YorNUpdate();
+		break;
+	}
+	message_window_->Update();
+}
 
+//=============================================================================
+// draw
+//=============================================================================
+void StageSelect::Draw(void)
+{
+	select_bg_->Draw();
+
+	for(u32 i=0;i<TYPE_MAX-1;i++)
+	{
+		regions_[i].region_->Draw();
+	}
+
+	select_arrow_->Draw();
+	message_window_->Draw();
+}
+
+//=============================================================================
+// ステージを選んでるときの更新
+//=============================================================================
+void StageSelect::SelectUpdate()
+{
 	if(current_stage_ !=TYPE_MAX-1)
 	{
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
@@ -124,11 +187,14 @@ void StageSelect::Update(void)
 		}
 	}
 
-	//if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_RETURN))
-	//{
-	//	//決定を押されたとき
-	//	SceneGame::__next_stage(STAGE_ID_1);
-	//}
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	{
+		if(message_window_->__is_move() == false)
+		{
+			message_window_->Show();
+		}
+		update_type_ = UPDATE_TYPE_YORN;
+	}
 
 	select_bg_->Update();
 	select_arrow_->__set_stage_id((Stage::TYPE)current_stage_);
@@ -140,22 +206,119 @@ void StageSelect::Update(void)
 		regions_[i].region_->Update();
 	}
 
-	int a = 0;
+	//キャンセル押されたときメッセージ表示
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+	{
+		if(message_window_->__is_move() == false)
+		{
+			message_window_->Show();
+		}
+		update_type_ = UPDATE_TYPE_MASSAGE;
+	}
 }
 
 //=============================================================================
-// draw
+// メッセージウィンドウが出てるときの更新
 //=============================================================================
-void StageSelect::Draw(void)
+void StageSelect::MassageUpdate()
 {
-	select_bg_->Draw();
-
-	for(u32 i=0;i<TYPE_MAX-1;i++)
+	//十字キー入力時
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 	{
-		regions_[i].region_->Draw();
+		message_window_->SelectDown();
+	}
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+	{
+		message_window_->SelectUp();
+	}
+	//決定キー押されたとき
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	{
+		//イエスの時
+		if(message_window_->__is_select() == 0)
+		{
+			// タイトルに戻る
+			if(next_scene_factory_ == nullptr)
+			{
+				next_scene_factory_ = new TitleFactory();
+			}
+		}
+		//ノーの時
+		if(message_window_->__is_select() == 1)
+		{
+			//ウィンドウを閉じる
+			if(message_window_->__is_move() == false)
+			{
+				message_window_->Close();
+			}
+			update_type_ = UPDATE_TYPE_SELECT;
+		}
 	}
 
-	select_arrow_->Draw();
+	//キャンセル押されたときメッセージけし
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+	{
+		if(message_window_->__is_move() == false)
+		{
+			message_window_->Close();
+		}
+		update_type_ = UPDATE_TYPE_SELECT;
+	}
+}
+
+//=============================================================================
+// ホントにこのステージで遊ぶか聞いてるときの更新
+//=============================================================================
+void StageSelect::YorNUpdate()
+{
+	//十字キー入力時
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+	{
+		message_window_->SelectDown();
+	}
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+	{
+		message_window_->SelectUp();
+	}
+
+	//決定キー押されたとき
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	{
+		//イエスの時
+		if(message_window_->__is_select() == 0)
+		{
+			//ゲームに移る
+			switch(current_stage_)
+			{
+			case TYPE_TUTORIAL:		//チュートリアル行くぜ
+			default:
+				next_stage_factory_ = new TutorialFactory();
+				break;
+			case TYPE_STAGE1:
+				next_stage_factory_ = new TutorialFactory();
+				break;
+			}
+		}
+		//メッセージを閉じる
+		if(message_window_->__is_select() == 1)
+		{	
+			if(message_window_->__is_move() == false)
+			{
+				message_window_->Close();
+			}
+			update_type_ = UPDATE_TYPE_SELECT;
+		}
+	}
+
+	//キャンセル押されたときメッセージけし
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+	{
+		if(message_window_->__is_move() == false)
+		{
+			message_window_->Close();
+		}
+		update_type_ = UPDATE_TYPE_SELECT;
+	}
 }
 
 //=============================================================================
@@ -165,6 +328,5 @@ StageFactory* StageSelect::CreateFactory(void)const
 {
 	return new SelectFactory();
 }
-
 
 //---------------------------------- EOF --------------------------------------

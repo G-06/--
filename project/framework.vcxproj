@@ -42,6 +42,7 @@
     <ClCompile Include="sources\application\object\stage_select\select_flame.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_number.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_record.cpp" />
+    <ClCompile Include="sources\application\object\stage_select\select_record_back.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_stage_image.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_stage_name.cpp" />
     <ClCompile Include="sources\application\scene\game\game_player.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="sources\application\object\stage_select\select_flame.h" />
     <ClInclude Include="sources\application\object\stage_select\select_number.h" />
     <ClInclude Include="sources\application\object\stage_select\select_record.h" />
+    <ClInclude Include="sources\application\object\stage_select\select_record_back.h" />
     <ClInclude Include="sources\application\object\stage_select\select_stage_image.h" />
     <ClInclude Include="sources\application\object\stage_select\select_stage_name.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />

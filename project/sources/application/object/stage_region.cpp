@@ -134,9 +134,9 @@ void StageRegion::Update(void)
 //=============================================================================
 void StageRegion::Draw(void)
 {
+	stage_image_->Draw();
 	select_frame_->Draw();
 	stage_name_->Draw();
-	stage_image_->Draw();
 	record_ ->Draw();
 }
 
