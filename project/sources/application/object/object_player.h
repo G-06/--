@@ -91,13 +91,13 @@ private:
 	};
 
 	static const Animation::DATA* ANIMATION_DATA[ANIMATION_TYPE_MAX];
-	static const u32 ANIMATION_DATA_SIZE_WAIT = 3 * 1;
+	static const u32 ANIMATION_DATA_SIZE_WAIT = 5 * 1;
 	static const u32 ANIMATION_DATA_SIZE_RUN = 3 * 2;
 	static const u32 ANIMATION_DATA_SIZE_JUMP = 3 * 2;
 	static const u32 ANIMATION_DATA_SIZE_FALL = 3 * 1;
 	static const u32 ANIMATION_DATA_SIZE_LIGHT_START = 1 * 1;
 	static const u32 ANIMATION_DATA_SIZE_LIGHT_END = 1 * 1;
-	static const u32 ANIMATION_DATA_SIZE_LIGHT = 1 * 1;
+	static const u32 ANIMATION_DATA_SIZE_LIGHT = 6 * 1;
 	static const u32 ANIMATION_DATA_SIZE_DAMAGE = 1 * 1;
 	static const u32 ANIMATION_DATA_SIZE_GAME_START = 1 * 1;
 	static const u32 ANIMATION_DATA_SIZE_GAME_END = 1 * 1;
