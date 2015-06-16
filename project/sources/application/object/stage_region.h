@@ -64,6 +64,8 @@ public:
 	void __set_time(u32 time);
 	void __set_position(D3DXVECTOR2 pos){region_pos_ = pos;region_distpos_ = pos;};
 
+	bool __get_move_falg(){return move_falg_;};
+
 protected:
 	static const D3DXVECTOR2 STAGE_SIZE;
 	D3DXVECTOR2 size_;
@@ -72,11 +74,12 @@ protected:
 	D3DXVECTOR2 region_pos_;		//まとまり全体の位置
 	D3DXVECTOR2 region_distpos_;		//まとまり全体の生きたい位置
 
-
 	SelectFrame* select_frame_;		//枠
 	StageName* stage_name_;			//名前
 	StageImage* stage_image_;		//イメージ画像
 	SelectRecord* record_;
+
+	bool move_falg_;
 
 
 };

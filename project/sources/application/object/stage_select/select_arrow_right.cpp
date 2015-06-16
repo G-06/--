@@ -14,9 +14,9 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
-const f32 DEFAULT_POS_X = 1181.0f;				// デフォルトポジションX
-const f32 DEFAULT_POS_Y = 350.0f;				// デフォルトポジションY
 const u32 ARROW_FLASH_TIME = 10;				// 矢印の点滅速度
+const D3DXVECTOR2 DEFAULT_POS((DEFAULT_SCREEN_WIDTH * 0.5f)+((850.0f*0.87f)*0.6f),340.0f);// デフォルトポジション
+const D3DXVECTOR2 DEFAULT_SIZE(81.0f*0.95f,140.0f*0.92f);// デフォルトサイズ
 
 //=============================================================================
 // constructor
@@ -42,8 +42,8 @@ bool ArrowRight::Initialize(void)
 
 	arrow_right_ = new Sprite();
 	arrow_right_->Initialize();
-	arrow_right_->__size(D3DXVECTOR2((f32)81.0f,(f32)140.0f));
-	arrow_right_->__position(D3DXVECTOR2(DEFAULT_POS_X,DEFAULT_POS_Y));
+	arrow_right_->__size(DEFAULT_SIZE);
+	arrow_right_->__position(DEFAULT_POS);
 	arrow_right_->__texture_id(Texture::TEXTURE_ID_SELECT_ARROW_RIGHT);
 	arrow_right_->__point(Sprite::POINT_CENTER);
 	arrow_right_->__color(D3DCOLOR_RGBA(255,255,255,alpha_));

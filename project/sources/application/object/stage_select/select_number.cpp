@@ -14,7 +14,8 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
-
+const D3DXVECTOR2 DEFAULT_SIZE(50.0f*0.95f,100.0f*0.92f);	// デフォルトサイズ
+const D3DXVECTOR2 DEFAULT_POS(400.f,400.f);				// デフォルトポジション
 
 //=============================================================================
 // constructor
@@ -41,7 +42,7 @@ bool Number::Initialize(void)
 	position_ = D3DXVECTOR2(400.0f,400.0f);
 	number_ = new Sprite();
 	number_->Initialize();
-	number_->__size(D3DXVECTOR2((f32)50.0f,(f32)100.0f));
+	number_->__size(DEFAULT_SIZE);
 	number_->__position(position_);
 	number_->__texture_id(Texture::TEXTURE_ID_GENERAL_NUMBER);
 	number_->__division_height(1);

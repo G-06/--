@@ -19,8 +19,8 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 RecordBack::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
-const D3DXVECTOR2 RecordBack::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,580);
-const D3DXVECTOR2 RecordBack::DEFAULT_SIZE = D3DXVECTOR2(300.0f,75.0f);
+const D3DXVECTOR2 RecordBack::DEFAULT_SIZE = D3DXVECTOR2(274.0f,60.0f);
+const D3DXVECTOR2 RecordBack::DEFAULT_POSITION = D3DXVECTOR2(820.f,500.f);
 
 //=============================================================================
 // constructor

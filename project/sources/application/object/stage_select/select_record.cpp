@@ -41,7 +41,7 @@ bool SelectRecord::Initialize(void)
 	{
 		number_[i] = new Number();
 		number_[i] -> Initialize();
-		number_[i] ->__Set_position(D3DXVECTOR2((f32)50*i+540,600));
+		number_[i] ->__Set_position(D3DXVECTOR2((f32)50*i+750,500));
 	}
 	record_back_ = new RecordBack();
 	record_back_->Initialize();
@@ -74,7 +74,7 @@ void SelectRecord::Update(void)
 	record_back_ ->Update();
 	for(int i=0;i<4;i++)
 	{
-		number_[i] ->__Set_position(D3DXVECTOR2(50*i+540 + offset_position_.x,600));
+		number_[i] ->__Set_position(D3DXVECTOR2(50*i+750 + offset_position_.x,500));
 		number_[i]->Update();
 	}
 }

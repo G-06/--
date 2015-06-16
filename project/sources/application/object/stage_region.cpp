@@ -23,8 +23,8 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 StageRegion::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
-const f32 MOVE_SPEED = 6.f;				// まとまりの移動速度 フレーム数で指定
-const f32 MOVE_FREAM = 1098.0f/MOVE_SPEED;
+const f32 MOVE_SPEED = 60.f;				// まとまりの移動速度 フレーム数で指定
+const f32 MOVE_FREAM = 960.0f/MOVE_SPEED;
 
 
 //=============================================================================
@@ -78,14 +78,14 @@ bool StageRegion::Initialize(void)
 	}
 	stage_image_->__set_image_texture(Stage::TYPE_MAX);
 
-	//レコード受け取り？
-
 	//レコード表示
 	record_ = new SelectRecord();
 	if(!SafeInitialize(record_))
 	{
 		return false;
 	}
+
+	move_falg_ = false;
 
 	return true;
 }
@@ -107,21 +107,23 @@ void StageRegion::Uninitialize(void)
 //=============================================================================
 void StageRegion::Update(void)
 {
+	move_falg_ = false;
+
 	if(region_pos_.x>region_distpos_.x)
 	{
 		region_pos_.x -= MOVE_FREAM;
+		move_falg_ = true;
 	}
 	if(region_pos_.x<region_distpos_.x)
 	{
 		region_pos_.x += MOVE_FREAM;
+		move_falg_ = true;
 	}
 
 	select_frame_->__offset_position(region_pos_);
 	stage_name_->__offset_position(region_pos_);
 	stage_image_->__offset_position(region_pos_);
 	record_->__offset_position(region_pos_);
-
-
 
 	select_frame_->Update();
 	stage_name_->Update();
