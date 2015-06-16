@@ -59,6 +59,7 @@ bool StageSelect::Initialize(void)
 	nas_ -> Initialize();
 	nas_ -> __position(D3DXVECTOR2(200.f,500.f));
 	nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
+	nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
 	nas_->__is_flip(false);
 
 	//矢印
@@ -170,46 +171,57 @@ void StageSelect::Draw(void)
 //=============================================================================
 void StageSelect::SelectUpdate()
 {
-	//必要以上に右に行かない
-	if(current_stage_ !=TYPE_MAX-1)
+	if(regions_[0].region_->__get_move_falg() == false)	//レギオンが動いてないとき
 	{
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
+		//必要以上に右に行かない
+		if(current_stage_ !=TYPE_MAX-1)
 		{
-			for(u32 i=0;i<TYPE_MAX-1;i++)
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
 			{
-				regions_[i].region_->__set_region_distpos(D3DXVECTOR2(-REGION_MOVE,0.0f));
-				select_bg_->__set_distmove(-0.06f);
+				for(u32 i=0;i<TYPE_MAX-1;i++)
+				{
+					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(-REGION_MOVE,0.0f));
+					select_bg_->__set_distmove(-0.06f);
+				}
+				current_stage_++;
+				nas_->__is_flip(false);
 			}
-			current_stage_++;
-			nas_->__is_flip(false);
 		}
-	}
 
-	//必要以上に左に行かない
-	if(current_stage_!=TYPE_TUTORIAL)
-	{
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
+		//必要以上に左に行かない
+		if(current_stage_!=TYPE_TUTORIAL)
 		{
-			for(u32 i=0;i<TYPE_MAX-1;i++)
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
 			{
-				regions_[i].region_->__set_region_distpos(D3DXVECTOR2(REGION_MOVE,0.0f));
-				select_bg_->__set_distmove(0.06f);
+				for(u32 i=0;i<TYPE_MAX-1;i++)
+				{
+					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(REGION_MOVE,0.0f));
+					select_bg_->__set_distmove(0.06f);
+				}
+				current_stage_--;
+				nas_->__is_flip(true);
 			}
-			current_stage_--;
-			nas_->__is_flip(true);
 		}
-	}
 
-	//決定押されたとき
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
-	{
-		if(message_window_->__is_move() == false)
+		//決定押されたとき
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
 		{
-			message_window_->Show();
+			if(message_window_->__is_move() == false)
+			{
+				message_window_->Show();
+				update_type_ = UPDATE_TYPE_YORN;
+			}
 		}
-		update_type_ = UPDATE_TYPE_YORN;
+		//キャンセル押されたときメッセージ表示
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+		{
+			if(message_window_->__is_move() == false)
+			{
+				message_window_->Show();
+				update_type_ = UPDATE_TYPE_MASSAGE;
+			}
+		}
 	}
-
 	//背景更新
 	select_bg_->Update();
 
@@ -224,26 +236,17 @@ void StageSelect::SelectUpdate()
 	}
 
 	//ニャス更新
-	if(regions_[1].region_->__get_move_falg() == false)
+	if(regions_[0].region_->__get_move_falg() == false)
 	{
 		nas_->__is_flip(false);
 		nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
 	}
-	else if(regions_[1].region_->__get_move_falg() == true)
+	else if(regions_[0].region_->__get_move_falg() == true)
 	{
 		nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
 	}
 	nas_->Update();
 
-	//キャンセル押されたときメッセージ表示
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
-	{
-		if(message_window_->__is_move() == false)
-		{
-			message_window_->Show();
-		}
-		update_type_ = UPDATE_TYPE_MASSAGE;
-	}
 }
 
 //=============================================================================
@@ -279,8 +282,8 @@ void StageSelect::MassageUpdate()
 			if(message_window_->__is_move() == false)
 			{
 				message_window_->Close();
+				update_type_ = UPDATE_TYPE_SELECT;
 			}
-			update_type_ = UPDATE_TYPE_SELECT;
 		}
 	}
 
@@ -290,8 +293,8 @@ void StageSelect::MassageUpdate()
 		if(message_window_->__is_move() == false)
 		{
 			message_window_->Close();
+			update_type_ = UPDATE_TYPE_SELECT;
 		}
-		update_type_ = UPDATE_TYPE_SELECT;
 	}
 }
 
@@ -316,7 +319,7 @@ void StageSelect::YorNUpdate()
 		//イエスの時
 		if(message_window_->__is_select() == 0)
 		{
-			if(next_stage_factory_ != nullptr)
+			if(next_stage_factory_ == nullptr)
 			{
 				//ゲームに移る
 				switch(current_stage_)
@@ -340,8 +343,8 @@ void StageSelect::YorNUpdate()
 			if(message_window_->__is_move() == false)
 			{
 				message_window_->Close();
+				update_type_ = UPDATE_TYPE_SELECT;
 			}
-			update_type_ = UPDATE_TYPE_SELECT;
 		}
 	}
 
@@ -351,8 +354,8 @@ void StageSelect::YorNUpdate()
 		if(message_window_->__is_move() == false)
 		{
 			message_window_->Close();
+			update_type_ = UPDATE_TYPE_SELECT;
 		}
-		update_type_ = UPDATE_TYPE_SELECT;
 	}
 }
 
