@@ -418,6 +418,9 @@
     <ClInclude Include="sources\application\object\object_light_gauge.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\title\title_circle.h">
+      <Filter>sources\application\scene\title</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -695,6 +698,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\object_light_gauge.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\title\title_circle.cpp">
+      <Filter>sources\application\scene\title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

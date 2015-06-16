@@ -67,6 +67,7 @@
     <ClCompile Include="sources\application\scene\scene_manager.cpp" />
     <ClCompile Include="sources\application\scene\title\scene_title.cpp" />
     <ClCompile Include="sources\application\scene\title\title_bg.cpp" />
+    <ClCompile Include="sources\application\scene\title\title_circle.cpp" />
     <ClCompile Include="sources\application\scene\title\title_logo.cpp" />
     <ClCompile Include="sources\application\scene\title\title_luminescence.cpp" />
     <ClCompile Include="sources\application\scene\title\title_push_start.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="sources\application\scene\scene_manager.h" />
     <ClInclude Include="sources\application\scene\title\scene_title.h" />
     <ClInclude Include="sources\application\scene\title\title_bg.h" />
+    <ClInclude Include="sources\application\scene\title\title_circle.h" />
     <ClInclude Include="sources\application\scene\title\title_logo.h" />
     <ClInclude Include="sources\application\scene\title\title_luminescence.h" />
     <ClInclude Include="sources\application\scene\title\title_push_start.h" />

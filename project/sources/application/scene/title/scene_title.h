@@ -26,6 +26,7 @@ class TitleLogo;
 class TitlePushStart;
 class TitleSelect;
 class Titleluminescence;
+class TitleCircle;
 class MessageWindow;
 class Option;
 
@@ -102,11 +103,15 @@ private:
 	// luminescence
 	Titleluminescence* luminescence_;
 
+	// circle
+	TitleCircle* circle_;
+
 	// select
 	TITLE_SELECT select_[SELECT_MAX];
 
 	// message_window
 	MessageWindow* message_window_;
+
 
 	// ロゴに戻るカウンター
 	u32 frame_count_;
