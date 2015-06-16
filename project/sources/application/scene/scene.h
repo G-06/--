@@ -63,10 +63,12 @@ public:
 	const TYPE& __type(void)const { return type_; }
 	SceneFactory* __next_scene_factory(void)const { return next_scene_factory_; }
 	void __is_fade(bool is_fade) { is_fade_ = is_fade; }
+	bool __is_stop(void) { return is_stop_; }
 
 protected:
 	SceneFactory* next_scene_factory_;
 	bool is_fade_;
+	bool is_stop_;
 
 private:
 	TYPE type_;

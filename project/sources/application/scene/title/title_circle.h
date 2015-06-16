@@ -1,8 +1,10 @@
 //*****************************************************************************
 //
-// scene manager
+// title circle
 //
-// Author		: Kenji Kabutomori
+// Author	: masato masuda
+//
+// ‰ñ‚Á‚Ä‚é‚â‚Â
 //
 //*****************************************************************************
 
@@ -10,32 +12,31 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _SCENE_MANAGER_H_
-#define _SCENE_MANAGER_H_
+#ifndef _TITLE_CIRCLE_H_
+#define _TITLE_CIRCLE_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
 #include "basic/basic.h"
+#include "system/directx9/texture/texture.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Scene;
-class SceneFactory;
-class Fade;
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class SceneManager : public Basic
+class TitleCircle : public Basic
 {
 public:
 	// constructor
-	SceneManager(void);
+	TitleCircle(void);
 
 	// destructor
-	virtual ~SceneManager(void);
+	virtual ~TitleCircle(void);
 
 	// initialize
 	bool Initialize(void);
@@ -49,18 +50,18 @@ public:
 	// draw
 	void Draw(void);
 
-	// accessor
-	bool __is_error(void)const { return is_error_; }
-	bool __is_stop(void)const { return is_stop_; }
+	void AddRotation(const f32 rotation);
+
+	// texture
+	void __texture_id(const Texture::TEXTURE_ID& texture_id);
 
 private:
-	Scene* current_scene_;
-	Scene* next_scene_;
-	Fade* fade_;
-	bool is_error_;
-	bool is_stop_;
+	static const D3DXVECTOR2 DEFAULT_POSITION;
+	static const D3DXVECTOR2 DEFAULT_SIZE;
+
+	Sprite* sprite_;
 };
 
-#endif	// _SCENE_MANAGER_H_
+#endif	// _TITLE_LUMINESCENCE_H_
 
 //---------------------------------- EOF --------------------------------------

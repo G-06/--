@@ -139,7 +139,6 @@ void Application::Update(void)
 	{
 		// update scene manager
 		scene_manager_->Update();
-
 	}
 
 	if(GET_SYSTEM.__directx9()->BeginDraw())
@@ -161,6 +160,11 @@ void Application::Update(void)
 	}
 
 	if(scene_manager_->__is_error())
+	{
+		is_loop_ = false;
+	}
+
+	if(scene_manager_->__is_stop())
 	{
 		is_loop_ = false;
 	}

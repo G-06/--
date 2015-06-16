@@ -21,6 +21,7 @@ SceneManager::SceneManager(void)
 	:current_scene_(nullptr)
 	,next_scene_(nullptr)
 	,is_error_(false)
+	,is_stop_(false)
 {
 }
 
@@ -96,6 +97,10 @@ void SceneManager::Update(void)
 	// update current scene
 	current_scene_->Update();
 
+	if(current_scene_->__is_stop())
+	{
+		is_stop_ = current_scene_->__is_stop();
+	}
 	// is next scene factory
 	if(current_scene_->__next_scene_factory() != nullptr && fade_->__type() == Fade::TYPE_NONE)
 	{

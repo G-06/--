@@ -15,6 +15,7 @@
 #include "title_logo.h"
 #include "title_push_start.h"
 #include "title_luminescence.h"
+#include "title_circle.h"
 #include "title_select.h"
 #include "object/message_window.h"
 #include "system/system.h"
@@ -59,6 +60,7 @@ SceneTitle::SceneTitle(void)
 	,push_(nullptr)
 	,push_frame_(nullptr)
 	,luminescence_(nullptr)
+	,circle_(nullptr)
 	,message_window_(nullptr)
 	,frame_count_(0)
 	,current_select_(0)
@@ -86,6 +88,9 @@ bool SceneTitle::Initialize(void)
 
 	luminescence_ = new Titleluminescence();
 	luminescence_->Initialize();
+
+	circle_ = new TitleCircle();
+	circle_->Initialize();
 
 	logo_ = new TitleLogo();
 	logo_->Initialize();
@@ -144,6 +149,8 @@ void SceneTitle::Uninitialize(void)
 
 	SafeRelease(luminescence_);
 
+	SafeRelease(circle_);
+
 	SafeRelease(option_);
 
 	for(int i = 0 ; i < SELECT_MAX ; i++){
@@ -168,6 +175,8 @@ void SceneTitle::Update(void)
 	{
 		// ”wŒi”­Œõ
 		_UpdateLuminescence();
+
+		circle_->AddRotation(0.01f);
 
 		// ŽžŠÔŒo‰ß‚ÅƒƒS‚É–ß‚é
 		if(mode_ == MODE_PUSH || mode_ == MODE_SELECT)
@@ -220,6 +229,7 @@ void SceneTitle::Draw(void)
 {
 	bg_->Draw();
 	luminescence_->Draw();
+	circle_->Draw();
 	logo_->Draw();
 
 	if(mode_ == MODE_PUSH || mode_ == MODE_PUSH_INTERVAL)

@@ -1,56 +1,51 @@
 //*****************************************************************************
 //
-// title luminescence
+// title circle
 //
 // Author	: masato masuda
-//
-// ”­Œõ‚µ‚Ä‚é‚â‚Â
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "title_luminescence.h"
+#include "title_circle.h"
 #include "render/sprite.h"
 #include "system/system.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-//const D3DXVECTOR2 Titleluminescence::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
-const D3DXVECTOR2 Titleluminescence::DEFAULT_POSITION = D3DXVECTOR2(0.0f, 0.0f);
-const D3DXVECTOR2 Titleluminescence::DEFAULT_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH, 360.0f);
-const f32 DEFAULT_ALPHA_SPEED = -0.005f;
+const D3DXVECTOR2 TitleCircle::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
+const f32 circle_scale = 0.4f;
+const D3DXVECTOR2 TitleCircle::DEFAULT_SIZE = D3DXVECTOR2(2147.0f * circle_scale, 2147.0f * circle_scale);
 
 //=============================================================================
 // constructor
 //=============================================================================
-Titleluminescence::Titleluminescence(void)
+TitleCircle::TitleCircle(void)
 	:sprite_(nullptr)
-	,alpha_speed_(DEFAULT_ALPHA_SPEED)
-	,alpha_(1.0f)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-Titleluminescence::~Titleluminescence(void)
+TitleCircle::~TitleCircle(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool Titleluminescence::Initialize(void)
+bool TitleCircle::Initialize(void)
 {
 	sprite_ = new Sprite();
 	sprite_->Initialize();
 	sprite_->__size(DEFAULT_SIZE);
 	sprite_->__position(DEFAULT_POSITION);
-	sprite_->__point(Sprite::POINT_LEFT_UP);
-	sprite_->__texture_id(Texture::TEXTURE_ID_TITLE_LUMINESCENCE);
+	sprite_->__point(Sprite::POINT_CENTER);
+	sprite_->__texture_id(Texture::TEXTURE_ID_TITLE_CIRCLE);
 	sprite_->SetParameter();
 	return true;
 }
@@ -58,7 +53,7 @@ bool Titleluminescence::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void Titleluminescence::Uninitialize(void)
+void TitleCircle::Uninitialize(void)
 {
 	SafeRelease(sprite_);
 }
@@ -66,47 +61,41 @@ void Titleluminescence::Uninitialize(void)
 //=============================================================================
 // update
 //=============================================================================
-void Titleluminescence::Update(void)
+void TitleCircle::Update(void)
 {
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void Titleluminescence::Draw(void)
+void TitleCircle::Draw(void)
 {
 	sprite_->Draw();
 }
 
 //=============================================================================
-// __color
+// AddRotation
 //=============================================================================
-void Titleluminescence::__color(const D3DXCOLOR& color)
+void TitleCircle::AddRotation(const f32 rotation)
 {
-	sprite_->__color(color);
-	sprite_->SetParameter();
-}
+	f32 old_rotation = sprite_->__rotation();
+	f32 temp_rotation = old_rotation + rotation;
 
-//=============================================================================
-// __color
-//=============================================================================
-const D3DXCOLOR Titleluminescence::__color(void)
-{
-	return (D3DXCOLOR)sprite_->__color();
-}
+	// normalize
+	if( temp_rotation > D3DX_PI ){
+		temp_rotation -= ( 2.0f * D3DX_PI );
+	}
+	if( temp_rotation < -(D3DX_PI) ){
+		temp_rotation += ( 2.0f * D3DX_PI );
+	}
 
-//=============================================================================
-// ResetAlphaSpeed
-//=============================================================================
-void Titleluminescence::ResetAlphaSpeed(void)
-{
-	alpha_speed_ = DEFAULT_ALPHA_SPEED;
+	sprite_->__rotation(temp_rotation);
 }
 
 //=============================================================================
 // __texture_id
 //=============================================================================
-void Titleluminescence::__texture_id(const Texture::TEXTURE_ID& texture_id)
+void TitleCircle::__texture_id(const Texture::TEXTURE_ID& texture_id)
 {
 	sprite_->__texture_id(texture_id);
 	sprite_->SetParameter();
