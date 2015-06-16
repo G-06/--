@@ -21,11 +21,14 @@
 #include "application/object/record.h"
 #include "application/object/message_window.h"
 #include "scene/factory/scene_factory.h"
+#include "application/object/object_player.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const u32 DEST_FRAME_COUNT = 20;				// ウィンドウ開閉の時間
+const u32 DEST_FRAME_COUNT = 20;						// ウィンドウ開閉の時間
+const f32 REGION_INTERVAL = (850.0f*0.87f)*1.3f;		// レギオンの間隔
+const f32 REGION_MOVE = 960.f;							// レギオンの間隔
 
 //=============================================================================
 // constructor
@@ -49,19 +52,18 @@ bool StageSelect::Initialize(void)
 {
 	//背景
 	select_bg_ = new SelectBg();
-	if(!SafeInitialize(select_bg_))
-	{
-		return false;
-	}
+	select_bg_->Initialize();
 
 	//ブルーニャス
+	nas_ = new ObjectPlayer();
+	nas_ -> Initialize();
+	nas_ -> __position(D3DXVECTOR2(200.f,500.f));
+	nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
+	nas_->__is_flip(false);
 
 	//矢印
 	select_arrow_ = new SelectArrow();
-	if(!SafeInitialize(select_arrow_))
-	{
-		return false;
-	}
+	select_arrow_ ->Initialize();
 
 	//レコード読み込み初期化
 	record_ = new Record();
@@ -70,20 +72,22 @@ bool StageSelect::Initialize(void)
 	//レコードファイル読み込み
 	record_->LoadFile("data/stage/record.bin");
 
+	//record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
+
 	//レコード保存（てきとー）
 	record_->__record(0,180);
 	record_->__record(1,181);
+	record_->__record(2,333);
 
 	//レコードファイル出力
-	record_->SaveFileClear("data/stage/record.bin",2);
-
+	record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
 
 	////セレクト枠xステージ数
 	for(u32 i=0;i<TYPE_MAX-1;i++)
 	{
 		regions_[i].region_ = new StageRegion();
 		regions_[i].region_->Initialize();
-		regions_[i].position_ = D3DXVECTOR2(i*1098.0f,0.0f);
+		regions_[i].position_ = D3DXVECTOR2(i*REGION_INTERVAL,0.0f);
 		regions_[i].region_->__set_position(regions_[i].position_);
 		regions_[i].type_ = ((TYPE)(i+1));
 		regions_[i].region_->__set_stage_id(regions_[i].type_);
@@ -114,10 +118,12 @@ void StageSelect::Uninitialize(void)
 	SafeRelease(select_arrow_);	
 	SafeRelease(message_window_);
 	SafeRelease(record_);
+	SafeRelease(nas_);
 	for(u32 i=0;i<TYPE_MAX-1;i++)
 	{
 		SafeRelease(regions_[i].region_);
 	}
+	SafeDelete(next_stage_factory_);
 }
 
 //=============================================================================
@@ -152,7 +158,10 @@ void StageSelect::Draw(void)
 		regions_[i].region_->Draw();
 	}
 
-	select_arrow_->Draw();
+	if(regions_[1].region_->__get_move_falg() == false)
+		select_arrow_->Draw();
+	nas_->Draw();
+
 	message_window_->Draw();
 }
 
@@ -161,42 +170,61 @@ void StageSelect::Draw(void)
 //=============================================================================
 void StageSelect::SelectUpdate()
 {
-	if(current_stage_ !=TYPE_MAX-1)
+	if(regions_[0].region_->__get_move_falg() == false)	//レギオンが動いてないとき
 	{
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
+		//必要以上に右に行かない
+		if(current_stage_ !=TYPE_MAX-1)
 		{
-			for(u32 i=0;i<TYPE_MAX-1;i++)
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
 			{
-				regions_[i].region_->__set_region_distpos(D3DXVECTOR2(-1098.0f,0.0f));
-				select_bg_->__set_distmove(-0.5f);
+				for(u32 i=0;i<TYPE_MAX-1;i++)
+				{
+					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(-REGION_MOVE,0.0f));
+					select_bg_->__set_distmove(-0.06f);
+				}
+				current_stage_++;
+				nas_->__is_flip(false);
 			}
-			current_stage_++;
 		}
-	}
 
-	if(current_stage_!=TYPE_TUTORIAL)
-	{
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
+		//必要以上に左に行かない
+		if(current_stage_!=TYPE_TUTORIAL)
 		{
-			for(u32 i=0;i<TYPE_MAX-1;i++)
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
 			{
-				regions_[i].region_->__set_region_distpos(D3DXVECTOR2(1098.0f,0.0f));
-				select_bg_->__set_distmove(0.5f);
+				for(u32 i=0;i<TYPE_MAX-1;i++)
+				{
+					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(REGION_MOVE,0.0f));
+					select_bg_->__set_distmove(0.06f);
+				}
+				current_stage_--;
+				nas_->__is_flip(true);
 			}
-			current_stage_--;
 		}
-	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
-	{
-		if(message_window_->__is_move() == false)
+		//決定押されたとき
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
 		{
-			message_window_->Show();
+			if(message_window_->__is_move() == false)
+			{
+				message_window_->Show();
+				update_type_ = UPDATE_TYPE_YORN;
+			}
 		}
-		update_type_ = UPDATE_TYPE_YORN;
+		//キャンセル押されたときメッセージ表示
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+		{
+			if(message_window_->__is_move() == false)
+			{
+				message_window_->Show();
+				update_type_ = UPDATE_TYPE_MASSAGE;
+			}
+		}
 	}
-
+	//背景更新
 	select_bg_->Update();
+
+	//矢印更新
 	select_arrow_->__set_stage_id((Stage::TYPE)current_stage_);
 	select_arrow_ ->Update();
 
@@ -206,15 +234,18 @@ void StageSelect::SelectUpdate()
 		regions_[i].region_->Update();
 	}
 
-	//キャンセル押されたときメッセージ表示
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+	//ニャス更新
+	if(regions_[0].region_->__get_move_falg() == false)
 	{
-		if(message_window_->__is_move() == false)
-		{
-			message_window_->Show();
-		}
-		update_type_ = UPDATE_TYPE_MASSAGE;
+		nas_->__is_flip(false);
+		nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
 	}
+	else if(regions_[0].region_->__get_move_falg() == true)
+	{
+		nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
+	}
+	nas_->Update();
+
 }
 
 //=============================================================================
@@ -250,8 +281,8 @@ void StageSelect::MassageUpdate()
 			if(message_window_->__is_move() == false)
 			{
 				message_window_->Close();
+				update_type_ = UPDATE_TYPE_SELECT;
 			}
-			update_type_ = UPDATE_TYPE_SELECT;
 		}
 	}
 
@@ -261,8 +292,8 @@ void StageSelect::MassageUpdate()
 		if(message_window_->__is_move() == false)
 		{
 			message_window_->Close();
+			update_type_ = UPDATE_TYPE_SELECT;
 		}
-		update_type_ = UPDATE_TYPE_SELECT;
 	}
 }
 
@@ -287,16 +318,22 @@ void StageSelect::YorNUpdate()
 		//イエスの時
 		if(message_window_->__is_select() == 0)
 		{
-			//ゲームに移る
-			switch(current_stage_)
+			if(next_stage_factory_ == nullptr)
 			{
-			case TYPE_TUTORIAL:		//チュートリアル行くぜ
-			default:
-				next_stage_factory_ = new TutorialFactory();
-				break;
-			case TYPE_STAGE1:
-				next_stage_factory_ = new TutorialFactory();
-				break;
+				//ゲームに移る
+				switch(current_stage_)
+				{
+				case TYPE_TUTORIAL:		//チュートリアル行くぜ
+				default:
+						next_stage_factory_ = new TutorialFactory();
+					break;
+				case TYPE_STAGE1:
+					next_stage_factory_ = new TutorialFactory();
+					break;
+				case TYPE_STAGE2:
+					next_stage_factory_ = new TutorialFactory();
+					break;
+				}
 			}
 		}
 		//メッセージを閉じる
@@ -305,8 +342,8 @@ void StageSelect::YorNUpdate()
 			if(message_window_->__is_move() == false)
 			{
 				message_window_->Close();
+				update_type_ = UPDATE_TYPE_SELECT;
 			}
-			update_type_ = UPDATE_TYPE_SELECT;
 		}
 	}
 
@@ -316,8 +353,8 @@ void StageSelect::YorNUpdate()
 		if(message_window_->__is_move() == false)
 		{
 			message_window_->Close();
+			update_type_ = UPDATE_TYPE_SELECT;
 		}
-		update_type_ = UPDATE_TYPE_SELECT;
 	}
 }
 

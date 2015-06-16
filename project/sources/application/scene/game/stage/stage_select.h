@@ -30,6 +30,7 @@ class SelectBg;
 class SelectArrow;
 class MessageWindow;
 class Record;
+class ObjectPlayer;
 
 //*****************************************************************************
 // class definition
@@ -97,6 +98,7 @@ protected:
 	bool massage_flag_;		//メッセージウィンドウの出てるかどうか
 	UPDATE_TYPE update_type_;
 
+	ObjectPlayer* nas_;
 };
 
 #endif	// _STAGE_H_

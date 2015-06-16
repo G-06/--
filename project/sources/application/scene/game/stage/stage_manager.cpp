@@ -108,7 +108,6 @@ void StageManager::Update(void)
 		// fade out
 		fade_->Start(Fade::TYPE_OUT);
 		next_stage_ = current_stage_->__next_stage_factory()->Create();
-
 		if(!SafeInitialize(next_stage_))
 		{
 			is_error_ = true;

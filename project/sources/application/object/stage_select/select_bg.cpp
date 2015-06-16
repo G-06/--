@@ -13,8 +13,8 @@
 #include "select_bg.h"
 #include "render/sprite.h"
 #include "system/system.h"
-const f32 MOVE_SPEED = 3.f;				// まとまりの移動速度 フレーム数で指定
-const f32 MOVE_FREAM = 0.6f/MOVE_SPEED;
+const f32 MOVE_SPEED = 20.f;				// まとまりの移動速度 フレーム数で指定
+const f32 MOVE_FREAM = 0.06f/MOVE_SPEED;
 
 
 //=============================================================================

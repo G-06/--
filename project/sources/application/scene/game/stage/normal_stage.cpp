@@ -57,6 +57,7 @@ bool NormalStage::Initialize(void)
 	object_light_gauge_ = new ObjectLightGauge();
 	object_light_gauge_->Initialize();
 	object_light_gauge_->__position(D3DXVECTOR2(100.0f,100.0f));
+
 	if(!SafeInitialize(stage_offset_))
 	{
 		return false;

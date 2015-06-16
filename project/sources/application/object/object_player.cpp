@@ -146,16 +146,14 @@ bool ObjectPlayer::Initialize(void)
 {
 	is_flip_ = false;
 	player_ = new Sprite();
-	animation_ = new Animation();
-	animation_type_ = ANIMATION_TYPE_WAIT;
-	animation_->Add(ANIMATION_DATA[animation_type_],sizeof(ANIMATION_DATA) * ANIMATION_DATA_SIZE[animation_type_]);
 	player_->Initialize();
+
+	animation_ = new Animation();
+	animation_type_ = ANIMATION_TYPE_MAX;
+	StartAnimation(ANIMATION_TYPE_WAIT);
+	animation_->Add(ANIMATION_DATA[animation_type_],sizeof(ANIMATION_DATA) * ANIMATION_DATA_SIZE[animation_type_]);
 	player_->__size(D3DXVECTOR2(200,200));
 	player_->__position(position_);
-	player_->__texture_id(Texture::TEXTURE_ID_NYAS_STAND);
-	player_->__division_height(2);
-	player_->__division_width(3);
-	player_->__index(0);
 	player_->__point(Sprite::POINT_CENTER);
 	player_->SetParameter();
 
@@ -205,6 +203,7 @@ void ObjectPlayer::StartAnimation(ANIMATION_TYPE animation_type)
 		player_->__texture_id((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._texture_id);
 		player_->__division_width((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._division_width);
 		player_->__division_height((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._division_height);
+		player_->SetParameter();
 	}
 }
 
