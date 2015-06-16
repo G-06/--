@@ -101,17 +101,9 @@ void NormalStage::Update(void)
 
 		game_player_->Update();
 
-		stage_offset_->__reference_position(game_player_->__position());
-		stage_offset_->Update();
-
-		game_player_->__offset_position(stage_offset_->__position());
-
-		map_->__position(-stage_offset_->__position());
-
 		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 		{
 			(*it)->Update();
-			(*it)->__offset_position(stage_offset_->__position());
 		}
 
 		object_light_gauge_->__rate((f32)game_player_->__sp() / (f32)game_player_->__sp_max() * 100.0f);
@@ -206,6 +198,18 @@ void NormalStage::Update(void)
 		if(game_player_->__position().y > map_->__size().y)
 		{
 			game_player_->Dead();
+		}
+
+		stage_offset_->__reference_position(game_player_->__position());
+		stage_offset_->Update();
+
+		game_player_->__offset_position(stage_offset_->__position());
+
+		map_->__position(-stage_offset_->__position());
+
+		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+		{
+			(*it)->__offset_position(stage_offset_->__position());
 		}
 
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_P))

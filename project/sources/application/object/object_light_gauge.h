@@ -49,19 +49,20 @@ public:
 
 	// accessor
 	void __position(const D3DXVECTOR2& position) { position_ = position; }
-	const D3DXVECTOR2& __size(void) { return size_; }
 	void __rate(f32 rate) { rate_ = rate; }
+
 private:
-	static const D3DXVECTOR2 SIZE;
-	static const u32 DIVISION_WIDTH;
-	static const u32 DIVISION_HEIGHT;
+	static const D3DXVECTOR2 GAUGE_SIZE;
+	static const D3DXVECTOR2 GAUGE_POSITION;
+	static const D3DXVECTOR2 GAUGE_FRAME_SIZE;
+	static const D3DXVECTOR2 GAUGE_FRAME_POSITION;
 
 	Sprite* gauge_;
+	Sprite* gauge_frame_;
 	D3DXVECTOR2 position_;
-	D3DXVECTOR2 size_;
 	f32 rate_;
 };
 
-#endif	// _OBJECT_START_POINT_H_
+#endif	// _OBJECT_LIGHT_GAUGE_H_
 
 //---------------------------------- EOF --------------------------------------

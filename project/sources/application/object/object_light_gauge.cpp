@@ -16,9 +16,9 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectLightGauge::SIZE	= D3DXVECTOR2(128.0f,128.0f);
-const u32 ObjectLightGauge::DIVISION_WIDTH	= 1;
-const u32 ObjectLightGauge::DIVISION_HEIGHT	= 1;
+const D3DXVECTOR2 ObjectLightGauge::GAUGE_SIZE = D3DXVECTOR2(128.0f,64.0f);
+const D3DXVECTOR2 ObjectLightGauge::GAUGE_POSITION = D3DXVECTOR2(0.0f,0.0f);
+const D3DXVECTOR2 ObjectLightGauge::GAUGE_FRAME_SIZE = D3DXVECTOR2(192.0f,128.0f);
 
 //=============================================================================
 // constructor
@@ -26,7 +26,6 @@ const u32 ObjectLightGauge::DIVISION_HEIGHT	= 1;
 ObjectLightGauge::ObjectLightGauge(void)
 	:gauge_(nullptr)
 	,position_(0.0f,0.0f)
-	,size_(0.0f,0.0f)
 	,rate_(100.0f)
 {
 }
@@ -43,16 +42,19 @@ ObjectLightGauge::~ObjectLightGauge(void)
 //=============================================================================
 bool ObjectLightGauge::Initialize(void)
 {
-	size_ = SIZE;
 	gauge_ = new Sprite();
 	gauge_->Initialize();
 	gauge_->__point(Sprite::POINT_LEFT_MIDDLE);
-	gauge_->__division_width(DIVISION_WIDTH);
-	gauge_->__division_height(DIVISION_HEIGHT);
-	gauge_->__size(SIZE);
+	gauge_->__size(GAUGE_SIZE);
 	gauge_->__texture_id(Texture::TEXTURE_ID_GAME_LIGHT_GAUGE);
 	gauge_->SetParameter();
 
+	gauge_frame_ = new Sprite();
+	gauge_frame_->Initialize();
+	gauge_frame_->__size(GAUGE_FRAME_SIZE);
+	gauge_frame_->__point(Sprite::POINT_LEFT_MIDDLE);
+	gauge_frame_->__texture_id(Texture::TEXTURE_ID_GAME_LIGHT_GAUGE_FRAME);
+	gauge_frame_->SetParameter();
 	return true;
 }
 
@@ -62,6 +64,8 @@ bool ObjectLightGauge::Initialize(void)
 void ObjectLightGauge::Uninitialize(void)
 {
 	SafeRelease(gauge_);
+
+	SafeRelease(gauge_frame_);
 }
 
 //=============================================================================
@@ -69,7 +73,7 @@ void ObjectLightGauge::Uninitialize(void)
 //=============================================================================
 void ObjectLightGauge::Update(void)
 {
-	gauge_->__size(D3DXVECTOR2(size_.x * rate_ / 100.0f,size_.y));
+	gauge_->__size(D3DXVECTOR2(GAUGE_SIZE.x * rate_ / 100.0f,GAUGE_SIZE.y));
 	gauge_->SetParameter();
 }
 
@@ -78,7 +82,9 @@ void ObjectLightGauge::Update(void)
 //=============================================================================
 void ObjectLightGauge::Draw(void)
 {
-	gauge_->__position(position_);
+	gauge_frame_->__position(position_);
+	gauge_frame_->Draw();
+	gauge_->__position(position_ + GAUGE_POSITION);
 	gauge_->Draw();
 }
 
