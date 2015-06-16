@@ -87,6 +87,9 @@ public:
 	const D3DXVECTOR2& __move(void)const { return move_; }
 	void __return_position(const D3DXVECTOR2& return_position) { return_position_ = return_position; }
 
+	s32 __sp(void)const { return sp_; }
+	s32 __sp_max(void)const { return sp_max_; }
+
 private:
 	enum ANIMATION_TYPE
 	{

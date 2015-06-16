@@ -415,6 +415,9 @@
     <ClInclude Include="sources\application\object\object_goal_point.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\object_light_gauge.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -688,6 +691,9 @@
       <Filter>sources\application\scene\game\gimmick</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\object\object_goal_point.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_light_gauge.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>

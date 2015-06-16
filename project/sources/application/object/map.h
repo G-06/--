@@ -59,6 +59,8 @@ public:
 	// accessor
 	void __position(const D3DXVECTOR2& position) { position_ = position; }
 	const D3DXVECTOR2& __size(void) { return size_; }
+	u32 __width(void) { return width_; }
+	u32 __height(void) { return height_; }
 
 private:
 	static const D3DXVECTOR2 SIZE;

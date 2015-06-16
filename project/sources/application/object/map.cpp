@@ -92,6 +92,11 @@ u32 Map::GetIndex(const D3DXVECTOR2& position,D3DXVECTOR2* index_position)
 	s32 index_y = (s32)(position.y / SIZE.y);
 	s32 index = index_y * width_ + index_x;
 
+	if(position.x < 0.0f || position.y < 0.0f)
+	{
+		return 0;
+	}
+
 	if(index_x < 0 || index_x >= width_ || index_y < 0 || index_y >= height_)
 	{
 		return 0;

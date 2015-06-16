@@ -145,7 +145,7 @@ bool CollisionMap::IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECT
 		pushlengthx_ = 0;
 	}
 
-	pushposition_ = D3DXVECTOR2(playerpos.x + pushlengthx_,playerpos.y + pushlengthy_);
+	pushposition_ = D3DXVECTOR2(playerpos.x + pushlengthx_,playerpos.y + pushlengthy_ - 0.1f);
 
 	return true;
 }
