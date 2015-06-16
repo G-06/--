@@ -123,6 +123,8 @@ const ObjectPlayer::ANIMATION_TEXTURE_DATA ObjectPlayer::TEXTURE_DATA[ANIMATION_
 	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_CLEAR,1,1),
 };
 
+const D3DXVECTOR2 ObjectPlayer::DEFAULT_SIZE = D3DXVECTOR2(200.0f,200.0f);
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -147,12 +149,13 @@ bool ObjectPlayer::Initialize(void)
 	is_flip_ = false;
 	player_ = new Sprite();
 	player_->Initialize();
+	size_ = DEFAULT_SIZE;
 
 	animation_ = new Animation();
 	animation_type_ = ANIMATION_TYPE_MAX;
 	StartAnimation(ANIMATION_TYPE_WAIT);
 	animation_->Add(ANIMATION_DATA[animation_type_],sizeof(ANIMATION_DATA) * ANIMATION_DATA_SIZE[animation_type_]);
-	player_->__size(D3DXVECTOR2(200,200));
+	player_->__size(size_);
 	player_->__position(position_);
 	player_->__point(Sprite::POINT_CENTER);
 	player_->SetParameter();
@@ -205,6 +208,16 @@ void ObjectPlayer::StartAnimation(ANIMATION_TYPE animation_type)
 		player_->__division_height((Texture::TEXTURE_ID)TEXTURE_DATA[animation_type_]._division_height);
 		player_->SetParameter();
 	}
+}
+
+//=============================================================================
+// set size
+//=============================================================================
+void ObjectPlayer::SetSize(const D3DXVECTOR2& size)
+{
+	size_ = size;
+	player_->__size(size_);
+	player_->SetParameter();
 }
 
 //---------------------------------- EOF --------------------------------------

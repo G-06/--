@@ -60,7 +60,7 @@ bool StageSelect::Initialize(void)
 	nas_ -> __position(D3DXVECTOR2(200.f,500.f));
 	nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
 	nas_->__is_flip(false);
-
+	nas_->SetSize(D3DXVECTOR2(1000.0f,1000.0f));
 	//矢印
 	select_arrow_ = new SelectArrow();
 	select_arrow_ ->Initialize();
@@ -143,6 +143,21 @@ void StageSelect::Update(void)
 		YorNUpdate();
 		break;
 	}
+
+	//ニャス更新
+	if(regions_[0].region_->__get_move_falg() == false)
+	{
+		nas_->__is_flip(false);
+		nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
+	}
+	else if(regions_[0].region_->__get_move_falg() == true)
+	{
+		nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
+	}
+	nas_->Update();
+
+
+
 	message_window_->Update();
 }
 
@@ -160,9 +175,9 @@ void StageSelect::Draw(void)
 
 	if(regions_[1].region_->__get_move_falg() == false)
 		select_arrow_->Draw();
-	nas_->Draw();
 
 	message_window_->Draw();
+	nas_->Draw();
 }
 
 //=============================================================================
@@ -233,18 +248,6 @@ void StageSelect::SelectUpdate()
 	{
 		regions_[i].region_->Update();
 	}
-
-	//ニャス更新
-	if(regions_[0].region_->__get_move_falg() == false)
-	{
-		nas_->__is_flip(false);
-		nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
-	}
-	else if(regions_[0].region_->__get_move_falg() == true)
-	{
-		nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
-	}
-	nas_->Update();
 
 }
 

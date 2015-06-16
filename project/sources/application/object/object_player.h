@@ -67,6 +67,9 @@ public:
 	// start animation
 	void StartAnimation(ANIMATION_TYPE animation_type);
 
+	// set size
+	void SetSize(const D3DXVECTOR2& size);
+
 	// 座標の取得
 	const D3DXVECTOR2& __position(void)const{ return position_; }
 	void __position(const D3DXVECTOR2& position){ position_ = position; }
@@ -113,7 +116,9 @@ private:
 
 	static const ANIMATION_TEXTURE_DATA TEXTURE_DATA[ANIMATION_TYPE_MAX];
 
+	static const D3DXVECTOR2 DEFAULT_SIZE;
 	D3DXVECTOR2 position_;
+	D3DXVECTOR2 size_;
 	bool		is_flip_;				// プレイヤーの向き
 	Sprite*		player_;				// プレイヤースプライト
 	Animation*	animation_;
