@@ -83,12 +83,12 @@ void GamePlayer::Update(void)
 		Move(-1.0);
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_9))
 	{
 		Jump();
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_7))
 	{
 		D3DXVECTOR2 vector = D3DXVECTOR2(0.0f,0.0f);
 
@@ -112,7 +112,7 @@ void GamePlayer::Update(void)
 		ChangeLightMode(vector);
 	}
 
-	if(GET_DIRECT_INPUT->CheckRelease(INPUT_EVENT_VIRTUAL_6))
+	if(GET_DIRECT_INPUT->CheckRelease(INPUT_EVENT_VIRTUAL_7))
 	{
 		StopLightMode();
 	}

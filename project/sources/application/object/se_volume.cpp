@@ -82,9 +82,9 @@ void SeVolume::Draw(void)
 //=============================================================================
 void SeVolume::Adjustvolume(u32 volume)
 {
-	if(se_volume_ + volume <= 9 && se_volume_ + volume >= 0)
+	if(volume <= 9 && volume >= 0)
 	{
-		se_volume_ += volume;
+		se_volume_ = volume;
 		volume_gage_->__size(D3DXVECTOR2(se_volume_*30.f, 30.0f));
 		volume_gage_->SetParameter();
 	}

@@ -94,11 +94,11 @@ public:
 	s32 cursor_x_;
 	s32 cursor_y_;
 	bool is_indication_;
-	bool is_exchange_;
+	KEY_CODE is_exchange_;
 
-	KEY_CONFIG* key_config_data_[5];
-	u32 volume_size_bgm_;
-	u32 volume_size_se_;
+	KEY_CONFIG key_config_data_[5];
+	s32 volume_size_bgm_;
+	s32 volume_size_se_;
 };
 
 #endif	// _OPTION_H_
