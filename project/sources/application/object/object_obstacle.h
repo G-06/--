@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// gimmick check point
+// object obstacle
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,30 +10,30 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _GIMMICK_CHECK_POINT_H_
-#define _GIMMICK_CHECK_POINT_H_
+#ifndef _OBJECT_OBSTACLE_H_
+#define _OBJECT_OBSTACLE_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "gimmick.h"
+#include "basic/basic.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class ObjectCheckPoint;
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class GimmickCheckPoint : public Gimmick
+class ObjectObstacle : public Basic
 {
 public:
 	// constructor
-	GimmickCheckPoint(void);
+	ObjectObstacle(void);
 
 	// destructor
-	virtual ~GimmickCheckPoint(void);
+	virtual ~ObjectObstacle(void);
 
 	// initialize
 	bool Initialize(void);
@@ -48,15 +48,19 @@ public:
 	void Draw(void);
 
 	// accessor
-	u32 __priority(void)const { return priority_; }
-	void __priority(u32 priority) { priority_ = priority; }
+	void __position(const D3DXVECTOR2& position) { position_ = position; }
+	const D3DXVECTOR2& __size(void) { return size_; }
 
 private:
-	ObjectCheckPoint* object_check_point_;
-	u32 priority_;
+	static const D3DXVECTOR2 SIZE;
+	static const u32 DIVISION_WIDTH;
+	static const u32 DIVISION_HEIGHT;
 
+	Sprite* object_obstacle_;
+	D3DXVECTOR2 position_;
+	D3DXVECTOR2 size_;
 };
 
-#endif	// _GIMMICK_CHECK_POINT_H_
+#endif	// _OBJECT_OBSTACLE_H_
 
 //---------------------------------- EOF --------------------------------------

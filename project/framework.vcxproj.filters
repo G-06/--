@@ -421,6 +421,12 @@
     <ClInclude Include="sources\application\scene\title\title_circle.h">
       <Filter>sources\application\scene\title</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_obstacle.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_obstacle.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -701,6 +707,12 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\title\title_circle.cpp">
       <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_obstacle.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_obstacle.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

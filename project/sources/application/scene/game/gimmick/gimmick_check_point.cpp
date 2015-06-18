@@ -21,6 +21,7 @@
 //=============================================================================
 GimmickCheckPoint::GimmickCheckPoint(void)
 	:Gimmick(TYPE_CHECK_POINT)
+	,priority_(0)
 {
 }
 

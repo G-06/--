@@ -19,9 +19,9 @@
 #include "../gimmick/gimmick_start_point.h"
 #include "../gimmick/gimmick_check_point.h"
 #include "../gimmick/gimmick_goal_point.h"
+#include "../gimmick/gimmick_obstacle.h"
 #include "object/object_light_gauge.h"
 #include "collision/collision_map.h"
-#include "object/object_check_point.h"
 
 //=============================================================================
 // constructor
@@ -218,6 +218,14 @@ void NormalStage::Update(void)
 			next_scene_factory_ = new TitleFactory();
 		}
 	}
+
+#ifndef _RELEASE
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_R))
+	{
+		Uninitialize();
+		Initialize();
+	}
+#endif
 }
 
 //=============================================================================
@@ -235,7 +243,6 @@ void NormalStage::Draw(void)
 	game_player_->Draw();
 	object_light_gauge_->Draw();
 }
-
 
 //=============================================================================
 // load from file
@@ -311,10 +318,13 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					i++;
 					i += FindWord(word,&data[i],",\n\0");
 					f32 y = atof(word);
+					i += FindWord(word,&data[i],",\n\0");
+					u32 priority = atoi(word);
 
 					GimmickCheckPoint* gimmick = new GimmickCheckPoint();
 					gimmick->Initialize();
 					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick->__priority(priority);
 					gimmick_container_.push_back(gimmick);
 					i += FindWord(word,&data[i],"\n\0");
 					break;
@@ -330,6 +340,39 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					GimmickGoalPoint* gimmick = new GimmickGoalPoint();
 					gimmick->Initialize();
 					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
+				case Gimmick::TYPE_OBSTACLE:
+				{
+					i += FindWord(word,&data[i],",\n\0");
+					f32 x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 start_x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 start_y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 end_x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 end_y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 speed = atof(word);
+
+					GimmickObstacle* gimmick = new GimmickObstacle();
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick->__start_position(D3DXVECTOR2(start_x,start_y));
+					gimmick->__end_position(D3DXVECTOR2(end_x,end_y));
+					gimmick->__speed(speed);
 					gimmick_container_.push_back(gimmick);
 					i += FindWord(word,&data[i],"\n\0");
 					break;

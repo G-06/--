@@ -22,6 +22,7 @@
     <ClCompile Include="sources\application\object\object_check_point.cpp" />
     <ClCompile Include="sources\application\object\object_goal_point.cpp" />
     <ClCompile Include="sources\application\object\object_light_gauge.cpp" />
+    <ClCompile Include="sources\application\object\object_obstacle.cpp" />
     <ClCompile Include="sources\application\object\object_player.cpp" />
     <ClCompile Include="sources\application\object\object_start_point.cpp" />
     <ClCompile Include="sources\application\object\option.cpp" />
@@ -53,6 +54,7 @@
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_check_point.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_goal_point.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_obstacle.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_start_point.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\normal_stage.cpp" />
@@ -122,6 +124,7 @@
     <ClInclude Include="sources\application\object\object_check_point.h" />
     <ClInclude Include="sources\application\object\object_goal_point.h" />
     <ClInclude Include="sources\application\object\object_light_gauge.h" />
+    <ClInclude Include="sources\application\object\object_obstacle.h" />
     <ClInclude Include="sources\application\object\object_player.h" />
     <ClInclude Include="sources\application\object\object_start_point.h" />
     <ClInclude Include="sources\application\object\option.h" />
@@ -155,6 +158,7 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_check_point.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_goal_point.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_obstacle.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
     <ClInclude Include="sources\application\scene\game\stage\normal_stage.h" />

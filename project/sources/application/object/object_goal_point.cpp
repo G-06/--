@@ -48,7 +48,7 @@ bool ObjectGoalPoint::Initialize(void)
 	object_goal_point_->__division_width(DIVISION_WIDTH);
 	object_goal_point_->__division_height(DIVISION_HEIGHT);
 	object_goal_point_->__size(SIZE);
-	object_goal_point_->__texture_id(Texture::TEXTURE_ID_GAME_START_POINT);
+	object_goal_point_->__texture_id(Texture::TEXTURE_ID_GAME_GOAL_POINT);
 	object_goal_point_->SetParameter();
 
 	return true;
