@@ -22,6 +22,8 @@ const f32 GamePlayer::LIGHT_SPEED = (30.0f);
 const f32 GamePlayer::SPEED = (2.0f);
 const f32 GamePlayer::DECREMENT = (0.9f);
 const f32 GamePlayer::JUMP_SPEED = (-70.0f);
+const s32 GamePlayer::DEFAULT_LIFE_MAX = 3;
+const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 
 //=============================================================================
 // constructor
@@ -43,17 +45,19 @@ GamePlayer::~GamePlayer(void)
 //=============================================================================
 bool GamePlayer::Initialize(void)
 {
-	position_				= D3DXVECTOR2(0, 0);
-	old_position_			= position_;
-	move_					= D3DXVECTOR2(0, 0);
-	size_					= D3DXVECTOR2(200, 200);
-	offset_position_		= D3DXVECTOR2(0, 0);
-	acceleration_counter_	= 0;
-	slowdown_counter_		= 0;
-	is_left_				= false;
-	is_light_				= false;
-	is_fly_					= true;
-	is_enable_light_		= true;
+	position_ = D3DXVECTOR2(0,0);
+	old_position_ = position_;
+	return_position_ = position_;
+	move_ = D3DXVECTOR2(0,0);
+	size_ = D3DXVECTOR2(200,200);
+	offset_position_ = D3DXVECTOR2(0,0);
+	is_left_ = false;
+	is_light_ = false;
+	is_fly_ = true;
+	is_enable_light_ = true;
+	life_ = DEFAULT_LIFE_MAX;
+	sp_max_ = DEFAULT_SP_MAX;
+	sp_ = sp_max_;
 	player_= new ObjectPlayer();
 	player_->Initialize();
 	player_->__position(position_);
@@ -119,19 +123,47 @@ void GamePlayer::Update(void)
 
 	if(is_light_ == false)
 	{
-		if(move_.x <= 0.9f && move_.x >= -0.9f)
+		if(is_fly_ == false)
 		{
-			move_.x = 0.0f;
-			player_->Wait();
+			if(move_.x <= 0.9f && move_.x >= -0.9f)
+			{
+				if(!(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT) || GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT)))
+				{
+					move_.x = 0.0f;
+					player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
+				}
+			}
+			else
+			{
+				player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
+			}
 		}
 		else
 		{
-			player_->Run();
+			if(player_->__animation_type() != ObjectPlayer::ANIMATION_TYPE_JUMP)
+			{
+				player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_FALL);
+			}
 		}
 
 		move_.y += DEFAULT_GRAVITY;
 		move_ *= DECREMENT;
 
+		sp_++;
+
+		if(sp_ > sp_max_)
+		{
+			sp_ = sp_max_;
+		}
+	}
+	else
+	{
+		sp_--;
+		if(sp_ <= 0 || sp_ > sp_max_)
+		{
+			sp_ = 0;
+			is_light_ = false;
+		}
 	}
 
 	is_fly_ = true;
@@ -180,6 +212,7 @@ void GamePlayer::Jump(void)
 	{
 		is_fly_ = true;
 		move_.y = JUMP_SPEED;
+		player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JUMP);
 	}
 }
 
@@ -232,7 +265,7 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 			move_ = normalize_vector * LIGHT_SPEED;
 		}
 
-		player_->Light();
+		player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
 	}
 }
 
@@ -255,6 +288,30 @@ void GamePlayer::ChangeDirection(const D3DXVECTOR2& vector)
 		D3DXVec2Normalize(&normalize_vector,&vector);
 		move_ = normalize_vector * LIGHT_SPEED;
 	}
+}
+
+//=============================================================================
+// dead
+//=============================================================================
+void GamePlayer::Dead(void)
+{
+	if(life_ > 0)
+	{
+		life_--;
+
+		position_ = return_position_;
+	}
+	else
+	{
+		life_--;
+	}
+}
+
+//=============================================================================
+// clear
+//=============================================================================
+void GamePlayer::Clear(void)
+{
 }
 
 //---------------------------------- EOF --------------------------------------

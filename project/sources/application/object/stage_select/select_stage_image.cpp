@@ -18,8 +18,8 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 StageImage::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
-const D3DXVECTOR2 StageImage::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
-const D3DXVECTOR2 StageImage::DEFAULT_SIZE = D3DXVECTOR2(300.0f,300.0f);
+const D3DXVECTOR2 StageImage::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.45f);
+const D3DXVECTOR2 StageImage::DEFAULT_SIZE = D3DXVECTOR2(700.0f,450.0f);
 
 //=============================================================================
 // constructor
@@ -52,7 +52,7 @@ bool StageImage::Initialize(void)
 
 	image_->__size(DEFAULT_SIZE);
 	image_->__position(DEFAULT_POSITION);
-	image_->__texture_id(Texture::TEXTURE_ID_STAGE_IMAGE_TST);
+	image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_1);
 	image_->__index((u32)0);
 	image_->__point(Sprite::POINT_CENTER);
 	image_->SetParameter();
@@ -89,15 +89,15 @@ void StageImage::Draw(void)
 //=============================================================================
 //ステージイメージテクスチャの設定
 //=============================================================================
-void StageImage::__set_image_texture(STAGE_ID stage)
+void StageImage::__set_image_texture(Stage::TYPE stage)
 {
 	switch(stage)
 	{
-	case STAGE_ID_SELECT:
-	case STAGE_ID_MAX:
+	case Stage::TYPE_TUTORIAL:	//チュートリアル
+	case Stage::TYPE_MAX:
 	default:
 		//ステージイメージがよくわからないものの時はすべてテストテクスチャで表示
-		image_->__texture_id(Texture::TEXTURE_ID_STAGE_IMAGE_TST);
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_1);
 		image_->SetParameter();
 
 		break;

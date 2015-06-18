@@ -167,10 +167,10 @@ void MeshSprite::SetParameter(void)
 			float top    = 1.0f / division_height_ * ((indexs_[i * width_count_ + j] / division_width_) + 0);
 			float bottom = 1.0f / division_height_ * ((indexs_[i * width_count_ + j] / division_width_) + 1);
 
-			vertex[(i * width_count_ + j) * 4 + 0]._position = D3DXVECTOR3(width_ * (j + 0),height_ * (i + 1),0.0f);
-			vertex[(i * width_count_ + j) * 4 + 1]._position = D3DXVECTOR3(width_ * (j + 0),height_ * (i + 0),0.0f);
-			vertex[(i * width_count_ + j) * 4 + 2]._position = D3DXVECTOR3(width_ * (j + 1),height_ * (i + 1),0.0f);
-			vertex[(i * width_count_ + j) * 4 + 3]._position = D3DXVECTOR3(width_ * (j + 1),height_ * (i + 0),0.0f);
+			vertex[(i * width_count_ + j) * 4 + 0]._position = D3DXVECTOR3(width_ * (j + 0) - 0.5f,height_ * (i + 1) - 0.5f,0.0f);
+			vertex[(i * width_count_ + j) * 4 + 1]._position = D3DXVECTOR3(width_ * (j + 0) - 0.5f,height_ * (i + 0) - 0.5f,0.0f);
+			vertex[(i * width_count_ + j) * 4 + 2]._position = D3DXVECTOR3(width_ * (j + 1) - 0.5f,height_ * (i + 1) - 0.5f,0.0f);
+			vertex[(i * width_count_ + j) * 4 + 3]._position = D3DXVECTOR3(width_ * (j + 1) - 0.5f,height_ * (i + 0) - 0.5f,0.0f);
 
 			vertex[(i * width_count_ + j) * 4 + 0]._color = color_;
 			vertex[(i * width_count_ + j) * 4 + 1]._color = color_;

@@ -11,17 +11,17 @@
 // include
 //*****************************************************************************
 #include "option.h"
-#include "option_bg.h"
-#include "key_config_ok.h"
-#include "key_config_cancel.h"
-#include "key_config_special.h"
-#include "key_config_jump.h"
-#include "key_config_pause.h"
-#include "bgm_volume.h"
-#include "se_volume.h"
-#include "option_logo.h"
-#include "volume_logo.h"
-#include "keyconfig_logo.h"
+#include "option/option_bg.h"
+#include "option/key_config_ok.h"
+#include "option/key_config_cancel.h"
+#include "option/key_config_special.h"
+#include "option/key_config_jump.h"
+#include "option/key_config_pause.h"
+#include "option/bgm_volume.h"
+#include "option/se_volume.h"
+#include "option/option_logo.h"
+#include "option/volume_logo.h"
+#include "option/keyconfig_logo.h"
 #include "system/system.h"
 #include "system/direct_input/input_event_buffer.h"
 
@@ -411,6 +411,12 @@ void Option::Exchange(KEY_CODE code, INPUT_EVENT key_num)
 
 	for(s32 i = 0; i < 5; i++)
 	{
+		GET_DIRECT_INPUT->UnregisterInputEventVertual(key_config_data_[i].virtual_num_, key_config_data_[i].key_num_);
+	}
+	GET_DIRECT_INPUT->SaveInputEventVertual();
+
+	for(s32 i = 0; i < 5; i++)
+	{
 		if(key_config_data_[i].key_code_ == code)
 		{
 			data_num = i;
@@ -428,10 +434,6 @@ void Option::Exchange(KEY_CODE code, INPUT_EVENT key_num)
 
 	if(data_num2 == 9)
 	{
-		GET_DIRECT_INPUT->UnregisterInputEventVertual(key_config_data_[data_num].virtual_num_, key_config_data_[data_num].key_num_);
-		GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_data_[data_num].virtual_num_, key_num);
-		GET_DIRECT_INPUT->SaveInputEventVertual();
-
 		key_config_data_[data_num].key_num_ = key_num;
 	}
 	else
@@ -440,27 +442,20 @@ void Option::Exchange(KEY_CODE code, INPUT_EVENT key_num)
 				key_config_data_[data_num2].is_competition_ == key_config_data_[data_num].is_competition_)
 		{
 			temp = key_config_data_[data_num].key_num_;
-
-			GET_DIRECT_INPUT->UnregisterInputEventVertual(key_config_data_[data_num].virtual_num_, key_config_data_[data_num].key_num_);
-			GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_data_[data_num].virtual_num_, key_config_data_[data_num2].key_num_);
-
-			key_config_data_[data_num].key_num_ = key_config_data_[data_num2].key_num_;
-
-			GET_DIRECT_INPUT->UnregisterInputEventVertual(key_config_data_[data_num2].virtual_num_, key_config_data_[data_num2].key_num_);
-			GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_data_[data_num2].virtual_num_, temp);
-			GET_DIRECT_INPUT->SaveInputEventVertual();
-				
+			key_config_data_[data_num].key_num_ = key_config_data_[data_num2].key_num_;	
 			key_config_data_[data_num2].key_num_ = temp;
 		}
 		else
 		{
-			GET_DIRECT_INPUT->UnregisterInputEventVertual(key_config_data_[data_num2].virtual_num_,key_config_data_[data_num2].key_num_);
-			GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_data_[data_num].virtual_num_, key_config_data_[data_num2].key_num_);
-			GET_DIRECT_INPUT->SaveInputEventVertual();
-
 			key_config_data_[data_num].key_num_ = key_num;
 		}
 	}
+
+	for(s32 i = 0; i < 5; i++)
+	{
+		GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_data_[i].virtual_num_, key_config_data_[i].key_num_);
+	}
+	GET_DIRECT_INPUT->SaveInputEventVertual();
 
 	FILE* fp = fopen("option_data.bin", "wb+");
 

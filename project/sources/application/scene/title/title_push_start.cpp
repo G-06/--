@@ -16,9 +16,10 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 TitlePushStart::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 450.0f + 100.0f);
-const D3DXVECTOR2 TitlePushStart::DEFAULT_SIZE = D3DXVECTOR2(324.0f, 71.0f);
 const f32 DEFAULT_ALPHA_SPEED = -0.03f;
+const f32 SIZE_SCAL = 1.2f;
+const D3DXVECTOR2 TitlePushStart::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 450.0f + 100.0f);
+const D3DXVECTOR2 TitlePushStart::DEFAULT_SIZE = D3DXVECTOR2(324.0f * SIZE_SCAL, 71.0f * SIZE_SCAL);
 
 //=============================================================================
 // constructor
@@ -47,7 +48,7 @@ bool TitlePushStart::Initialize(void)
 	sprite_->__size(DEFAULT_SIZE);
 	sprite_->__position(DEFAULT_POSITION);
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__texture_id(Texture::TEXTURE_ID_TITLE_STRING_TEST_A);
+	sprite_->__texture_id(Texture::TEXTURE_ID_TITLE_STRING_PUSH_START);
 	sprite_->SetParameter();
 	return true;
 }

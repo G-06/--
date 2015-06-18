@@ -35,9 +35,9 @@ bool Texture::Initialize(void)
 {
 	device_ = GET_DIRECTX9_DEVICE;
 
-	for(u32 i = TEXTURE_ID_TEST;i < TEXTURE_ID_MAX;++i)
+	for(u32 i = TEXTURE_ID_DOT;i < TEXTURE_ID_MAX;++i)
 	{
-		if(FAILED(D3DXCreateTextureFromResource(device_,NULL,MAKEINTRESOURCE(i),&texture_container_[i - TEXTURE_ID_TEST])))
+		if(FAILED(D3DXCreateTextureFromResource(device_,NULL,MAKEINTRESOURCE(i),&texture_container_[i - TEXTURE_ID_DOT])))
 		{
 			ASSERT("failed load texure");
 			return false;
@@ -52,7 +52,7 @@ bool Texture::Initialize(void)
 //=============================================================================
 void Texture::Uninitialize(void)
 {
-	for(u32 i = 0;i < TEXTURE_ID_MAX - TEXTURE_ID_TEST;++i)
+	for(u32 i = 0;i < TEXTURE_ID_MAX - TEXTURE_ID_DOT;++i)
 	{
 		SafeRelease(texture_container_[i]);
 	}
@@ -68,7 +68,7 @@ LPDIRECT3DTEXTURE9 Texture::GetTexture(const TEXTURE_ID& texture_id)const
 		return nullptr;
 	}
 
-	return texture_container_[texture_id - TEXTURE_ID_TEST];
+	return texture_container_[texture_id - TEXTURE_ID_DOT];
 }
 
 //---------------------------------- EOF --------------------------------------

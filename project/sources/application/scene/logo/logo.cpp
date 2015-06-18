@@ -60,7 +60,7 @@ bool Logo::Initialize(void)
 
 	logo_neko_->__size(DEFAULT_SIZE);
 	logo_neko_->__position(DEFAULT_POSITION);
-	logo_neko_->__texture_id(Texture::TEXTURE_ID_LOGO);
+	logo_neko_->__texture_id(Texture::TEXTURE_ID_TEAM_LOGO);
 	logo_neko_->__division_width(DEFAULT_DIVISION_WIDTH);
 	logo_neko_->__division_height(DEFAULT_DIVISION_HEIGHT);
 	logo_neko_->__index((u32)0);

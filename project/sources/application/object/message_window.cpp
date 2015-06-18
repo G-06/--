@@ -35,8 +35,8 @@ const D3DXVECTOR2 TITLE_POSITION_OFFSET = D3DXVECTOR2(0.0f, -80.0f);
 
 // string texture_id
 const Texture::TEXTURE_ID SELECT_STRING_TEXTURE[] = {
-	Texture::TEXTURE_ID_STRING_YES,
-	Texture::TEXTURE_ID_STRING_NO };
+	Texture::TEXTURE_ID_GENERAL_STRING_YES,
+	Texture::TEXTURE_ID_GENERAL_STRING_NO };
 
 //=============================================================================
 // constructor
@@ -77,7 +77,7 @@ bool MessageWindow::Initialize(void)
 	// title
 	title_ = new MessageSpriteSmooth();
 	title_->Initialize();
-	title_->__texture_id(Texture::TEXTURE_ID_TITLE_STRING_TEST_A);
+	title_->__texture_id(Texture::TEXTURE_ID_DOT);
 
 	for(int i = 0 ; i < SELECT_MAX ; i++){
 

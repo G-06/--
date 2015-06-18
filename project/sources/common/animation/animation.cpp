@@ -18,7 +18,7 @@ Animation::Animation(void)
 	:frame_count_(0)
 	,current_index_(0)
 	,number_(0)
-	,is_actitive(false)
+	,is_actitive_(false)
 	,is_end_(false)
 {
 }
@@ -50,7 +50,7 @@ void Animation::Uninitialize(void)
 //=============================================================================
 void Animation::Update(void)
 {
-	if(is_actitive)
+	if(is_actitive_)
 	{
 		if(current_index_ >= 0 && current_index_ < container_.size())
 		{
@@ -86,7 +86,7 @@ void Animation::Add(const DATA* data,u32 size)
 //=============================================================================
 void Animation::Start(u32 index)
 {
-	is_actitive = true;
+	is_actitive_ = true;
 	is_end_ = false;
 	current_index_ = index;
 }
@@ -96,8 +96,21 @@ void Animation::Start(u32 index)
 //=============================================================================
 void Animation::Stop(void)
 {
-	is_actitive = false;
+	is_actitive_ = false;
 	is_end_ = false;
+}
+
+//=============================================================================
+// clear
+//=============================================================================
+void Animation::Clear(void)
+{
+	frame_count_ = 0;
+	current_index_ = 0;
+	number_ = 0;
+	is_actitive_ = false;
+	is_end_ = false;
+	container_.clear();
 }
 
 //---------------------------------- EOF --------------------------------------

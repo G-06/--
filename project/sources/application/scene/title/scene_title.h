@@ -25,6 +25,8 @@ class TitleBg;
 class TitleLogo;
 class TitlePushStart;
 class TitleSelect;
+class Titleluminescence;
+class TitleCircle;
 class MessageWindow;
 class Option;
 
@@ -69,6 +71,7 @@ public:
 		MODE_PUSH,
 		MODE_SELECT,
 		MODE_MESSAGE,
+		MODE_PUSH_INTERVAL,
 		MODE_MAX
 	};
 
@@ -84,6 +87,7 @@ private:
 	// モード別Update
 	void _UpdatePush(void);
 	void _UpdateSelect(void);
+	void _UpdateLuminescence(void);
 	void _UpdateMessage(void);
 
 	// bg
@@ -96,17 +100,27 @@ private:
 	TitlePushStart* push_;
 	TitlePushStart* push_frame_;
 
+	// luminescence
+	Titleluminescence* luminescence_;
+
+	// circle
+	TitleCircle* circle_;
+
 	// select
 	TITLE_SELECT select_[SELECT_MAX];
 
 	// message_window
 	MessageWindow* message_window_;
 
+
 	// ロゴに戻るカウンター
 	u32 frame_count_;
 
 	// 選択中の選択肢
 	s32 current_select_;
+
+	// 決定ボタン押したあとの余韻
+	u32 decide_interval_;
 
 	// 現在のモード
 	MODE mode_;

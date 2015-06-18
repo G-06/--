@@ -18,7 +18,7 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
-#include "application/object/stage_select.h"
+#include "application/scene/game/stage/stage_select.h"
 
 //*****************************************************************************
 // forward declaration
@@ -55,7 +55,7 @@ public:
 	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
 
 	//ステージイメージテクスチャの設定
-	void __set_image_texture(STAGE_ID stage);
+	void __set_image_texture(Stage::TYPE stage);
 
 
 protected:

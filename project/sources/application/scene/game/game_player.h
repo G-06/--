@@ -67,6 +67,12 @@ public:
 	// change direction
 	void ChangeDirection(const D3DXVECTOR2& vector);
 
+	// dead
+	void Dead(void);
+
+	// clear
+	void Clear(void);
+
 	// 座標の取得
 	const D3DXVECTOR2& __position(void)const{ return position_; }
 
@@ -82,9 +88,13 @@ public:
 	const D3DXVECTOR2& __size(void)const{ return size_; }
 
 	const D3DXVECTOR2& __move(void)const { return move_; }
-private:
-	void LightMode(bool is_light, bool is_right);
+	void __return_position(const D3DXVECTOR2& return_position) { return_position_ = return_position; }
 
+	s32 __sp(void)const { return sp_; }
+	s32 __sp_max(void)const { return sp_max_; }
+	s32 __life(void)const { return life_; }
+
+private:
 	enum ANIMATION_TYPE
 	{
 		ANIMATION_TYPE_WAIT = 0,
@@ -110,19 +120,25 @@ private:
 	static const f32 SPEED;
 	static const f32 DECREMENT;
 	static const f32 JUMP_SPEED;
+	static const s32 DEFAULT_LIFE_MAX;
+	static const s32 DEFAULT_SP_MAX;
 
 	D3DXVECTOR2 position_;				// プレイヤー座標
 	D3DXVECTOR2 old_position_;			// プレイヤーの前回座標
 	D3DXVECTOR2 move_;					// プレイヤーの移動量
 	D3DXVECTOR2 size_;					// プレイヤーサイズ
 	D3DXVECTOR2 offset_position_;		// オフセット座標
-	u32			acceleration_counter_;	// 加速カウンター
-	u32			slowdown_counter_;		// 減速カウンター
 	bool		is_left_;				// プレイヤーの向き
 	bool		is_light_;				// 光化フラグ
 	bool		is_fly_;				// 空中フラグ
 	bool		is_enable_light_;
+	s32 life_;
+	s32 sp_;
+	s32 sp_max_;
+	D3DXVECTOR2 return_position_;
+
 	ObjectPlayer*		player_;				// プレイヤースプライト
+
 };
 
 #endif	// _PLAYER_H_

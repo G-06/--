@@ -18,12 +18,13 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
-#include "application/object/stage_select.h"
+#include "application/scene/game/stage/stage_select.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
 class Number;
+class RecordBack;
 
 //*****************************************************************************
 // class definition
@@ -50,18 +51,19 @@ public:
 	void Draw(void);
 
 	//
-	void __set_stage_id(STAGE_ID id){stage_id_ = id;};
+	void __set_stage_id(Stage::TYPE id){stage_id_ = id;};
 	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
 	void __set_time(u32 time);
 
 private:
 
-	STAGE_ID stage_id_;
+	Stage::TYPE stage_id_;
 
 	u32 time_;			//reko-do
 	Number* number_[4];	//jikann 
 	D3DXVECTOR2 offset_position_;
-
+	RecordBack* record_back_;
+	D3DXVECTOR2 def_position;
 
 
 };

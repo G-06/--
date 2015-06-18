@@ -14,6 +14,8 @@
 #include "title_bg.h"
 #include "title_logo.h"
 #include "title_push_start.h"
+#include "title_luminescence.h"
+#include "title_circle.h"
 #include "title_select.h"
 #include "object/message_window.h"
 #include "system/system.h"
@@ -23,12 +25,20 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const u32 SceneTitle::GO_LOGO_FRAME = 60 * 30;	//ロゴに戻るまでの時間
-
+const u32 SceneTitle::GO_LOGO_FRAME = 60 * 30;	// ロゴに戻るまでの時間
 const u32 DEST_FRAME_COUNT = 20;				// ウィンドウ開閉の時間
+const u32 DESIDE_INTERVAL_COUNT = 30;			// 決定ボタン後の余韻
 
+// push_startの点滅数値
 const f32 PUSH_START_ALPHA_MAX = 1.25f;
 const f32 PUSH_START_ALPHA_MIN = 0.0f;
+
+// luminesceneの点滅数値
+const f32 LUMINESCENCE_ALPHA_MAX = 1.1f;
+const f32 LUMINESCENCE_ALPHA_MIN = 0.2f;
+
+// circleの回転
+const f32 CIRCLE_ROTATION = 0.01f;
 
 // select position
 const f32 SELECT_OFFSET_Y = 100.0f;
@@ -39,9 +49,9 @@ const D3DXCOLOR DEFAULT_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 // string texture_id
 const Texture::TEXTURE_ID SELECT_STRING_TEXTURE[] = {
-	Texture::TEXTURE_ID_TITLE_STRING_TEST_A,
-	Texture::TEXTURE_ID_TITLE_STRING_TEST_A,
-	Texture::TEXTURE_ID_TITLE_STRING_TEST_A };
+	Texture::TEXTURE_ID_TITLE_STRING_GAME_START,
+	Texture::TEXTURE_ID_TITLE_STRING_OPTION,
+	Texture::TEXTURE_ID_TITLE_STRING_GAME_END };
 
 //=============================================================================
 // constructor
@@ -52,10 +62,12 @@ SceneTitle::SceneTitle(void)
 	,logo_(nullptr)
 	,push_(nullptr)
 	,push_frame_(nullptr)
+	,luminescence_(nullptr)
+	,circle_(nullptr)
 	,message_window_(nullptr)
 	,frame_count_(0)
 	,current_select_(0)
-//	,mode_(MODE_SELECT)
+	,decide_interval_(0)
 	,mode_(MODE_PUSH)
 	,option_(nullptr)
 {
@@ -76,6 +88,12 @@ bool SceneTitle::Initialize(void)
 {
 	bg_ = new TitleBg();
 	bg_->Initialize();
+
+	luminescence_ = new Titleluminescence();
+	luminescence_->Initialize();
+
+	circle_ = new TitleCircle();
+	circle_->Initialize();
 
 	logo_ = new TitleLogo();
 	logo_->Initialize();
@@ -110,8 +128,8 @@ bool SceneTitle::Initialize(void)
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
-	option_ = new Option();
-	option_->Initialize();
+//	option_ = new Option();
+//	option_->Initialize();
 
 	frame_count_ = 0;
 	current_select_ = 0;
@@ -131,6 +149,10 @@ void SceneTitle::Uninitialize(void)
 	SafeRelease(push_);
 
 	SafeRelease(push_frame_);
+
+	SafeRelease(luminescence_);
+
+	SafeRelease(circle_);
 
 	SafeRelease(option_);
 
@@ -154,6 +176,9 @@ void SceneTitle::Update(void)
 	}
 	else
 	{
+		// 背景発光
+		_UpdateLuminescence();
+
 		// 時間経過でロゴに戻る
 		if(mode_ == MODE_PUSH || mode_ == MODE_SELECT)
 		{
@@ -172,6 +197,14 @@ void SceneTitle::Update(void)
 		{
 			_UpdatePush();
 		}
+		if(mode_ == MODE_PUSH_INTERVAL)
+		{
+			decide_interval_--;
+			if(decide_interval_ <= 0){
+				mode_ = MODE_SELECT;
+			}
+		}
+
 		// 選択肢処理
 		else if(mode_ == MODE_SELECT && !message_window_->__is_show())
 		{
@@ -182,10 +215,14 @@ void SceneTitle::Update(void)
 		{
 			_UpdateMessage();
 		}
-		option_->Update();
 		message_window_->Update();
 
+		// オプション
+//		option_->Update();
 	}
+
+	// サークルの回転
+	circle_->AddRotation(CIRCLE_ROTATION);
 }
 
 //=============================================================================
@@ -194,9 +231,11 @@ void SceneTitle::Update(void)
 void SceneTitle::Draw(void)
 {
 	bg_->Draw();
+	luminescence_->Draw();
+	circle_->Draw();
 	logo_->Draw();
 
-	if(mode_ == MODE_PUSH)
+	if(mode_ == MODE_PUSH || mode_ == MODE_PUSH_INTERVAL)
 	{
 		push_frame_->Draw();
 		push_->Draw();
@@ -209,7 +248,7 @@ void SceneTitle::Draw(void)
 			select_[i].select_->Draw();
 		}
 	}
-	option_->Draw();
+//	option_->Draw();
 
 	message_window_->Draw();
 }
@@ -256,7 +295,8 @@ void SceneTitle::_UpdatePush(void)
 	// モード変更
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
 	{
-		mode_ = MODE_SELECT;
+		decide_interval_ = DESIDE_INTERVAL_COUNT;
+		mode_ = MODE_PUSH_INTERVAL;
 
 		// 初期値に戻しておく
 		push_->ResetAlphaSpeed();
@@ -266,16 +306,20 @@ void SceneTitle::_UpdatePush(void)
 		push_frame_->ResetAlphaSpeed();
 		push_frame_->__alpha(DEFAULT_COLOR.a);
 		push_frame_->__color(DEFAULT_COLOR);
+
+		// 決定枠テクスチャ
+		push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 	}
 }
 
 //=============================================================================
-// _UpdatePush
+// _UpdateSelect
 //=============================================================================
 void SceneTitle::_UpdateSelect(void)
 {
 	// 現在の選択肢保存
 	bool input = false;
+	bool decide = false;
 	const s16 oldSelect = current_select_;
 
 	// 選択肢移動の入力
@@ -302,11 +346,16 @@ void SceneTitle::_UpdateSelect(void)
 			select_[i].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 		}
 		select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
+
+		// push
+		push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 	}
 
 	// 決定
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN) && !message_window_->__is_move())
 	{
+		decide = true;
+
 		// 選択肢ごとに処理
 		switch((SELECT_TYPE)current_select_)
 		{
@@ -336,10 +385,15 @@ void SceneTitle::_UpdateSelect(void)
 		select_[oldSelect].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 		select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 	} // select
+	
+	if(decide)
+	{
+		select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+	}
 }
 
 //=============================================================================
-// _UpdatePush
+// _UpdateMessage
 //=============================================================================
 void SceneTitle::_UpdateMessage(void)
 {
@@ -361,9 +415,38 @@ void SceneTitle::_UpdateMessage(void)
 		{
 			message_window_->Close();
 			mode_ = MODE_SELECT;
+			select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 		}
 	}
 }
+
+//=============================================================================
+// _UpdateLuminescence
+//=============================================================================
+void SceneTitle::_UpdateLuminescence(void)
+{
+	// アルファ取得
+	f32 alpha = luminescence_->__alpha();
+
+	// アルファ値加算
+	alpha += luminescence_->__alpha_speed();
+
+	if( alpha > LUMINESCENCE_ALPHA_MAX )
+	{
+		alpha = LUMINESCENCE_ALPHA_MAX;
+		luminescence_->InverseAlphaSpeed();
+	}
+	else if( alpha < LUMINESCENCE_ALPHA_MIN )
+	{
+		alpha  = LUMINESCENCE_ALPHA_MIN;
+		luminescence_->InverseAlphaSpeed();
+	}
+
+	// 設定
+	luminescence_->__alpha(alpha);
+	luminescence_->__color(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
+}
+
 
 
 //---------------------------------- EOF --------------------------------------

@@ -51,12 +51,14 @@ public:
 
 	// accessor
 	bool __is_error(void)const { return is_error_; }
+	bool __is_stop(void)const { return is_stop_; }
 
 private:
 	Scene* current_scene_;
 	Scene* next_scene_;
 	Fade* fade_;
 	bool is_error_;
+	bool is_stop_;
 };
 
 #endif	// _SCENE_MANAGER_H_

@@ -101,6 +101,15 @@
     <Filter Include="sources\application\object\stage_select">
       <UniqueIdentifier>{eaad040a-94b7-430d-b846-a04888dff142}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\application\object\option">
+      <UniqueIdentifier>{afe71d4d-8584-4a0d-b4a3-9fb8c121214e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\scene\game\stage">
+      <UniqueIdentifier>{df25fca6-25e7-406b-bd7b-e101058d5b86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\scene\game\gimmick">
+      <UniqueIdentifier>{60549378-f39b-424c-a7fc-db4b06126ec2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -241,9 +250,6 @@
     <ClInclude Include="sources\application\object\stage_offset.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\stage.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
     <ClInclude Include="resources\resource.h">
       <Filter>resources</Filter>
     </ClInclude>
@@ -292,9 +298,6 @@
     <ClInclude Include="sources\application\object\stage_select\select_stage_name.h">
       <Filter>sources\application\object\stage_select</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\stage_select.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
     <ClInclude Include="sources\application\object\stage_region.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
@@ -325,37 +328,103 @@
     <ClInclude Include="sources\application\object\option.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\se_volume.h">
+    <ClInclude Include="sources\application\object\option\bgm_volume.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\key_config_cancel.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\key_config_jump.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\key_config_ok.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\key_config_pause.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\key_config_special.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\keyconfig_logo.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\option_bg.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\option_data.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\option_logo.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\se_volume.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\option\volume_logo.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\title\title_luminescence.h">
+      <Filter>sources\application\scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\record.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\bgm_volume.h">
+    <ClInclude Include="sources\application\scene\game\stage\stage_tutorial.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_factory.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_manager.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_start_point.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\keyconfig_logo.h">
+    <ClInclude Include="sources\collision\collision_map.h">
+      <Filter>sources\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\normal_stage.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\stage_select\select_record_back.h">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_select.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_check_point.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\volume_logo.h">
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_check_point.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_goal_point.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_goal_point.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\option_logo.h">
+    <ClInclude Include="sources\application\object\object_light_gauge.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_jump.h">
-      <Filter>sources\application\object</Filter>
+    <ClInclude Include="sources\application\scene\title\title_circle.h">
+      <Filter>sources\application\scene\title</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_pause.h">
-      <Filter>sources\application\object</Filter>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_obstacle.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_special.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_cancel.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\object\key_config_ok.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\object\option_bg.h">
+    <ClInclude Include="sources\application\object\object_obstacle.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\object\option_data.h">
@@ -480,9 +549,6 @@
     <ClCompile Include="sources\application\object\stage_offset.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\stage.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
     <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp">
       <Filter>sources\system\xaudio2</Filter>
     </ClCompile>
@@ -531,9 +597,6 @@
     <ClCompile Include="sources\application\object\stage_region.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\stage_select.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
     <ClCompile Include="sources\application\object\stage_select\select_record.cpp">
       <Filter>sources\application\object\stage_select</Filter>
     </ClCompile>
@@ -561,37 +624,97 @@
     <ClCompile Include="sources\application\object\option.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\se_volume.cpp">
+    <ClCompile Include="sources\application\object\option\bgm_volume.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\key_config_cancel.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\key_config_jump.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\key_config_ok.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\key_config_pause.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\key_config_special.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\keyconfig_logo.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\option_bg.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\option_logo.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\se_volume.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\volume_logo.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\title\title_luminescence.cpp">
+      <Filter>sources\application\scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\record.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\bgm_volume.cpp">
+    <ClCompile Include="sources\application\scene\game\stage\stage_tutorial.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_manager.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_start_point.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\keyconfig_logo.cpp">
+    <ClCompile Include="sources\collision\collision_map.cpp">
+      <Filter>sources\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_start_point.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\normal_stage.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\stage_select\select_record_back.cpp">
+      <Filter>sources\application\object\stage_select</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_check_point.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\volume_logo.cpp">
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_check_point.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_goal_point.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_goal_point.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\option_logo.cpp">
+    <ClCompile Include="sources\application\object\object_light_gauge.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_jump.cpp">
-      <Filter>sources\application\object</Filter>
+    <ClCompile Include="sources\application\scene\title\title_circle.cpp">
+      <Filter>sources\application\scene\title</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_pause.cpp">
-      <Filter>sources\application\object</Filter>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_obstacle.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_special.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_cancel.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\key_config_ok.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\option_bg.cpp">
+    <ClCompile Include="sources\application\object\object_obstacle.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>

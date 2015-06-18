@@ -19,7 +19,7 @@
 //*****************************************************************************
 #include "basic/basic.h"
 #include "system/direct_input/direct_input.h"
-#include "option_data.h"
+#include "option/option_data.h"
 
 //*****************************************************************************
 // forward declaration
