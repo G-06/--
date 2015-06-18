@@ -20,8 +20,10 @@
     <ClCompile Include="sources\application\object\message_sprite_smooth.cpp" />
     <ClCompile Include="sources\application\object\message_window.cpp" />
     <ClCompile Include="sources\application\object\object_check_point.cpp" />
+    <ClCompile Include="sources\application\object\object_disappear_ground.cpp" />
     <ClCompile Include="sources\application\object\object_goal_point.cpp" />
     <ClCompile Include="sources\application\object\object_light_gauge.cpp" />
+    <ClCompile Include="sources\application\object\object_move_ground.cpp" />
     <ClCompile Include="sources\application\object\object_obstacle.cpp" />
     <ClCompile Include="sources\application\object\object_player.cpp" />
     <ClCompile Include="sources\application\object\object_start_point.cpp" />
@@ -53,7 +55,9 @@
     <ClCompile Include="sources\application\scene\game\game_player.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_check_point.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_goal_point.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_move_ground.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_obstacle.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_start_point.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
@@ -122,8 +126,10 @@
     <ClInclude Include="sources\application\object\message_sprite_smooth.h" />
     <ClInclude Include="sources\application\object\message_window.h" />
     <ClInclude Include="sources\application\object\object_check_point.h" />
+    <ClInclude Include="sources\application\object\object_disappear_ground.h" />
     <ClInclude Include="sources\application\object\object_goal_point.h" />
     <ClInclude Include="sources\application\object\object_light_gauge.h" />
+    <ClInclude Include="sources\application\object\object_move_ground.h" />
     <ClInclude Include="sources\application\object\object_obstacle.h" />
     <ClInclude Include="sources\application\object\object_player.h" />
     <ClInclude Include="sources\application\object\object_start_point.h" />
@@ -157,7 +163,9 @@
     <ClInclude Include="sources\application\scene\game\game_player.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_check_point.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_goal_point.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_move_ground.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_obstacle.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />

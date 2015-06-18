@@ -52,6 +52,9 @@ public:
 	// move
 	void Move(f32 vector);
 
+	// accelerate
+	void Accelerate(const D3DXVECTOR2& acceleration);
+
 	// jump
 	void Jump(void);
 
@@ -93,6 +96,8 @@ public:
 	s32 __sp(void)const { return sp_; }
 	s32 __sp_max(void)const { return sp_max_; }
 	s32 __life(void)const { return life_; }
+	u32 __check_point_priority(void) { return check_point_priority_; }
+	void __check_point_priority(u32 check_point_priority) { check_point_priority_ = check_point_priority; }
 
 private:
 	enum ANIMATION_TYPE
@@ -136,7 +141,8 @@ private:
 	s32 sp_;
 	s32 sp_max_;
 	D3DXVECTOR2 return_position_;
-
+	u32 check_point_priority_;
+	D3DXVECTOR2 acceleration_;
 	ObjectPlayer*		player_;				// プレイヤースプライト
 
 };

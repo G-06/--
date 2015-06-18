@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// gimmick check point
+// gimmick move ground
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,8 +9,8 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "gimmick_check_point.h"
-#include "object/object_check_point.h"
+#include "gimmick_move_ground.h"
+#include "object/object_move_ground.h"
 
 //*****************************************************************************
 // constant definition
@@ -19,27 +19,30 @@
 //=============================================================================
 // constructor
 //=============================================================================
-GimmickCheckPoint::GimmickCheckPoint(void)
-	:Gimmick(TYPE_CHECK_POINT)
+GimmickMoveGround::GimmickMoveGround(void)
+	:Gimmick(TYPE_MOVE_GROUND)
+	,start_position_(0.0f,0.0f)
+	,end_position_(0.0f,0.0f)
+	,speed_(0.0f)
+	,rate_(0.0f)
 {
-	data_._priority = 0;
 	size_ = D3DXVECTOR2(128.0f,128.0f);
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-GimmickCheckPoint::~GimmickCheckPoint(void)
+GimmickMoveGround::~GimmickMoveGround(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool GimmickCheckPoint::Initialize(void)
+bool GimmickMoveGround::Initialize(void)
 {
-	object_check_point_ = new ObjectCheckPoint();
-	object_check_point_->Initialize();
+	object_move_ground_ = new ObjectMoveGround();
+	object_move_ground_->Initialize();
 
 	return true;
 }
@@ -47,32 +50,52 @@ bool GimmickCheckPoint::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void GimmickCheckPoint::Uninitialize(void)
+void GimmickMoveGround::Uninitialize(void)
 {
-	SafeRelease(object_check_point_);
+	SafeRelease(object_move_ground_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void GimmickCheckPoint::Update(void)
+void GimmickMoveGround::Update(void)
 {
-	object_check_point_->Update();
+	object_move_ground_->Update();
+
+	D3DXVECTOR2 vector = end_position_ - start_position_;
+
+	data_._move = position_;
+
+	rate_ += speed_;
+	if(rate_ < 0.0f)
+	{
+		rate_ = 0.0f;
+		speed_ *= -1;
+	}
+
+	if(rate_ > 1.0f)
+	{
+		rate_ = 1.0f;
+		speed_ *= -1;
+	}
+
+	position_ = start_position_ + vector * rate_;
+	data_._move = position_ - data_._move;
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void GimmickCheckPoint::Draw(void)
+void GimmickMoveGround::Draw(void)
 {
-	object_check_point_->__position(position_ - offset_position_);
-	object_check_point_->Draw();
+	object_move_ground_->__position(position_ - offset_position_);
+	object_move_ground_->Draw();
 }
 
 //=============================================================================
 // get pointer
 //=============================================================================
-void* GimmickCheckPoint::GetPointer(void)
+void* GimmickMoveGround::GetPointer(void)
 {
 	return &data_;
 }

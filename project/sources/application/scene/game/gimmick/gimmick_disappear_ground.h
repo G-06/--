@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// stage
+// gimmick disappear ground
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,75 +10,65 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _NORMAL_STAGE_H_
-#define _NORMAL_STAGE_H_
+#ifndef _GIMMICK_DISAPPEAR_GROUND_H_
+#define _GIMMICK_DISAPPEAR_GROUND_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "stage.h"
+#include "gimmick.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class GamePlayer;
-class Map;
-class StageOffset;
-class Gimmick;
-class ObjectLightGauge;
+class ObjectDisappearGround;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class NormalStage : public Stage
+class GimmickDisappearGround : public Gimmick
 {
 public:
+	struct DATA
+	{
+		bool _is_hit;
+	};
+
 	// constructor
-	NormalStage(const TYPE& type);
+	GimmickDisappearGround(void);
 
 	// destructor
-	virtual ~NormalStage(void);
+	virtual ~GimmickDisappearGround(void);
 
 	// initialize
-	virtual bool Initialize(void);
+	bool Initialize(void);
 
 	// uninitialize
-	virtual void Uninitialize(void);
+	void Uninitialize(void);
 
 	// update
-	virtual void Update(void);
+	void Update(void);
 
 	// draw
-	virtual void Draw(void);
+	void Draw(void);
 
-	// create factory
-	virtual StageFactory* CreateFactory(void)const = 0;
-
-	// collision gimmick
-	void CollisionGimmick(void);
-
-	// load from file
-	bool LoadFromFile(const s8* filename);
-
-	// load from memory
-	bool LoadFromMemory(const s8* data);
-
-	u32 FindWord(s8* dest,const s8* source,s8* words);
+	// get pointer
+	void* GetPointer(void);
 
 	// accessor
+	void __appear_frame(u32 appear_frame) { appear_frame_ = appear_frame; }
+	void __disappear_frame(u32 disappear_frame) { disappear_frame_ = disappear_frame; }
+	bool __is_show(void) { return is_show_; }
 
-protected:
-	GamePlayer* game_player_;
-	Map* map_;
-	StageOffset* stage_offset_;
-	ObjectLightGauge* object_light_gauge_;
-	std::list<Gimmick*> gimmick_container_;
-	u32 time_count_;
-	D3DXVECTOR2 position_;
-	bool is_pause_;
-	bool is_clear_;
+private:
+	ObjectDisappearGround* object_disappear_ground_;
+	u32 appear_frame_;
+	u32 disappear_frame_;
+	bool is_show_;
+	u32 frame_count_;
+	DATA data_;
 };
 
-#endif	// _NORMAL_STAGE_H_
+#endif	// _GIMMICK_DISAPPEAR_GROUND_H_
 
 //---------------------------------- EOF --------------------------------------

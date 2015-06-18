@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// gimmick check point
+// gimmick disappear ground
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,8 +9,8 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "gimmick_check_point.h"
-#include "object/object_check_point.h"
+#include "gimmick_disappear_ground.h"
+#include "object/object_disappear_ground.h"
 
 //*****************************************************************************
 // constant definition
@@ -19,27 +19,27 @@
 //=============================================================================
 // constructor
 //=============================================================================
-GimmickCheckPoint::GimmickCheckPoint(void)
-	:Gimmick(TYPE_CHECK_POINT)
+GimmickDisappearGround::GimmickDisappearGround(void)
+	:Gimmick(TYPE_DISAPPEAR_GROUND)
+	,frame_count_(0)
 {
-	data_._priority = 0;
 	size_ = D3DXVECTOR2(128.0f,128.0f);
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-GimmickCheckPoint::~GimmickCheckPoint(void)
+GimmickDisappearGround::~GimmickDisappearGround(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool GimmickCheckPoint::Initialize(void)
+bool GimmickDisappearGround::Initialize(void)
 {
-	object_check_point_ = new ObjectCheckPoint();
-	object_check_point_->Initialize();
+	object_disappear_ground_ = new ObjectDisappearGround();
+	object_disappear_ground_->Initialize();
 
 	return true;
 }
@@ -47,32 +47,54 @@ bool GimmickCheckPoint::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void GimmickCheckPoint::Uninitialize(void)
+void GimmickDisappearGround::Uninitialize(void)
 {
-	SafeRelease(object_check_point_);
+	SafeRelease(object_disappear_ground_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void GimmickCheckPoint::Update(void)
+void GimmickDisappearGround::Update(void)
 {
-	object_check_point_->Update();
+	frame_count_++;
+
+	if(is_show_)
+	{
+		data_._is_hit = true;
+		if(frame_count_ > appear_frame_)
+		{
+			is_show_ = false;
+			frame_count_ = 0;
+			data_._is_hit = false;
+		}
+	}
+	else
+	{
+		if(frame_count_ > disappear_frame_)
+		{
+			is_show_ = true;
+			frame_count_ = 0;
+		}
+	}
+
+	object_disappear_ground_->Show(is_show_);
+	object_disappear_ground_->Update();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void GimmickCheckPoint::Draw(void)
+void GimmickDisappearGround::Draw(void)
 {
-	object_check_point_->__position(position_ - offset_position_);
-	object_check_point_->Draw();
+	object_disappear_ground_->__position(position_ - offset_position_);
+	object_disappear_ground_->Draw();
 }
 
 //=============================================================================
 // get pointer
 //=============================================================================
-void* GimmickCheckPoint::GetPointer(void)
+void* GimmickDisappearGround::GetPointer(void)
 {
 	return &data_;
 }

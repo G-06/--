@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// stage
+// object disappear ground
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,75 +10,67 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _NORMAL_STAGE_H_
-#define _NORMAL_STAGE_H_
+#ifndef _OBJECT_DISAPPEAR_GROUND_H_
+#define _OBJECT_DISAPPEAR_GROUND_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "stage.h"
+#include "basic/basic.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class GamePlayer;
-class Map;
-class StageOffset;
-class Gimmick;
-class ObjectLightGauge;
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class NormalStage : public Stage
+class ObjectDisappearGround : public Basic
 {
 public:
 	// constructor
-	NormalStage(const TYPE& type);
+	ObjectDisappearGround(void);
 
 	// destructor
-	virtual ~NormalStage(void);
+	virtual ~ObjectDisappearGround(void);
 
 	// initialize
-	virtual bool Initialize(void);
+	bool Initialize(void);
 
 	// uninitialize
-	virtual void Uninitialize(void);
+	void Uninitialize(void);
 
 	// update
-	virtual void Update(void);
+	void Update(void);
 
 	// draw
-	virtual void Draw(void);
+	void Draw(void);
 
-	// create factory
-	virtual StageFactory* CreateFactory(void)const = 0;
-
-	// collision gimmick
-	void CollisionGimmick(void);
-
-	// load from file
-	bool LoadFromFile(const s8* filename);
-
-	// load from memory
-	bool LoadFromMemory(const s8* data);
-
-	u32 FindWord(s8* dest,const s8* source,s8* words);
+	// show
+	void Show(bool is_show);
 
 	// accessor
+	void __position(const D3DXVECTOR2& position) { position_ = position; }
+	const D3DXVECTOR2& __size(void) { return size_; }
+	void __show_frame(u32 show_frame) { show_frame_ = show_frame; }
+	bool __is_appear(void) { return is_appear_; }
 
-protected:
-	GamePlayer* game_player_;
-	Map* map_;
-	StageOffset* stage_offset_;
-	ObjectLightGauge* object_light_gauge_;
-	std::list<Gimmick*> gimmick_container_;
-	u32 time_count_;
+private:
+	static const D3DXVECTOR2 SIZE;
+	static const u32 DIVISION_WIDTH;
+	static const u32 DIVISION_HEIGHT;
+
+	Sprite* object_disappear_ground_;
 	D3DXVECTOR2 position_;
-	bool is_pause_;
-	bool is_clear_;
+	D3DXVECTOR2 size_;
+	bool is_show_;
+	u32 show_frame_;
+	u32 frame_count_;
+	f32 alpha_;
+	bool is_appear_;
 };
 
-#endif	// _NORMAL_STAGE_H_
+#endif	// _OBJECT_DISAPPEAR_GROUND_H_
 
 //---------------------------------- EOF --------------------------------------

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// gimmick check point
+// object move ground
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,37 +9,47 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "gimmick_check_point.h"
-#include "object/object_check_point.h"
+#include "object_move_ground.h"
+#include "render/sprite.h"
+#include "system/system.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
+const D3DXVECTOR2 ObjectMoveGround::SIZE	= D3DXVECTOR2(128.0f,128.0f);
+const u32 ObjectMoveGround::DIVISION_WIDTH	= 1;
+const u32 ObjectMoveGround::DIVISION_HEIGHT	= 1;
 
 //=============================================================================
 // constructor
 //=============================================================================
-GimmickCheckPoint::GimmickCheckPoint(void)
-	:Gimmick(TYPE_CHECK_POINT)
+ObjectMoveGround::ObjectMoveGround(void)
+	:object_move_ground_(nullptr)
+	,position_(0.0f,0.0f)
+	,size_(0.0f,0.0f)
 {
-	data_._priority = 0;
-	size_ = D3DXVECTOR2(128.0f,128.0f);
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-GimmickCheckPoint::~GimmickCheckPoint(void)
+ObjectMoveGround::~ObjectMoveGround(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool GimmickCheckPoint::Initialize(void)
+bool ObjectMoveGround::Initialize(void)
 {
-	object_check_point_ = new ObjectCheckPoint();
-	object_check_point_->Initialize();
+	object_move_ground_ = new Sprite();
+	object_move_ground_->Initialize();
+	object_move_ground_->__point(Sprite::POINT_CENTER);
+	object_move_ground_->__division_width(DIVISION_WIDTH);
+	object_move_ground_->__division_height(DIVISION_HEIGHT);
+	object_move_ground_->__size(SIZE);
+	object_move_ground_->__texture_id(Texture::TEXTURE_ID_DEATH_GROUND);
+	object_move_ground_->SetParameter();
 
 	return true;
 }
@@ -47,34 +57,25 @@ bool GimmickCheckPoint::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void GimmickCheckPoint::Uninitialize(void)
+void ObjectMoveGround::Uninitialize(void)
 {
-	SafeRelease(object_check_point_);
+	SafeRelease(object_move_ground_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void GimmickCheckPoint::Update(void)
+void ObjectMoveGround::Update(void)
 {
-	object_check_point_->Update();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void GimmickCheckPoint::Draw(void)
+void ObjectMoveGround::Draw(void)
 {
-	object_check_point_->__position(position_ - offset_position_);
-	object_check_point_->Draw();
-}
-
-//=============================================================================
-// get pointer
-//=============================================================================
-void* GimmickCheckPoint::GetPointer(void)
-{
-	return &data_;
+	object_move_ground_->__position(position_);
+	object_move_ground_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

@@ -427,6 +427,18 @@
     <ClInclude Include="sources\application\object\object_obstacle.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_disappear_ground.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_move_ground.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_move_ground.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -713,6 +725,18 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\object_obstacle.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_disappear_ground.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_move_ground.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_move_ground.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

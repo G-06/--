@@ -20,6 +20,8 @@
 #include "../gimmick/gimmick_check_point.h"
 #include "../gimmick/gimmick_goal_point.h"
 #include "../gimmick/gimmick_obstacle.h"
+#include "../gimmick/gimmick_disappear_ground.h"
+#include "../gimmick/gimmick_move_ground.h"
 #include "object/object_light_gauge.h"
 #include "collision/collision_map.h"
 
@@ -29,6 +31,7 @@
 NormalStage::NormalStage(const TYPE& type)
 	:Stage(type)
 	,is_pause_(false)
+	,is_clear_(false)
 {
 }
 
@@ -333,6 +336,7 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					i++;
 					i += FindWord(word,&data[i],",\n\0");
 					f32 y = atof(word);
+					i++;
 					i += FindWord(word,&data[i],",\n\0");
 					u32 priority = atoi(word);
 
@@ -368,12 +372,6 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					f32 y = atof(word);
 					i++;
 					i += FindWord(word,&data[i],",\n\0");
-					f32 start_x = atof(word);
-					i++;
-					i += FindWord(word,&data[i],",\n\0");
-					f32 start_y = atof(word);
-					i++;
-					i += FindWord(word,&data[i],",\n\0");
 					f32 end_x = atof(word);
 					i++;
 					i += FindWord(word,&data[i],",\n\0");
@@ -385,7 +383,57 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					GimmickObstacle* gimmick = new GimmickObstacle();
 					gimmick->Initialize();
 					gimmick->__position(D3DXVECTOR2(x,y));
-					gimmick->__start_position(D3DXVECTOR2(start_x,start_y));
+					gimmick->__start_position(D3DXVECTOR2(x,y));
+					gimmick->__end_position(D3DXVECTOR2(end_x,end_y));
+					gimmick->__speed(speed);
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
+				case Gimmick::TYPE_DISAPPEAR_GROUND:
+				{
+					i += FindWord(word,&data[i],",\n\0");
+					f32 x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					u32 appear_frame = atoi(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					u32 disappear_frame = atoi(word);
+
+					GimmickDisappearGround* gimmick = new GimmickDisappearGround();
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick->__appear_frame(appear_frame);
+					gimmick->__disappear_frame(disappear_frame);
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
+				case Gimmick::TYPE_MOVE_GROUND:
+				{
+					i += FindWord(word,&data[i],",\n\0");
+					f32 x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 end_x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 end_y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 speed = atof(word);
+
+					GimmickMoveGround* gimmick = new GimmickMoveGround();
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick->__start_position(D3DXVECTOR2(x,y));
 					gimmick->__end_position(D3DXVECTOR2(end_x,end_y));
 					gimmick->__speed(speed);
 					gimmick_container_.push_back(gimmick);
@@ -394,6 +442,7 @@ bool NormalStage::LoadFromFile(const s8* filename)
 				}
 				default:
 				{
+					i += FindWord(word,&data[i],"\n\0");
 					break;
 				}
 			}
@@ -452,7 +501,19 @@ void NormalStage::CollisionGimmick(void)
 				case Gimmick::TYPE_CHECK_POINT:
 				{
 					DEBUG_TOOL.__debug_display()->Print("hit check point\n");
-					game_player_->__return_position(gimmick_position);
+					GimmickCheckPoint::DATA* data = (GimmickCheckPoint::DATA*)(*it)->GetPointer();
+					if(game_player_->__check_point_priority() < data->_priority)
+					{
+						game_player_->__check_point_priority(data->_priority);
+						game_player_->__return_position(gimmick_position);
+					}
+					break;
+				}
+				case Gimmick::TYPE_GOAL_POINT:
+				{
+					DEBUG_TOOL.__debug_display()->Print("hit goal point\n");
+					game_player_->Clear();
+					is_clear_ = true;
 					break;
 				}
 				case Gimmick::TYPE_OBSTACLE:
@@ -461,6 +522,25 @@ void NormalStage::CollisionGimmick(void)
 					game_player_->Dead();
 					break;
 				}
+				case Gimmick::TYPE_DISAPPEAR_GROUND:
+				{
+					GimmickDisappearGround::DATA* data = (GimmickDisappearGround::DATA*)(*it)->GetPointer();
+					if(data->_is_hit)
+					{
+						DEBUG_TOOL.__debug_display()->Print("hit disappear ground\n");
+						game_player_->HitStage(collision_map.__position(),true);
+					}
+					break;
+				}
+				case Gimmick::TYPE_MOVE_GROUND:
+				{
+					GimmickMoveGround::DATA* data = (GimmickMoveGround::DATA*)(*it)->GetPointer();
+					game_player_->Accelerate(data->_move);
+					game_player_->HitStage(collision_map.__position(),true);
+					DEBUG_TOOL.__debug_display()->Print("hit move ground\n");
+					break;
+				}
+
 			}
 		}
 	}

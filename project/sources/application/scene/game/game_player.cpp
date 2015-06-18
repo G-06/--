@@ -30,6 +30,8 @@ const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 //=============================================================================
 GamePlayer::GamePlayer(void)
 	:player_(nullptr)
+	,check_point_priority_(0)
+	,acceleration_(0.0f,0.0f)
 {
 }
 
@@ -168,7 +170,8 @@ void GamePlayer::Update(void)
 
 	is_fly_ = true;
 	old_position_ = position_;
-	position_ += move_;
+	position_ += move_ + acceleration_;
+	acceleration_ = D3DXVECTOR2(0.0f,0.0f);
 
 	player_->__is_flip(is_left_);
 	player_->Update();
@@ -201,6 +204,14 @@ void GamePlayer::Move(f32 vector)
 			move_.x -= SPEED;
 		}
 	}
+}
+
+//=============================================================================
+// accelerate
+//=============================================================================
+void GamePlayer::Accelerate(const D3DXVECTOR2& acceleration)
+{
+	acceleration_ += acceleration;
 }
 
 //=============================================================================
@@ -300,6 +311,10 @@ void GamePlayer::Dead(void)
 		life_--;
 
 		position_ = return_position_;
+		old_position_ = position_;
+		is_enable_light_ = true;
+		is_light_ = false;
+		move_ = D3DXVECTOR2(0.0f,0.0f);
 	}
 	else
 	{
