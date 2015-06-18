@@ -314,6 +314,30 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			}
 			break;
 		}
+		case 4:
+		{
+			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			{
+				game_player_->Dead();
+			}
+			break;
+		}
+		case 5:
+		{
+			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			{
+				//game_player_->Dead();
+			}
+			break;
+		}
+		case 6:
+		{
+			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			{
+				//game_player_->Dead();
+			}
+			break;
+		}
 		default:
 		{
 			break;

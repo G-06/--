@@ -110,6 +110,12 @@
     <Filter Include="sources\application\scene\game\gimmick">
       <UniqueIdentifier>{60549378-f39b-424c-a7fc-db4b06126ec2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\application\scene\game\effect">
+      <UniqueIdentifier>{1ae7364d-a30b-42ff-a2cb-99e0551d1b60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\scene\game\assert_effect">
+      <UniqueIdentifier>{0dd7e936-c8a1-42b8-abf6-9c3c6e5fd855}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -439,6 +445,12 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_move_ground.h">
       <Filter>sources\application\scene\game\gimmick</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect.h">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -737,6 +749,12 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_move_ground.cpp">
       <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect.cpp">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
