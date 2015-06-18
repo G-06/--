@@ -242,6 +242,7 @@ void GamePlayer::HitStage(const D3DXVECTOR2& position,bool is_floor)
 	{
 		is_fly_ = false;
 		is_enable_light_ = true;
+		move_.y = 0.0f;
 	}
 }
 

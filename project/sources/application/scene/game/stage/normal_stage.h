@@ -54,6 +54,10 @@ public:
 	// create factory
 	virtual StageFactory* CreateFactory(void)const = 0;
 
+	// collision chip
+	void CollisionChip(void);
+	void CollisionChip(u32 index,const D3DXVECTOR2& position);
+
 	// collision gimmick
 	void CollisionGimmick(void);
 
