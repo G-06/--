@@ -78,6 +78,10 @@ public:
 	void __is_indication(const bool indication){ is_indication_ = indication;}
 	const bool __is_indication(void)const{ return is_indication_;}
 
+	const KEY_CONFIG* __key_config_data(void)const{return &key_config_data_[0];}
+	const s32 __volume_bgm_size(void)const{return volume_size_bgm_;}
+	const s32 __volume_se_size(void)const{return volume_size_bgm_;}
+
 	private:
 	OptionBg* option_bg_;
 	KeyConfigOk* key_config_ok_;
@@ -96,9 +100,13 @@ public:
 	bool is_indication_;
 	KEY_CODE is_exchange_;
 
-	KEY_CONFIG key_config_data_[5];
-	s32 volume_size_bgm_;
-	s32 volume_size_se_;
+	static KEY_CONFIG key_config_data_[5];
+	static s32 volume_size_bgm_;
+	static s32 volume_size_se_;
+
+	KEY_CONFIG key_config_temp_[5];
+	s32 bgm_size_temp_;
+	s32 se_size_temp_;
 };
 
 #endif	// _OPTION_H_
