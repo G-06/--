@@ -150,7 +150,7 @@ bool CollisionMap::IsHit(D3DXVECTOR2 playerpos,D3DXVECTOR2 oldplayerpos,D3DXVECT
 	}
 	else
 	{
-		if(pushlengthx_ / pv.x >= pushlengthy_ / pv.y)
+		if(abs(pushlengthx_ / pv.x) <= abs(pushlengthy_ / pv.y))
 		{
 			pushlengthy_ = 0;
 			vector_.y = 0.0f;

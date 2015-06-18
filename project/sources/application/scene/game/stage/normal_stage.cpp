@@ -202,10 +202,8 @@ void NormalStage::CollisionChip(void)
 	// ¶
 	index = map_->GetIndex(D3DXVECTOR2(player_position.x - game_player_->__size().x * 0.5f,player_position.y),&index_position);
 
-	if(index != 0)
-	{
-		CollisionChip(index,index_position);
-	}
+	CollisionChip(index,index_position);
+
 	// ã
 	index = map_->GetIndex(D3DXVECTOR2(player_position.x,player_position.y - game_player_->__size().y * 0.5f),&index_position);
 
@@ -229,10 +227,7 @@ void NormalStage::CollisionChip(void)
 	// ¶ã
 	index = map_->GetIndex(D3DXVECTOR2(player_position.x - game_player_->__size().x * 0.5f,player_position.y - game_player_->__size().y * 0.5f),&index_position);
 
-	if(index != 0)
-	{
-		CollisionChip(index,index_position);
-	}
+	CollisionChip(index,index_position);
 
 }
 
@@ -342,7 +337,6 @@ void NormalStage::CollisionGimmick(void)
 							game_player_->HitStage(collision_map.__position());
 						}
 						DEBUG_TOOL.__debug_display()->Print("hit move ground\n");
-						DEBUG_TOOL.__debug_trace()->Print("%.1f : %.1f\n",collision_map.__vector().x,collision_map.__vector().y);
 					}
 					break;
 				}
