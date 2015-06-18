@@ -86,6 +86,8 @@ void NormalStage::Uninitialize(void)
 		SafeRelease(*it);
 	}
 	gimmick_container_.clear();
+
+	SafeDelete(next_stage_factory_);
 }
 
 //=============================================================================
@@ -93,129 +95,142 @@ void NormalStage::Uninitialize(void)
 //=============================================================================
 void NormalStage::Update(void)
 {
-	if(is_pause_)
+	if(game_player_->__life() < 0)
 	{
+		if(next_stage_factory_ == nullptr)
+		{
+			next_stage_factory_ = new SelectFactory();
+		}
 	}
 	else
 	{
-		time_count_++;
-
-		game_player_->Update();
-
-		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+		if(is_pause_)
 		{
-			(*it)->Update();
 		}
-
-		object_light_gauge_->__rate((f32)game_player_->__sp() / (f32)game_player_->__sp_max() * 100.0f);
-
-		object_light_gauge_->Update();
-
-		D3DXVECTOR2 player_position = game_player_->__position();
-		D3DXVECTOR2 player_old_position = game_player_->__old_position();
-		D3DXVECTOR2 index_position;
-		u32 index = 0;
-		CollisionMap collision_map;
-
-		index = map_->GetIndex(D3DXVECTOR2(player_position.x - game_player_->__size().x * 0.5f,player_position.y - game_player_->__size().y * 0.5f),&index_position);
-
-		if(index != 0)
+		else
 		{
-			if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			time_count_++;
+
+			game_player_->Update();
+
+			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 			{
-				game_player_->HitStage(collision_map.__position(),true);
+				(*it)->Update();
 			}
-		}
 
-		index = map_->GetIndex(D3DXVECTOR2(player_position.x - game_player_->__size().x * 0.5f,player_position.y + game_player_->__size().y * 0.5f),&index_position);
+			object_light_gauge_->__rate((f32)game_player_->__sp() / (f32)game_player_->__sp_max() * 100.0f);
 
-		if(index != 0)
-		{
-			if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			object_light_gauge_->Update();
+
+			D3DXVECTOR2 player_position = game_player_->__position();
+			D3DXVECTOR2 player_old_position = game_player_->__old_position();
+			D3DXVECTOR2 index_position;
+			u32 index = 0;
+			CollisionMap collision_map;
+
+			index = map_->GetIndex(D3DXVECTOR2(player_position.x - game_player_->__size().x * 0.5f,player_position.y - game_player_->__size().y * 0.5f),&index_position);
+
+			if(index != 0)
 			{
-				game_player_->HitStage(collision_map.__position(),true);
+				if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->HitStage(collision_map.__position(),true);
+				}
 			}
-		}
 
-		index = map_->GetIndex(D3DXVECTOR2(player_position.x + game_player_->__size().x * 0.5f,player_position.y - game_player_->__size().y * 0.5f),&index_position);
+			index = map_->GetIndex(D3DXVECTOR2(player_position.x - game_player_->__size().x * 0.5f,player_position.y + game_player_->__size().y * 0.5f),&index_position);
 
-		if(index != 0)
-		{
-			if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if(index != 0)
 			{
-				game_player_->HitStage(collision_map.__position(),true);
+				if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->HitStage(collision_map.__position(),true);
+				}
 			}
-		}
 
-		index = map_->GetIndex(D3DXVECTOR2(player_position.x + game_player_->__size().x * 0.5f,player_position.y + game_player_->__size().y * 0.5f),&index_position);
+			index = map_->GetIndex(D3DXVECTOR2(player_position.x + game_player_->__size().x * 0.5f,player_position.y - game_player_->__size().y * 0.5f),&index_position);
 
-		if(index != 0)
-		{
-			if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if(index != 0)
 			{
-				game_player_->HitStage(D3DXVECTOR2(collision_map.__position().x,collision_map.__position().y),true);
+				if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->HitStage(collision_map.__position(),true);
+				}
 			}
-		}
 
-		index = map_->GetIndex(D3DXVECTOR2(player_position.x,player_position.y - game_player_->__size().y * 0.5f),&index_position);
+			index = map_->GetIndex(D3DXVECTOR2(player_position.x + game_player_->__size().x * 0.5f,player_position.y + game_player_->__size().y * 0.5f),&index_position);
 
-		if(index != 0)
-		{
-			if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if(index != 0)
 			{
-				game_player_->HitStage(collision_map.__position(),true);
+				if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->HitStage(D3DXVECTOR2(collision_map.__position().x,collision_map.__position().y),true);
+				}
 			}
-		}
 
-		index = map_->GetIndex(D3DXVECTOR2(player_position.x,player_position.y + game_player_->__size().y * 0.5f),&index_position);
+			index = map_->GetIndex(D3DXVECTOR2(player_position.x,player_position.y - game_player_->__size().y * 0.5f),&index_position);
 
-		if(index != 0)
-		{
-			if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if(index != 0)
 			{
-				game_player_->HitStage(collision_map.__position(),true);
+				if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->HitStage(collision_map.__position(),true);
+				}
 			}
-		}
 
-		index = map_->GetIndex(D3DXVECTOR2(player_position.x - game_player_->__size().x * 0.5f,player_position.y),&index_position);
+			index = map_->GetIndex(D3DXVECTOR2(player_position.x,player_position.y + game_player_->__size().y * 0.5f),&index_position);
 
-		if(index != 0)
-		{
-			if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if(index != 0)
 			{
-				game_player_->HitStage(collision_map.__position(),true);
+				if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->HitStage(collision_map.__position(),true);
+				}
 			}
-		}
 
-		index = map_->GetIndex(D3DXVECTOR2(player_position.x + game_player_->__size().x * 0.5f,player_position.y),&index_position);
+			index = map_->GetIndex(D3DXVECTOR2(player_position.x - game_player_->__size().x * 0.5f,player_position.y),&index_position);
 
-		if(index != 0)
-		{
-			if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if(index != 0)
 			{
-				game_player_->HitStage(D3DXVECTOR2(collision_map.__position().x,collision_map.__position().y),true);
+				if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->HitStage(collision_map.__position(),true);
+				}
 			}
-		}
-		if(game_player_->__position().y > map_->__size().y)
-		{
-			game_player_->Dead();
-		}
 
-		stage_offset_->__reference_position(game_player_->__position());
-		stage_offset_->Update();
+			index = map_->GetIndex(D3DXVECTOR2(player_position.x + game_player_->__size().x * 0.5f,player_position.y),&index_position);
 
-		game_player_->__offset_position(stage_offset_->__position());
+			if(index != 0)
+			{
+				if(collision_map.IsHit(game_player_->__position(),player_old_position,index_position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->HitStage(D3DXVECTOR2(collision_map.__position().x,collision_map.__position().y),true);
+				}
+			}
+			if(game_player_->__position().y > map_->__size().y)
+			{
+				game_player_->Dead();
+			}
 
-		map_->__position(-stage_offset_->__position());
+			CollisionGimmick();
 
-		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
-		{
-			(*it)->__offset_position(stage_offset_->__position());
-		}
+			// offset
+			stage_offset_->__reference_position(game_player_->__position());
+			stage_offset_->Update();
 
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_P))
-		{
-			next_scene_factory_ = new TitleFactory();
+			game_player_->__offset_position(stage_offset_->__position());
+
+			map_->__position(-stage_offset_->__position());
+
+			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+			{
+				(*it)->__offset_position(stage_offset_->__position());
+			}
+
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_P))
+			{
+				next_scene_factory_ = new TitleFactory();
+			}
 		}
 	}
 
@@ -413,6 +428,41 @@ u32 NormalStage::FindWord(s8* dest,const s8* source,s8* words)
 		}
 		dest[count] = source[count];
 		count++;
+	}
+}
+
+//=============================================================================
+// collision gimmick
+//=============================================================================
+void NormalStage::CollisionGimmick(void)
+{
+	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+	{
+		D3DXVECTOR2 player_position = game_player_->__position();
+		D3DXVECTOR2 player_old_position = game_player_->__old_position();
+		D3DXVECTOR2 player_size = game_player_->__size() * 0.5f;
+		D3DXVECTOR2 gimmick_position = (*it)->__position();
+		D3DXVECTOR2 gimmick_size = (*it)->__size() * 0.5f;
+		CollisionMap collision_map;
+
+		if(collision_map.IsHit(player_position,player_old_position,gimmick_position,player_size.x,player_size.y,gimmick_size.x,gimmick_size.y))
+		{
+			switch((*it)->__type())
+			{
+				case Gimmick::TYPE_CHECK_POINT:
+				{
+					DEBUG_TOOL.__debug_display()->Print("hit check point\n");
+					game_player_->__return_position(gimmick_position);
+					break;
+				}
+				case Gimmick::TYPE_OBSTACLE:
+				{
+					DEBUG_TOOL.__debug_display()->Print("hit obstacle\n");
+					game_player_->Dead();
+					break;
+				}
+			}
+		}
 	}
 }
 

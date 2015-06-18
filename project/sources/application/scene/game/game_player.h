@@ -70,6 +70,9 @@ public:
 	// dead
 	void Dead(void);
 
+	// clear
+	void Clear(void);
+
 	// À•W‚Ìæ“¾
 	const D3DXVECTOR2& __position(void)const{ return position_; }
 
@@ -89,6 +92,7 @@ public:
 
 	s32 __sp(void)const { return sp_; }
 	s32 __sp_max(void)const { return sp_max_; }
+	s32 __life(void)const { return life_; }
 
 private:
 	enum ANIMATION_TYPE

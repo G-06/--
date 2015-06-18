@@ -48,7 +48,7 @@ bool ObjectObstacle::Initialize(void)
 	object_obstacle_->__division_width(DIVISION_WIDTH);
 	object_obstacle_->__division_height(DIVISION_HEIGHT);
 	object_obstacle_->__size(SIZE);
-	object_obstacle_->__texture_id(Texture::TEXTURE_ID_GAME_START_POINT);
+	object_obstacle_->__texture_id(Texture::TEXTURE_ID_DEATH_GROUND);
 	object_obstacle_->SetParameter();
 
 	return true;

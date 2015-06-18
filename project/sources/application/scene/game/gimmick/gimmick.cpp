@@ -24,6 +24,7 @@ Gimmick::Gimmick(TYPE type)
 	:type_(type)
 	,position_(0.0f,0.0f)
 	,offset_position_(0.0f,0.0f)
+	,size_(0.0f,0.0f)
 {
 }
 

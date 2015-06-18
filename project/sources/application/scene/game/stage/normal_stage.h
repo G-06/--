@@ -54,6 +54,9 @@ public:
 	// create factory
 	virtual StageFactory* CreateFactory(void)const = 0;
 
+	// collision gimmick
+	void CollisionGimmick(void);
+
 	// load from file
 	bool LoadFromFile(const s8* filename);
 

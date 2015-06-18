@@ -26,6 +26,7 @@ GimmickObstacle::GimmickObstacle(void)
 	,speed_(0.0f)
 	,rate_(0.0f)
 {
+	size_ = D3DXVECTOR2(128.0f,128.0f);
 }
 
 //=============================================================================

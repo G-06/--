@@ -23,6 +23,7 @@ GimmickCheckPoint::GimmickCheckPoint(void)
 	:Gimmick(TYPE_CHECK_POINT)
 	,priority_(0)
 {
+	size_ = D3DXVECTOR2(128.0f,128.0f);
 }
 
 //=============================================================================
