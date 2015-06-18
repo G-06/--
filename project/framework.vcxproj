@@ -118,6 +118,7 @@
     <ClCompile Include="sources\system\window\main_window.cpp" />
     <ClCompile Include="sources\system\window\window.cpp" />
     <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp" />
+    <ClCompile Include="sources\system\xaudio2\se\se.cpp" />
     <ClCompile Include="sources\system\xaudio2\xaudio2.cpp" />
     <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp" />
   </ItemGroup>
@@ -231,6 +232,7 @@
     <ClInclude Include="sources\system\window\main_window.h" />
     <ClInclude Include="sources\system\window\window.h" />
     <ClInclude Include="sources\system\xaudio2\bgm\bgm.h" />
+    <ClInclude Include="sources\system\xaudio2\se\se.h" />
     <ClInclude Include="sources\system\xaudio2\xaudio2.h" />
     <ClInclude Include="sources\system\xaudio2\xaudio2_sound.h" />
   </ItemGroup>

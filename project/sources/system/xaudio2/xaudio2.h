@@ -19,6 +19,7 @@
 #include "basic/basic.h"
 #include "xaudio2_sound.h"
 #include "bgm/bgm.h"
+#include "se/se.h"
 
 //*****************************************************************************
 // class definition
@@ -47,13 +48,13 @@ public:
 	// accessor
 	const f32& __volume(void) { return volume_; }
 	BGM* __bgm(void)const { return bgm_; }
-
+	SE* __se(void)const { return se_; }
 private:
 	IXAudio2* ixaudio2_;
 	IXAudio2MasteringVoice* ixaudio2_mastering_voice_;
 	f32 volume_;
 	BGM* bgm_;
-
+	SE* se_;
 };
 
 #endif // _XAUDIO2_H_

@@ -116,6 +116,9 @@
     <Filter Include="sources\application\scene\game\assert_effect">
       <UniqueIdentifier>{0dd7e936-c8a1-42b8-abf6-9c3c6e5fd855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\system\xaudio2\se">
+      <UniqueIdentifier>{a3c67896-a632-45fc-b720-be0715b12d36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -451,6 +454,9 @@
     <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect.h">
       <Filter>sources\application\scene\game\assert_effect</Filter>
     </ClInclude>
+    <ClInclude Include="sources\system\xaudio2\se\se.h">
+      <Filter>sources\system\xaudio2\se</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -755,6 +761,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect.cpp">
       <Filter>sources\application\scene\game\assert_effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\xaudio2\se\se.cpp">
+      <Filter>sources\system\xaudio2\se</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -93,7 +93,6 @@ bool XAudio2Sound::LoadFromFile(const s8* filename)
 //=============================================================================
 bool XAudio2Sound::Play(const u32& loop_count)
 {
-	XAUDIO2_VOICE_STATE xa2state;
 	XAUDIO2_BUFFER buffer;
 
 	ixaudio2_source_voice_->SetVolume(volume_);
@@ -174,6 +173,33 @@ void XAudio2Sound::SetVolume(const f32& volume)
 }
 
 //=============================================================================
+// create clone ixaudio2 source voice
+//=============================================================================
+IXAudio2SourceVoice* XAudio2Sound::CreateCloneIXAudio2SourceVoice(void)
+{
+	IXAudio2SourceVoice* ixaudio2_source_voice = nullptr;
+
+	if(FAILED(ixaudio2_->CreateSourceVoice(&ixaudio2_source_voice,&waveformatex_)))
+	{
+		return nullptr;
+	}
+
+	return ixaudio2_source_voice;
+}
+
+//=============================================================================
+// clone xaudio2 buffer
+//=============================================================================
+void XAudio2Sound::CloneXAudio2Buffer(XAUDIO2_BUFFER* xaudio2_buffer)
+{
+	memset(xaudio2_buffer,0,sizeof(XAUDIO2_BUFFER));
+	xaudio2_buffer->AudioBytes = xaudio2_buffer_.AudioBytes;
+	xaudio2_buffer->pAudioData = xaudio2_buffer_.pAudioData;
+	xaudio2_buffer->Flags = XAUDIO2_END_OF_STREAM;
+	xaudio2_buffer->LoopCount = 1;
+}
+
+//=============================================================================
 // load from resource
 //=============================================================================
 bool XAudio2Sound::LoadFromResource(const s8* resource)
@@ -215,7 +241,6 @@ bool XAudio2Sound::ReadWaveData(const s8* data)
 		s32 size;
 	};
 
-	WAVEFORMATEXTENSIBLE waveformatextensible;
 	XAUDIO2_BUFFER xaudio2_buffer;
 	RiffHeader riff_header;
 	FormatChunk format_chank;
@@ -261,16 +286,16 @@ bool XAudio2Sound::ReadWaveData(const s8* data)
 	xaudio2_buffer_.AudioBytes = data_chunk.size;
 	xaudio2_buffer_.pAudioData = buffer;
 
-	waveformatextensible.Format.wFormatTag = format_chank.format;
-	waveformatextensible.Format.nChannels = format_chank.channels;
-	waveformatextensible.Format.nSamplesPerSec = format_chank.samplerate;
-	waveformatextensible.Format.nAvgBytesPerSec = format_chank.bytepersec;
-	waveformatextensible.Format.nBlockAlign = format_chank.blockalign;
-	waveformatextensible.Format.wBitsPerSample = format_chank.bitswidth;
-	waveformatextensible.Format.cbSize = sizeof(FormatChunk) - format_chank.size - 8;
+	waveformatex_.wFormatTag = format_chank.format;
+	waveformatex_.nChannels = format_chank.channels;
+	waveformatex_.nSamplesPerSec = format_chank.samplerate;
+	waveformatex_.nAvgBytesPerSec = format_chank.bytepersec;
+	waveformatex_.nBlockAlign = format_chank.blockalign;
+	waveformatex_.wBitsPerSample = format_chank.bitswidth;
+	waveformatex_.cbSize = sizeof(FormatChunk) - format_chank.size - 8;
 
 	// ソースボイスの生成
-	if(FAILED(ixaudio2_->CreateSourceVoice(&ixaudio2_source_voice_,&waveformatextensible.Format)))
+	if(FAILED(ixaudio2_->CreateSourceVoice(&ixaudio2_source_voice_,&waveformatex_)))
 	{
 		return false;
 	}
