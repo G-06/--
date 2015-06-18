@@ -37,6 +37,9 @@ const f32 PUSH_START_ALPHA_MIN = 0.0f;
 const f32 LUMINESCENCE_ALPHA_MAX = 1.1f;
 const f32 LUMINESCENCE_ALPHA_MIN = 0.2f;
 
+// circle‚Ì‰ñ“]
+const f32 CIRCLE_ROTATION = 0.01f;
+
 // select position
 const f32 SELECT_OFFSET_Y = 100.0f;
 const D3DXVECTOR2 SELECT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 450.0f);
@@ -176,8 +179,6 @@ void SceneTitle::Update(void)
 		// ”wŒi”­Œõ
 		_UpdateLuminescence();
 
-		circle_->AddRotation(0.01f);
-
 		// ŽžŠÔŒo‰ß‚ÅƒƒS‚É–ß‚é
 		if(mode_ == MODE_PUSH || mode_ == MODE_SELECT)
 		{
@@ -220,6 +221,8 @@ void SceneTitle::Update(void)
 //		option_->Update();
 	}
 
+	// ƒT[ƒNƒ‹‚Ì‰ñ“]
+	circle_->AddRotation(CIRCLE_ROTATION);
 }
 
 //=============================================================================
