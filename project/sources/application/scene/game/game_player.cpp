@@ -32,6 +32,8 @@ GamePlayer::GamePlayer(void)
 	:player_(nullptr)
 	,check_point_priority_(0)
 	,acceleration_(0.0f,0.0f)
+	,is_preview_light_(false)
+	,is_force_light_(false)
 {
 }
 
@@ -80,6 +82,8 @@ void GamePlayer::Uninitialize(void)
 //=============================================================================
 void GamePlayer::Update(void)
 {
+	is_preview_light_ = is_force_light_;
+
 	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 	{
 		Move(1.0);
@@ -118,11 +122,11 @@ void GamePlayer::Update(void)
 		ChangeLightMode(vector);
 	}
 
-	if(GET_DIRECT_INPUT->CheckRelease(INPUT_EVENT_VIRTUAL_6))
+	if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_6))
 	{
 		StopLightMode();
 	}
-
+	
 	if(is_light_ == false)
 	{
 		if(is_fly_ == false)
@@ -164,11 +168,12 @@ void GamePlayer::Update(void)
 		if(sp_ <= 0 || sp_ > sp_max_)
 		{
 			sp_ = 0;
-			is_light_ = false;
+			StopLightMode();
 		}
 	}
 
 	is_fly_ = true;
+	is_force_light_ = false;
 	old_position_ = position_;
 	position_ += move_ + acceleration_;
 	acceleration_ = D3DXVECTOR2(0.0f,0.0f);
@@ -285,7 +290,10 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 //=============================================================================
 void GamePlayer::StopLightMode(void)
 {
-	is_light_ = false;
+	if(!is_force_light_)
+	{
+		is_light_ = false;
+	}
 }
 
 //=============================================================================

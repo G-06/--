@@ -98,7 +98,10 @@ public:
 	s32 __life(void)const { return life_; }
 	u32 __check_point_priority(void) { return check_point_priority_; }
 	void __check_point_priority(u32 check_point_priority) { check_point_priority_ = check_point_priority; }
-
+	bool __is_light(void) { return is_light_; }
+	bool __is_preview_light(void) { return is_preview_light_; }
+	bool __is_force_light(void) { return is_force_light_; }
+	void __is_force_light(bool is_force_light) { is_force_light_ = is_force_light; }
 private:
 	enum ANIMATION_TYPE
 	{
@@ -144,7 +147,8 @@ private:
 	u32 check_point_priority_;
 	D3DXVECTOR2 acceleration_;
 	ObjectPlayer*		player_;				// プレイヤースプライト
-
+	bool is_preview_light_;
+	bool is_force_light_;
 };
 
 #endif	// _PLAYER_H_

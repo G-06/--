@@ -244,13 +244,72 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
-				if(collision_map.__vector().y > 0)
+				if(game_player_->__is_preview_light())
 				{
-					game_player_->HitStage(collision_map.__position(),true);
+					game_player_->Dead();
 				}
 				else
 				{
-					game_player_->HitStage(collision_map.__position());
+					if(collision_map.__vector().y > 0)
+					{
+						game_player_->HitStage(collision_map.__position(),true);
+					}
+					else
+					{
+						game_player_->HitStage(collision_map.__position());
+					}
+				}
+			}
+			break;
+		}
+		case 2:
+		{
+			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			{
+				if(game_player_->__is_light())
+				{
+					if(collision_map.__vector().x != 0.0f)
+					{
+						game_player_->ChangeDirection(D3DXVECTOR2(-game_player_->__move().x,game_player_->__move().y));
+					}
+					else
+					{
+						game_player_->ChangeDirection(D3DXVECTOR2(game_player_->__move().x,-game_player_->__move().y));
+					}
+				}
+				else
+				{
+					if(collision_map.__vector().y > 0)
+					{
+						game_player_->HitStage(collision_map.__position(),true);
+					}
+					else
+					{
+						game_player_->HitStage(collision_map.__position());
+					}
+				}
+			}
+			break;
+		}
+		case 3:
+		{
+			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			{
+				if(game_player_->__is_light())
+				{
+					game_player_->__is_force_light(true);
+				}
+				else
+				{
+					if(collision_map.__vector().y > 0)
+					{
+						game_player_->HitStage(collision_map.__position(),true);
+					}
+					else
+					{
+						game_player_->HitStage(collision_map.__position());
+					}
+				
 				}
 			}
 			break;
