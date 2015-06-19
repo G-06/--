@@ -23,7 +23,14 @@
 #include "../gimmick/gimmick_disappear_ground.h"
 #include "../gimmick/gimmick_move_ground.h"
 #include "object/object_light_gauge.h"
+#include "object/object_player_icon.h"
 #include "collision/collision_map.h"
+
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(100.0f,100.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(100.0f,100.0f);
 
 //=============================================================================
 // constructor
@@ -59,7 +66,11 @@ bool NormalStage::Initialize(void)
 
 	object_light_gauge_ = new ObjectLightGauge();
 	object_light_gauge_->Initialize();
-	object_light_gauge_->__position(D3DXVECTOR2(100.0f,100.0f));
+	object_light_gauge_->__position(DEFAULT_LIGHT_GAUGE_POSITION);
+
+	object_player_icon_ = new ObjectPlayerIcon();
+	object_player_icon_->Initialize();
+	object_player_icon_->__position(DEFAULT_PLAYER_ICON_POSITION);
 
 	if(!SafeInitialize(stage_offset_))
 	{
@@ -83,6 +94,8 @@ void NormalStage::Uninitialize(void)
 	SafeRelease(stage_offset_);
 
 	SafeRelease(object_light_gauge_);
+
+	SafeRelease(object_player_icon_);
 
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 	{
@@ -122,6 +135,8 @@ void NormalStage::Update(void)
 			time_count_++;
 
 			game_player_->Update();
+
+			object_player_icon_->Update();
 
 			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 			{
@@ -183,6 +198,7 @@ void NormalStage::Draw(void)
 
 	game_player_->Draw();
 	object_light_gauge_->Draw();
+	object_player_icon_->Draw();
 }
 
 //=============================================================================

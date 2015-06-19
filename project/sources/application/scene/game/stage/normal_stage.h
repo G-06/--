@@ -26,6 +26,7 @@ class Map;
 class StageOffset;
 class Gimmick;
 class ObjectLightGauge;
+class ObjectPlayerIcon;
 
 //*****************************************************************************
 // class definition
@@ -76,11 +77,16 @@ protected:
 	Map* map_;
 	StageOffset* stage_offset_;
 	ObjectLightGauge* object_light_gauge_;
+	ObjectPlayerIcon* object_player_icon_;
 	std::list<Gimmick*> gimmick_container_;
 	u32 time_count_;
 	D3DXVECTOR2 position_;
 	bool is_pause_;
 	bool is_clear_;
+
+private:
+	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;
+	static const D3DXVECTOR2 DEFAULT_PLAYER_ICON_POSITION;
 };
 
 #endif	// _NORMAL_STAGE_H_

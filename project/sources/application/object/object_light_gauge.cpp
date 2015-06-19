@@ -55,6 +55,7 @@ bool ObjectLightGauge::Initialize(void)
 	gauge_frame_->__point(Sprite::POINT_LEFT_MIDDLE);
 	gauge_frame_->__texture_id(Texture::TEXTURE_ID_GAME_LIGHT_GAUGE_FRAME);
 	gauge_frame_->SetParameter();
+
 	return true;
 }
 
