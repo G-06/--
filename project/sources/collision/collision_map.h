@@ -39,13 +39,14 @@ public:
 	// accessor
 	const D3DXVECTOR2&  __position(void)const { return pushposition_; }
 	void __position(const D3DXVECTOR2& position) { position_ = position; }
-
+	const D3DXVECTOR2& __vector(void) { return vector_; }
 private:
 	D3DXVECTOR2 position_;
 	f32 pushlengthx_;
 	f32 pushlengthy_;
 	D3DXVECTOR2 pushposition_;
 	D3DXMATRIX matrix_;
+	D3DXVECTOR2 vector_;
 
 };
 

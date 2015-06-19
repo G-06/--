@@ -20,8 +20,10 @@
     <ClCompile Include="sources\application\object\message_sprite_smooth.cpp" />
     <ClCompile Include="sources\application\object\message_window.cpp" />
     <ClCompile Include="sources\application\object\object_check_point.cpp" />
+    <ClCompile Include="sources\application\object\object_disappear_ground.cpp" />
     <ClCompile Include="sources\application\object\object_goal_point.cpp" />
     <ClCompile Include="sources\application\object\object_light_gauge.cpp" />
+    <ClCompile Include="sources\application\object\object_move_ground.cpp" />
     <ClCompile Include="sources\application\object\object_obstacle.cpp" />
     <ClCompile Include="sources\application\object\object_player.cpp" />
     <ClCompile Include="sources\application\object\object_start_point.cpp" />
@@ -50,10 +52,14 @@
     <ClCompile Include="sources\application\object\stage_select\select_record_back.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_stage_image.cpp" />
     <ClCompile Include="sources\application\object\stage_select\select_stage_name.cpp" />
+    <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect.cpp" />
+    <ClCompile Include="sources\application\scene\game\effect\effect.cpp" />
     <ClCompile Include="sources\application\scene\game\game_player.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_check_point.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_goal_point.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_move_ground.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_obstacle.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_start_point.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
@@ -112,6 +118,7 @@
     <ClCompile Include="sources\system\window\main_window.cpp" />
     <ClCompile Include="sources\system\window\window.cpp" />
     <ClCompile Include="sources\system\xaudio2\bgm\bgm.cpp" />
+    <ClCompile Include="sources\system\xaudio2\se\se.cpp" />
     <ClCompile Include="sources\system\xaudio2\xaudio2.cpp" />
     <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp" />
   </ItemGroup>
@@ -122,8 +129,10 @@
     <ClInclude Include="sources\application\object\message_sprite_smooth.h" />
     <ClInclude Include="sources\application\object\message_window.h" />
     <ClInclude Include="sources\application\object\object_check_point.h" />
+    <ClInclude Include="sources\application\object\object_disappear_ground.h" />
     <ClInclude Include="sources\application\object\object_goal_point.h" />
     <ClInclude Include="sources\application\object\object_light_gauge.h" />
+    <ClInclude Include="sources\application\object\object_move_ground.h" />
     <ClInclude Include="sources\application\object\object_obstacle.h" />
     <ClInclude Include="sources\application\object\object_player.h" />
     <ClInclude Include="sources\application\object\object_start_point.h" />
@@ -154,10 +163,14 @@
     <ClInclude Include="sources\application\object\stage_select\select_stage_image.h" />
     <ClInclude Include="sources\application\object\stage_select\select_stage_name.h" />
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
+    <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect.h" />
+    <ClInclude Include="sources\application\scene\game\effect\effect.h" />
     <ClInclude Include="sources\application\scene\game\game_player.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_check_point.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_goal_point.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_move_ground.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_obstacle.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
@@ -219,6 +232,7 @@
     <ClInclude Include="sources\system\window\main_window.h" />
     <ClInclude Include="sources\system\window\window.h" />
     <ClInclude Include="sources\system\xaudio2\bgm\bgm.h" />
+    <ClInclude Include="sources\system\xaudio2\se\se.h" />
     <ClInclude Include="sources\system\xaudio2\xaudio2.h" />
     <ClInclude Include="sources\system\xaudio2\xaudio2_sound.h" />
   </ItemGroup>

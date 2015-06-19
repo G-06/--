@@ -31,54 +31,11 @@
 const D3DXVECTOR2 Option::DEFAULT_MENU_SIZE = D3DXVECTOR2(300.f, 100.f);
 const D3DXVECTOR2 Option::EXPAND_MENU_SIZE = D3DXVECTOR2(450.f, 150.f);
 
-KEY_CONFIG Option::key_config_data_[5];
-s32 Option::volume_size_bgm_;
-s32 Option::volume_size_se_;
 //=============================================================================
 // constructor
 //=============================================================================
 Option::Option(void)
 {	
-	FILE* fp = fopen("option_data.bin", "rb");
-
-	if(fp == NULL)
-	{
-		key_config_data_[0].key_code_ = KEY_CODE_OK;
-		key_config_data_[0].virtual_num_ = INPUT_EVENT_VIRTUAL_6;
-		key_config_data_[0].key_num_ = INPUT_EVENT_PAD_6;
-		key_config_data_[0].is_competition_ = false;
-
-		key_config_data_[1].key_code_ = KEY_CODE_NO;
-		key_config_data_[1].virtual_num_ = INPUT_EVENT_VIRTUAL_CANCEL;
-		key_config_data_[1].key_num_ = INPUT_EVENT_PAD_5;
-		key_config_data_[1].is_competition_ = false;
-				
-		key_config_data_[2].key_code_ = KEY_CODE_LIGHT;
-		key_config_data_[2].virtual_num_ = INPUT_EVENT_VIRTUAL_7;
-		key_config_data_[2].key_num_ = INPUT_EVENT_PAD_6;
-		key_config_data_[2].is_competition_ = true;
-				
-		key_config_data_[3].key_code_ = KEY_CODE_JUMP;
-		key_config_data_[3].virtual_num_ = INPUT_EVENT_VIRTUAL_9;
-		key_config_data_[3].key_num_ = INPUT_EVENT_PAD_5;
-		key_config_data_[3].is_competition_ = true;
-				
-		key_config_data_[4].key_code_ = KEY_CODE_PAUSE;
-		key_config_data_[4].virtual_num_ = INPUT_EVENT_VIRTUAL_8;
-		key_config_data_[4].key_num_ = INPUT_EVENT_PAD_13;
-		key_config_data_[4].is_competition_ = true;
-
-		volume_size_bgm_ = 5;
-		volume_size_se_ = 5;
-	}
-	else
-	{
-		fread(&volume_size_bgm_, sizeof(u32), 1, fp);
-		fread(&volume_size_se_, sizeof(u32), 1, fp);
-		fread(&key_config_data_[0], sizeof(KEY_CONFIG), 5, fp);
-		fclose(fp);
-	}
-
 }
 
 //=============================================================================
@@ -131,75 +88,8 @@ bool Option::Initialize(void)
 	is_indication_ = true;
 	is_exchange_ = KEY_CODE_MAX;
 
-	key_config_temp_[0] = key_config_data_[0];
-	key_config_temp_[1] = key_config_data_[1];
-	key_config_temp_[2] = key_config_data_[2];
-	key_config_temp_[3] = key_config_data_[3];
-	key_config_temp_[4] = key_config_data_[4];
-
-	bgm_size_temp_ = volume_size_bgm_;
-	se_size_temp_ = volume_size_se_;
-
 	bgm_volume_ ->Adjustvolume(bgm_size_temp_);
 	se_volume_ ->Adjustvolume(se_size_temp_);
-
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_5);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_6);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_7);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_8);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_9);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_10);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_11);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_12);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_13);
-
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_5);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_6);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_7);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_8);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_9);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_10);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_11);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_12);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_13);
-
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_5);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_6);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_7);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_8);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_9);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_10);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_11);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_12);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_13);
-
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_5);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_6);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_7);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_8);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_9);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_10);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_11);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_12);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_13);
-
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_5);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_6);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_7);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_8);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_9);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_10);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_11);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_12);
-	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_13);
-
-	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[0].virtual_num_, key_config_temp_[0].key_num_);
-	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[1].virtual_num_, key_config_temp_[1].key_num_);
-	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[2].virtual_num_, key_config_temp_[2].key_num_);
-	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[3].virtual_num_, key_config_temp_[3].key_num_);
-	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[4].virtual_num_, key_config_temp_[4].key_num_);
-
-	GET_DIRECT_INPUT->SaveInputEventVertual();
 
 	return true;
 }
@@ -223,9 +113,9 @@ void Option::Uninitialize(void)
 
 	FILE* fp = fopen("option_data.bin", "wb+");
 
-	fwrite(&volume_size_bgm_, sizeof(u32), 1, fp);
-	fwrite(&volume_size_se_, sizeof(u32), 1, fp);
-	fwrite(&key_config_data_[0], sizeof(KEY_CONFIG), 5, fp);
+	fwrite(&bgm_size_temp_, sizeof(u32), 1, fp);
+	fwrite(&se_size_temp_, sizeof(u32), 1, fp);
+	fwrite(&key_config_temp_[0], sizeof(KEY_CONFIG), 5, fp);
 
 	fclose(fp);
 }
@@ -307,17 +197,10 @@ void Option::Update(void)
 
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 			{
-				volume_size_bgm_ = bgm_size_temp_;
-				volume_size_se_ = se_size_temp_;
-				for(s32 i = 0; i < 5; i++)
-				{
-					key_config_data_[i] = key_config_temp_[i];
-				}
-
 				FILE* fp = fopen("option_data.bin", "wb+");
-				fwrite(&volume_size_bgm_, sizeof(u32), 1, fp);
-				fwrite(&volume_size_se_, sizeof(u32), 1, fp);
-				fwrite(&key_config_data_[0], sizeof(KEY_CONFIG), 5, fp);
+				fwrite(&bgm_size_temp_, sizeof(u32), 1, fp);
+				fwrite(&se_size_temp_, sizeof(u32), 1, fp);
+				fwrite(&key_config_temp_[0], sizeof(KEY_CONFIG), 5, fp);
 				fclose(fp);
 
 				__is_indication(false);
@@ -437,6 +320,12 @@ void Option::Update(void)
 			default:
 				break;
 		}
+		key_config_ok_->__set_button_number_texture(key_config_temp_[0].key_num_);
+		key_config_cancel_->__set_button_number_texture(key_config_temp_[1].key_num_);
+		key_config_special_->__set_button_number_texture(key_config_temp_[2].key_num_);
+		key_config_jump_->__set_button_number_texture(key_config_temp_[3].key_num_);
+		key_config_pause_->__set_button_number_texture(key_config_temp_[4].key_num_);
+
 	}
 }
 
@@ -520,4 +409,106 @@ void Option::Exchange(KEY_CODE code, INPUT_EVENT key_num)
 	}
 	GET_DIRECT_INPUT->SaveInputEventVertual();
 
+}
+
+void Option::Load(void)
+{
+	FILE* fp = fopen("option_data.bin", "rb");
+
+	if(fp == NULL)
+	{
+		key_config_temp_[0].key_code_ = KEY_CODE_OK;
+		key_config_temp_[0].virtual_num_ = INPUT_EVENT_VIRTUAL_6;
+		key_config_temp_[0].key_num_ = INPUT_EVENT_PAD_6;
+		key_config_temp_[0].is_competition_ = false;
+
+		key_config_temp_[1].key_code_ = KEY_CODE_NO;
+		key_config_temp_[1].virtual_num_ = INPUT_EVENT_VIRTUAL_CANCEL;
+		key_config_temp_[1].key_num_ = INPUT_EVENT_PAD_5;
+		key_config_temp_[1].is_competition_ = false;
+				
+		key_config_temp_[2].key_code_ = KEY_CODE_LIGHT;
+		key_config_temp_[2].virtual_num_ = INPUT_EVENT_VIRTUAL_7;
+		key_config_temp_[2].key_num_ = INPUT_EVENT_PAD_6;
+		key_config_temp_[2].is_competition_ = true;
+				
+		key_config_temp_[3].key_code_ = KEY_CODE_JUMP;
+		key_config_temp_[3].virtual_num_ = INPUT_EVENT_VIRTUAL_9;
+		key_config_temp_[3].key_num_ = INPUT_EVENT_PAD_5;
+		key_config_temp_[3].is_competition_ = true;
+				
+		key_config_temp_[4].key_code_ = KEY_CODE_PAUSE;
+		key_config_temp_[4].virtual_num_ = INPUT_EVENT_VIRTUAL_8;
+		key_config_temp_[4].key_num_ = INPUT_EVENT_PAD_13;
+		key_config_temp_[4].is_competition_ = true;
+
+		bgm_size_temp_ = 5;
+		se_size_temp_ = 5;
+	}
+	else
+	{
+		fread(&bgm_size_temp_, sizeof(u32), 1, fp);
+		fread(&se_size_temp_, sizeof(u32), 1, fp);
+		fread(&key_config_temp_[0], sizeof(KEY_CONFIG), 5, fp);
+		fclose(fp);
+	}
+
+	
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[0].virtual_num_, key_config_temp_[0].key_num_);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[1].virtual_num_, key_config_temp_[1].key_num_);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[2].virtual_num_, key_config_temp_[2].key_num_);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[3].virtual_num_, key_config_temp_[3].key_num_);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[4].virtual_num_, key_config_temp_[4].key_num_);
+
+	GET_DIRECT_INPUT->SaveInputEventVertual();
 }

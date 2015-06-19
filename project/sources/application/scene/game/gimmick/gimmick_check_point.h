@@ -29,6 +29,11 @@ class ObjectCheckPoint;
 class GimmickCheckPoint : public Gimmick
 {
 public:
+	struct DATA
+	{
+		u32 _priority;
+	};
+
 	// constructor
 	GimmickCheckPoint(void);
 
@@ -47,14 +52,14 @@ public:
 	// draw
 	void Draw(void);
 
+	void* GetPointer(void);
 	// accessor
-	u32 __priority(void)const { return priority_; }
-	void __priority(u32 priority) { priority_ = priority; }
+	u32 __priority(void)const { return data_._priority; }
+	void __priority(u32 priority) { data_._priority = priority; }
 
 private:
 	ObjectCheckPoint* object_check_point_;
-	u32 priority_;
-
+	DATA data_;
 };
 
 #endif	// _GIMMICK_CHECK_POINT_H_

@@ -21,8 +21,8 @@
 //=============================================================================
 GimmickCheckPoint::GimmickCheckPoint(void)
 	:Gimmick(TYPE_CHECK_POINT)
-	,priority_(0)
 {
+	data_._priority = 0;
 	size_ = D3DXVECTOR2(128.0f,128.0f);
 }
 
@@ -67,6 +67,14 @@ void GimmickCheckPoint::Draw(void)
 {
 	object_check_point_->__position(position_ - offset_position_);
 	object_check_point_->Draw();
+}
+
+//=============================================================================
+// get pointer
+//=============================================================================
+void* GimmickCheckPoint::GetPointer(void)
+{
+	return &data_;
 }
 
 //---------------------------------- EOF --------------------------------------

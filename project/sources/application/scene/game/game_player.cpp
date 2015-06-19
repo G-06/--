@@ -30,6 +30,10 @@ const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 //=============================================================================
 GamePlayer::GamePlayer(void)
 	:player_(nullptr)
+	,check_point_priority_(0)
+	,acceleration_(0.0f,0.0f)
+	,is_preview_light_(false)
+	,is_force_light_(false)
 {
 }
 
@@ -78,6 +82,8 @@ void GamePlayer::Uninitialize(void)
 //=============================================================================
 void GamePlayer::Update(void)
 {
+	is_preview_light_ = is_force_light_;
+
 	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 	{
 		Move(1.0);
@@ -87,12 +93,12 @@ void GamePlayer::Update(void)
 		Move(-1.0);
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_9))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 	{
 		Jump();
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_7))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6))
 	{
 		D3DXVECTOR2 vector = D3DXVECTOR2(0.0f,0.0f);
 
@@ -116,11 +122,11 @@ void GamePlayer::Update(void)
 		ChangeLightMode(vector);
 	}
 
-	if(GET_DIRECT_INPUT->CheckRelease(INPUT_EVENT_VIRTUAL_7))
+	if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_6))
 	{
 		StopLightMode();
 	}
-
+	
 	if(is_light_ == false)
 	{
 		if(is_fly_ == false)
@@ -162,13 +168,15 @@ void GamePlayer::Update(void)
 		if(sp_ <= 0 || sp_ > sp_max_)
 		{
 			sp_ = 0;
-			is_light_ = false;
+			StopLightMode();
 		}
 	}
 
 	is_fly_ = true;
+	is_force_light_ = false;
 	old_position_ = position_;
-	position_ += move_;
+	position_ += move_ + acceleration_;
+	acceleration_ = D3DXVECTOR2(0.0f,0.0f);
 
 	player_->__is_flip(is_left_);
 	player_->Update();
@@ -201,6 +209,14 @@ void GamePlayer::Move(f32 vector)
 			move_.x -= SPEED;
 		}
 	}
+}
+
+//=============================================================================
+// accelerate
+//=============================================================================
+void GamePlayer::Accelerate(const D3DXVECTOR2& acceleration)
+{
+	acceleration_ += acceleration;
 }
 
 //=============================================================================
@@ -274,7 +290,10 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 //=============================================================================
 void GamePlayer::StopLightMode(void)
 {
-	is_light_ = false;
+	if(!is_force_light_)
+	{
+		is_light_ = false;
+	}
 }
 
 //=============================================================================
@@ -300,6 +319,10 @@ void GamePlayer::Dead(void)
 		life_--;
 
 		position_ = return_position_;
+		old_position_ = position_;
+		is_enable_light_ = true;
+		is_light_ = false;
+		move_ = D3DXVECTOR2(0.0f,0.0f);
 	}
 	else
 	{

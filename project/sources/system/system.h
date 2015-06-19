@@ -31,6 +31,7 @@
 #define GET_DIRECT_INPUT System::GetInstance().__direct_input()
 #define GET_XAUDIO2 System::GetInstance().__xaudio2()
 #define GET_BGM System::GetInstance().__xaudio2()->__bgm()
+#define GET_SE System::GetInstance().__xaudio2()->__se()
 
 //*****************************************************************************
 // class definition

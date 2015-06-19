@@ -76,7 +76,7 @@
 #define TEXTURE_CHECK_POINT					158
 #define TEXTURE_MOVE_GROUND					159
 #define TEXTURE_DEATH_GROUND				160
-#define TEXTURE_DUSAPPEAR_GROUND			161
+#define TEXTURE_DISAPPEAR_GROUND			161
 
 #define TEXTURE_LIGHT_GAUGE_FRAME			162
 #define TEXTURE_LIGHT_GAUGE					163
@@ -104,11 +104,32 @@
 #define TEXTURE_MAP_000						182
 #define TEXTURE_MAP_001						183
 #define TEXTURE_MAP_002						184
+// option
+#define TEXTURE_OPTION_KEY_01				185
+#define TEXTURE_OPTION_KEY_02				186
+#define TEXTURE_OPTION_KEY_03				187
+#define TEXTURE_OPTION_KEY_04				188
+#define TEXTURE_OPTION_KEY_05				189
+#define TEXTURE_OPTION_KEY_06				190
+#define TEXTURE_OPTION_KEY_07				191
+#define TEXTURE_OPTION_KEY_08				192
+#define TEXTURE_OPTION_KEY_09				193
+#define TEXTURE_OPTION_KEY_10				194
+#define TEXTURE_OPTION_KEY_11				195
+#define TEXTURE_OPTION_KEY_12				196
+#define TEXTURE_OPTION_KEY_13				197
+#define TEXTURE_OPTION_KEY_14				198
 
 //*****************************************************************************
 // bgm
 //*****************************************************************************
 #define BGM_TEST				300
 #define BGM_TEST2				301
+
+//*****************************************************************************
+// se
+//*****************************************************************************
+#define SE_TEST					400
+#define SE_TEST2				401
 
 //---------------------------------- EOF --------------------------------------

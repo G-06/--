@@ -110,6 +110,15 @@
     <Filter Include="sources\application\scene\game\gimmick">
       <UniqueIdentifier>{60549378-f39b-424c-a7fc-db4b06126ec2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\application\scene\game\effect">
+      <UniqueIdentifier>{1ae7364d-a30b-42ff-a2cb-99e0551d1b60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\application\scene\game\assert_effect">
+      <UniqueIdentifier>{0dd7e936-c8a1-42b8-abf6-9c3c6e5fd855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\system\xaudio2\se">
+      <UniqueIdentifier>{a3c67896-a632-45fc-b720-be0715b12d36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -427,8 +436,26 @@
     <ClInclude Include="sources\application\object\object_obstacle.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\option_data.h">
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_disappear_ground.h">
       <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_move_ground.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_move_ground.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect.h">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\system\xaudio2\se\se.h">
+      <Filter>sources\system\xaudio2\se</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -716,6 +743,27 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\object_obstacle.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_disappear_ground.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_move_ground.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_move_ground.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect.cpp">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\system\xaudio2\se\se.cpp">
+      <Filter>sources\system\xaudio2\se</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

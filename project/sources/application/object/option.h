@@ -75,12 +75,12 @@ public:
 
 	void Exchange(KEY_CODE code, INPUT_EVENT key_num);
 
+	void Load(void);
+
 	void __is_indication(const bool indication){ is_indication_ = indication;}
 	const bool __is_indication(void)const{ return is_indication_;}
 
-	const KEY_CONFIG* __key_config_data(void)const{return &key_config_data_[0];}
-	const s32 __volume_bgm_size(void)const{return volume_size_bgm_;}
-	const s32 __volume_se_size(void)const{return volume_size_bgm_;}
+	const KEY_CONFIG* __key_config_data(void)const{return &key_config_temp_[0];}
 
 	private:
 	OptionBg* option_bg_;
@@ -99,10 +99,6 @@ public:
 	s32 cursor_y_;
 	bool is_indication_;
 	KEY_CODE is_exchange_;
-
-	static KEY_CONFIG key_config_data_[5];
-	static s32 volume_size_bgm_;
-	static s32 volume_size_se_;
 
 	KEY_CONFIG key_config_temp_[5];
 	s32 bgm_size_temp_;

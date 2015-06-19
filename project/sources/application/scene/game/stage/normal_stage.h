@@ -54,6 +54,10 @@ public:
 	// create factory
 	virtual StageFactory* CreateFactory(void)const = 0;
 
+	// collision chip
+	void CollisionChip(void);
+	void CollisionChip(u32 index,const D3DXVECTOR2& position);
+
 	// collision gimmick
 	void CollisionGimmick(void);
 
@@ -76,7 +80,7 @@ protected:
 	u32 time_count_;
 	D3DXVECTOR2 position_;
 	bool is_pause_;
-
+	bool is_clear_;
 };
 
 #endif	// _NORMAL_STAGE_H_

@@ -17,8 +17,8 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 Map::SIZE		= D3DXVECTOR2(128.0f,128.0f);
-const u32 Map::DIVISION_WIDTH	= 2;
-const u32 Map::DIVISION_HEIGHT	= 2;
+const u32 Map::DIVISION_WIDTH	= 4;
+const u32 Map::DIVISION_HEIGHT	= 4;
 
 //=============================================================================
 // constructor
