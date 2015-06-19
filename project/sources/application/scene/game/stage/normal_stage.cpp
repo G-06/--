@@ -25,6 +25,7 @@
 #include "object/object_light_gauge.h"
 #include "object/object_player_icon.h"
 #include "collision/collision_map.h"
+#include "object/pause/pause.h"
 
 //*****************************************************************************
 // constant definition
@@ -39,6 +40,8 @@ NormalStage::NormalStage(const TYPE& type)
 	:Stage(type)
 	,is_pause_(false)
 	,is_clear_(false)
+	,is_pause_input_(false)
+	,pause_(nullptr)
 {
 }
 
@@ -79,6 +82,9 @@ bool NormalStage::Initialize(void)
 
 	stage_offset_->__screen_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,(f32)DEFAULT_SCREEN_HEIGHT));
 
+	pause_ = new Pause();
+	pause_->Initialize();
+
 	return true;
 }
 
@@ -104,6 +110,8 @@ void NormalStage::Uninitialize(void)
 	gimmick_container_.clear();
 
 	SafeDelete(next_stage_factory_);
+
+	SafeRelease(pause_);
 }
 
 //=============================================================================
@@ -129,6 +137,61 @@ void NormalStage::Update(void)
 	{
 		if(is_pause_)
 		{
+			if(!is_pause_input_ && !pause_->__is_move())
+			{
+				if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
+				{
+					pause_->SelectDown();
+				}
+				if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
+				{
+					pause_->SelectUp();
+				}
+				if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+				{
+					// select
+					const s32 current_select = pause_->__is_select();
+					switch(current_select)
+					{
+					case Pause::SELECT_TYPE_GAME_BACK:
+						{
+							is_pause_ = false;
+							pause_->Close();
+							break;
+						}
+					case Pause::SELECT_TYPE_TITLE_BACK:
+						{
+							if(next_stage_factory_ == nullptr)
+							{
+								is_pause_input_ = true;
+								next_scene_factory_ = new TitleFactory();
+							}
+							break;
+						}
+					case Pause::SELECT_TYPE_STAGESELECT_BACK:
+						{
+							if(next_stage_factory_ == nullptr)
+							{
+								is_pause_input_ = true;
+								next_stage_factory_ = new SelectFactory();
+							}
+							break;
+						}
+					case Pause::SELECT_TYPE_OPTION:
+						{
+							is_pause_ = false;
+							pause_->Close();
+							break;
+						}
+					} // switch
+				}
+
+				if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_O) && !pause_->__is_move())
+				{
+					is_pause_ = false;
+					pause_->Close();
+				}
+			} // !pause_->__is_move()
 		}
 		else
 		{
@@ -172,7 +235,14 @@ void NormalStage::Update(void)
 			{
 				next_scene_factory_ = new TitleFactory();
 			}
+
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_O) && !pause_->__is_move())
+			{
+				is_pause_ = true;
+				pause_->Show();
+			}
 		}
+		pause_->Update();
 	}
 
 #ifndef _RELEASE
@@ -199,6 +269,8 @@ void NormalStage::Draw(void)
 	game_player_->Draw();
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
+
+	pause_->Draw();
 }
 
 //=============================================================================

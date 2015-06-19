@@ -40,6 +40,8 @@
     <ClCompile Include="sources\application\object\option\option_logo.cpp" />
     <ClCompile Include="sources\application\object\option\se_volume.cpp" />
     <ClCompile Include="sources\application\object\option\volume_logo.cpp" />
+    <ClCompile Include="sources\application\object\pause\pause.cpp" />
+    <ClCompile Include="sources\application\object\pause\sprite_smooth.cpp" />
     <ClCompile Include="sources\application\object\record.cpp" />
     <ClCompile Include="sources\application\object\stage_region.cpp" />
     <ClCompile Include="sources\application\object\stage_offset.cpp" />
@@ -151,6 +153,8 @@
     <ClInclude Include="sources\application\object\option\option_logo.h" />
     <ClInclude Include="sources\application\object\option\se_volume.h" />
     <ClInclude Include="sources\application\object\option\volume_logo.h" />
+    <ClInclude Include="sources\application\object\pause\pause.h" />
+    <ClInclude Include="sources\application\object\pause\sprite_smooth.h" />
     <ClInclude Include="sources\application\object\record.h" />
     <ClInclude Include="sources\application\object\stage_region.h" />
     <ClInclude Include="sources\application\object\stage_offset.h" />
