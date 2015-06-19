@@ -104,6 +104,21 @@
 #define TEXTURE_MAP_000						182
 #define TEXTURE_MAP_001						183
 #define TEXTURE_MAP_002						184
+// option
+#define TEXTURE_OPTION_KEY_01				185
+#define TEXTURE_OPTION_KEY_02				186
+#define TEXTURE_OPTION_KEY_03				187
+#define TEXTURE_OPTION_KEY_04				188
+#define TEXTURE_OPTION_KEY_05				189
+#define TEXTURE_OPTION_KEY_06				190
+#define TEXTURE_OPTION_KEY_07				191
+#define TEXTURE_OPTION_KEY_08				192
+#define TEXTURE_OPTION_KEY_09				193
+#define TEXTURE_OPTION_KEY_10				194
+#define TEXTURE_OPTION_KEY_11				195
+#define TEXTURE_OPTION_KEY_12				196
+#define TEXTURE_OPTION_KEY_13				197
+#define TEXTURE_OPTION_KEY_14				198
 
 //*****************************************************************************
 // bgm
