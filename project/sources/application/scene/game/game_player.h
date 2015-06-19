@@ -95,6 +95,8 @@ public:
 
 	s32 __sp(void)const { return sp_; }
 	s32 __sp_max(void)const { return sp_max_; }
+	s32 __sp_recover_speed(void)const { return sp_recover_speed_; }
+	void __sp_recover_speed(s32 sp_recover_speed) { sp_recover_speed_ = sp_recover_speed; }
 	s32 __life(void)const { return life_; }
 	u32 __check_point_priority(void) { return check_point_priority_; }
 	void __check_point_priority(u32 check_point_priority) { check_point_priority_ = check_point_priority; }
@@ -102,6 +104,7 @@ public:
 	bool __is_preview_light(void) { return is_preview_light_; }
 	bool __is_force_light(void) { return is_force_light_; }
 	void __is_force_light(bool is_force_light) { is_force_light_ = is_force_light; }
+
 private:
 	enum ANIMATION_TYPE
 	{
@@ -130,6 +133,7 @@ private:
 	static const f32 JUMP_SPEED;
 	static const s32 DEFAULT_LIFE_MAX;
 	static const s32 DEFAULT_SP_MAX;
+	static const s32 DEFAULT_SP_RECOVER_SPEED;
 
 	D3DXVECTOR2 position_;				// プレイヤー座標
 	D3DXVECTOR2 old_position_;			// プレイヤーの前回座標
@@ -143,6 +147,7 @@ private:
 	s32 life_;
 	s32 sp_;
 	s32 sp_max_;
+	s32 sp_recover_speed_;
 	D3DXVECTOR2 return_position_;
 	u32 check_point_priority_;
 	D3DXVECTOR2 acceleration_;

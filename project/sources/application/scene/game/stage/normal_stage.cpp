@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// stage
+// normal stage
 //
 // Author		: Kenji Kabutomori
 //
@@ -98,7 +98,14 @@ void NormalStage::Uninitialize(void)
 //=============================================================================
 void NormalStage::Update(void)
 {
-	if(game_player_->__life() < 0)
+	if(is_clear_)
+	{
+		if(next_stage_factory_ == nullptr)
+		{
+			next_stage_factory_ = new SelectFactory();
+		}
+	}
+	else if(game_player_->__life() < 0)
 	{
 		if(next_stage_factory_ == nullptr)
 		{
@@ -326,7 +333,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
-				//game_player_->Dead();
+				game_player_->__sp_recover_speed(game_player_->__sp_recover_speed() * 2);
 			}
 			break;
 		}
@@ -334,7 +341,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
-				//game_player_->Dead();
+				game_player_->__sp_recover_speed(game_player_->__sp_recover_speed() * -1);
 			}
 			break;
 		}

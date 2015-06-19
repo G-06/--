@@ -29,6 +29,12 @@ class MeshSprite;
 class Map : public Basic
 {
 public:
+	enum TYPE
+	{
+		TYPE_000 = 0,
+		TYPE_MAX,
+	};
+
 	// constructor
 	Map(void);
 
@@ -61,6 +67,7 @@ public:
 	const D3DXVECTOR2& __size(void) { return size_; }
 	u32 __width(void) { return width_; }
 	u32 __height(void) { return height_; }
+	void __type(TYPE type) { type_ = type; }
 
 private:
 	static const D3DXVECTOR2 SIZE;
@@ -73,6 +80,7 @@ private:
 	u32* indexs_;
 	D3DXVECTOR2 position_;
 	D3DXVECTOR2 size_;
+	TYPE type_;
 };
 
 #endif	// _MAP_H_

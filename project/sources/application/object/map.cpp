@@ -28,6 +28,7 @@ Map::Map(void)
 	,indexs_(nullptr)
 	,position_(0.0f,0.0f)
 	,size_(0.0f,0.0f)
+	,type_(TYPE_000)
 {
 }
 
@@ -167,7 +168,7 @@ bool Map::LoadFromMemory(const u8* memory)
 	map_->__height(SIZE.y);
 	map_->__division_width(DIVISION_WIDTH);
 	map_->__division_height(DIVISION_HEIGHT);
-	map_->__texture_id(Texture::TEXTURE_ID_MAP_000);
+	map_->__texture_id((Texture::TEXTURE_ID)(Texture::TEXTURE_ID_MAP_000 + type_));
 
 	for(u32 i = 0;i < height_;++i)
 	{

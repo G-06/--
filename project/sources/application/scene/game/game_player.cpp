@@ -24,6 +24,7 @@ const f32 GamePlayer::DECREMENT = (0.9f);
 const f32 GamePlayer::JUMP_SPEED = (-70.0f);
 const s32 GamePlayer::DEFAULT_LIFE_MAX = 3;
 const s32 GamePlayer::DEFAULT_SP_MAX = 60;
+const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
 
 //=============================================================================
 // constructor
@@ -34,6 +35,7 @@ GamePlayer::GamePlayer(void)
 	,acceleration_(0.0f,0.0f)
 	,is_preview_light_(false)
 	,is_force_light_(false)
+	,sp_recover_speed_(2)
 {
 }
 
@@ -155,7 +157,7 @@ void GamePlayer::Update(void)
 		move_.y += DEFAULT_GRAVITY;
 		move_ *= DECREMENT;
 
-		sp_++;
+		sp_ += sp_recover_speed_;
 
 		if(sp_ > sp_max_)
 		{
@@ -180,6 +182,8 @@ void GamePlayer::Update(void)
 
 	player_->__is_flip(is_left_);
 	player_->Update();
+	sp_recover_speed_ = DEFAULT_SP_RECOVER_SPEED;
+
 }
 
 //=============================================================================
