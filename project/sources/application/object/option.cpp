@@ -70,8 +70,6 @@ Option::Option(void)
 
 		volume_size_bgm_ = 5;
 		volume_size_se_ = 5;
-		bgm_volume_ ->Adjustvolume(volume_size_bgm_);
-		se_volume_ ->Adjustvolume(volume_size_se_);
 	}
 	else
 	{
@@ -79,9 +77,6 @@ Option::Option(void)
 		fread(&volume_size_se_, sizeof(u32), 1, fp);
 		fread(&key_config_data_[0], sizeof(KEY_CONFIG), 5, fp);
 		fclose(fp);
-
-		bgm_volume_ ->Adjustvolume(volume_size_bgm_);
-		se_volume_ ->Adjustvolume(volume_size_se_);
 	}
 
 }
@@ -144,6 +139,67 @@ bool Option::Initialize(void)
 
 	bgm_size_temp_ = volume_size_bgm_;
 	se_size_temp_ = volume_size_se_;
+
+	bgm_volume_ ->Adjustvolume(bgm_size_temp_);
+	se_volume_ ->Adjustvolume(se_size_temp_);
+
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_6, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_7, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_8, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_9, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_5);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_6);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_7);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_8);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_9);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_10);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_11);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_12);
+	GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_PAD_13);
+
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[0].virtual_num_, key_config_temp_[0].key_num_);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[1].virtual_num_, key_config_temp_[1].key_num_);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[2].virtual_num_, key_config_temp_[2].key_num_);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[3].virtual_num_, key_config_temp_[3].key_num_);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(key_config_temp_[4].virtual_num_, key_config_temp_[4].key_num_);
+
+	GET_DIRECT_INPUT->SaveInputEventVertual();
 
 	return true;
 }
@@ -251,7 +307,6 @@ void Option::Update(void)
 
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 			{
-				// 保存するかifいれる?
 				volume_size_bgm_ = bgm_size_temp_;
 				volume_size_se_ = se_size_temp_;
 				for(s32 i = 0; i < 5; i++)
@@ -267,32 +322,10 @@ void Option::Update(void)
 
 				__is_indication(false);
 			}
-
-			/*switch(GET_DIRECT_INPUT->GetPress(INPUT_EVENT_VIRTUAL_CANCEL, INPUT_EVENT_VIRTUAL_8))
-			{
-				case INPUT_EVENT_VIRTUAL_CANCEL:
-					ASSERT("このボタンはVIRTUAL_CANCEL");
-					break;
-
-					
-				case INPUT_EVENT_VIRTUAL_6:
-					ASSERT("このボタンはVIRTUAL_6");
-					break;
-					
-				case INPUT_EVENT_VIRTUAL_7:
-					ASSERT("このボタンはVIRTUAL_7");
-					break;
-
-				case INPUT_EVENT_VIRTUAL_8:
-					ASSERT("このボタンはVIRTUAL_8");
-					break;
-
-			}*/
-
 		}
 		else
 		{
-			switch(GET_DIRECT_INPUT->GetTrigger(INPUT_EVENT_PAD_4, INPUT_EVENT_PAD_14))
+			switch(GET_DIRECT_INPUT->GetTrigger(INPUT_EVENT_PAD_3, INPUT_EVENT_PAD_14))
 			{
 				case INPUT_EVENT_PAD_4:
 					Exchange(is_exchange_, INPUT_EVENT_PAD_4);
@@ -342,6 +375,9 @@ void Option::Update(void)
 				case INPUT_EVENT_PAD_13:
 					Exchange(is_exchange_, INPUT_EVENT_PAD_13);
 					is_exchange_ = KEY_CODE_MAX;
+					break;
+
+				default:
 					break;
 			}
 		}
@@ -451,8 +487,11 @@ void Option::Exchange(KEY_CODE code, INPUT_EVENT key_num)
 	{
 		if(key_config_temp_[i].key_num_ == key_num)
 		{
-			data_num2 = i;
-			break;
+			if(key_config_temp_[data_num].is_competition_ == key_config_temp_[i].is_competition_)
+			{
+				data_num2 = i;
+				break;
+			}
 		}
 	}
 
