@@ -22,6 +22,10 @@
 #include "../gimmick/gimmick_obstacle.h"
 #include "../gimmick/gimmick_disappear_ground.h"
 #include "../gimmick/gimmick_move_ground.h"
+
+#include "../gimmick/gimmick_tutorial_text.h"
+
+
 #include "object/object_light_gauge.h"
 #include "collision/collision_map.h"
 
@@ -423,7 +427,17 @@ void NormalStage::CollisionGimmick(void)
 					}
 					break;
 				}
+				case Gimmick::TYPE_TUTORIAL_TEXT:
+				{
+					GimmickTutorialText::DATA* data = (GimmickTutorialText::DATA*)(*it)->GetPointer();
+					if(data->_is_hit)
+					{
+						DEBUG_TOOL.__debug_display()->Print("hittxt\n");
+						data->_priority=0;
 
+					break;
+					}
+				}
 			}
 		}
 	}
@@ -605,6 +619,33 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					gimmick->__speed(speed);
 					gimmick_container_.push_back(gimmick);
 					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
+				case Gimmick::TYPE_TUTORIAL_TEXT:
+				{
+					//みる
+					i += FindWord(word,&data[i],",\n\0");
+					//xを文字列からfloatに
+					f32 x = atof(word);
+					//次へ
+					i++;
+					//みる
+					i += FindWord(word,&data[i],",\n\0");
+					//yを文字列からfloatに
+					f32 y = atof(word);
+					i++;
+					//プライオリティ
+					i += FindWord(word,&data[i],",\n\0");
+					u32 priority = atoi(word);
+
+					GimmickTutorialText* gimmick = new GimmickTutorialText();
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+
+					//無いと死ぬ
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+
 					break;
 				}
 				default:

@@ -62,6 +62,7 @@
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_move_ground.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_obstacle.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_start_point.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_tutorial_text.cpp" />
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\normal_stage.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_move_ground.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_obstacle.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_tutorial_text.h" />
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
     <ClInclude Include="sources\application\scene\game\stage\normal_stage.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage.h" />
