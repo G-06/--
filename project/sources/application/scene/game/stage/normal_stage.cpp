@@ -25,12 +25,15 @@
 #include "object/object_light_gauge.h"
 #include "object/object_player_icon.h"
 #include "collision/collision_map.h"
+#include "object/pause/pause.h"
+#include "object/message_window.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(100.0f,100.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(100.0f,100.0f);
+const u32 DEST_FRAME_COUNT = 20;
 
 //=============================================================================
 // constructor
@@ -39,6 +42,9 @@ NormalStage::NormalStage(const TYPE& type)
 	:Stage(type)
 	,is_pause_(false)
 	,is_clear_(false)
+	,is_pause_input_(false)
+	,pause_(nullptr)
+	,message_window_(nullptr)
 {
 }
 
@@ -79,6 +85,13 @@ bool NormalStage::Initialize(void)
 
 	stage_offset_->__screen_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,(f32)DEFAULT_SCREEN_HEIGHT));
 
+	pause_ = new Pause();
+	pause_->Initialize();
+
+	message_window_ = new MessageWindow();
+	message_window_->Initialize();
+	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
+
 	return true;
 }
 
@@ -104,6 +117,10 @@ void NormalStage::Uninitialize(void)
 	gimmick_container_.clear();
 
 	SafeDelete(next_stage_factory_);
+
+	SafeRelease(pause_);
+
+	SafeRelease(message_window_);
 }
 
 //=============================================================================
@@ -129,6 +146,106 @@ void NormalStage::Update(void)
 	{
 		if(is_pause_)
 		{
+			if(!is_pause_input_ && !pause_->__is_move())
+			{
+				if(message_window_->__is_show())
+				{
+					// メッセージの選択処理
+					if(message_window_->__is_show()){
+
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+						{
+							message_window_->SelectDown();
+						}
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+						{
+							message_window_->SelectUp();
+						}
+
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+						{
+							const s32 current_select = message_window_->__is_select();
+							if(current_select == MessageWindow::MESSAGE_NO)
+							{
+								message_window_->Close();
+							}
+							if((current_select == MessageWindow::MESSAGE_YES))
+							{
+								// select
+								const s32 current_select = pause_->__is_select();
+								switch(current_select)
+								{
+								case Pause::SELECT_TYPE_TITLE_BACK:
+									{
+										if(next_stage_factory_ == nullptr)
+										{
+											is_pause_input_ = true;
+											next_scene_factory_ = new TitleFactory();
+										}
+										break;
+									}
+								case Pause::SELECT_TYPE_STAGESELECT_BACK:
+									{
+										if(next_stage_factory_ == nullptr)
+										{
+											is_pause_input_ = true;
+											next_stage_factory_ = new SelectFactory();
+										}
+										break;
+									}
+								} // switch
+							} // message
+						}
+					} // is_show
+				}
+				else
+				{
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
+					{
+						pause_->SelectDown();
+					}
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
+					{
+						pause_->SelectUp();
+					}
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+					{
+						// select
+						const s32 current_select = pause_->__is_select();
+						switch(current_select)
+						{
+						case Pause::SELECT_TYPE_GAME_BACK:
+							{
+								is_pause_ = false;
+								pause_->Close();
+								break;
+							}
+						case Pause::SELECT_TYPE_TITLE_BACK:
+							{
+								message_window_->Show();
+								break;
+							}
+						case Pause::SELECT_TYPE_STAGESELECT_BACK:
+							{
+								message_window_->Show();
+								break;
+							}
+						case Pause::SELECT_TYPE_OPTION:
+							{
+								is_pause_ = false;
+								pause_->Close();
+								break;
+							}
+						} // switch
+					}
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_O) && !pause_->__is_move())
+					{
+						is_pause_ = false;
+						pause_->Close();
+					}
+				} // message_window
+			
+			} // !pause_->__is_move()
 		}
 		else
 		{
@@ -172,7 +289,15 @@ void NormalStage::Update(void)
 			{
 				next_scene_factory_ = new TitleFactory();
 			}
+
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_O) && !pause_->__is_move())
+			{
+				is_pause_ = true;
+				pause_->Show();
+			}
 		}
+		pause_->Update();
+		message_window_->Update();
 	}
 
 #ifndef _RELEASE
@@ -199,6 +324,9 @@ void NormalStage::Draw(void)
 	game_player_->Draw();
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
+
+	pause_->Draw();
+	message_window_->Draw();
 }
 
 //=============================================================================

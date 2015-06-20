@@ -206,7 +206,6 @@ void SceneTitle::Update(void)
 				mode_ = MODE_SELECT;
 			}
 		}
-
 		// ‘I‘ðŽˆˆ—
 		else if(mode_ == MODE_SELECT && !message_window_->__is_show())
 		{
@@ -400,6 +399,8 @@ void SceneTitle::_UpdateSelect(void)
 //=============================================================================
 void SceneTitle::_UpdateMessage(void)
 {
+	if(is_stop_) return;
+
 	// Ž©“®‘JˆÚŽ~‚ß‚é
 	frame_count_ = 0;
 
@@ -414,13 +415,22 @@ void SceneTitle::_UpdateMessage(void)
 		{
 			message_window_->SelectUp();
 		}
+
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
 		{
-			message_window_->Close();
-			mode_ = MODE_SELECT;
-			select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
+			const s32 current_select = message_window_->__is_select();
+			if(current_select == MessageWindow::MESSAGE_NO)
+			{
+				message_window_->Close();
+				mode_ = MODE_SELECT;
+				select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
+			}
+			if((current_select == MessageWindow::MESSAGE_YES))
+			{
+				is_stop_ = true;
+			}
 		}
-	}
+	} // is_show
 }
 
 //=============================================================================

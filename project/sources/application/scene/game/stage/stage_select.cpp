@@ -60,7 +60,7 @@ bool StageSelect::Initialize(void)
 	nas_ -> __position(D3DXVECTOR2(200.f,500.f));
 	nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
 	nas_->__is_flip(false);
-	nas_->SetSize(D3DXVECTOR2(1000.0f,1000.0f));
+	nas_->SetSize(D3DXVECTOR2(255.0f,255.0f));
 	//–îˆó
 	select_arrow_ = new SelectArrow();
 	select_arrow_ ->Initialize();

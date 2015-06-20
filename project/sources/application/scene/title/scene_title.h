@@ -112,7 +112,6 @@ private:
 	// message_window
 	MessageWindow* message_window_;
 
-
 	// ロゴに戻るカウンター
 	u32 frame_count_;
 
