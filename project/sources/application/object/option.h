@@ -18,6 +18,8 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
+#include "system/direct_input/direct_input.h"
+#include "option/option_data.h"
 
 //*****************************************************************************
 // forward declaration
@@ -40,8 +42,6 @@ class SeVolume;
 class Option : public Basic
 {
 public:
-	static const D3DXVECTOR2 DEFAULT_MENU_SIZE;
-	static const D3DXVECTOR2 EXPAND_MENU_SIZE;
 	enum OPTION_SCENE
 	{
 		OPTION_MIN = -1,
@@ -50,10 +50,12 @@ public:
 		OPTION_KEY_CONFIG_OK,
 		OPTION_KEY_CONFIG_CANCEL,
 		OPTION_KEY_CONFIG_SPECIAL,
-		OPTION_KEY_CONFIG_JUMP,
 		OPTION_KEY_CONFIG_PAUSE,
 		OPTION_MAX
 	};
+
+	static const D3DXVECTOR2 DEFAULT_MENU_SIZE;
+	static const D3DXVECTOR2 EXPAND_MENU_SIZE;
 
 	// constructor
 	Option(void);
@@ -67,11 +69,25 @@ public:
 	// uninitialize
 	void Uninitialize(void);
 
+	// update
 	void Update(void);
 
+	// draw
 	void Draw(void);
 
-	private:
+	// 
+	void Exchange(INPUT_EVENT* out_input_event,INPUT_EVENT input_event);
+
+	void Load(void);
+
+	void __is_indication(const bool indication){ is_indication_ = indication;}
+	const bool __is_indication(void)const{ return is_indication_;}
+
+private:
+	static const f32 VOLUME_MIN;
+	static const f32 VOLUME_MAX;
+	static const f32 VOLUME_RATE;
+
 	OptionBg* option_bg_;
 	KeyConfigOk* key_config_ok_;
 	KeyConfigCancel* key_config_cancel_;
@@ -86,8 +102,18 @@ public:
 
 	s32 cursor_x_;
 	s32 cursor_y_;
+	bool is_indication_;
+	bool is_select_;
+	KEY_CODE is_exchange_;
+
+	OPTION_DATA option_data_;
+
+	//KEY_CONFIG key_config_temp_[5];
+	s32 bgm_size_temp_;
+	s32 se_size_temp_;
 };
 
 #endif	// _OPTION_H_
 
 //---------------------------------- EOF --------------------------------------
+

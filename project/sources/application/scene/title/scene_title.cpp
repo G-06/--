@@ -128,8 +128,10 @@ bool SceneTitle::Initialize(void)
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
-//	option_ = new Option();
-//	option_->Initialize();
+	option_ = new Option();
+	option_->Initialize();
+	//option_->Load();
+	//option_->__is_indication(false);
 
 	frame_count_ = 0;
 	current_select_ = 0;
@@ -218,7 +220,7 @@ void SceneTitle::Update(void)
 		message_window_->Update();
 
 		// オプション
-//		option_->Update();
+		option_->Update();
 	}
 
 	// サークルの回転
@@ -248,7 +250,7 @@ void SceneTitle::Draw(void)
 			select_[i].select_->Draw();
 		}
 	}
-//	option_->Draw();
+	option_->Draw();
 
 	message_window_->Draw();
 }
@@ -293,7 +295,7 @@ void SceneTitle::_UpdatePush(void)
 	push_frame_->__color(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
 
 	// モード変更
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
 		decide_interval_ = DESIDE_INTERVAL_COUNT;
 		mode_ = MODE_PUSH_INTERVAL;
@@ -352,7 +354,7 @@ void SceneTitle::_UpdateSelect(void)
 	}
 
 	// 決定
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN) && !message_window_->__is_move())
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE) && !message_window_->__is_move())
 	{
 		decide = true;
 
@@ -366,7 +368,8 @@ void SceneTitle::_UpdateSelect(void)
 			break;
 
 		case SELECT_OPTION:
-			mode_ = MODE_PUSH;
+			//mode_ = MODE_PUSH;
+			option_->__is_indication(true);
 			break;
 
 		case SELECT_END:

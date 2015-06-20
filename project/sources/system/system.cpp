@@ -74,6 +74,32 @@ bool System::Setup(HINSTANCE hinstance)
 		return false;
 	}
 
+	// load option data
+	FILE* file = nullptr;
+
+	file = fopen("data/system/option_data.bin","rb");
+
+	if(file == nullptr)
+	{
+		instance_.option_data_._se_volume  = 0.8f;
+		instance_.option_data_._bgm_volume = 0.8f;
+		instance_.option_data_._decide_key = INPUT_EVENT_PAD_6;
+		instance_.option_data_._cancel_key = INPUT_EVENT_PAD_5;
+		instance_.option_data_._light_key  = INPUT_EVENT_PAD_9;
+		instance_.option_data_._pause_key  = INPUT_EVENT_PAD_13;
+	}
+	else
+	{
+		instance_.option_data_;
+		fread(&instance_.option_data_,sizeof(OPTION_DATA),1,file);
+		fclose(file);
+	}
+
+	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,instance_.option_data_._decide_key);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,instance_.option_data_._cancel_key);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT,instance_.option_data_._light_key);
+	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE,instance_.option_data_._pause_key);
+
 	return true;
 }
 

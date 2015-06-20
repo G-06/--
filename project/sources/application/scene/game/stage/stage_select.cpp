@@ -190,7 +190,7 @@ void StageSelect::SelectUpdate()
 		//必要以上に右に行かない
 		if(current_stage_ !=TYPE_MAX-1)
 		{
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
 			{
 				for(u32 i=0;i<TYPE_MAX-1;i++)
 				{
@@ -205,7 +205,7 @@ void StageSelect::SelectUpdate()
 		//必要以上に左に行かない
 		if(current_stage_!=TYPE_TUTORIAL)
 		{
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 			{
 				for(u32 i=0;i<TYPE_MAX-1;i++)
 				{
@@ -218,7 +218,7 @@ void StageSelect::SelectUpdate()
 		}
 
 		//決定押されたとき
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 		{
 			if(message_window_->__is_move() == false)
 			{
@@ -266,7 +266,7 @@ void StageSelect::MassageUpdate()
 		message_window_->SelectUp();
 	}
 	//決定キー押されたとき
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
 		//イエスの時
 		if(message_window_->__is_select() == 0)
@@ -316,7 +316,7 @@ void StageSelect::YorNUpdate()
 	}
 
 	//決定キー押されたとき
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
 		//イエスの時
 		if(message_window_->__is_select() == 0)
