@@ -139,7 +139,8 @@ void StageRegion::Draw(void)
 	stage_image_->Draw();
 	select_frame_->Draw();
 	stage_name_->Draw();
-	record_ ->Draw();
+	if(type_ != Stage::TYPE_TUTORIAL)
+		record_ ->Draw();
 }
 
 //=============================================================================
@@ -157,6 +158,7 @@ void StageRegion::__set_stage_id(Stage::TYPE stage)
 {
 	stage_name_->__set_name_texture(stage);
 	stage_image_->__set_image_texture(stage);
+	type_= stage;
 }
 
 void StageRegion::__set_time(u32 time)

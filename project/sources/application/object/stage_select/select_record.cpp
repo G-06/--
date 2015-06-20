@@ -36,16 +36,18 @@ SelectRecord::~SelectRecord(void)
 //=============================================================================
 bool SelectRecord::Initialize(void)
 {
-	//
-	for(int i=0;i<4;i++)
+	//”Žš
+	for(int i=0;i<TEXTURE_MAX;i++)
 	{
 		number_[i] = new Number();
 		number_[i] -> Initialize();
-		number_[i] ->__Set_position(D3DXVECTOR2((f32)50*i+750,500));
+		number_[i] ->__Set_position(D3DXVECTOR2((f32)35*i+680,500));
 	}
+	//”wŒi
 	record_back_ = new RecordBack();
 	record_back_->Initialize();
 
+	//ˆÊ’u
 	offset_position_ = D3DXVECTOR2(0,0);
 	time_ =0;
 	__set_time(time_);
@@ -58,7 +60,7 @@ bool SelectRecord::Initialize(void)
 //=============================================================================
 void SelectRecord::Uninitialize(void)
 {
-	for(int i=0;i<4;i++)
+	for(int i=0;i<TEXTURE_MAX;i++)
 	{
 		SafeRelease(number_[i]);
 	}
@@ -72,9 +74,9 @@ void SelectRecord::Update(void)
 {
 	record_back_ ->__offset_position(offset_position_);
 	record_back_ ->Update();
-	for(int i=0;i<4;i++)
+	for(int i=0;i<TEXTURE_MAX;i++)
 	{
-		number_[i] ->__Set_position(D3DXVECTOR2(50*i+750 + offset_position_.x,500));
+		number_[i] ->__Set_position(D3DXVECTOR2(35*i+680 + offset_position_.x,500));
 		number_[i]->Update();
 	}
 }
@@ -85,7 +87,7 @@ void SelectRecord::Update(void)
 void SelectRecord::Draw(void)
 {
 	record_back_->Draw();
-	for(int i=0;i<4;i++)
+	for(int i=0;i<TEXTURE_MAX;i++)
 	{
 		number_[i]->Draw();
 	}
@@ -101,15 +103,20 @@ void SelectRecord::__set_time(u32 time)
 
 	u32 min=0;
 	u32 sec=0;
+	u32 mlisec=0;
 
 	workA = time_;
 
+	//ƒ~ƒŠ•b‚ð‚¾‚·
+	mlisec=workA%100;
+	workA-=mlisec;
 	//•b‚ðŠ„‚èo‚·
-	sec = workA%60;
+	sec = workA%6000;
+	sec = sec/100;
 	//•b‚ðˆø‚¢‚Ä•ª‚Ì‚Ý‚É‚·‚é
 	workA-=sec;
 	//‚Ó‚ñ‚ðŠ„‚èo‚·
-	min=workA/60;
+	min=workA/6000;
 
 	workA = min;
 	//•ª@‚P‚O‚ÌˆÊ
@@ -124,18 +131,38 @@ void SelectRecord::__set_time(u32 time)
 	workA -= (u32)workB;
 	workA /= 10;
 
+	//‚±‚ë‚ñ
+	number_[2]->__Set_index(11);
+
 	workA = sec;
 	//•b@‚P‚O‚ÌˆÊ
 	workB = (f32)(workA%10);
-	number_[3]->__Set_index((u32)workB);
+	number_[4]->__Set_index((u32)workB);
 	workA -= (u32)workB;
 	workA /= 10;
 
 	//•b@‚P‚ÌˆÊ
 	workB = (f32)(workA%10);
-	number_[2]->__Set_index((u32)workB);
+	number_[3]->__Set_index((u32)workB);
 	workA -= (u32)workB;
 	workA /= 10;
+
+	//dotto
+	number_[5]->__Set_index(12);
+
+	workA = mlisec;
+	//•b@‚P‚O‚ÌˆÊ
+	workB = (f32)(workA%10);
+	number_[7]->__Set_index((u32)workB);
+	workA -= (u32)workB;
+	workA /= 10;
+
+	//•b@‚P‚ÌˆÊ
+	workB = (f32)(workA%10);
+	number_[6]->__Set_index((u32)workB);
+	workA -= (u32)workB;
+	workA /= 10;
+
 }
 
 //---------------------------------- EOF --------------------------------------
