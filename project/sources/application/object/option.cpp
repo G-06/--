@@ -264,17 +264,19 @@ void Option::Update(void)
 
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 			{
-				OPTION_DATA option_data = *GET_OPTION_DATA;
+				OPTION_DATA* option_data = GET_OPTION_DATA;
 
-				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,option_data._decide_key);
-				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,option_data._cancel_key);
-				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT,option_data._light_key);
-				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE,option_data._pause_key);
+				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,option_data->_decide_key);
+				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,option_data->_cancel_key);
+				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT ,option_data->_light_key);
+				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE ,option_data->_pause_key);
 
 				GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,option_data_._decide_key);
 				GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,option_data_._cancel_key);
 				GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT,option_data_._light_key);
 				GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE,option_data_._pause_key);
+
+				*option_data = option_data_;
 
 				FILE* fp = fopen("data/system/option_data.bin","wb");
 
