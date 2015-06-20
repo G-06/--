@@ -28,6 +28,7 @@ class Gimmick;
 class ObjectLightGauge;
 class ObjectPlayerIcon;
 class Pause;
+class MessageWindow;
 
 //*****************************************************************************
 // class definition
@@ -87,6 +88,7 @@ protected:
 	bool is_clear_;
 	bool is_pause_input_;
 	Pause* pause_;
+	MessageWindow* message_window_;
 
 private:
 	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;
