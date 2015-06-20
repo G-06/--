@@ -72,7 +72,7 @@ protected:
 	D3DXVECTOR2 offset_position_;
 
 	D3DXVECTOR2 region_pos_;		//まとまり全体の位置
-	D3DXVECTOR2 region_distpos_;		//まとまり全体の生きたい位置
+	D3DXVECTOR2 region_distpos_;	//まとまり全体の生きたい位置
 
 	SelectFrame* select_frame_;		//枠
 	StageName* stage_name_;			//名前
@@ -80,8 +80,7 @@ protected:
 	SelectRecord* record_;
 
 	bool move_falg_;
-
-
+	Stage::TYPE type_;				//私は誰?
 };
 
 #endif	// _STAGE_H_
