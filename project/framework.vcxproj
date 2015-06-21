@@ -15,7 +15,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="effect_game_start.cpp" />
     <ClCompile Include="sources\application\application.cpp" />
+    <ClCompile Include="sources\application\object\effect_check_point.cpp" />
+    <ClCompile Include="sources\application\object\effect_game_end.cpp" />
     <ClCompile Include="sources\application\object\map.cpp" />
     <ClCompile Include="sources\application\object\message_sprite_smooth.cpp" />
     <ClCompile Include="sources\application\object\message_window.cpp" />
@@ -126,8 +129,11 @@
     <ClCompile Include="sources\system\xaudio2\xaudio2_sound.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="effect_game_start.h" />
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="sources\application\application.h" />
+    <ClInclude Include="sources\application\object\effect_check_point.h" />
+    <ClInclude Include="sources\application\object\effect_game_end.h" />
     <ClInclude Include="sources\application\object\map.h" />
     <ClInclude Include="sources\application\object\message_sprite_smooth.h" />
     <ClInclude Include="sources\application\object\message_window.h" />
