@@ -27,6 +27,7 @@
 #include "collision/collision_map.h"
 #include "object/pause/pause.h"
 #include "object/message_window.h"
+#include "../game_bg.h"
 
 //*****************************************************************************
 // constant definition
@@ -46,6 +47,7 @@ NormalStage::NormalStage(const TYPE& type)
 	,pause_(nullptr)
 	,message_window_(nullptr)
 {
+	type_ = type;
 }
 
 //=============================================================================
@@ -92,6 +94,11 @@ bool NormalStage::Initialize(void)
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
+	//haikei
+	game_bg_ = new GameBg();
+	game_bg_->Initialize();
+	game_bg_->__SetTexture(type_);
+
 	return true;
 }
 
@@ -121,6 +128,7 @@ void NormalStage::Uninitialize(void)
 	SafeRelease(pause_);
 
 	SafeRelease(message_window_);
+	SafeRelease(game_bg_);
 }
 
 //=============================================================================
@@ -280,6 +288,10 @@ void NormalStage::Update(void)
 
 			map_->__position(-stage_offset_->__position());
 
+			//”wŒiXV
+			game_bg_->__SetPosition(stage_offset_->__position());
+			game_bg_->Update();
+
 			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 			{
 				(*it)->__offset_position(stage_offset_->__position());
@@ -314,6 +326,7 @@ void NormalStage::Update(void)
 //=============================================================================
 void NormalStage::Draw(void)
 {
+	game_bg_->Draw();
 	map_->Draw();
 
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)

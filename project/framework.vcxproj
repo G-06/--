@@ -19,6 +19,7 @@
     <ClCompile Include="sources\application\object\map.cpp" />
     <ClCompile Include="sources\application\object\message_sprite_smooth.cpp" />
     <ClCompile Include="sources\application\object\message_window.cpp" />
+    <ClCompile Include="sources\application\object\object_bg.cpp" />
     <ClCompile Include="sources\application\object\object_check_point.cpp" />
     <ClCompile Include="sources\application\object\object_disappear_ground.cpp" />
     <ClCompile Include="sources\application\object\object_goal_point.cpp" />
@@ -57,6 +58,7 @@
     <ClCompile Include="sources\application\object\stage_select\select_stage_name.cpp" />
     <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect.cpp" />
     <ClCompile Include="sources\application\scene\game\effect\effect.cpp" />
+    <ClCompile Include="sources\application\scene\game\game_bg.cpp" />
     <ClCompile Include="sources\application\scene\game\game_player.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_check_point.cpp" />
@@ -131,6 +133,7 @@
     <ClInclude Include="sources\application\object\map.h" />
     <ClInclude Include="sources\application\object\message_sprite_smooth.h" />
     <ClInclude Include="sources\application\object\message_window.h" />
+    <ClInclude Include="sources\application\object\object_bg.h" />
     <ClInclude Include="sources\application\object\object_check_point.h" />
     <ClInclude Include="sources\application\object\object_disappear_ground.h" />
     <ClInclude Include="sources\application\object\object_goal_point.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect.h" />
     <ClInclude Include="sources\application\scene\game\effect\effect.h" />
+    <ClInclude Include="sources\application\scene\game\game_bg.h" />
     <ClInclude Include="sources\application\scene\game\game_player.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_check_point.h" />

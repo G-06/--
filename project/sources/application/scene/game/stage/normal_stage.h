@@ -29,6 +29,7 @@ class ObjectLightGauge;
 class ObjectPlayerIcon;
 class Pause;
 class MessageWindow;
+class GameBg;
 
 //*****************************************************************************
 // class definition
@@ -89,6 +90,9 @@ protected:
 	bool is_pause_input_;
 	Pause* pause_;
 	MessageWindow* message_window_;
+
+	GameBg* game_bg_;
+	TYPE type_;
 
 private:
 	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;

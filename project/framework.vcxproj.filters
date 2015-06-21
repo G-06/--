@@ -469,6 +469,12 @@
     <ClInclude Include="sources\application\object\pause\sprite_smooth.h">
       <Filter>sources\application\object\pause</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\game_bg.h">
+      <Filter>sources\application\scene\game</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_bg.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -785,6 +791,12 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\pause\sprite_smooth.cpp">
       <Filter>sources\application\object\pause</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\game_bg.cpp">
+      <Filter>sources\application\scene\game</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_bg.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
