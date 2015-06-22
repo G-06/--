@@ -52,6 +52,8 @@ public:
 	//ステージ教える
 	void __SetTexture(Stage::TYPE type);
 	void __SetPosition(D3DXVECTOR2 pos){old_position_ = position_;position_ = pos;};
+	void ReSetUv(void);
+
 
 private:
 	ObjectBg* game_bg_far_;

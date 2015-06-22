@@ -170,7 +170,7 @@ void NormalStage::Update(void)
 							message_window_->SelectUp();
 						}
 
-						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 						{
 							const s32 current_select = message_window_->__is_select();
 							if(current_select == MessageWindow::MESSAGE_NO)
@@ -208,15 +208,15 @@ void NormalStage::Update(void)
 				}
 				else
 				{
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
 					{
 						pause_->SelectDown();
 					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
 					{
 						pause_->SelectUp();
 					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 					{
 						// select
 						const s32 current_select = pause_->__is_select();
@@ -246,7 +246,7 @@ void NormalStage::Update(void)
 							}
 						} // switch
 					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_O) && !pause_->__is_move())
+					if((GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL)) && !pause_->__is_move())
 					{
 						is_pause_ = false;
 						pause_->Close();
@@ -275,6 +275,7 @@ void NormalStage::Update(void)
 			if(game_player_->__position().y > map_->__size().y)
 			{
 				game_player_->Dead();
+				game_bg_->ReSetUv();
 			}
 
 			CollisionGimmick();
@@ -297,12 +298,7 @@ void NormalStage::Update(void)
 				(*it)->__offset_position(stage_offset_->__position());
 			}
 
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_P))
-			{
-				next_scene_factory_ = new TitleFactory();
-			}
-
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_O) && !pause_->__is_move())
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) && !pause_->__is_move())
 			{
 				is_pause_ = true;
 				pause_->Show();
