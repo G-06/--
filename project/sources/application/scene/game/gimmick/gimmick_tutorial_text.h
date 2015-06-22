@@ -23,12 +23,24 @@
 //*****************************************************************************
 class TextBox;
 
+
 //*****************************************************************************
 // class definition
 //*****************************************************************************
 class GimmickTutorialText : public Gimmick
 {
 public:
+	enum MASSAGE_TYPE
+	{
+		MASSAGE_TYPE_MOVE=0,
+		MASSAGE_TYPE_JUMP,
+		MASSAGE_TYPE_LIGHT,
+		MASSAGE_TYPE_GIMMICK_GLAS,
+		MASSAGE_TYPE_GIMMICK_MIRROR,
+		MASSAGE_TYPE_MAX
+
+	};
+
 	struct DATA
 	{
 		u32 _priority;
@@ -57,12 +69,16 @@ public:
 	// accessor
 	u32 __priority(void)const { return data_._priority; }
 	void __priority(u32 priority) { data_._priority = priority; }
-
+	void __draw_flag(bool flag){draw_flag_=flag;};
+	void __type(u32 type){type_ = (MASSAGE_TYPE)type;};
 
 private:
 	TextBox* txtbox_;
 	D3DXVECTOR2 position_;
 	DATA data_;
+
+	bool draw_flag_;
+	MASSAGE_TYPE type_;
 
 };
 

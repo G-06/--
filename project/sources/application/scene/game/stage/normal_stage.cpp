@@ -433,10 +433,10 @@ void NormalStage::CollisionGimmick(void)
 					if(data->_is_hit)
 					{
 						DEBUG_TOOL.__debug_display()->Print("hittxt\n");
+						//(*it)->Draw();
 						data->_priority=0;
-
-					break;
 					}
+					break;
 				}
 			}
 		}
@@ -637,8 +637,12 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					//プライオリティ
 					i += FindWord(word,&data[i],",\n\0");
 					u32 priority = atoi(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					u32 massage = atoi(word);
 
 					GimmickTutorialText* gimmick = new GimmickTutorialText();
+					gimmick->__type(massage);
 					gimmick->Initialize();
 					gimmick->__position(D3DXVECTOR2(x,y));
 
