@@ -32,8 +32,8 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(100.0f,100.0f);
-const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(100.0f,100.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(60.0f,620.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(60.0f,620.0f);
 const u32 DEST_FRAME_COUNT = 20;
 
 //=============================================================================

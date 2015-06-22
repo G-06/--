@@ -735,9 +735,6 @@
     <ClCompile Include="sources\application\object\stage_select\select_record_back.cpp">
       <Filter>sources\application\object\stage_select</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
-      <Filter>sources\application\scene\game\stage</Filter>
-    </ClCompile>
     <ClCompile Include="sources\application\object\object_check_point.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
@@ -797,6 +794,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\object_bg.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

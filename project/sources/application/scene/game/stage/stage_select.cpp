@@ -57,10 +57,11 @@ bool StageSelect::Initialize(void)
 	//ブルーニャス
 	nas_ = new ObjectPlayer();
 	nas_ -> Initialize();
-	nas_ -> __position(D3DXVECTOR2(200.f,500.f));
+	nas_ -> __position(D3DXVECTOR2(260.f,510.f));
 	nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
 	nas_->__is_flip(false);
-	nas_->SetSize(D3DXVECTOR2(255.0f,255.0f));
+	const f32 scale = 1.2f;
+	nas_->SetSize(D3DXVECTOR2(255.0f * scale,255.0f * scale));
 	//矢印
 	select_arrow_ = new SelectArrow();
 	select_arrow_ ->Initialize();

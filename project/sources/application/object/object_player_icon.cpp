@@ -46,7 +46,7 @@ bool ObjectPlayerIcon::Initialize(void)
 	sprite_->Initialize();
 	sprite_->__point(Sprite::POINT_LEFT_MIDDLE);
 	sprite_->__size(DEFAULT_SIZE);
-	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_LIGHT_GAUGE);
+	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_NYAS_ICON);
 	sprite_->__division_width(DIVISION_WIDTH);
 	sprite_->__division_height(DIVISION_HEIGHT);
 	sprite_->SetParameter();
