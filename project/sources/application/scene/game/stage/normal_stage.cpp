@@ -432,6 +432,8 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			{
 				if(game_player_->__is_light())
 				{
+					game_player_->__position(collision_map.__position());
+
 					if(collision_map.__vector().x != 0.0f)
 					{
 						game_player_->ChangeDirection(D3DXVECTOR2(-game_player_->__move().x,game_player_->__move().y));
