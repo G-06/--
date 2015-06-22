@@ -94,5 +94,18 @@ void ObjectBg::__SetTexture(Texture::TEXTURE_ID texture)
 }
 
 
+void ObjectBg::ReSetUv(void)
+{
+	uv_x_ = D3DXVECTOR2(0.0f,1.0f);
+	uv_y_ = D3DXVECTOR2(0.0f,1.0f);
+	bg_->__left(uv_x_.x);
+	bg_->__right(uv_x_.y);
+	bg_->__top(uv_y_.x);
+	bg_->__bottom(uv_y_.y);
+	bg_->SetParameter();
+}
+
+
+
 
 //---------------------------------- EOF --------------------------------------

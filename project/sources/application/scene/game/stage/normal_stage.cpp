@@ -275,6 +275,7 @@ void NormalStage::Update(void)
 			if(game_player_->__position().y > map_->__size().y)
 			{
 				game_player_->Dead();
+				game_bg_->ReSetUv();
 			}
 
 			CollisionGimmick();

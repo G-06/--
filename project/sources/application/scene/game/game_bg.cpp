@@ -79,14 +79,14 @@ void GameBg::Update(void)
 		}
 		if(position_.y < old_position_.y)
 		{
-			game_bg_far_->__Set_move(MOVE_Y_FAR);
-			game_bg_near_->__Set_move(MOVE_Y_NEAR);
+			game_bg_far_->__Set_move(-MOVE_Y_FAR);
+			game_bg_near_->__Set_move(-MOVE_Y_NEAR);
 
 		}
 		else if(position_.y > old_position_.y)
 		{
-			game_bg_far_->__Set_move(-MOVE_Y_FAR);
-			game_bg_near_->__Set_move(-MOVE_Y_NEAR);
+			game_bg_far_->__Set_move(MOVE_Y_FAR);
+			game_bg_near_->__Set_move(MOVE_Y_NEAR);
 		}
 	game_bg_far_->Update();
 	game_bg_near_->Update();
@@ -129,6 +129,11 @@ void GameBg::__SetTexture(Stage::TYPE type)
 	}
 }
 
+void GameBg::ReSetUv(void)
+{
+	game_bg_far_->ReSetUv();
+	game_bg_near_->ReSetUv();
+}
 
 
 

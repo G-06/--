@@ -52,6 +52,7 @@ public:
 	//テクスチャ設置
 	void __SetTexture(Texture::TEXTURE_ID texture);
 	void __Set_move(D3DXVECTOR2 move){ move_.x += move.x; move_.y += move.y;};
+	void ReSetUv(void);
 
 
 private:
