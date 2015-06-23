@@ -430,12 +430,8 @@ void NormalStage::CollisionGimmick(void)
 				case Gimmick::TYPE_TUTORIAL_TEXT:
 				{
 					GimmickTutorialText::DATA* data = (GimmickTutorialText::DATA*)(*it)->GetPointer();
-					if(data->_is_hit)
-					{
-						DEBUG_TOOL.__debug_display()->Print("hittxt\n");
-						//(*it)->Draw();
-						data->_priority=0;
-					}
+					data->_is_hit=true;
+					DEBUG_TOOL.__debug_display()->Print("hit text\n");
 					break;
 				}
 			}

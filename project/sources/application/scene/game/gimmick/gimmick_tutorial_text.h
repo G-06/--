@@ -22,7 +22,8 @@
 // forward declaration
 //*****************************************************************************
 class TextBox;
-
+class MessageWindow;
+class TutorialBack;
 
 //*****************************************************************************
 // class definition
@@ -69,7 +70,6 @@ public:
 	// accessor
 	u32 __priority(void)const { return data_._priority; }
 	void __priority(u32 priority) { data_._priority = priority; }
-	void __draw_flag(bool flag){draw_flag_=flag;};
 	void __type(u32 type){type_ = (MASSAGE_TYPE)type;};
 
 private:
@@ -77,8 +77,12 @@ private:
 	D3DXVECTOR2 position_;
 	DATA data_;
 
-	bool draw_flag_;
 	MASSAGE_TYPE type_;
+
+	TutorialBack* back_;
+	bool back_flag_;
+
+	u32 wait_;
 
 };
 
