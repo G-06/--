@@ -20,6 +20,7 @@
 #include "directx9/directx9.h"
 #include "direct_input/direct_input.h"
 #include "xaudio2/xaudio2.h"
+#include "../application/object/option/option_data.h"
 
 //*****************************************************************************
 // macro definition
@@ -32,6 +33,7 @@
 #define GET_XAUDIO2 System::GetInstance().__xaudio2()
 #define GET_BGM System::GetInstance().__xaudio2()->__bgm()
 #define GET_SE System::GetInstance().__xaudio2()->__se()
+#define GET_OPTION_DATA System::GetInstance().__option_data();
 
 //*****************************************************************************
 // class definition
@@ -53,6 +55,8 @@ public:
 	Directx9* __directx9(void)const { return directx9_; }
 	DirectInput* __direct_input(void)const { return direct_input_; }
 	XAudio2* __xaudio2(void)const { return xaudio2_; }
+	OPTION_DATA* __option_data(void) { return &option_data_; }
+
 private:
 	System(void);
 	System(const System& system);
@@ -63,6 +67,7 @@ private:
 	Directx9* directx9_;
 	DirectInput* direct_input_;
 	XAudio2* xaudio2_;
+	OPTION_DATA option_data_;
 };
 
 #endif // _SYSYEM_H_

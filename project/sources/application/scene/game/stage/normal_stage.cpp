@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// stage
+// normal stage
 //
 // Author		: Kenji Kabutomori
 //
@@ -27,7 +27,18 @@
 
 
 #include "object/object_light_gauge.h"
+#include "object/object_player_icon.h"
 #include "collision/collision_map.h"
+#include "object/pause/pause.h"
+#include "object/message_window.h"
+#include "../game_bg.h"
+
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(60.0f,620.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(60.0f,620.0f);
+const u32 DEST_FRAME_COUNT = 20;
 
 //=============================================================================
 // constructor
@@ -36,7 +47,11 @@ NormalStage::NormalStage(const TYPE& type)
 	:Stage(type)
 	,is_pause_(false)
 	,is_clear_(false)
+	,is_pause_input_(false)
+	,pause_(nullptr)
+	,message_window_(nullptr)
 {
+	type_ = type;
 }
 
 //=============================================================================
@@ -63,7 +78,11 @@ bool NormalStage::Initialize(void)
 
 	object_light_gauge_ = new ObjectLightGauge();
 	object_light_gauge_->Initialize();
-	object_light_gauge_->__position(D3DXVECTOR2(100.0f,100.0f));
+	object_light_gauge_->__position(DEFAULT_LIGHT_GAUGE_POSITION);
+
+	object_player_icon_ = new ObjectPlayerIcon();
+	object_player_icon_->Initialize();
+	object_player_icon_->__position(DEFAULT_PLAYER_ICON_POSITION);
 
 	if(!SafeInitialize(stage_offset_))
 	{
@@ -71,6 +90,18 @@ bool NormalStage::Initialize(void)
 	}
 
 	stage_offset_->__screen_size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,(f32)DEFAULT_SCREEN_HEIGHT));
+
+	pause_ = new Pause();
+	pause_->Initialize();
+
+	message_window_ = new MessageWindow();
+	message_window_->Initialize();
+	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
+
+	//haikei
+	game_bg_ = new GameBg();
+	game_bg_->Initialize();
+	game_bg_->__SetTexture(type_);
 
 	return true;
 }
@@ -88,6 +119,8 @@ void NormalStage::Uninitialize(void)
 
 	SafeRelease(object_light_gauge_);
 
+	SafeRelease(object_player_icon_);
+
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 	{
 		SafeRelease(*it);
@@ -95,6 +128,11 @@ void NormalStage::Uninitialize(void)
 	gimmick_container_.clear();
 
 	SafeDelete(next_stage_factory_);
+
+	SafeRelease(pause_);
+
+	SafeRelease(message_window_);
+	SafeRelease(game_bg_);
 }
 
 //=============================================================================
@@ -102,7 +140,14 @@ void NormalStage::Uninitialize(void)
 //=============================================================================
 void NormalStage::Update(void)
 {
-	if(game_player_->__life() < 0)
+	if(is_clear_)
+	{
+		if(next_stage_factory_ == nullptr)
+		{
+			next_stage_factory_ = new SelectFactory();
+		}
+	}
+	else if(game_player_->__life() < 0)
 	{
 		if(next_stage_factory_ == nullptr)
 		{
@@ -113,12 +158,114 @@ void NormalStage::Update(void)
 	{
 		if(is_pause_)
 		{
+			if(!is_pause_input_ && !pause_->__is_move())
+			{
+				if(message_window_->__is_show())
+				{
+					// メッセージの選択処理
+					if(message_window_->__is_show()){
+
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+						{
+							message_window_->SelectDown();
+						}
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+						{
+							message_window_->SelectUp();
+						}
+
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+						{
+							const s32 current_select = message_window_->__is_select();
+							if(current_select == MessageWindow::MESSAGE_NO)
+							{
+								message_window_->Close();
+							}
+							if((current_select == MessageWindow::MESSAGE_YES))
+							{
+								// select
+								const s32 current_select = pause_->__is_select();
+								switch(current_select)
+								{
+								case Pause::SELECT_TYPE_TITLE_BACK:
+									{
+										if(next_stage_factory_ == nullptr)
+										{
+											is_pause_input_ = true;
+											next_scene_factory_ = new TitleFactory();
+										}
+										break;
+									}
+								case Pause::SELECT_TYPE_STAGESELECT_BACK:
+									{
+										if(next_stage_factory_ == nullptr)
+										{
+											is_pause_input_ = true;
+											next_stage_factory_ = new SelectFactory();
+										}
+										break;
+									}
+								} // switch
+							} // message
+						}
+					} // is_show
+				}
+				else
+				{
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
+					{
+						pause_->SelectDown();
+					}
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
+					{
+						pause_->SelectUp();
+					}
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+					{
+						// select
+						const s32 current_select = pause_->__is_select();
+						switch(current_select)
+						{
+						case Pause::SELECT_TYPE_GAME_BACK:
+							{
+								is_pause_ = false;
+								pause_->Close();
+								break;
+							}
+						case Pause::SELECT_TYPE_TITLE_BACK:
+							{
+								message_window_->Show();
+								break;
+							}
+						case Pause::SELECT_TYPE_STAGESELECT_BACK:
+							{
+								message_window_->Show();
+								break;
+							}
+						case Pause::SELECT_TYPE_OPTION:
+							{
+								is_pause_ = false;
+								pause_->Close();
+								break;
+							}
+						} // switch
+					}
+					if((GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL)) && !pause_->__is_move())
+					{
+						is_pause_ = false;
+						pause_->Close();
+					}
+				} // message_window
+			
+			} // !pause_->__is_move()
 		}
 		else
 		{
 			time_count_++;
 
 			game_player_->Update();
+
+			object_player_icon_->Update();
 
 			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 			{
@@ -132,6 +279,7 @@ void NormalStage::Update(void)
 			if(game_player_->__position().y > map_->__size().y)
 			{
 				game_player_->Dead();
+				game_bg_->ReSetUv();
 			}
 
 			CollisionGimmick();
@@ -145,16 +293,23 @@ void NormalStage::Update(void)
 
 			map_->__position(-stage_offset_->__position());
 
+			//背景更新
+			game_bg_->__SetPosition(stage_offset_->__position());
+			game_bg_->Update();
+
 			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 			{
 				(*it)->__offset_position(stage_offset_->__position());
 			}
 
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_P))
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) && !pause_->__is_move())
 			{
-				next_scene_factory_ = new TitleFactory();
+				is_pause_ = true;
+				pause_->Show();
 			}
 		}
+		pause_->Update();
+		message_window_->Update();
 	}
 
 #ifndef _RELEASE
@@ -171,6 +326,7 @@ void NormalStage::Update(void)
 //=============================================================================
 void NormalStage::Draw(void)
 {
+	game_bg_->Draw();
 	map_->Draw();
 
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
@@ -180,6 +336,10 @@ void NormalStage::Draw(void)
 
 	game_player_->Draw();
 	object_light_gauge_->Draw();
+	object_player_icon_->Draw();
+
+	pause_->Draw();
+	message_window_->Draw();
 }
 
 //=============================================================================
@@ -272,6 +432,8 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			{
 				if(game_player_->__is_light())
 				{
+					game_player_->__position(collision_map.__position());
+
 					if(collision_map.__vector().x != 0.0f)
 					{
 						game_player_->ChangeDirection(D3DXVECTOR2(-game_player_->__move().x,game_player_->__move().y));
@@ -330,7 +492,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
-				//game_player_->Dead();
+				game_player_->__is_sp_recover_speed_up(true);
 			}
 			break;
 		}
@@ -338,7 +500,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
-				//game_player_->Dead();
+				game_player_->__is_sp_down(true);
 			}
 			break;
 		}

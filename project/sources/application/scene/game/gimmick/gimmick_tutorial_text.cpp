@@ -30,7 +30,7 @@ GimmickTutorialText::GimmickTutorialText(void)
 	:Gimmick(TYPE_TUTORIAL_TEXT)
 {
 	data_._priority = 0;
-	size_ = D3DXVECTOR2(128.0f,128.0f);
+	size_ = D3DXVECTOR2(256.0f,128.0f);
 }
 
 //=============================================================================

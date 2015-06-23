@@ -33,15 +33,19 @@ enum KEY_CODE
 		KEY_CODE_NO,
 		KEY_CODE_JUMP,
 		KEY_CODE_LIGHT,
+		KEY_CODE_PAUSE,
 		KEY_CODE_MAX
 	};
 
-	struct KEY_CONFIG
-	{
-		bool		is_occupied_;
-		KEY_CODE	key_code_;
-		u32			key_number_;
-	};
+struct OPTION_DATA
+{
+	f32 _bgm_volume;
+	f32 _se_volume;
+	INPUT_EVENT _decide_key;
+	INPUT_EVENT _cancel_key;
+	INPUT_EVENT _light_key;
+	INPUT_EVENT _pause_key;
+};
 
 #endif	// _OPTION_DATA_H_
 

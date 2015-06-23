@@ -17,6 +17,7 @@
 // include
 //*****************************************************************************
 #include "basic/basic.h"
+#include "system/system.h"
 
 //*****************************************************************************
 // forward declaration
@@ -50,8 +51,11 @@ public:
 	// ‘I‘ð
 	void Select(bool is_select);
 
+	void __set_button_number_texture(INPUT_EVENT button);
+
 private:
 	Sprite* select_button_;
+	Sprite* set_button_number_;
 
 	u32 current_key_event_;
 };

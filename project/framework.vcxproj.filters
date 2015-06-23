@@ -119,6 +119,9 @@
     <Filter Include="sources\system\xaudio2\se">
       <UniqueIdentifier>{a3c67896-a632-45fc-b720-be0715b12d36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sources\application\object\pause">
+      <UniqueIdentifier>{5ab90b4c-c96f-4f99-be63-ea63e9a7c14e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sources\main.h">
@@ -457,10 +460,19 @@
     <ClInclude Include="sources\system\xaudio2\se\se.h">
       <Filter>sources\system\xaudio2\se</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_tutorial_text.h">
-      <Filter>sources\application\scene\game\gimmick</Filter>
+    <ClInclude Include="sources\application\object\object_player_icon.h">
+      <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\tutorial_back.h">
+    <ClInclude Include="sources\application\object\pause\pause.h">
+      <Filter>sources\application\object\pause</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\pause\sprite_smooth.h">
+      <Filter>sources\application\object\pause</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\game_bg.h">
+      <Filter>sources\application\scene\game</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_bg.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -723,9 +735,6 @@
     <ClCompile Include="sources\application\object\stage_select\select_record_back.cpp">
       <Filter>sources\application\object\stage_select</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
-      <Filter>sources\application\scene\game\stage</Filter>
-    </ClCompile>
     <ClCompile Include="sources\application\object\object_check_point.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
@@ -771,11 +780,23 @@
     <ClCompile Include="sources\system\xaudio2\se\se.cpp">
       <Filter>sources\system\xaudio2\se</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_tutorial_text.cpp">
-      <Filter>sources\application\scene\game\gimmick</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\tutorial_back.cpp">
+    <ClCompile Include="sources\application\object\object_player_icon.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\pause\pause.cpp">
+      <Filter>sources\application\object\pause</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\pause\sprite_smooth.cpp">
+      <Filter>sources\application\object\pause</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\game_bg.cpp">
+      <Filter>sources\application\scene\game</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_bg.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

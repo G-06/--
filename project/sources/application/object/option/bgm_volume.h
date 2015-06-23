@@ -29,9 +29,6 @@ class Sprite;
 class BgmVolume : public Basic
 {
 public:
-	const static u32 MAX_VOLUME = (9);
-	const static u32 MIN_VOLUME = (0);
-
 	// constructor
 	BgmVolume(void);
 
@@ -51,15 +48,18 @@ public:
 	void Draw(void);
 
 	// Т▓Ро
-	void Adjustvolume(u32 volume);
+	void Adjustvolume(f32 volume);
 
 	void Select(bool is_select);
 
 private:
+	static const f32 VOLUME_MAX;
+	static const f32 VOLUME_MIN;
+	static const D3DXVECTOR2 SIZE;
 	Sprite* volume_gage_;
 	Sprite* bgm_button_;
 
-	s32 bgm_volume_;
+	f32 bgm_volume_;
 };
 
 #endif	// _OPTION_MENU_H_

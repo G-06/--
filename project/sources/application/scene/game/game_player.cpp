@@ -24,6 +24,7 @@ const f32 GamePlayer::DECREMENT = (0.9f);
 const f32 GamePlayer::JUMP_SPEED = (-70.0f);
 const s32 GamePlayer::DEFAULT_LIFE_MAX = 3;
 const s32 GamePlayer::DEFAULT_SP_MAX = 60;
+const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
 
 //=============================================================================
 // constructor
@@ -34,6 +35,9 @@ GamePlayer::GamePlayer(void)
 	,acceleration_(0.0f,0.0f)
 	,is_preview_light_(false)
 	,is_force_light_(false)
+	,sp_recover_speed_(2)
+	,is_sp_recover_speed_up_(false)
+	,is_sp_down_(false)
 {
 }
 
@@ -98,7 +102,7 @@ void GamePlayer::Update(void)
 		Jump();
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_6))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LIGHT))
 	{
 		D3DXVECTOR2 vector = D3DXVECTOR2(0.0f,0.0f);
 
@@ -122,7 +126,7 @@ void GamePlayer::Update(void)
 		ChangeLightMode(vector);
 	}
 
-	if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_6))
+	if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LIGHT))
 	{
 		StopLightMode();
 	}
@@ -155,7 +159,19 @@ void GamePlayer::Update(void)
 		move_.y += DEFAULT_GRAVITY;
 		move_ *= DECREMENT;
 
-		sp_++;
+		if(is_sp_recover_speed_up_)
+		{
+			sp_recover_speed_ *= 2;
+		}
+
+		if(is_sp_down_)
+		{
+
+		}
+		else
+		{
+			sp_ += sp_recover_speed_;
+		}
 
 		if(sp_ > sp_max_)
 		{
@@ -172,6 +188,16 @@ void GamePlayer::Update(void)
 		}
 	}
 
+	if(is_sp_down_)
+	{
+		sp_--;
+	}
+
+	if(sp_ <= 0)
+	{
+		sp_ = 0;
+	}
+
 	is_fly_ = true;
 	is_force_light_ = false;
 	old_position_ = position_;
@@ -180,6 +206,10 @@ void GamePlayer::Update(void)
 
 	player_->__is_flip(is_left_);
 	player_->Update();
+	is_sp_down_ = false;
+	is_sp_recover_speed_up_ = false;
+	sp_recover_speed_ = DEFAULT_SP_RECOVER_SPEED;
+
 }
 
 //=============================================================================
@@ -258,30 +288,33 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 	if(is_enable_light_)
 	{
 		D3DXVECTOR2 normalize_vector;
-		is_enable_light_ = false;
-		is_light_ = true;
-		is_fly_ = true;
-		D3DXVec2Normalize(&normalize_vector,&vector);
-
-		if(normalize_vector.x == 0.0f && normalize_vector.y == 0.0f)
+		if(sp_ > 0)
 		{
-			if(is_left_)
+			is_enable_light_ = false;
+			is_light_ = true;
+			is_fly_ = true;
+			D3DXVec2Normalize(&normalize_vector,&vector);
+
+			if(normalize_vector.x == 0.0f && normalize_vector.y == 0.0f)
 			{
-				move_.x = -LIGHT_SPEED;
-				move_.y = 0.0f;
+				if(is_left_)
+				{
+					move_.x = -LIGHT_SPEED;
+					move_.y = 0.0f;
+				}
+				else
+				{
+					move_.x = LIGHT_SPEED;
+					move_.y = 0.0f;
+				}
 			}
 			else
 			{
-				move_.x = LIGHT_SPEED;
-				move_.y = 0.0f;
+				move_ = normalize_vector * LIGHT_SPEED;
 			}
-		}
-		else
-		{
-			move_ = normalize_vector * LIGHT_SPEED;
-		}
 
-		player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
+			player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
+		}
 	}
 }
 

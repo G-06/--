@@ -58,9 +58,10 @@ public:
 private:
 
 	Stage::TYPE stage_id_;
+	static const u32 TEXTURE_MAX = 8;
 
 	u32 time_;			//reko-do
-	Number* number_[4];	//jikann 
+	Number* number_[TEXTURE_MAX];	//jikann 
 	D3DXVECTOR2 offset_position_;
 	RecordBack* record_back_;
 	D3DXVECTOR2 def_position;

@@ -16,9 +16,9 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectLightGauge::GAUGE_SIZE = D3DXVECTOR2(128.0f,64.0f);
+const D3DXVECTOR2 ObjectLightGauge::GAUGE_SIZE = D3DXVECTOR2(350.0f,80.0f);
 const D3DXVECTOR2 ObjectLightGauge::GAUGE_POSITION = D3DXVECTOR2(0.0f,0.0f);
-const D3DXVECTOR2 ObjectLightGauge::GAUGE_FRAME_SIZE = D3DXVECTOR2(192.0f,128.0f);
+const D3DXVECTOR2 ObjectLightGauge::GAUGE_FRAME_SIZE = D3DXVECTOR2(370.0f,110.0f);
 
 //=============================================================================
 // constructor
@@ -55,6 +55,7 @@ bool ObjectLightGauge::Initialize(void)
 	gauge_frame_->__point(Sprite::POINT_LEFT_MIDDLE);
 	gauge_frame_->__texture_id(Texture::TEXTURE_ID_GAME_LIGHT_GAUGE_FRAME);
 	gauge_frame_->SetParameter();
+
 	return true;
 }
 

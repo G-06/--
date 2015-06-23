@@ -128,8 +128,10 @@ bool SceneTitle::Initialize(void)
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
-//	option_ = new Option();
-//	option_->Initialize();
+	option_ = new Option();
+	option_->Initialize();
+	//option_->Load();
+	//option_->__is_indication(false);
 
 	frame_count_ = 0;
 	current_select_ = 0;
@@ -204,7 +206,6 @@ void SceneTitle::Update(void)
 				mode_ = MODE_SELECT;
 			}
 		}
-
 		// 選択肢処理
 		else if(mode_ == MODE_SELECT && !message_window_->__is_show())
 		{
@@ -218,7 +219,7 @@ void SceneTitle::Update(void)
 		message_window_->Update();
 
 		// オプション
-//		option_->Update();
+		option_->Update();
 	}
 
 	// サークルの回転
@@ -248,7 +249,7 @@ void SceneTitle::Draw(void)
 			select_[i].select_->Draw();
 		}
 	}
-//	option_->Draw();
+	option_->Draw();
 
 	message_window_->Draw();
 }
@@ -293,7 +294,7 @@ void SceneTitle::_UpdatePush(void)
 	push_frame_->__color(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
 
 	// モード変更
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
 		decide_interval_ = DESIDE_INTERVAL_COUNT;
 		mode_ = MODE_PUSH_INTERVAL;
@@ -337,7 +338,7 @@ void SceneTitle::_UpdateSelect(void)
 	}
 
 	// キャンセル
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_BACK))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 	{
 		// 選択肢を戻しておく
 		mode_ = MODE_PUSH;
@@ -352,7 +353,7 @@ void SceneTitle::_UpdateSelect(void)
 	}
 
 	// 決定
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN) && !message_window_->__is_move())
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE) && !message_window_->__is_move())
 	{
 		decide = true;
 
@@ -366,7 +367,8 @@ void SceneTitle::_UpdateSelect(void)
 			break;
 
 		case SELECT_OPTION:
-			mode_ = MODE_PUSH;
+			//mode_ = MODE_PUSH;
+			option_->__is_indication(true);
 			break;
 
 		case SELECT_END:
@@ -397,6 +399,8 @@ void SceneTitle::_UpdateSelect(void)
 //=============================================================================
 void SceneTitle::_UpdateMessage(void)
 {
+	if(is_stop_) return;
+
 	// 自動遷移止める
 	frame_count_ = 0;
 
@@ -411,13 +415,22 @@ void SceneTitle::_UpdateMessage(void)
 		{
 			message_window_->SelectUp();
 		}
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 		{
-			message_window_->Close();
-			mode_ = MODE_SELECT;
-			select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
+			const s32 current_select = message_window_->__is_select();
+			if(current_select == MessageWindow::MESSAGE_NO)
+			{
+				message_window_->Close();
+				mode_ = MODE_SELECT;
+				select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
+			}
+			if((current_select == MessageWindow::MESSAGE_YES))
+			{
+				is_stop_ = true;
+			}
 		}
-	}
+	} // is_show
 }
 
 //=============================================================================
@@ -436,7 +449,7 @@ void SceneTitle::_UpdateLuminescence(void)
 		alpha = LUMINESCENCE_ALPHA_MAX;
 		luminescence_->InverseAlphaSpeed();
 	}
-	else if( alpha < LUMINESCENCE_ALPHA_MIN )
+	else if( alpha < LUMINESCENCE_ALPHA_MIN)
 	{
 		alpha  = LUMINESCENCE_ALPHA_MIN;
 		luminescence_->InverseAlphaSpeed();

@@ -71,9 +71,12 @@ public:
 
 	// get press
 	INPUT_EVENT GetPress(const INPUT_EVENT& begin_input_event,const INPUT_EVENT& end_input_event);
+	INPUT_EVENT GetTrigger(const INPUT_EVENT& begin_input_event,const INPUT_EVENT& end_input_event);
 
 	// register input event vertual
 	bool RegisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
+
+	void UnregisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event);
 
 	// save input event vertual
 	void SaveInputEventVertual(void);

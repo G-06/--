@@ -57,10 +57,11 @@ bool StageSelect::Initialize(void)
 	//ブルーニャス
 	nas_ = new ObjectPlayer();
 	nas_ -> Initialize();
-	nas_ -> __position(D3DXVECTOR2(200.f,500.f));
+	nas_ -> __position(D3DXVECTOR2(260.f,510.f));
 	nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
 	nas_->__is_flip(false);
-	nas_->SetSize(D3DXVECTOR2(1000.0f,1000.0f));
+	const f32 scale = 1.2f;
+	nas_->SetSize(D3DXVECTOR2(255.0f * scale,255.0f * scale));
 	//矢印
 	select_arrow_ = new SelectArrow();
 	select_arrow_ ->Initialize();
@@ -72,12 +73,12 @@ bool StageSelect::Initialize(void)
 	//レコードファイル読み込み
 	record_->LoadFile("data/stage/record.bin");
 
-	//record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
+	record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
 
 	//レコード保存（てきとー）
-	record_->__record(0,180);
-	record_->__record(1,181);
-	record_->__record(2,333);
+	record_->__record(0,6112);
+	record_->__record(1,18134);
+	record_->__record(2,33356);
 
 	//レコードファイル出力
 	record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
@@ -131,34 +132,36 @@ void StageSelect::Uninitialize(void)
 //=============================================================================
 void StageSelect::Update(void)
 {
-	switch(update_type_)
+
+	if(next_stage_factory_ == nullptr)
 	{
-	case UPDATE_TYPE_SELECT:		//遊びたいステージを選ぶ
-		SelectUpdate();
-		break;
-	case UPDATE_TYPE_MASSAGE:		//タイトルに戻る？
-		MassageUpdate();
-		break;
-	case UPDATE_TYPE_YORN:			//このステージで遊ぶ?
-		YorNUpdate();
-		break;
+		switch(update_type_)
+		{
+		case UPDATE_TYPE_SELECT:		//遊びたいステージを選ぶ
+			SelectUpdate();
+			break;
+		case UPDATE_TYPE_MASSAGE:		//タイトルに戻る？
+			MassageUpdate();
+			break;
+		case UPDATE_TYPE_YORN:			//このステージで遊ぶ?
+			YorNUpdate();
+			break;
+		}
+
+		//ニャス更新
+		if(regions_[0].region_->__get_move_falg() == false)
+		{
+			nas_->__is_flip(false);
+			nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
+		}
+		else if(regions_[0].region_->__get_move_falg() == true)
+		{
+			nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
+		}
+		nas_->Update();
+
+		message_window_->Update();
 	}
-
-	//ニャス更新
-	if(regions_[0].region_->__get_move_falg() == false)
-	{
-		nas_->__is_flip(false);
-		nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
-	}
-	else if(regions_[0].region_->__get_move_falg() == true)
-	{
-		nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
-	}
-	nas_->Update();
-
-
-
-	message_window_->Update();
 }
 
 //=============================================================================
@@ -190,7 +193,7 @@ void StageSelect::SelectUpdate()
 		//必要以上に右に行かない
 		if(current_stage_ !=TYPE_MAX-1)
 		{
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RIGHT))
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
 			{
 				for(u32 i=0;i<TYPE_MAX-1;i++)
 				{
@@ -205,7 +208,7 @@ void StageSelect::SelectUpdate()
 		//必要以上に左に行かない
 		if(current_stage_!=TYPE_TUTORIAL)
 		{
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_LEFT))
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 			{
 				for(u32 i=0;i<TYPE_MAX-1;i++)
 				{
@@ -218,7 +221,7 @@ void StageSelect::SelectUpdate()
 		}
 
 		//決定押されたとき
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 		{
 			if(message_window_->__is_move() == false)
 			{
@@ -266,7 +269,7 @@ void StageSelect::MassageUpdate()
 		message_window_->SelectUp();
 	}
 	//決定キー押されたとき
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
 		//イエスの時
 		if(message_window_->__is_select() == 0)
@@ -316,7 +319,7 @@ void StageSelect::YorNUpdate()
 	}
 
 	//決定キー押されたとき
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
 		//イエスの時
 		if(message_window_->__is_select() == 0)

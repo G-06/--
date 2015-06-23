@@ -240,12 +240,37 @@ INPUT_EVENT DirectInput::GetPress(const INPUT_EVENT& begin_input_event,const INP
 }
 
 //=============================================================================
+// get trigger
+//=============================================================================
+INPUT_EVENT DirectInput::GetTrigger(const INPUT_EVENT& begin_input_event,const INPUT_EVENT& end_input_event)
+{
+	for(u32 i = begin_input_event; i < end_input_event;++i)
+	{
+		if(input_event_buffer_->CheckTrigger((INPUT_EVENT)i))
+		{
+			return (INPUT_EVENT)i;
+		}
+	}
+
+	return INPUT_EVENT_MAX;
+}
+
+//=============================================================================
 // register input event vertual
 //=============================================================================
 bool DirectInput::RegisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event)
 {
 	return di_virtual_->Register(input_event_virtual,input_event);
 }
+
+//=============================================================================
+// register input event vertual
+//=============================================================================
+void DirectInput::UnregisterInputEventVertual(const INPUT_EVENT& input_event_virtual,const INPUT_EVENT& input_event)
+{
+	di_virtual_->Unregister(input_event_virtual,input_event);
+}
+
 
 //=============================================================================
 // save input event vertual

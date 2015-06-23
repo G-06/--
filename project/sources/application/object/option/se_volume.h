@@ -29,9 +29,6 @@ class Sprite;
 class SeVolume : public Basic
 {
 public:
-	const static u32 MAX_VOLUME = (9);
-	const static u32 MIN_VOLUME = (0);
-
 	// constructor
 	SeVolume(void);
 
@@ -51,7 +48,7 @@ public:
 	void Draw(void);
 
 	// Т▓Ро
-	void Adjustvolume(u32 volume);
+	void Adjustvolume(f32 volume);
 
 	void Select(bool is_select);
 
@@ -59,7 +56,7 @@ private:
 	Sprite* volume_gage_;
 	Sprite* se_button_;
 
-	s32 se_volume_;
+	f32 se_volume_;
 };
 
 #endif	// _OPTION_MENU_H_

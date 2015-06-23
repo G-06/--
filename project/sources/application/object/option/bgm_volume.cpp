@@ -14,10 +14,18 @@
 #include "system/system.h"
 #include "../option.h"
 
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+const f32 BgmVolume::VOLUME_MAX = 1.0f;
+const f32 BgmVolume::VOLUME_MIN = 0.0f;
+const D3DXVECTOR2 BgmVolume::SIZE = D3DXVECTOR2(270.0f,30.0f);
+
 //=============================================================================
 // constructor
 //=============================================================================
 BgmVolume::BgmVolume(void)
+	:bgm_volume_(1.0f)
 {
 }
 
@@ -33,11 +41,9 @@ BgmVolume::~BgmVolume(void)
 //=============================================================================
 bool BgmVolume::Initialize(void)
 {
-	bgm_volume_ = 5;
-
 	volume_gage_ = new Sprite();
 	volume_gage_->Initialize();
-	volume_gage_->__size(D3DXVECTOR2(bgm_volume_*30.f, 30.f));
+	volume_gage_->__size(D3DXVECTOR2(bgm_volume_ * SIZE.x,SIZE.y));
 	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,225.f));
 	volume_gage_->SetParameter();
 
@@ -80,14 +86,21 @@ void BgmVolume::Draw(void)
 //=============================================================================
 // Adjustvolume
 //=============================================================================
-void BgmVolume::Adjustvolume(u32 volume)
+void BgmVolume::Adjustvolume(f32 volume)
 {
-	if(bgm_volume_ + volume <= 9 && bgm_volume_ + volume >= 0)
+	if(volume > VOLUME_MAX)
 	{
-		bgm_volume_ += volume;
-		volume_gage_->__size(D3DXVECTOR2(bgm_volume_*30.f, 30.0f));
-		volume_gage_->SetParameter();
+		volume = VOLUME_MAX;
 	}
+
+	if(volume < VOLUME_MIN)
+	{
+		volume = VOLUME_MIN;
+	}
+
+	bgm_volume_ = volume;
+	volume_gage_->__size(D3DXVECTOR2(bgm_volume_ * SIZE.x,SIZE.y));
+	volume_gage_->SetParameter();
 }
 
 //=============================================================================

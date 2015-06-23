@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// stage
+// normal stage
 //
 // Author		: Kenji Kabutomori
 //
@@ -26,6 +26,10 @@ class Map;
 class StageOffset;
 class Gimmick;
 class ObjectLightGauge;
+class ObjectPlayerIcon;
+class Pause;
+class MessageWindow;
+class GameBg;
 
 //*****************************************************************************
 // class definition
@@ -70,17 +74,29 @@ public:
 	u32 FindWord(s8* dest,const s8* source,s8* words);
 
 	// accessor
+	bool __is_pause(void){return is_pause_;}
 
 protected:
 	GamePlayer* game_player_;
 	Map* map_;
 	StageOffset* stage_offset_;
 	ObjectLightGauge* object_light_gauge_;
+	ObjectPlayerIcon* object_player_icon_;
 	std::list<Gimmick*> gimmick_container_;
 	u32 time_count_;
 	D3DXVECTOR2 position_;
 	bool is_pause_;
 	bool is_clear_;
+	bool is_pause_input_;
+	Pause* pause_;
+	MessageWindow* message_window_;
+
+	GameBg* game_bg_;
+	TYPE type_;
+
+private:
+	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;
+	static const D3DXVECTOR2 DEFAULT_PLAYER_ICON_POSITION;
 };
 
 #endif	// _NORMAL_STAGE_H_
