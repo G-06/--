@@ -259,6 +259,9 @@ void NormalStage::Update(void)
 		{
 			time_count_++;
 
+			// offset
+			stage_offset_->__old_reference_position(game_player_->__position());
+
 			game_player_->Update();
 
 			object_player_icon_->Update();
