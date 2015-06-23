@@ -132,34 +132,36 @@ void StageSelect::Uninitialize(void)
 //=============================================================================
 void StageSelect::Update(void)
 {
-	switch(update_type_)
+
+	if(next_stage_factory_ == nullptr)
 	{
-	case UPDATE_TYPE_SELECT:		//遊びたいステージを選ぶ
-		SelectUpdate();
-		break;
-	case UPDATE_TYPE_MASSAGE:		//タイトルに戻る？
-		MassageUpdate();
-		break;
-	case UPDATE_TYPE_YORN:			//このステージで遊ぶ?
-		YorNUpdate();
-		break;
+		switch(update_type_)
+		{
+		case UPDATE_TYPE_SELECT:		//遊びたいステージを選ぶ
+			SelectUpdate();
+			break;
+		case UPDATE_TYPE_MASSAGE:		//タイトルに戻る？
+			MassageUpdate();
+			break;
+		case UPDATE_TYPE_YORN:			//このステージで遊ぶ?
+			YorNUpdate();
+			break;
+		}
+
+		//ニャス更新
+		if(regions_[0].region_->__get_move_falg() == false)
+		{
+			nas_->__is_flip(false);
+			nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
+		}
+		else if(regions_[0].region_->__get_move_falg() == true)
+		{
+			nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
+		}
+		nas_->Update();
+
+		message_window_->Update();
 	}
-
-	//ニャス更新
-	if(regions_[0].region_->__get_move_falg() == false)
-	{
-		nas_->__is_flip(false);
-		nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
-	}
-	else if(regions_[0].region_->__get_move_falg() == true)
-	{
-		nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
-	}
-	nas_->Update();
-
-
-
-	message_window_->Update();
 }
 
 //=============================================================================
