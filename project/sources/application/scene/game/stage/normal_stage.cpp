@@ -27,12 +27,13 @@
 #include "collision/collision_map.h"
 #include "object/pause/pause.h"
 #include "object/message_window.h"
+#include "../game_bg.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(100.0f,100.0f);
-const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(100.0f,100.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(60.0f,620.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(60.0f,620.0f);
 const u32 DEST_FRAME_COUNT = 20;
 
 //=============================================================================
@@ -46,6 +47,7 @@ NormalStage::NormalStage(const TYPE& type)
 	,pause_(nullptr)
 	,message_window_(nullptr)
 {
+	type_ = type;
 }
 
 //=============================================================================
@@ -92,6 +94,11 @@ bool NormalStage::Initialize(void)
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
+	//haikei
+	game_bg_ = new GameBg();
+	game_bg_->Initialize();
+	game_bg_->__SetTexture(type_);
+
 	return true;
 }
 
@@ -121,6 +128,7 @@ void NormalStage::Uninitialize(void)
 	SafeRelease(pause_);
 
 	SafeRelease(message_window_);
+	SafeRelease(game_bg_);
 }
 
 //=============================================================================
@@ -162,7 +170,7 @@ void NormalStage::Update(void)
 							message_window_->SelectUp();
 						}
 
-						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 						{
 							const s32 current_select = message_window_->__is_select();
 							if(current_select == MessageWindow::MESSAGE_NO)
@@ -200,15 +208,15 @@ void NormalStage::Update(void)
 				}
 				else
 				{
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_UP))
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
 					{
 						pause_->SelectDown();
 					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_DOWN))
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
 					{
 						pause_->SelectUp();
 					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 					{
 						// select
 						const s32 current_select = pause_->__is_select();
@@ -238,7 +246,7 @@ void NormalStage::Update(void)
 							}
 						} // switch
 					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_O) && !pause_->__is_move())
+					if((GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL)) && !pause_->__is_move())
 					{
 						is_pause_ = false;
 						pause_->Close();
@@ -267,6 +275,7 @@ void NormalStage::Update(void)
 			if(game_player_->__position().y > map_->__size().y)
 			{
 				game_player_->Dead();
+				game_bg_->ReSetUv();
 			}
 
 			CollisionGimmick();
@@ -280,17 +289,16 @@ void NormalStage::Update(void)
 
 			map_->__position(-stage_offset_->__position());
 
+			//”wŒiXV
+			game_bg_->__SetPosition(stage_offset_->__position());
+			game_bg_->Update();
+
 			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 			{
 				(*it)->__offset_position(stage_offset_->__position());
 			}
 
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_P))
-			{
-				next_scene_factory_ = new TitleFactory();
-			}
-
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_O) && !pause_->__is_move())
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) && !pause_->__is_move())
 			{
 				is_pause_ = true;
 				pause_->Show();
@@ -314,6 +322,7 @@ void NormalStage::Update(void)
 //=============================================================================
 void NormalStage::Draw(void)
 {
+	game_bg_->Draw();
 	map_->Draw();
 
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
@@ -419,6 +428,8 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			{
 				if(game_player_->__is_light())
 				{
+					game_player_->__position(collision_map.__position());
+
 					if(collision_map.__vector().x != 0.0f)
 					{
 						game_player_->ChangeDirection(D3DXVECTOR2(-game_player_->__move().x,game_player_->__move().y));
@@ -477,7 +488,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
-				game_player_->__sp_recover_speed(game_player_->__sp_recover_speed() * 2);
+				game_player_->__is_sp_recover_speed_up(true);
 			}
 			break;
 		}
@@ -485,7 +496,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
-				game_player_->__sp_recover_speed(game_player_->__sp_recover_speed() * -1);
+				game_player_->__is_sp_down(true);
 			}
 			break;
 		}

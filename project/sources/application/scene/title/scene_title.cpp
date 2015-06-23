@@ -338,7 +338,7 @@ void SceneTitle::_UpdateSelect(void)
 	}
 
 	// ƒLƒƒƒ“ƒZƒ‹
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_BACK))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 	{
 		// ‘I‘ðŽˆ‚ð–ß‚µ‚Ä‚¨‚­
 		mode_ = MODE_PUSH;
@@ -416,7 +416,7 @@ void SceneTitle::_UpdateMessage(void)
 			message_window_->SelectUp();
 		}
 
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_RETURN))
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 		{
 			const s32 current_select = message_window_->__is_select();
 			if(current_select == MessageWindow::MESSAGE_NO)
@@ -449,7 +449,7 @@ void SceneTitle::_UpdateLuminescence(void)
 		alpha = LUMINESCENCE_ALPHA_MAX;
 		luminescence_->InverseAlphaSpeed();
 	}
-	else if( alpha < LUMINESCENCE_ALPHA_MIN )
+	else if( alpha < LUMINESCENCE_ALPHA_MIN)
 	{
 		alpha  = LUMINESCENCE_ALPHA_MIN;
 		luminescence_->InverseAlphaSpeed();

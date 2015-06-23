@@ -36,6 +36,8 @@ GamePlayer::GamePlayer(void)
 	,is_preview_light_(false)
 	,is_force_light_(false)
 	,sp_recover_speed_(2)
+	,is_sp_recover_speed_up_(false)
+	,is_sp_down_(false)
 {
 }
 
@@ -157,7 +159,19 @@ void GamePlayer::Update(void)
 		move_.y += DEFAULT_GRAVITY;
 		move_ *= DECREMENT;
 
-		sp_ += sp_recover_speed_;
+		if(is_sp_recover_speed_up_)
+		{
+			sp_recover_speed_ *= 2;
+		}
+
+		if(is_sp_down_)
+		{
+
+		}
+		else
+		{
+			sp_ += sp_recover_speed_;
+		}
 
 		if(sp_ > sp_max_)
 		{
@@ -174,6 +188,16 @@ void GamePlayer::Update(void)
 		}
 	}
 
+	if(is_sp_down_)
+	{
+		sp_--;
+	}
+
+	if(sp_ <= 0)
+	{
+		sp_ = 0;
+	}
+
 	is_fly_ = true;
 	is_force_light_ = false;
 	old_position_ = position_;
@@ -182,6 +206,8 @@ void GamePlayer::Update(void)
 
 	player_->__is_flip(is_left_);
 	player_->Update();
+	is_sp_down_ = false;
+	is_sp_recover_speed_up_ = false;
 	sp_recover_speed_ = DEFAULT_SP_RECOVER_SPEED;
 
 }
@@ -262,30 +288,33 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 	if(is_enable_light_)
 	{
 		D3DXVECTOR2 normalize_vector;
-		is_enable_light_ = false;
-		is_light_ = true;
-		is_fly_ = true;
-		D3DXVec2Normalize(&normalize_vector,&vector);
-
-		if(normalize_vector.x == 0.0f && normalize_vector.y == 0.0f)
+		if(sp_ > 0)
 		{
-			if(is_left_)
+			is_enable_light_ = false;
+			is_light_ = true;
+			is_fly_ = true;
+			D3DXVec2Normalize(&normalize_vector,&vector);
+
+			if(normalize_vector.x == 0.0f && normalize_vector.y == 0.0f)
 			{
-				move_.x = -LIGHT_SPEED;
-				move_.y = 0.0f;
+				if(is_left_)
+				{
+					move_.x = -LIGHT_SPEED;
+					move_.y = 0.0f;
+				}
+				else
+				{
+					move_.x = LIGHT_SPEED;
+					move_.y = 0.0f;
+				}
 			}
 			else
 			{
-				move_.x = LIGHT_SPEED;
-				move_.y = 0.0f;
+				move_ = normalize_vector * LIGHT_SPEED;
 			}
-		}
-		else
-		{
-			move_ = normalize_vector * LIGHT_SPEED;
-		}
 
-		player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
+			player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
+		}
 	}
 }
 

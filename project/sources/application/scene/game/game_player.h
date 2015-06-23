@@ -104,6 +104,8 @@ public:
 	bool __is_preview_light(void) { return is_preview_light_; }
 	bool __is_force_light(void) { return is_force_light_; }
 	void __is_force_light(bool is_force_light) { is_force_light_ = is_force_light; }
+	void __is_sp_recover_speed_up(bool is_sp_recover_speed_up) { is_sp_recover_speed_up_ = is_sp_recover_speed_up; }
+	void __is_sp_down(bool is_sp_down) { is_sp_down_ = is_sp_down; }
 
 private:
 	enum ANIMATION_TYPE
@@ -148,6 +150,8 @@ private:
 	s32 sp_;
 	s32 sp_max_;
 	s32 sp_recover_speed_;
+	bool is_sp_recover_speed_up_;
+	bool is_sp_down_;
 	D3DXVECTOR2 return_position_;
 	u32 check_point_priority_;
 	D3DXVECTOR2 acceleration_;

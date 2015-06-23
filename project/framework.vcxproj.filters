@@ -469,13 +469,10 @@
     <ClInclude Include="sources\application\object\pause\sprite_smooth.h">
       <Filter>sources\application\object\pause</Filter>
     </ClInclude>
-    <ClInclude Include="effect_game_start.h">
-      <Filter>sources\application\object</Filter>
+    <ClInclude Include="sources\application\scene\game\game_bg.h">
+      <Filter>sources\application\scene\game</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\effect_game_end.h">
-      <Filter>sources\application\object</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\object\effect_check_point.h">
+    <ClInclude Include="sources\application\object\object_bg.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -738,9 +735,6 @@
     <ClCompile Include="sources\application\object\stage_select\select_record_back.cpp">
       <Filter>sources\application\object\stage_select</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
-      <Filter>sources\application\scene\game\stage</Filter>
-    </ClCompile>
     <ClCompile Include="sources\application\object\object_check_point.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
@@ -795,14 +789,14 @@
     <ClCompile Include="sources\application\object\pause\sprite_smooth.cpp">
       <Filter>sources\application\object\pause</Filter>
     </ClCompile>
-    <ClCompile Include="effect_game_start.cpp">
+    <ClCompile Include="sources\application\scene\game\game_bg.cpp">
+      <Filter>sources\application\scene\game</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_bg.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\effect_game_end.cpp">
-      <Filter>sources\application\object</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\effect_check_point.cpp">
-      <Filter>sources\application\object</Filter>
+    <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

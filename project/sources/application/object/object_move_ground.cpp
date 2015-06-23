@@ -48,7 +48,7 @@ bool ObjectMoveGround::Initialize(void)
 	object_move_ground_->__division_width(DIVISION_WIDTH);
 	object_move_ground_->__division_height(DIVISION_HEIGHT);
 	object_move_ground_->__size(SIZE);
-	object_move_ground_->__texture_id(Texture::TEXTURE_ID_DEATH_GROUND);
+	object_move_ground_->__texture_id(Texture::TEXTURE_ID_MOVE_GROUND);
 	object_move_ground_->SetParameter();
 
 	return true;

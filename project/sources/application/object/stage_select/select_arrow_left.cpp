@@ -14,8 +14,9 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
-const D3DXVECTOR2 DEFAULT_SIZE(81.0f*0.95f,140.0f*0.92f);	// デフォルトサイズ
-const u32 ARROW_FLASH_TIME = 10;							// 矢印の点滅速度
+//const D3DXVECTOR2 DEFAULT_SIZE(81.0f*0.95f,140.0f*0.92f);	// デフォルトサイズ
+const D3DXVECTOR2 DEFAULT_SIZE(128.0f*1.1f,128.0f*1.1f);	// デフォルトサイズ
+const u32 ARROW_FLASH_TIME = 18;							// 矢印の点滅速度
 const D3DXVECTOR2 DEFAULT_POS((DEFAULT_SCREEN_WIDTH * 0.5f)-((850.0f*0.87f)*0.6f),340.0f);				// デフォルトポジション
 
 //=============================================================================
@@ -66,7 +67,7 @@ void ArrowLeft::Update(void)
 {
 	time_++;
 
-	if(time_==10)
+	if(time_==ARROW_FLASH_TIME)
 	{
 		if(alpha_==255)
 		{
