@@ -72,6 +72,7 @@ public:
 		MODE_SELECT,
 		MODE_MESSAGE,
 		MODE_PUSH_INTERVAL,
+		MODE_OPTION,
 		MODE_MAX
 	};
 
@@ -124,6 +125,7 @@ private:
 	// 現在のモード
 	MODE mode_;
 
+	// オプション
 	Option* option_;
 };
 

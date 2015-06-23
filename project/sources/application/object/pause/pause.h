@@ -79,6 +79,8 @@ public:
 	void SelectUp(void);
 	void SelectDown(void);
 
+	bool __select_texture_id_(const s32& select_number, const Texture::TEXTURE_ID& texture_id);
+
 private:
 
 	static const D3DXVECTOR2 DEFAULT_POSITION;

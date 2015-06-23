@@ -30,6 +30,7 @@ class ObjectPlayerIcon;
 class Pause;
 class MessageWindow;
 class GameBg;
+class Option;
 
 //*****************************************************************************
 // class definition
@@ -86,10 +87,12 @@ protected:
 	u32 time_count_;
 	D3DXVECTOR2 position_;
 	bool is_pause_;
+	bool is_option_;
 	bool is_clear_;
 	bool is_pause_input_;
 	Pause* pause_;
 	MessageWindow* message_window_;
+	Option* option_;
 
 	GameBg* game_bg_;
 	TYPE type_;

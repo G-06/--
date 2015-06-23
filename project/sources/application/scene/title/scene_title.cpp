@@ -65,11 +65,11 @@ SceneTitle::SceneTitle(void)
 	,luminescence_(nullptr)
 	,circle_(nullptr)
 	,message_window_(nullptr)
+	,option_(nullptr)
 	,frame_count_(0)
 	,current_select_(0)
 	,decide_interval_(0)
 	,mode_(MODE_PUSH)
-	,option_(nullptr)
 {
 	memset(select_, 0, sizeof(select_));
 }
@@ -128,6 +128,7 @@ bool SceneTitle::Initialize(void)
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
+	// option
 	option_ = new Option();
 	option_->Initialize();
 	//option_->Load();
@@ -156,14 +157,14 @@ void SceneTitle::Uninitialize(void)
 
 	SafeRelease(circle_);
 
-	SafeRelease(option_);
-
 	for(int i = 0 ; i < SELECT_MAX ; i++){
 		SafeRelease(select_[i].frame_);
 		SafeRelease(select_[i].select_);
 	}
 
 	SafeRelease(message_window_);
+
+	SafeRelease(option_);
 
 	SafeDelete(next_scene_factory_);
 }
@@ -216,10 +217,17 @@ void SceneTitle::Update(void)
 		{
 			_UpdateMessage();
 		}
-		message_window_->Update();
-
 		// オプション
-		option_->Update();
+		else if(mode_ == MODE_OPTION)
+		{
+			option_->Update();
+			if(option_->__is_indication() == false){
+				mode_ = MODE_SELECT;
+				select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
+			}
+		}
+
+		message_window_->Update();
 	}
 
 	// サークルの回転
@@ -367,7 +375,7 @@ void SceneTitle::_UpdateSelect(void)
 			break;
 
 		case SELECT_OPTION:
-			//mode_ = MODE_PUSH;
+			mode_ = MODE_OPTION;
 			option_->__is_indication(true);
 			break;
 
