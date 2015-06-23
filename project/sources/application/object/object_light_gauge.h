@@ -59,6 +59,7 @@ private:
 
 	Sprite* gauge_;
 	Sprite* gauge_frame_;
+	Sprite* gauge_back_;
 	D3DXVECTOR2 position_;
 	f32 rate_;
 };
