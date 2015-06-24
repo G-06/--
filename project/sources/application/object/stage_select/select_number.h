@@ -50,12 +50,14 @@ public:
 
 	void __Set_position(D3DXVECTOR2 pos){position_ = pos;};
 	void __Set_index(u32 index){index_ = index;};
+	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; };
 
 private:
 
 	Sprite* number_;
 	D3DXVECTOR2 position_;
 	u32 index_;
+	D3DXVECTOR2 offset_position_;
 
 
 };

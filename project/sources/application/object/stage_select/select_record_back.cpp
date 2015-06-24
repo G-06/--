@@ -51,8 +51,10 @@ bool RecordBack::Initialize(void)
 		return false;
 	}
 
+	position_ = DEFAULT_POSITION;
+
 	record_back_->__size(DEFAULT_SIZE);
-	record_back_->__position(DEFAULT_POSITION);
+	record_back_->__position(position_);
 	record_back_->__texture_id(Texture::TEXTURE_ID_SELECT_TIME_FRAME);
 	record_back_->__index((u32)0);
 	record_back_->__point(Sprite::POINT_CENTER);
@@ -74,7 +76,7 @@ void RecordBack::Uninitialize(void)
 //=============================================================================
 void RecordBack::Update(void)
 {
-	record_back_->__position(D3DXVECTOR2(DEFAULT_POSITION.x + offset_position_.x,DEFAULT_POSITION.y + offset_position_.y));
+	record_back_->__position(D3DXVECTOR2(position_.x + offset_position_.x,position_.y + offset_position_.y));
 	record_back_->SetParameter();
 }
 
