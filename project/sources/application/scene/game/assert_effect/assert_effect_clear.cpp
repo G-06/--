@@ -57,6 +57,7 @@ bool AssertEffectClear::Initialize(void)
 //=============================================================================
 void AssertEffectClear::Uninitialize(void)
 {
+	SafeRelease(sprite_);
 }
 
 //=============================================================================
