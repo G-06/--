@@ -73,12 +73,11 @@ bool StageSelect::Initialize(void)
 	//レコードファイル読み込み
 	record_->LoadFile("data/stage/record.bin");
 
-	record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
-
-	//レコード保存（てきとー）
-	record_->__record(0,6112);
-	record_->__record(1,18134);
-	record_->__record(2,33356);
+	////レコード保存（てきとー）
+	//record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
+	record_->__record(0,0);
+	record_->__record(1,3600);
+	record_->__record(2,1800);
 
 	//レコードファイル出力
 	record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);

@@ -69,7 +69,7 @@ void Number::Uninitialize(void)
 //=============================================================================
 void Number::Update(void)
 {
-	number_->__position(position_);
+	number_->__position(D3DXVECTOR2(position_.x + offset_position_.x,position_.y + offset_position_.y));
 	number_->__index(index_);
 	number_->SetParameter();
 
