@@ -19,12 +19,13 @@
 // constant definition
 //*****************************************************************************
 const f32 GamePlayer::LIGHT_SPEED = (30.0f);
-const f32 GamePlayer::SPEED = (2.0f);
+const f32 GamePlayer::SPEED = (1.7f);
 const f32 GamePlayer::DECREMENT = (0.9f);
 const f32 GamePlayer::JUMP_SPEED = (-70.0f);
 const s32 GamePlayer::DEFAULT_LIFE_MAX = 3;
 const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
+const D3DXVECTOR2 GamePlayer::DEFAULT_SIZE = D3DXVECTOR2(190.0f,197.0f);
 
 //=============================================================================
 // constructor
@@ -57,7 +58,7 @@ bool GamePlayer::Initialize(void)
 	old_position_ = position_;
 	return_position_ = position_;
 	move_ = D3DXVECTOR2(0,0);
-	size_ = D3DXVECTOR2(200,200);
+	size_ = DEFAULT_SIZE;
 	offset_position_ = D3DXVECTOR2(0,0);
 	is_left_ = false;
 	is_light_ = false;
