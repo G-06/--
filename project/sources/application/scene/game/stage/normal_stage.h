@@ -30,6 +30,10 @@ class ObjectPlayerIcon;
 class Pause;
 class MessageWindow;
 class GameBg;
+class Effect;
+class AssertEffectStart;
+class AssertEffectClear;
+class SelectRecord;
 
 //*****************************************************************************
 // class definition
@@ -83,14 +87,19 @@ protected:
 	ObjectLightGauge* object_light_gauge_;
 	ObjectPlayerIcon* object_player_icon_;
 	std::list<Gimmick*> gimmick_container_;
+	std::list<Effect*> effect_container_;
 	u32 time_count_;
 	D3DXVECTOR2 position_;
 	bool is_pause_;
 	bool is_clear_;
+	bool is_start_;
 	bool is_pause_input_;
 	Pause* pause_;
 	MessageWindow* message_window_;
 
+	AssertEffectStart* assert_effect_start_;
+	AssertEffectClear* assert_effect_clear_;
+	SelectRecord* select_record_;
 	GameBg* game_bg_;
 	TYPE type_;
 

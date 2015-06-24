@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// assert effect
+// assert effect start
 //
 // Author		: Kenji Kabutomori
 //
@@ -10,36 +10,30 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _ASSERT_EFFECT_H_
-#define _ASSERT_EFFECT_H_
+#ifndef _ASSERT_EFFECT_START_H_
+#define _ASSERT_EFFECT_START_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
+#include "assert_effect.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class AssertEffect : public Basic
+class AssertEffectStart : public AssertEffect
 {
 public:
-	enum TYPE
-	{
-		TYPE_START = 0,
-		TYPE_CLEAR,
-		TYPE_MAX,
-	};
-
 	// constructor
-	AssertEffect(TYPE type);
+	AssertEffectStart(void);
 
 	// destructor
-	virtual ~AssertEffect(void);
+	virtual ~AssertEffectStart(void);
 
 	// initialize
 	virtual bool Initialize(void);
@@ -54,16 +48,17 @@ public:
 	virtual void Draw(void);
 
 	// accessor
-	TYPE __type(void)const { return type_; }
-	bool __is_assert(void) { return is_assert_; }
-	void __is_assert(bool is_assert) { is_assert_ = is_assert; }
 
-protected:
-	TYPE type_;
-	bool is_assert_;
-
+private:
+	static const u32 SRIDE_IN_FRAME;
+	static const u32 STOP_FRAME;
+	static const u32 SRIDE_OUT_FRAME;
+	Sprite* sprite_;
+	D3DXVECTOR2 position_;
+	D3DXVECTOR2 purpose_position_;
+	u32 frame_count_;
 };
 
-#endif	// _ASSERT_EFFECT_H_
+#endif	// _ASSERT_EFFECT_START_H_
 
 //---------------------------------- EOF --------------------------------------

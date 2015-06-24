@@ -475,6 +475,15 @@
     <ClInclude Include="sources\application\object\object_bg.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_check_point.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect_start.h">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect_clear.h">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -797,6 +806,15 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp">
       <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_check_point.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect_start.cpp">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect_clear.cpp">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

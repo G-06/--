@@ -108,15 +108,13 @@ void SelectRecord::__set_time(u32 time)
 	workA = time_;
 
 	//ƒ~ƒŠ•b‚ğ‚¾‚·
-	mlisec=workA%100;
-	workA-=mlisec;
+	mlisec = workA % 60;
+	workA = workA / 60;
 	//•b‚ğŠ„‚èo‚·
-	sec = workA%6000;
-	sec = sec/100;
+	sec = workA%60;
+	workA = sec / 60;
 	//•b‚ğˆø‚¢‚Ä•ª‚Ì‚İ‚É‚·‚é
-	workA-=sec;
-	//‚Ó‚ñ‚ğŠ„‚èo‚·
-	min=workA/6000;
+	min=workA%60;
 
 	workA = min;
 	//•ª@‚P‚O‚ÌˆÊ

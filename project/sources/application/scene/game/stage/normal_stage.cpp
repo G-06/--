@@ -28,6 +28,11 @@
 #include "object/pause/pause.h"
 #include "object/message_window.h"
 #include "../game_bg.h"
+#include "../effect/effect.h"
+#include "../effect/effect_check_point.h"
+#include "../assert_effect/assert_effect_start.h"
+#include "../assert_effect/assert_effect_clear.h"
+#include "object/stage_select/select_record.h"
 
 //*****************************************************************************
 // constant definition
@@ -46,6 +51,7 @@ NormalStage::NormalStage(const TYPE& type)
 	,is_pause_input_(false)
 	,pause_(nullptr)
 	,message_window_(nullptr)
+	,is_start_(true)
 {
 	type_ = type;
 }
@@ -99,6 +105,20 @@ bool NormalStage::Initialize(void)
 	game_bg_->Initialize();
 	game_bg_->__SetTexture(type_);
 
+	assert_effect_start_ = new AssertEffectStart();
+	assert_effect_start_->Initialize();
+	assert_effect_start_->__is_assert(true);
+
+	assert_effect_clear_ = new AssertEffectClear();
+	assert_effect_clear_->Initialize();
+
+	is_start_ = true;
+
+	time_count_ = 0;
+	select_record_ = new SelectRecord();
+	select_record_->Initialize();
+	select_record_->__set_time(time_count_);
+
 	return true;
 }
 
@@ -123,6 +143,13 @@ void NormalStage::Uninitialize(void)
 	}
 	gimmick_container_.clear();
 
+	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+	{
+		SafeRelease(*it);
+	}
+
+	effect_container_.clear();
+
 	SafeDelete(next_stage_factory_);
 
 	SafeRelease(pause_);
@@ -136,11 +163,25 @@ void NormalStage::Uninitialize(void)
 //=============================================================================
 void NormalStage::Update(void)
 {
-	if(is_clear_)
+	if(is_start_)
 	{
-		if(next_stage_factory_ == nullptr)
+		assert_effect_start_->Update();
+
+		if(!assert_effect_start_->__is_assert())
 		{
-			next_stage_factory_ = new SelectFactory();
+			is_start_ = false;
+		}
+	}
+	else if(is_clear_)
+	{
+		assert_effect_clear_->Update();
+
+		if(assert_effect_clear_->__is_stop())
+		{
+			if(next_stage_factory_ == nullptr)
+			{
+				next_stage_factory_ = new SelectFactory();
+			}
 		}
 	}
 	else if(game_player_->__life() < 0)
@@ -222,23 +263,23 @@ void NormalStage::Update(void)
 						const s32 current_select = pause_->__is_select();
 						switch(current_select)
 						{
-						case Pause::SELECT_TYPE_GAME_BACK:
+							case Pause::SELECT_TYPE_GAME_BACK:
 							{
 								is_pause_ = false;
 								pause_->Close();
 								break;
 							}
-						case Pause::SELECT_TYPE_TITLE_BACK:
+							case Pause::SELECT_TYPE_TITLE_BACK:
 							{
 								message_window_->Show();
 								break;
 							}
-						case Pause::SELECT_TYPE_STAGESELECT_BACK:
+							case Pause::SELECT_TYPE_STAGESELECT_BACK:
 							{
 								message_window_->Show();
 								break;
 							}
-						case Pause::SELECT_TYPE_OPTION:
+							case Pause::SELECT_TYPE_OPTION:
 							{
 								is_pause_ = false;
 								pause_->Close();
@@ -268,9 +309,25 @@ void NormalStage::Update(void)
 				(*it)->Update();
 			}
 
+			for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+			{
+				(*it)->Update();
+			}
+
 			object_light_gauge_->__rate((f32)game_player_->__sp() / (f32)game_player_->__sp_max() * 100.0f);
 
 			object_light_gauge_->Update();
+
+
+			if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
+			{
+				game_player_->__position(D3DXVECTOR2(map_->__size().x - game_player_->__size().x * 0.5f,game_player_->__position().y));
+			}
+
+			if(game_player_->__position().x - game_player_->__size().x * 0.5f < 0)
+			{
+				game_player_->__position(D3DXVECTOR2(game_player_->__size().x * 0.5f,game_player_->__position().y));
+			}
 
 			if(game_player_->__position().y > map_->__size().y)
 			{
@@ -280,6 +337,19 @@ void NormalStage::Update(void)
 
 			CollisionGimmick();
 			CollisionChip();
+
+			auto predfunc = [](Effect* effect)->bool
+			{
+				if(effect->__is_death())
+				{
+					effect->Uninitialize();
+					delete effect;
+					return true;
+				}
+				return false;
+			};
+
+			effect_container_.erase(remove_if(effect_container_.begin(),effect_container_.end(),predfunc),effect_container_.end());
 
 			// offset
 			stage_offset_->__reference_position(game_player_->__position());
@@ -298,12 +368,19 @@ void NormalStage::Update(void)
 				(*it)->__offset_position(stage_offset_->__position());
 			}
 
+			for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+			{
+				(*it)->__offset_position(stage_offset_->__position());
+			}
+
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) && !pause_->__is_move())
 			{
 				is_pause_ = true;
 				pause_->Show();
 			}
 		}
+		select_record_->__set_time(time_count_);
+		select_record_->Update();
 		pause_->Update();
 		message_window_->Update();
 	}
@@ -330,9 +407,18 @@ void NormalStage::Draw(void)
 		(*it)->Draw();
 	}
 
+	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+	{
+		(*it)->Draw();
+	}
+
 	game_player_->Draw();
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
+	select_record_->Draw();
+
+	assert_effect_start_->Draw();
+	assert_effect_clear_->Draw();
 
 	pause_->Draw();
 	message_window_->Draw();
@@ -533,12 +619,17 @@ void NormalStage::CollisionGimmick(void)
 					{
 						game_player_->__check_point_priority(data->_priority);
 						game_player_->__return_position(gimmick_position);
+						EffectCheckPoint* effect = new EffectCheckPoint();
+						effect->Initialize();
+						effect->__position(gimmick_position);
+						effect_container_.push_back(effect);
 					}
 					break;
 				}
 				case Gimmick::TYPE_GOAL_POINT:
 				{
 					DEBUG_TOOL.__debug_display()->Print("hit goal point\n");
+					assert_effect_clear_->__is_assert(true);
 					game_player_->Clear();
 					is_clear_ = true;
 					break;

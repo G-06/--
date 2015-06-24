@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// effect
+// effect check point
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,7 +9,8 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "effect.h"
+#include "effect_check_point.h"
+#include "render/sprite.h"
 
 //*****************************************************************************
 // constant definition
@@ -18,48 +19,63 @@
 //=============================================================================
 // constructor
 //=============================================================================
-Effect::Effect(TYPE type)
-	:type_(type)
-	,position_(0.0f,0.0f)
-	,offset_position_(0.0f,0.0f)
-	,is_death_(false)
+EffectCheckPoint::EffectCheckPoint(void)
+	:Effect(TYPE_CHECK_POINT)
+	,sprite_(nullptr)
+	,frame_count_(0)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-Effect::~Effect(void)
+EffectCheckPoint::~EffectCheckPoint(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool Effect::Initialize(void)
+bool EffectCheckPoint::Initialize(void)
 {
+	sprite_ = new Sprite();
+	SafeInitialize(sprite_);
+	sprite_->__point(Sprite::POINT_CENTER);
+	sprite_->__size(D3DXVECTOR2(128.0f,64.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_CHECK_POINT);
+	sprite_->SetParameter();
+
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void Effect::Uninitialize(void)
+void EffectCheckPoint::Uninitialize(void)
 {
+	SafeRelease(sprite_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void Effect::Update(void)
+void EffectCheckPoint::Update(void)
 {
+	frame_count_++;
+
+	if(frame_count_ > 60)
+	{
+		is_death_ = true;
+	}
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void Effect::Draw(void)
+void EffectCheckPoint::Draw(void)
 {
+	sprite_->__position(position_ - offset_position_);
+	sprite_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------
