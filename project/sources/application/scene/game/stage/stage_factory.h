@@ -19,6 +19,7 @@
 #include "stage.h"
 #include "stage_select.h"
 #include "stage_tutorial.h"
+#include "stage_1.h"
 
 //*****************************************************************************
 // class definition
@@ -73,6 +74,23 @@ public:
 	// create
 	Stage* Create(void)const { return new StageTutorial(); }
 };
+
+//*****************************************************************************
+// stage1 factory
+//*****************************************************************************
+class StageOneFactory : public StageFactory
+{
+public:
+	// constructor
+	StageOneFactory(void) : StageFactory(Stage::TYPE_TUTORIAL) {}
+
+	// destructor
+	virtual ~StageOneFactory(void) {}
+
+	// create
+	Stage* Create(void)const { return new StageOne(); }
+};
+
 
 //*****************************************************************************
 // game factory

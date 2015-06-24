@@ -333,7 +333,7 @@ void StageSelect::YorNUpdate()
 						next_stage_factory_ = new TutorialFactory();
 					break;
 				case TYPE_STAGE1:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageOneFactory();
 					break;
 				case TYPE_STAGE2:
 					next_stage_factory_ = new TutorialFactory();

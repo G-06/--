@@ -1,84 +1,91 @@
 //*****************************************************************************
 //
-// stage offset
+// stage 1
 //
-// Author		: Kenji Kabutomori
+// Author		: kitazawa taichi
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include"stage_offset.h"
-#include "system/system.h"
+#include "stage_1.h"
+#include "stage_factory.h"
+#include "object/map.h"
+#include "object/stage_offset.h"
 
-static const D3DXVECTOR2 POSITION_MOVE_RATE = D3DXVECTOR2(0.15f, 0.16f);
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
 
 //=============================================================================
 // constructor
 //=============================================================================
-StageOffset::StageOffset(void)
-	:position_(0.0f,0.0f)
-	,target_position_(0.0f,0.0f)
-	,stage_size_(0.0f,0.0f)
-	,reference_position_(0.0f,0.0f)
-	,screen_size_(0.0f,0.0f)
+StageOne::StageOne(void)
+	:NormalStage(TYPE_TUTORIAL)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-StageOffset::~StageOffset(void)
+StageOne::~StageOne(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool StageOffset::Initialize(void)
+bool StageOne::Initialize(void)
 {
+	NormalStage::Initialize();
+
+	map_ = new Map();
+
+	if(!SafeInitialize(map_))
+	{
+		return false;
+	}
+
+	map_->LoadFromFile("data/map/stage1.bin");
+
+	stage_offset_->__stage_size(map_->__size());
+
+	LoadFromFile("data/script/stage1.csv");
+
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void StageOffset::Uninitialize(void)
+void StageOne::Uninitialize(void)
 {
+	NormalStage::Uninitialize();
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void StageOffset::Update(void)
+void StageOne::Update(void)
 {
-	target_position_.x = reference_position_.x - screen_size_.x * 0.5f;
-	target_position_.y = reference_position_.y - screen_size_.y * 0.5f;
+	NormalStage::Update();
+}
 
-	position_.x += (target_position_.x - position_.x) * POSITION_MOVE_RATE.x;
-	position_.y += (target_position_.y - position_.y) * POSITION_MOVE_RATE.y;
+//=============================================================================
+// draw
+//=============================================================================
+void StageOne::Draw(void)
+{
+	NormalStage::Draw();
+}
 
-	if(position_.x < 0.0f)
-	{
-		position_.x = 0.0f;
-	}
-
-	if(position_.x > stage_size_.x - screen_size_.x)
-	{
-		position_.x = stage_size_.x - screen_size_.x;
-	}
-
-	if(position_.y < 0.0f)
-	{
-		position_.y = 0.0f;
-	}
-
-	if(position_.y > stage_size_.y - screen_size_.y)
-	{
-		position_.y = stage_size_.y - screen_size_.y;
-	}
-
+//=============================================================================
+// create factory
+//=============================================================================
+StageFactory* StageOne::CreateFactory(void)const
+{
+	return new TutorialFactory();
 }
 
 //---------------------------------- EOF --------------------------------------

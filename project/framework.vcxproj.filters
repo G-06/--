@@ -490,6 +490,9 @@
     <ClInclude Include="sources\application\object\tutorial_back.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_1.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -827,6 +830,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\tutorial_back.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_1.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -125,6 +125,8 @@ bool NormalStage::Initialize(void)
 	select_record_ = new SelectRecord();
 	select_record_->Initialize();
 	select_record_->__set_time(time_count_);
+	select_record_->__set_position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 200.0f,100.0f));
+	select_record_->Update();
 
 	// option
 	option_ = new Option();
@@ -555,6 +557,28 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
+				if(game_player_->__is_preview_light())
+				{
+					game_player_->Dead();
+				}
+				else
+				{
+					if(collision_map.__vector().y > 0)
+					{
+						game_player_->HitStage(collision_map.__position(),true);
+					}
+					else
+					{
+						game_player_->HitStage(collision_map.__position());
+					}
+				}
+			}
+			break;
+		}
+		case 3:
+		{
+			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			{
 				if(game_player_->__is_light())
 				{
 					game_player_->__position(collision_map.__position());
@@ -582,7 +606,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			}
 			break;
 		}
-		case 3:
+		case 4:
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
@@ -605,7 +629,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			}
 			break;
 		}
-		case 4:
+		case 5:
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
@@ -613,7 +637,31 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			}
 			break;
 		}
-		case 5:
+		case 6:
+		{
+			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			{
+				game_player_->Dead();
+			}
+			break;
+		}
+		case 7:
+		{
+			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			{
+				game_player_->Dead();
+			}
+			break;
+		}
+		case 8:
+		{
+			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			{
+				game_player_->Dead();
+			}
+			break;
+		}
+		case 9:
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
@@ -621,7 +669,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			}
 			break;
 		}
-		case 6:
+		case 10:
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{

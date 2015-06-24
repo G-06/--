@@ -50,6 +50,7 @@ public:
 
 private:
 	D3DXVECTOR2 position_;
+	D3DXVECTOR2 target_position_;
 	D3DXVECTOR2 stage_size_;
 	D3DXVECTOR2 reference_position_;
 	D3DXVECTOR2 old_reference_position_;
