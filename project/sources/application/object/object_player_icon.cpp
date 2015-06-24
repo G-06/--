@@ -15,7 +15,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectPlayerIcon::DEFAULT_SIZE = D3DXVECTOR2(64.0f,64.0f);
+const D3DXVECTOR2 ObjectPlayerIcon::DEFAULT_SIZE = D3DXVECTOR2(256.0f*0.55f,256.0f*0.55f);
 const u32 ObjectPlayerIcon::DIVISION_WIDTH = 1;
 const u32 ObjectPlayerIcon::DIVISION_HEIGHT = 1;
 const Animation::DATA ObjectPlayerIcon::ANIMATION_DATA[] =
