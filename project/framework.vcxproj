@@ -75,6 +75,7 @@
     <ClCompile Include="sources\application\scene\game\scene_game.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\normal_stage.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage.cpp" />
+    <ClCompile Include="sources\application\scene\game\stage\stage_1.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage_manager.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage_select.cpp" />
     <ClCompile Include="sources\application\scene\game\stage\stage_tutorial.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="sources\application\scene\game\scene_game.h" />
     <ClInclude Include="sources\application\scene\game\stage\normal_stage.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage.h" />
+    <ClInclude Include="sources\application\scene\game\stage\stage_1.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage_factory.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage_manager.h" />
     <ClInclude Include="sources\application\scene\game\stage\stage_select.h" />
