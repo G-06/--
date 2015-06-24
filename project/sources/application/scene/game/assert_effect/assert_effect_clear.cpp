@@ -28,6 +28,7 @@ AssertEffectClear::AssertEffectClear(void)
 	,position_(0.0f,0.0f)
 	,frame_count_(0)
 	,is_stop_(false)
+	,time_(0)
 {
 }
 
@@ -47,6 +48,7 @@ bool AssertEffectClear::Initialize(void)
 	sprite_->Initialize();
 	sprite_->__point(Sprite::POINT_CENTER);
 	sprite_->__size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,200.0f));
+	position_ = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 1.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
 	sprite_->SetParameter();
 
 	return true;

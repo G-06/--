@@ -57,6 +57,7 @@ private:
 	D3DXVECTOR2 position_;
 	D3DXVECTOR2 purpose_position_;
 	u32 frame_count_;
+	u32 time_;
 	bool is_stop_;
 };
 
