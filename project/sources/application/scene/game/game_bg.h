@@ -52,6 +52,7 @@ public:
 	//ステージ教える
 	void __SetTexture(Stage::TYPE type);
 	void __SetPosition(D3DXVECTOR2 pos){old_position_ = position_;position_ = pos;};
+	void __move(D3DXVECTOR2 move){ move_ = move; }
 	void ReSetUv(void);
 
 
@@ -61,6 +62,7 @@ private:
 
 	D3DXVECTOR2 position_;
 	D3DXVECTOR2 old_position_;
+	D3DXVECTOR2 move_;
 };
 
 #endif	// _TITLE_BG_H_

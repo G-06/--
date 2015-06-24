@@ -13,16 +13,18 @@
 #include "system/system.h"
 #include "application/object/object_bg.h"
 
-static const D3DXVECTOR2 MOVE_X_FAR(0.002f,0.0f);
-static const D3DXVECTOR2 MOVE_Y_FAR(0.0f,0.0006f);
-
-static const D3DXVECTOR2 MOVE_X_NEAR(0.004f,0.0f);
-static const D3DXVECTOR2 MOVE_Y_NEAR(0.0f,0.0008f);
+static const D3DXVECTOR2 MOVE_FAR(0.00005f,0.0006f);
+static const D3DXVECTOR2 MOVE_NEAR(0.0001f,0.001f);
 
 //=============================================================================
 // constructor
 //=============================================================================
 GameBg::GameBg(void)
+:game_bg_far_(nullptr)
+,game_bg_near_(nullptr)
+,position_(0.0f,0.0f)
+,old_position_(0.0f,0.0f)
+,move_(0.0f, 0.0f)
 {
 }
 
@@ -44,9 +46,6 @@ bool GameBg::Initialize(void)
 	game_bg_near_ = new ObjectBg();
 	game_bg_near_->Initialize();
 
-	position_ = D3DXVECTOR2(0.0f,0.0f);
-	old_position_ = D3DXVECTOR2(0.0f,0.0f);
-
 	return true;
 }
 
@@ -64,34 +63,30 @@ void GameBg::Uninitialize(void)
 //=============================================================================
 void GameBg::Update(void)
 {
-	//”wŒi“®‚©‚·‚æ
-	if((position_.x != old_position_.x)||(position_.y != old_position_.y))
-	{
-		if(position_.x < old_position_.x)
-		{
-			game_bg_far_->__Set_move(-MOVE_X_FAR);
-			game_bg_near_->__Set_move(-MOVE_X_NEAR);
-		}
-		else if(position_.x > old_position_.x)
-		{
-			game_bg_far_->__Set_move(MOVE_X_FAR);
-			game_bg_near_->__Set_move(MOVE_X_NEAR);
-		}
-		if(position_.y < old_position_.y)
-		{
-			game_bg_far_->__Set_move(-MOVE_Y_FAR);
-			game_bg_near_->__Set_move(-MOVE_Y_NEAR);
+	D3DXVECTOR2 move_far = D3DXVECTOR2(0.0f, 0.0f);
+	D3DXVECTOR2 move_near = D3DXVECTOR2(0.0f, 0.0f);
 
-		}
-		else if(position_.y > old_position_.y)
-		{
-			game_bg_far_->__Set_move(MOVE_Y_FAR);
-			game_bg_near_->__Set_move(MOVE_Y_NEAR);
-		}
-	game_bg_far_->Update();
-	game_bg_near_->Update();
+	if(position_.y < old_position_.y)
+	{
+		move_far.y = -MOVE_FAR.y;
+		move_near.y = -MOVE_NEAR.y;
+	}
+	else if(position_.y > old_position_.y)
+	{
+		move_far.y = MOVE_FAR.y;
+		move_near.y = MOVE_NEAR.y;
+	}
+	if(position_.x != old_position_.x)
+	{
+		move_far.x = move_.x * MOVE_FAR.x;
+		move_near.x = move_.x * MOVE_NEAR.x;
 	}
 
+	game_bg_far_->__Set_move(move_far);
+	game_bg_near_->__Set_move(move_near);
+
+	game_bg_far_->Update();
+	game_bg_near_->Update();
 }
 
 //=============================================================================
