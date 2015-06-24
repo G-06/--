@@ -328,4 +328,18 @@ void Pause::__title_texture_id_(const Texture::TEXTURE_ID& texture_id)
 	title_->__texture_id(texture_id);
 }
 
+//=============================================================================
+// __title_texture_id_
+//=============================================================================
+bool Pause::__select_texture_id_(const s32& select_number, const Texture::TEXTURE_ID& texture_id)
+{
+	if(select_number >= SELECT_MAX){
+		return false;
+	}
+
+	frame_[select_number]->__texture_id(texture_id);
+	return true;
+}
+
+
 //---------------------------------- EOF --------------------------------------

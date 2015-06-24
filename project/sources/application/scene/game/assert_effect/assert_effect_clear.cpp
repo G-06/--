@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// object player icon
+// assert effect clear
 //
 // Author		: Kenji Kabutomori
 //
@@ -9,52 +9,47 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "object_player_icon.h"
+#include "assert_effect_clear.h"
 #include "render/sprite.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectPlayerIcon::DEFAULT_SIZE = D3DXVECTOR2(256.0f*0.55f,256.0f*0.55f);
-const u32 ObjectPlayerIcon::DIVISION_WIDTH = 1;
-const u32 ObjectPlayerIcon::DIVISION_HEIGHT = 1;
-const Animation::DATA ObjectPlayerIcon::ANIMATION_DATA[] =
-{
-	Animation::DATA(8,0,0),
-};
+const u32 AssertEffectClear::SRIDE_IN_FRAME = 30;
+const u32 AssertEffectClear::STOP_FRAME = 60;
+const u32 AssertEffectClear::SRIDE_OUT_FRAME = 30;
 
 //=============================================================================
 // constructor
 //=============================================================================
-ObjectPlayerIcon::ObjectPlayerIcon(void)
+AssertEffectClear::AssertEffectClear(void)
+	:AssertEffect(TYPE_CLEAR)
+	,sprite_(nullptr)
+	,position_(0.0f,0.0f)
+	,frame_count_(0)
+	,is_stop_(false)
+	,time_(0)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-ObjectPlayerIcon::~ObjectPlayerIcon(void)
+AssertEffectClear::~AssertEffectClear(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool ObjectPlayerIcon::Initialize(void)
+bool AssertEffectClear::Initialize(void)
 {
 	sprite_ = new Sprite();
 	sprite_->Initialize();
-	sprite_->__point(Sprite::POINT_LEFT_MIDDLE);
-	sprite_->__size(DEFAULT_SIZE);
-	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_NYAS_ICON);
-	sprite_->__division_width(DIVISION_WIDTH);
-	sprite_->__division_height(DIVISION_HEIGHT);
+	sprite_->__point(Sprite::POINT_CENTER);
+	sprite_->__size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,200.0f));
+	position_ = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 1.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
 	sprite_->SetParameter();
-
-	animation_ = new Animation();
-	animation_->Initialize();
-	animation_->Add(ANIMATION_DATA,sizeof(ANIMATION_DATA) / sizeof(Animation::DATA));
-	animation_->Start(0);
 
 	return true;
 }
@@ -62,31 +57,53 @@ bool ObjectPlayerIcon::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void ObjectPlayerIcon::Uninitialize(void)
+void AssertEffectClear::Uninitialize(void)
 {
 	SafeRelease(sprite_);
-
-	SafeRelease(animation_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void ObjectPlayerIcon::Update(void)
+void AssertEffectClear::Update(void)
 {
-	animation_->Update();
+	D3DXVECTOR2 vector;
 
-	sprite_->__index(animation_->__current_index());
-	sprite_->SetParameter();
+	frame_count_++;
+
+	if(frame_count_ <= SRIDE_IN_FRAME)
+	{
+		position_ = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 1.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
+		purpose_position_ = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
+		vector = purpose_position_ - position_;
+		position_ = position_ + vector * 1.0f / (f32)SRIDE_IN_FRAME * (f32)frame_count_;
+	}
+	else if(frame_count_ <= SRIDE_IN_FRAME + STOP_FRAME)
+	{
+	}
+	else if(frame_count_ <= SRIDE_IN_FRAME + STOP_FRAME + SRIDE_OUT_FRAME)
+	{
+		position_ = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
+		purpose_position_ = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.2f);
+		vector = purpose_position_ - position_;
+		position_ = position_ + vector * 1.0f / (f32)SRIDE_OUT_FRAME * (f32)(frame_count_ - SRIDE_IN_FRAME - STOP_FRAME);
+	}
+	else
+	{
+		is_stop_ = true;
+	}
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void ObjectPlayerIcon::Draw(void)
+void AssertEffectClear::Draw(void)
 {
-	sprite_->__position(position_);
-	sprite_->Draw();
+	if(is_assert_)
+	{
+		sprite_->__position(position_);
+		sprite_->Draw();
+	}
 }
 
 //---------------------------------- EOF --------------------------------------

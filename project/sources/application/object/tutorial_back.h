@@ -1,9 +1,8 @@
 //*****************************************************************************
 //
-// stage select bg
+// チュートリアル拝啓
 //
-// Author		: taichi kitazawa
-//
+// Author	: kitazawa taichi
 //
 //*****************************************************************************
 
@@ -11,30 +10,31 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _SELECT_NUMBER_H_
-#define _SELECT_NUMBER_H_
+#ifndef _TUTORIAL_BACK_H_
+#define _TUTORIAL_BACK_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
 #include "basic/basic.h"
+#include "system/directx9/texture/texture.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
+class MessageSpriteSmooth;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Number : public Basic
+class TutorialBack : public Basic
 {
 public:
 	// constructor
-	Number(void);
+	TutorialBack(void);
 
 	// destructor
-	virtual ~Number(void);
+	virtual ~TutorialBack(void);
 
 	// initialize
 	bool Initialize(void);
@@ -48,20 +48,53 @@ public:
 	// draw
 	void Draw(void);
 
-	void __Set_position(D3DXVECTOR2 pos){position_ = pos;};
-	void __Set_index(u32 index){index_ = index;};
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; };
+	// メッセージの種類
+	enum MESSAGE{
+		MESSAGE_YES = 0,
+		MESSAGE_NO,
+		MESSAGE_MAX
+	};
+
+	// show close
+	// 良い感じに開閉
+	void Show(void);
+	void Close(void);
+
+	const bool& __is_show(void) {return is_show_;}
+	void __dest_frame_count(const u32& frame){dest_frame_count_ = frame;}
+	const bool& __is_move(void) {return is_move_;}
+
+	void __window_position(const D3DXVECTOR2& position){window_position_ = position;}
+	void __window_size(const D3DXVECTOR2& size){window_size_ = size;}
 
 private:
 
-	Sprite* number_;
-	D3DXVECTOR2 position_;
-	u32 index_;
-	D3DXVECTOR2 offset_position_;
+	static const D3DXVECTOR2 DEFAULT_POSITION;
+	static const D3DXVECTOR2 DEFAULT_SIZE;
+	static const u32 SELECT_MAX = MESSAGE_MAX;
+
+	// 切替え用
+	void _ChangeSelect(const s32& now, const s32& old);
+
+	MessageSpriteSmooth* window_;
+
+	// 規定位置
+	D3DXVECTOR2 window_position_;
+
+	// 移動するまでのカウント
+	u32 dest_frame_count_;
 
 
+	// 開いている？
+	bool is_show_;
+
+	// 動いてる？
+	bool is_move_;
+
+	// size
+	D3DXVECTOR2 window_size_;
 };
 
-#endif	// _select_BG_H_
+#endif	// _MESSAGE_WINDOW_H_
 
 //---------------------------------- EOF --------------------------------------

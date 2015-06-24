@@ -51,15 +51,16 @@ public:
 
 	// accessor
 	//void __size(const D3DXVECTOR2& size) { size_ = size; }
-	const D3DXVECTOR2& __size(void)const { return size_; }
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
-
+	const D3DXVECTOR2& __size(void)const { return size_; };
+	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; };
+	void __Set_position(D3DXVECTOR2 pos){position_ = pos;};
 
 protected:
 	static const D3DXVECTOR2 DEFAULT_POSITION;
 	static const D3DXVECTOR2 DEFAULT_SIZE;
 	static const D3DXVECTOR2 STAGE_SIZE;
 
+	D3DXVECTOR2 position_;
 	D3DXVECTOR2 size_;
 	D3DXVECTOR2 offset_position_;
 	Sprite* record_back_;

@@ -22,18 +22,28 @@
 #include "../gimmick/gimmick_obstacle.h"
 #include "../gimmick/gimmick_disappear_ground.h"
 #include "../gimmick/gimmick_move_ground.h"
+
+#include "../gimmick/gimmick_tutorial_text.h"
+
+
 #include "object/object_light_gauge.h"
 #include "object/object_player_icon.h"
 #include "collision/collision_map.h"
 #include "object/pause/pause.h"
 #include "object/message_window.h"
 #include "../game_bg.h"
+#include "../effect/effect.h"
+#include "../effect/effect_check_point.h"
+#include "../assert_effect/assert_effect_start.h"
+#include "../assert_effect/assert_effect_clear.h"
+#include "object/stage_select/select_record.h"
+#include "object/option.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(60.0f,620.0f);
-const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(60.0f,620.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,90.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(17.0f,80.0f);
 const u32 DEST_FRAME_COUNT = 20;
 
 //=============================================================================
@@ -43,9 +53,12 @@ NormalStage::NormalStage(const TYPE& type)
 	:Stage(type)
 	,is_pause_(false)
 	,is_clear_(false)
+	,is_option_(false)
 	,is_pause_input_(false)
 	,pause_(nullptr)
 	,message_window_(nullptr)
+	,is_start_(true)
+	,option_(nullptr)
 {
 	type_ = type;
 }
@@ -94,10 +107,30 @@ bool NormalStage::Initialize(void)
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
-	//haikei
+	// haikei
 	game_bg_ = new GameBg();
 	game_bg_->Initialize();
 	game_bg_->__SetTexture(type_);
+
+	assert_effect_start_ = new AssertEffectStart();
+	assert_effect_start_->Initialize();
+	assert_effect_start_->__is_assert(true);
+
+	assert_effect_clear_ = new AssertEffectClear();
+	assert_effect_clear_->Initialize();
+
+	is_start_ = true;
+
+	time_count_ = 0;
+	select_record_ = new SelectRecord();
+	select_record_->Initialize();
+	select_record_->__set_time(time_count_);
+
+	// option
+	option_ = new Option();
+	option_->Initialize();
+	//option_->Load();
+	//option_->__is_indication(false);
 
 	return true;
 }
@@ -117,18 +150,34 @@ void NormalStage::Uninitialize(void)
 
 	SafeRelease(object_player_icon_);
 
+	SafeRelease(select_record_);
+
+	SafeRelease(assert_effect_start_);
+
+	SafeRelease(assert_effect_clear_);
+
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 	{
 		SafeRelease(*it);
 	}
 	gimmick_container_.clear();
 
+	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+	{
+		SafeRelease(*it);
+	}
+
+	effect_container_.clear();
+
 	SafeDelete(next_stage_factory_);
 
 	SafeRelease(pause_);
 
 	SafeRelease(message_window_);
+
 	SafeRelease(game_bg_);
+
+	SafeRelease(option_);
 }
 
 //=============================================================================
@@ -136,11 +185,25 @@ void NormalStage::Uninitialize(void)
 //=============================================================================
 void NormalStage::Update(void)
 {
-	if(is_clear_)
+	if(is_start_)
 	{
-		if(next_stage_factory_ == nullptr)
+		assert_effect_start_->Update();
+
+		if(!assert_effect_start_->__is_assert())
 		{
-			next_stage_factory_ = new SelectFactory();
+			is_start_ = false;
+		}
+	}
+	else if(is_clear_)
+	{
+		assert_effect_clear_->Update();
+
+		if(assert_effect_clear_->__is_stop())
+		{
+			if(next_stage_factory_ == nullptr)
+			{
+				next_stage_factory_ = new SelectFactory();
+			}
 		}
 	}
 	else if(game_player_->__life() < 0)
@@ -156,103 +219,119 @@ void NormalStage::Update(void)
 		{
 			if(!is_pause_input_ && !pause_->__is_move())
 			{
-				if(message_window_->__is_show())
+				if(is_option_)
 				{
-					// メッセージの選択処理
-					if(message_window_->__is_show()){
-
-						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
-						{
-							message_window_->SelectDown();
-						}
-						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
-						{
-							message_window_->SelectUp();
-						}
-
-						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
-						{
-							const s32 current_select = message_window_->__is_select();
-							if(current_select == MessageWindow::MESSAGE_NO)
-							{
-								message_window_->Close();
-							}
-							if((current_select == MessageWindow::MESSAGE_YES))
-							{
-								// select
-								const s32 current_select = pause_->__is_select();
-								switch(current_select)
-								{
-								case Pause::SELECT_TYPE_TITLE_BACK:
-									{
-										if(next_stage_factory_ == nullptr)
-										{
-											is_pause_input_ = true;
-											next_scene_factory_ = new TitleFactory();
-										}
-										break;
-									}
-								case Pause::SELECT_TYPE_STAGESELECT_BACK:
-									{
-										if(next_stage_factory_ == nullptr)
-										{
-											is_pause_input_ = true;
-											next_stage_factory_ = new SelectFactory();
-										}
-										break;
-									}
-								} // switch
-							} // message
-						}
-					} // is_show
+					option_->Update();
+					if(option_->__is_indication() == false){
+						is_option_ = false;
+						const s32 current_select = pause_->__is_select();
+						pause_->__select_texture_id_(current_select, Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
+					}
 				}
 				else
 				{
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
+					if(message_window_->__is_show())
 					{
-						pause_->SelectDown();
+						// メッセージの選択処理
+						if(message_window_->__is_show()){
+
+							if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+							{
+								message_window_->SelectDown();
+							}
+							if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+							{
+								message_window_->SelectUp();
+							}
+
+							if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+							{
+								const s32 current_select = message_window_->__is_select();
+								if(current_select == MessageWindow::MESSAGE_NO)
+								{
+									message_window_->Close();
+									const s32 current_select = pause_->__is_select();
+									pause_->__select_texture_id_(current_select, Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
+								}
+								if((current_select == MessageWindow::MESSAGE_YES))
+								{
+									// select
+									const s32 current_select = pause_->__is_select();
+									switch(current_select)
+									{
+									case Pause::SELECT_TYPE_TITLE_BACK:
+										{
+											if(next_stage_factory_ == nullptr)
+											{
+												is_pause_input_ = true;
+												next_scene_factory_ = new TitleFactory();
+											}
+											break;
+										}
+									case Pause::SELECT_TYPE_STAGESELECT_BACK:
+										{
+											if(next_stage_factory_ == nullptr)
+											{
+												is_pause_input_ = true;
+												next_stage_factory_ = new SelectFactory();
+											}
+											break;
+										}
+									} // switch
+								} // message
+							}
+						} // is_show
 					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
+					else
 					{
-						pause_->SelectUp();
-					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
-					{
-						// select
-						const s32 current_select = pause_->__is_select();
-						switch(current_select)
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
 						{
-						case Pause::SELECT_TYPE_GAME_BACK:
+							pause_->SelectDown();
+						}
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
+						{
+							pause_->SelectUp();
+						}
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+						{
+							// select
+							const s32 current_select = pause_->__is_select();
+							pause_->__select_texture_id_(current_select, Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+							switch(current_select)
 							{
-								is_pause_ = false;
-								pause_->Close();
-								break;
-							}
-						case Pause::SELECT_TYPE_TITLE_BACK:
-							{
-								message_window_->Show();
-								break;
-							}
-						case Pause::SELECT_TYPE_STAGESELECT_BACK:
-							{
-								message_window_->Show();
-								break;
-							}
-						case Pause::SELECT_TYPE_OPTION:
-							{
-								is_pause_ = false;
-								pause_->Close();
-								break;
-							}
-						} // switch
-					}
-					if((GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL)) && !pause_->__is_move())
-					{
-						is_pause_ = false;
-						pause_->Close();
-					}
-				} // message_window
-			
+							case Pause::SELECT_TYPE_GAME_BACK:
+								{
+									is_pause_ = false;
+									pause_->Close();
+									break;
+								}
+							case Pause::SELECT_TYPE_TITLE_BACK:
+								{
+									message_window_->Show();
+									break;
+								}
+							case Pause::SELECT_TYPE_STAGESELECT_BACK:
+								{
+									message_window_->Show();
+									break;
+								}
+							case Pause::SELECT_TYPE_OPTION:
+								{
+									//is_pause_ = false;
+									//pause_->Close();
+									is_option_ = true;
+									option_->__is_indication(true);
+									break;
+								}
+							} // switch
+						}
+						if((GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) || GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL)) && !pause_->__is_move())
+						{
+							is_pause_ = false;
+							pause_->Close();
+						}
+					} // message_window
+				} // is_option
 			} // !pause_->__is_move()
 		}
 		else
@@ -271,9 +350,25 @@ void NormalStage::Update(void)
 				(*it)->Update();
 			}
 
+			for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+			{
+				(*it)->Update();
+			}
+
 			object_light_gauge_->__rate((f32)game_player_->__sp() / (f32)game_player_->__sp_max() * 100.0f);
 
 			object_light_gauge_->Update();
+
+
+			if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
+			{
+				game_player_->__position(D3DXVECTOR2(map_->__size().x - game_player_->__size().x * 0.5f,game_player_->__position().y));
+			}
+
+			if(game_player_->__position().x - game_player_->__size().x * 0.5f < 0)
+			{
+				game_player_->__position(D3DXVECTOR2(game_player_->__size().x * 0.5f,game_player_->__position().y));
+			}
 
 			if(game_player_->__position().y > map_->__size().y)
 			{
@@ -283,6 +378,19 @@ void NormalStage::Update(void)
 
 			CollisionGimmick();
 			CollisionChip();
+
+			auto predfunc = [](Effect* effect)->bool
+			{
+				if(effect->__is_death())
+				{
+					effect->Uninitialize();
+					delete effect;
+					return true;
+				}
+				return false;
+			};
+
+			effect_container_.erase(remove_if(effect_container_.begin(),effect_container_.end(),predfunc),effect_container_.end());
 
 			// offset
 			stage_offset_->__reference_position(game_player_->__position());
@@ -301,12 +409,19 @@ void NormalStage::Update(void)
 				(*it)->__offset_position(stage_offset_->__position());
 			}
 
+			for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+			{
+				(*it)->__offset_position(stage_offset_->__position());
+			}
+
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) && !pause_->__is_move())
 			{
 				is_pause_ = true;
 				pause_->Show();
 			}
 		}
+		select_record_->__set_time(time_count_);
+		select_record_->Update();
 		pause_->Update();
 		message_window_->Update();
 	}
@@ -333,12 +448,23 @@ void NormalStage::Draw(void)
 		(*it)->Draw();
 	}
 
+	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+	{
+		(*it)->Draw();
+	}
+
 	game_player_->Draw();
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
+	select_record_->Draw();
+
+	assert_effect_start_->Draw();
+	assert_effect_clear_->Draw();
 
 	pause_->Draw();
 	message_window_->Draw();
+
+	option_->Draw();
 }
 
 //=============================================================================
@@ -536,12 +662,17 @@ void NormalStage::CollisionGimmick(void)
 					{
 						game_player_->__check_point_priority(data->_priority);
 						game_player_->__return_position(gimmick_position);
+						EffectCheckPoint* effect = new EffectCheckPoint();
+						effect->Initialize();
+						effect->__position(gimmick_position);
+						effect_container_.push_back(effect);
 					}
 					break;
 				}
 				case Gimmick::TYPE_GOAL_POINT:
 				{
 					DEBUG_TOOL.__debug_display()->Print("hit goal point\n");
+					assert_effect_clear_->__is_assert(true);
 					game_player_->Clear();
 					is_clear_ = true;
 					break;
@@ -588,7 +719,13 @@ void NormalStage::CollisionGimmick(void)
 					}
 					break;
 				}
-
+				case Gimmick::TYPE_TUTORIAL_TEXT:
+				{
+					GimmickTutorialText::DATA* data = (GimmickTutorialText::DATA*)(*it)->GetPointer();
+					data->_is_hit=true;
+					DEBUG_TOOL.__debug_display()->Print("hit text\n");
+					break;
+				}
 			}
 		}
 	}
@@ -770,6 +907,37 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					gimmick->__speed(speed);
 					gimmick_container_.push_back(gimmick);
 					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
+				case Gimmick::TYPE_TUTORIAL_TEXT:
+				{
+					//みる
+					i += FindWord(word,&data[i],",\n\0");
+					//xを文字列からfloatに
+					f32 x = atof(word);
+					//次へ
+					i++;
+					//みる
+					i += FindWord(word,&data[i],",\n\0");
+					//yを文字列からfloatに
+					f32 y = atof(word);
+					i++;
+					//プライオリティ
+					i += FindWord(word,&data[i],",\n\0");
+					u32 priority = atoi(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					u32 massage = atoi(word);
+
+					GimmickTutorialText* gimmick = new GimmickTutorialText();
+					gimmick->__type(massage);
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+
+					//無いと死ぬ
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+
 					break;
 				}
 				default:

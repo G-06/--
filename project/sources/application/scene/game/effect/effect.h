@@ -30,7 +30,7 @@ class Effect : public Basic
 public:
 	enum TYPE
 	{
-		TYPE_ = 0,
+		TYPE_CHECK_POINT = 0,
 		TYPE_MAX,
 	};
 
@@ -57,11 +57,12 @@ public:
 	const D3DXVECTOR2& __position(void) { return position_; }
 	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
 	TYPE __type(void)const { return type_; }
-
+	bool __is_death(void)const { return is_death_; }
 protected:
 	D3DXVECTOR2 position_;
 	D3DXVECTOR2 offset_position_;
 	TYPE type_;
+	bool is_death_;
 };
 
 #endif	// _EFFECT_H_

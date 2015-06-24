@@ -1,57 +1,49 @@
 //*****************************************************************************
 //
-// stage select bg
+// effect check point
 //
-// Author		: taichi kitazawa
-//
+// Author		: Kenji Kabutomori
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "select_number.h"
+#include "effect_check_point.h"
 #include "render/sprite.h"
-#include "system/system.h"
 
-const D3DXVECTOR2 DEFAULT_SIZE(50.0f*0.6f,100.0f*0.6f);	// デフォルトサイズ
-const D3DXVECTOR2 DEFAULT_POS(400.f,400.f);					// デフォルトポジション
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
 
 //=============================================================================
 // constructor
 //=============================================================================
-Number::Number(void)
+EffectCheckPoint::EffectCheckPoint(void)
+	:Effect(TYPE_CHECK_POINT)
+	,sprite_(nullptr)
+	,frame_count_(0)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-Number::~Number(void)
+EffectCheckPoint::~EffectCheckPoint(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool Number::Initialize(void)
+bool EffectCheckPoint::Initialize(void)
 {
-	index_ = 0;
-
-
-	position_ = D3DXVECTOR2(400.0f,400.0f);
-	number_ = new Sprite();
-	number_->Initialize();
-	number_->__size(DEFAULT_SIZE);
-	number_->__position(position_);
-	number_->__texture_id(Texture::TEXTURE_ID_GENERAL_NUMBER);
-	number_->__division_height(1);
-	number_->__division_width(13);
-	number_->__index(index_);
-
-	number_->__point(Sprite::POINT_CENTER);
-	number_->__color(D3DCOLOR_RGBA(255,255,255,255));
-	number_->SetParameter();
+	sprite_ = new Sprite();
+	SafeInitialize(sprite_);
+	sprite_->__point(Sprite::POINT_CENTER);
+	sprite_->__size(D3DXVECTOR2(128.0f,64.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_CHECK_POINT);
+	sprite_->SetParameter();
 
 	return true;
 }
@@ -59,29 +51,31 @@ bool Number::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void Number::Uninitialize(void)
+void EffectCheckPoint::Uninitialize(void)
 {
-	SafeRelease(number_);
+	SafeRelease(sprite_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void Number::Update(void)
+void EffectCheckPoint::Update(void)
 {
-	number_->__position(D3DXVECTOR2(position_.x + offset_position_.x,position_.y + offset_position_.y));
-	number_->__index(index_);
-	number_->SetParameter();
+	frame_count_++;
 
+	if(frame_count_ > 60)
+	{
+		is_death_ = true;
+	}
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void Number::Draw(void)
+void EffectCheckPoint::Draw(void)
 {
-	number_->Draw();
+	sprite_->__position(position_ - offset_position_);
+	sprite_->Draw();
 }
-
 
 //---------------------------------- EOF --------------------------------------

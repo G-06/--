@@ -22,6 +22,7 @@ Effect::Effect(TYPE type)
 	:type_(type)
 	,position_(0.0f,0.0f)
 	,offset_position_(0.0f,0.0f)
+	,is_death_(false)
 {
 }
 
