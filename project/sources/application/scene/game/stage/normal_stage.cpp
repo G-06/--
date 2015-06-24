@@ -339,7 +339,7 @@ void NormalStage::Update(void)
 			time_count_++;
 
 			// offset
-			stage_offset_->__old_reference_position(game_player_->__position());
+			stage_offset_->__old_reference_position(game_player_->__old_position());
 
 			game_player_->Update();
 

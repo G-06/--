@@ -55,11 +55,15 @@ void StageOffset::Uninitialize(void)
 //=============================================================================
 void StageOffset::Update(void)
 {
+	/*bool is_move_x = false;
+	bool is_move_y = false;
+
 	if(old_reference_position_.x - reference_position_.x > 0)
 	{
 		if(offset_percent_.x < 0.55f)
 		{
 			offset_move_.x = OFFSET_MOVE;
+			is_move_x = true;
 		}
 		else
 		{
@@ -72,6 +76,7 @@ void StageOffset::Update(void)
 		if(offset_percent_.x > 0.45f)
 		{
 			offset_move_.x = -OFFSET_MOVE;
+			is_move_x = true;
 		}
 		else
 		{
@@ -80,46 +85,49 @@ void StageOffset::Update(void)
 	}
 
 
-	/*if(old_reference_position_.y > reference_position_.y)
+	if(old_reference_position_.y - reference_position_.y > 0)
+	{
+		if(offset_percent_.y > 0.7f)
+		{
+			offset_move_.y = OFFSET_MOVE*10;
+			is_move_y = true;
+		}
+		else
+		{
+			offset_move_.y= 0;
+		}
+	}
+	else if(old_reference_position_.y - reference_position_.y < 0)
 	{
 		if(offset_percent_.y < 0.3f)
 		{
-			offset_move_.y = OFFSET_MOVE*10;
-		}
-	}
-	else if(old_reference_position_.y < reference_position_.y)
-	{
-		if(offset_percent_.y >= 0.7f)
-		{
 			offset_move_.y = -OFFSET_MOVE*10;
+			is_move_y = true;
+		}
+		else
+		{
+			offset_move_.y = 0;
 		}
 	}
-	else if(old_reference_position_.y == reference_position_.y)
-	{
-		if(offset_percent_.y > 0.5f)
-		{
-			offset_move_.y = -OFFSET_MOVE;
-		}
-		else if(offset_percent_.y < 0.5f)
-		{
-			offset_move_.y = OFFSET_MOVE;
-		}
-	}*/
+
 
 	if(offset_percent_.x + offset_move_.x < 0.55f
-		&& offset_percent_.x + offset_move_.x > 0.45f)
+		&& offset_percent_.x + offset_move_.x > 0.45f
+		&& is_move_x == true)
 	{
 		offset_percent_.x += offset_move_.x;
 	}
 
 	if(offset_percent_.y + offset_move_.y < 0.7f
-		&& offset_percent_.y + offset_move_.y > 0.3f)
+		&& offset_percent_.y + offset_move_.y > 0.3f
+		&& is_move_y == true)
 	{
 		offset_percent_.y += offset_move_.y;
-	}
+	}*/
 
-	position_.x = reference_position_.x - screen_size_.x * offset_percent_.x;
-	position_.y = reference_position_.y - screen_size_.y * offset_percent_.y;
+	position_.x = old_reference_position_.x - screen_size_.x * offset_percent_.x;
+	position_.y = old_reference_position_.y - screen_size_.y * offset_percent_.y;
+
 
 	if(position_.x < 0.0f)
 	{
