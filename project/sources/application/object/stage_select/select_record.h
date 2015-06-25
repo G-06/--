@@ -24,7 +24,6 @@
 // forward declaration
 //*****************************************************************************
 class Number;
-class RecordBack;
 
 //*****************************************************************************
 // class definition
@@ -65,10 +64,7 @@ private:
 	u32 time_;			//reko-do
 	Number* number_[TEXTURE_MAX];	//jikann 
 	D3DXVECTOR2 offset_position_;
-	RecordBack* record_back_;		//É^ÉCÉ}Å[îwåi
 	D3DXVECTOR2 def_position;
-
-
 };
 
 #endif	// _select_record_H_

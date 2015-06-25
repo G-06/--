@@ -14,11 +14,9 @@
 #include "select_number.h"
 #include "render/sprite.h"
 #include "system/system.h"
-#include "select_record_back.h"
 
 static const D3DXVECTOR2 DEFAULT_POS_NUM(680.f,500.f);		// デフォルトポジション 数字の一番左端の位置
-static const D3DXVECTOR2 DEFAULT_POS_BACK(800.f,500.f);		// デフォルトポジション 数字の一番左端の位置
- 
+
 
 //=============================================================================
 // constructor
@@ -47,9 +45,6 @@ bool SelectRecord::Initialize(void)
 		number_[i] -> Initialize();
 		number_[i] ->__Set_position(D3DXVECTOR2((f32)35*i+DEFAULT_POS_NUM.x,DEFAULT_POS_NUM.y));
 	}
-	//背景
-	record_back_ = new RecordBack();
-	record_back_->Initialize();
 
 	//位置
 	offset_position_ = D3DXVECTOR2(0,0);
@@ -68,7 +63,6 @@ void SelectRecord::Uninitialize(void)
 	{
 		SafeRelease(number_[i]);
 	}
-	SafeRelease(record_back_);
 }
 
 //=============================================================================
@@ -76,8 +70,6 @@ void SelectRecord::Uninitialize(void)
 //=============================================================================
 void SelectRecord::Update(void)
 {
-	record_back_ ->__offset_position(offset_position_);
-	record_back_ ->Update();
 	for(int i=0;i<TEXTURE_MAX;i++)
 	{
 		number_[i]->__offset_position(offset_position_);
@@ -90,7 +82,6 @@ void SelectRecord::Update(void)
 //=============================================================================
 void SelectRecord::Draw(void)
 {
-	record_back_->Draw();
 	for(int i=0;i<TEXTURE_MAX;i++)
 	{
 		number_[i]->Draw();
@@ -173,9 +164,6 @@ void SelectRecord::__set_time(u32 time)
 //=============================================================================
 void SelectRecord::__set_position(D3DXVECTOR2 pos)
 {
-	record_back_ ->__Set_position(pos);
-	pos.x = pos.x - (DEFAULT_POS_BACK.x-DEFAULT_POS_NUM.x);
-
 	for(int i=0;i<TEXTURE_MAX;i++)
 	{
 		number_[i]->__Set_position(D3DXVECTOR2((f32)35*i+pos.x,pos.y));

@@ -14,6 +14,7 @@
 #include "render/sprite.h"
 #include "system/system.h"
 
+#include "stage_select/select_record_back.h"
 #include "stage_select/select_flame.h"
 #include "stage_select/select_stage_name.h"
 #include "stage_select/select_stage_image.h"
@@ -25,6 +26,7 @@
 const D3DXVECTOR2 StageRegion::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
 const f32 MOVE_SPEED = 60.f;				// まとまりの移動速度 フレーム数で指定
 const f32 MOVE_FREAM = 960.0f/MOVE_SPEED;
+static const D3DXVECTOR2 DEFAULT_POS_BACK(800.f,500.f);		// デフォルトポジション 数字の一番左端の位置
 
 
 //=============================================================================
@@ -36,7 +38,6 @@ StageRegion::StageRegion(void)
 		,select_frame_(nullptr)
 		,stage_name_(nullptr)
 		,stage_image_(nullptr)
-
 {
 }
 
@@ -84,6 +85,9 @@ bool StageRegion::Initialize(void)
 	{
 		return false;
 	}
+	//レコード背景
+	record_back_ = new RecordBack();
+	record_back_->Initialize();
 
 	move_falg_ = false;
 
@@ -99,6 +103,7 @@ void StageRegion::Uninitialize(void)
 	SafeRelease(stage_name_);
 	SafeRelease(stage_image_);
 	SafeRelease(record_);
+	SafeRelease(record_back_);
 
 }
 
@@ -109,6 +114,7 @@ void StageRegion::Update(void)
 {
 	move_falg_ = false;
 
+	//目的位置と今の位置が違ったら移動
 	if(region_pos_.x>region_distpos_.x)
 	{
 		region_pos_.x -= MOVE_FREAM;
@@ -120,14 +126,18 @@ void StageRegion::Update(void)
 		move_falg_ = true;
 	}
 
+	//移動したことを子に伝える
 	select_frame_->__offset_position(region_pos_);
 	stage_name_->__offset_position(region_pos_);
 	stage_image_->__offset_position(region_pos_);
+	record_back_ ->__offset_position(region_pos_);
 	record_->__offset_position(region_pos_);
 
+	//子の更新
 	select_frame_->Update();
 	stage_name_->Update();
 	stage_image_->Update();
+	record_back_ ->Update();
 	record_->Update();
 }
 
@@ -140,7 +150,10 @@ void StageRegion::Draw(void)
 	select_frame_->Draw();
 	stage_name_->Draw();
 	if(type_ != Stage::TYPE_TUTORIAL)
+	{
+		record_back_->Draw();
 		record_ ->Draw();
+	}
 }
 
 //=============================================================================
