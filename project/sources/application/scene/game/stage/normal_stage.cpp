@@ -198,13 +198,20 @@ void NormalStage::Update(void)
 	}
 	else if(is_clear_)
 	{
+		assert_effect_clear_->__is_assert(true);
+		game_player_->Clear();
+
+		assert_effect_clear_->SetTime(time_count_);
 		assert_effect_clear_->Update();
 
 		if(assert_effect_clear_->__is_stop())
 		{
-			if(next_stage_factory_ == nullptr)
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 			{
-				next_stage_factory_ = new SelectFactory();
+				if(next_stage_factory_ == nullptr)
+				{
+					next_stage_factory_ = new SelectFactory();
+				}
 			}
 		}
 	}
@@ -432,6 +439,11 @@ void NormalStage::Update(void)
 		Uninitialize();
 		Initialize();
 	}
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_C))
+	{
+		is_clear_ = true;
+	}
+
 #endif
 }
 
@@ -718,8 +730,6 @@ void NormalStage::CollisionGimmick(void)
 				case Gimmick::TYPE_GOAL_POINT:
 				{
 					DEBUG_TOOL.__debug_display()->Print("hit goal point\n");
-					assert_effect_clear_->__is_assert(true);
-					game_player_->Clear();
 					is_clear_ = true;
 					break;
 				}

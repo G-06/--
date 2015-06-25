@@ -22,6 +22,7 @@
 // forward declaration
 //*****************************************************************************
 class Sprite;
+class SelectRecord;
 
 //*****************************************************************************
 // class definition
@@ -47,15 +48,32 @@ public:
 	// draw
 	virtual void Draw(void);
 
+	// set time
+	void SetTime(u32 time);
+
 	// accessor
 	bool __is_stop(void) { return is_stop_; }
+	void __time(u32 time) { time_ = time; }
+
 private:
 	static const u32 SRIDE_IN_FRAME;
 	static const u32 STOP_FRAME;
 	static const u32 SRIDE_OUT_FRAME;
+	static const u32 RECORD_SRIDE_IN_FRAME;
+	static const D3DXVECTOR2 CLEAR_START_POSITION;
+	static const D3DXVECTOR2 CLEAR_STOP_POSITION;
+	static const D3DXVECTOR2 CLEAR_END_POSITION;
+	static const D3DXVECTOR2 RECORD_START_POSITION;
+	static const D3DXVECTOR2 RECORD_END_POSITION;
+
 	Sprite* sprite_;
+	SelectRecord* record_;
+
 	D3DXVECTOR2 position_;
 	D3DXVECTOR2 purpose_position_;
+	D3DXVECTOR2 record_position_;
+	f32 record_alpha_;
+
 	u32 frame_count_;
 	u32 time_;
 	bool is_stop_;
