@@ -12,7 +12,7 @@
 #include"stage_offset.h"
 #include "system/system.h"
 
-static const D3DXVECTOR2 POSITION_MOVE_RATE = D3DXVECTOR2(0.15f, 0.16f);
+static const D3DXVECTOR2 POSITION_MOVE_RATE = D3DXVECTOR2(0.155f, 0.16f);
 
 //=============================================================================
 // constructor

@@ -400,7 +400,8 @@ void NormalStage::Update(void)
 			map_->__position(-stage_offset_->__position());
 
 			//”wŒiXV
-			game_bg_->__SetPosition(stage_offset_->__position());
+			game_bg_->__SetPosition(game_player_->__position());
+			game_bg_->__move(game_player_->__move());
 			game_bg_->Update();
 
 			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
