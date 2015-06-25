@@ -27,6 +27,7 @@ class SelectFrame;
 class StageName;
 class StageImage;
 class SelectRecord;
+class RecordBack;
 
 //*****************************************************************************
 // class definition
@@ -78,6 +79,7 @@ protected:
 	StageName* stage_name_;			//名前
 	StageImage* stage_image_;		//イメージ画像
 	SelectRecord* record_;
+	RecordBack* record_back_;		//タイマー背景
 
 	bool move_falg_;
 	Stage::TYPE type_;				//私は誰?

@@ -125,7 +125,7 @@ bool NormalStage::Initialize(void)
 	select_record_ = new SelectRecord();
 	select_record_->Initialize();
 	select_record_->__set_time(time_count_);
-	select_record_->__set_position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 200.0f,100.0f));
+	select_record_->__set_position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 290.0f,60.0f));
 	select_record_->Update();
 
 	// option
