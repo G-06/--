@@ -47,11 +47,11 @@ bool StageTutorial::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/map.bin");
+	map_->LoadFromFile("data/map/tst.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/script.csv");
+	LoadFromFile("data/script/tst.csv");
 
 	return true;
 }
