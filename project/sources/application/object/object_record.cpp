@@ -167,7 +167,7 @@ void ObjectRecord::__set_position(D3DXVECTOR2 pos)
 {
 	for(int i=0;i<TEXTURE_MAX;i++)
 	{
-		number_[i]->__Set_position(D3DXVECTOR2((f32)35*i+pos.x,pos.y));
+		number_[i]->__Set_position(D3DXVECTOR2((f32)35*i+(pos.x-140),pos.y));
 	}
 }
 

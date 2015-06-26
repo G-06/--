@@ -24,6 +24,7 @@
 // forward declaration
 //*****************************************************************************
 class ObjectRecord;
+class RecordBack;
 
 //*****************************************************************************
 // class definition
@@ -50,10 +51,15 @@ public:
 	void Draw(void);
 
 	//
+	void __offset_position(D3DXVECTOR2 pos){off_position_=pos;};
+	void __set_time(u32 time);
+	void __set_position(D3DXVECTOR2 pos);
 
 private:
+	ObjectRecord* record_;
+	RecordBack* back_;
 
-
+	D3DXVECTOR2 off_position_;
 };
 
 #endif	// _select_record_H_

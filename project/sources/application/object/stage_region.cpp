@@ -85,9 +85,6 @@ bool StageRegion::Initialize(void)
 	{
 		return false;
 	}
-	//レコード背景
-	record_back_ = new RecordBack();
-	record_back_->Initialize();
 
 	move_falg_ = false;
 
@@ -103,8 +100,6 @@ void StageRegion::Uninitialize(void)
 	SafeRelease(stage_name_);
 	SafeRelease(stage_image_);
 	SafeRelease(record_);
-	SafeRelease(record_back_);
-
 }
 
 //=============================================================================
@@ -130,14 +125,12 @@ void StageRegion::Update(void)
 	select_frame_->__offset_position(region_pos_);
 	stage_name_->__offset_position(region_pos_);
 	stage_image_->__offset_position(region_pos_);
-	record_back_ ->__offset_position(region_pos_);
 	record_->__offset_position(region_pos_);
 
 	//子の更新
 	select_frame_->Update();
 	stage_name_->Update();
 	stage_image_->Update();
-	record_back_ ->Update();
 	record_->Update();
 }
 
@@ -151,7 +144,6 @@ void StageRegion::Draw(void)
 	stage_name_->Draw();
 	if(type_ != Stage::TYPE_TUTORIAL)
 	{
-		record_back_->Draw();
 		record_ ->Draw();
 	}
 }
