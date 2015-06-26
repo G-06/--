@@ -16,7 +16,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectDisappearGround::SIZE	= D3DXVECTOR2(128.0f,128.0f);
+const D3DXVECTOR2 ObjectDisappearGround::SIZE	= D3DXVECTOR2(256.0f,64.0f);
 const u32 ObjectDisappearGround::DIVISION_WIDTH	= 1;
 const u32 ObjectDisappearGround::DIVISION_HEIGHT	= 1;
 

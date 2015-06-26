@@ -16,7 +16,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectMoveGround::SIZE	= D3DXVECTOR2(128.0f,128.0f);
+const D3DXVECTOR2 ObjectMoveGround::SIZE	= D3DXVECTOR2(256.0f,64.0f);
 const u32 ObjectMoveGround::DIVISION_WIDTH	= 1;
 const u32 ObjectMoveGround::DIVISION_HEIGHT	= 1;
 

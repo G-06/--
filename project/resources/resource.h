@@ -121,6 +121,7 @@
 #define TEXTURE_OPTION_KEY_12				198
 #define TEXTURE_OPTION_KEY_13				199
 #define TEXTURE_OPTION_KEY_14				200
+#define TEXTURE_OPTION_KEY_15				201
 
 //*****************************************************************************
 // bgm
