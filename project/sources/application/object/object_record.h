@@ -1,9 +1,8 @@
 //*****************************************************************************
 //
-// stage select reko-do
+// obj record
 //
 // Author		: taichi kitazawa
-//
 //
 //*****************************************************************************
 
@@ -11,31 +10,32 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _SELECT_RECORD_H_
-#define _SELECT_RECORD_H_
+#ifndef _OBJECT_RECORD_H_
+#define _OBJECT_RECORD_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
 #include "basic/basic.h"
-#include "application/scene/game/stage/stage_select.h"
+#include "application/scene/game/stage/stage.h"
+#include "system/directx9/texture/texture.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class ObjectRecord;
+class Number;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class SelectRecord : public Basic
+class ObjectRecord : public Basic
 {
 public:
 	// constructor
-	SelectRecord(void);
+	ObjectRecord(void);
 
 	// destructor
-	virtual ~SelectRecord(void);
+	virtual ~ObjectRecord(void);
 
 	// initialize
 	bool Initialize(void);
@@ -49,13 +49,25 @@ public:
 	// draw
 	void Draw(void);
 
-	//
+	void __set_stage_id(Stage::TYPE id){stage_id_ = id;};
+	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; };
+	void __set_time(u32 time);
+	void __set_position(D3DXVECTOR2 pos);
+
+
+
 
 private:
 
+	Stage::TYPE stage_id_;
+	static const u32 TEXTURE_MAX = 8;
 
+	u32 time_;			//reko-do
+	Number* number_[TEXTURE_MAX];	//jikann 
+	D3DXVECTOR2 offset_position_;
+	D3DXVECTOR2 def_position;
 };
 
-#endif	// _select_record_H_
+#endif	// _
 
 //---------------------------------- EOF --------------------------------------
