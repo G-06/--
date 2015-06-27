@@ -19,9 +19,10 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const u32 DEST_FRAME_COUNT = 20;						// ウィンドウ開閉の時間
+const u32 DEST_FRAME_COUNT = 15;						// ウィンドウ開閉の時間
 const D3DXVECTOR2 DEFAULT_POS_BACK (DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.3f);		//テキスト背景の位置
 const D3DXVECTOR2 DEFAULT_TXT_BACK (DEFAULT_SCREEN_WIDTH * 0.25f, DEFAULT_SCREEN_HEIGHT * 0.2f);	//文字の開始位置
+const D3DXCOLOR TEXT_COLOR = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
 
 //=============================================================================
 // constructor
@@ -47,29 +48,29 @@ bool GimmickTutorialText::Initialize(void)
 {
 	txtbox_ = new TextBox(FontTexture::TYPE_MEIRYO,50);
 	txtbox_->Initialize();
-
+	txtbox_->__show_speed(2);
 
 	txtbox_->__position(DEFAULT_TXT_BACK);
 
 	switch(type_)
 	{
 	case MASSAGE_TYPE_MOVE:
-		txtbox_->Print("移動キーで移動するニャス");
+		txtbox_->Print("移動キーで移動するニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_JUMP:
-		txtbox_->Print("ジャンプキーでジャンプするニャス");
+		txtbox_->Print("ジャンプキーでジャンプするニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_LIGHT:
-		txtbox_->Print("光化キーで光化するニャス");
+		txtbox_->Print("光化キーで光化するニャス",TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_GLAS:
-		txtbox_->Print("光化中でないととおれないニャス");
+		txtbox_->Print("光化中でないととおれないニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_MIRROR:
-		txtbox_->Print("光化してぶつかると反射するニャス");
+		txtbox_->Print("光化してぶつかると反射するニャス", TEXT_COLOR);
 		break;
 	default:
-		txtbox_->Print("表示する文字がないニャス");
+		txtbox_->Print("表示する文字がないニャス", TEXT_COLOR);
 	break;
 	}
 

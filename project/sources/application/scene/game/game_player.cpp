@@ -19,7 +19,7 @@
 // constant definition
 //*****************************************************************************
 const f32 GamePlayer::LIGHT_SPEED = (30.0f);
-const f32 GamePlayer::SPEED = (1.7f);
+const f32 GamePlayer::SPEED = (1.75f);
 const f32 GamePlayer::DECREMENT = (0.9f);
 const f32 GamePlayer::JUMP_SPEED = (-70.0f);
 const s32 GamePlayer::DEFAULT_LIFE_MAX = 3;

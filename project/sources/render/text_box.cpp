@@ -32,7 +32,7 @@ offset_y_(0),
 string_count_(0),
 scale_(1.0f,1.0f),
 rotation_(0.0f),
-show_speed_(5),
+show_speed_(3),
 show_count_(0),
 frame_count_(0),
 font_type_(FontTexture::TYPE_MS_GOTHIC)
