@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// stage 1
+// stage 6
 //
 // Author		: kitazawa taichi
 //
@@ -9,7 +9,7 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "stage_1.h"
+#include "stage_06.h"
 #include "stage_factory.h"
 #include "object/map.h"
 #include "object/stage_offset.h"
@@ -21,7 +21,7 @@
 //=============================================================================
 // constructor
 //=============================================================================
-StageOne::StageOne(void)
+StageSix::StageSix(void)
 	:NormalStage(TYPE_TUTORIAL)
 {
 }
@@ -29,14 +29,14 @@ StageOne::StageOne(void)
 //=============================================================================
 // destructor
 //=============================================================================
-StageOne::~StageOne(void)
+StageSix::~StageSix(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool StageOne::Initialize(void)
+bool StageSix::Initialize(void)
 {
 	NormalStage::Initialize();
 
@@ -59,7 +59,7 @@ bool StageOne::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void StageOne::Uninitialize(void)
+void StageSix::Uninitialize(void)
 {
 	NormalStage::Uninitialize();
 }
@@ -67,7 +67,7 @@ void StageOne::Uninitialize(void)
 //=============================================================================
 // update
 //=============================================================================
-void StageOne::Update(void)
+void StageSix::Update(void)
 {
 	NormalStage::Update();
 }
@@ -75,7 +75,7 @@ void StageOne::Update(void)
 //=============================================================================
 // draw
 //=============================================================================
-void StageOne::Draw(void)
+void StageSix::Draw(void)
 {
 	NormalStage::Draw();
 }
@@ -83,9 +83,9 @@ void StageOne::Draw(void)
 //=============================================================================
 // create factory
 //=============================================================================
-StageFactory* StageOne::CreateFactory(void)const
+StageFactory* StageSix::CreateFactory(void)const
 {
-	return new TutorialFactory();
+	return new StageSixFactory();
 }
 
 //---------------------------------- EOF --------------------------------------
