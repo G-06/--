@@ -23,7 +23,8 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Number;
+class ObjectRecord;
+class RecordBack;
 
 //*****************************************************************************
 // class definition
@@ -50,21 +51,15 @@ public:
 	void Draw(void);
 
 	//
-	void __set_stage_id(Stage::TYPE id){stage_id_ = id;};
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; };
+	void __offset_position(D3DXVECTOR2 pos){off_position_=pos;};
 	void __set_time(u32 time);
 	void __set_position(D3DXVECTOR2 pos);
 
-
 private:
+	ObjectRecord* record_;
+	RecordBack* back_;
 
-	Stage::TYPE stage_id_;
-	static const u32 TEXTURE_MAX = 8;
-
-	u32 time_;			//reko-do
-	Number* number_[TEXTURE_MAX];	//jikann 
-	D3DXVECTOR2 offset_position_;
-	D3DXVECTOR2 def_position;
+	D3DXVECTOR2 off_position_;
 };
 
 #endif	// _select_record_H_

@@ -49,6 +49,7 @@ public:
 	void Draw(void);
 
 	void __set_distmove(f32 move){ distmove_ += move;};
+	void __set_move_uv(f32 uv_move);
 
 private:
 	Sprite* bg_;

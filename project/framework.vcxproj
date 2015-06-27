@@ -28,6 +28,7 @@
     <ClCompile Include="sources\application\object\object_obstacle.cpp" />
     <ClCompile Include="sources\application\object\object_player.cpp" />
     <ClCompile Include="sources\application\object\object_player_icon.cpp" />
+    <ClCompile Include="sources\application\object\object_record.cpp" />
     <ClCompile Include="sources\application\object\object_start_point.cpp" />
     <ClCompile Include="sources\application\object\option.cpp" />
     <ClCompile Include="sources\application\object\option\bgm_volume.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="sources\application\object\object_obstacle.h" />
     <ClInclude Include="sources\application\object\object_player.h" />
     <ClInclude Include="sources\application\object\object_player_icon.h" />
+    <ClInclude Include="sources\application\object\object_record.h" />
     <ClInclude Include="sources\application\object\object_start_point.h" />
     <ClInclude Include="sources\application\object\option.h" />
     <ClInclude Include="sources\application\object\option\bgm_volume.h" />

@@ -99,6 +99,7 @@ protected:
 	UPDATE_TYPE update_type_;
 
 	ObjectPlayer* nas_;
+	u32 flag_;
 };
 
 #endif	// _STAGE_H_
