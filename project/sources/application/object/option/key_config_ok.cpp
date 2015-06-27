@@ -142,10 +142,27 @@ void KeyConfigOk::__set_button_number_texture(INPUT_EVENT button)
 		case INPUT_EVENT_PAD_13:
 			set_button_number_->__texture_id(Texture::TEXTURE_ID_OPTION_KEY_13);
 			break;
+
+		case INPUT_EVENT_PAD_14:
+			set_button_number_->__texture_id(Texture::TEXTURE_ID_OPTION_KEY_14);
+			break;
+
+		case INPUT_EVENT_PAD_15:
+			set_button_number_->__texture_id(Texture::TEXTURE_ID_NONE);
+			break;
 	}
 	set_button_number_->SetParameter();
 }
 
+//=============================================================================
+// set alpha
+//=============================================================================
+void KeyConfigOk::SetAlpha(f32 alpha)
+{
+	select_button_->__color(D3DXCOLOR(1,1,1,alpha));
+
+	select_button_->SetParameter();
+}
 
 
 //---------------------------------- EOF --------------------------------------

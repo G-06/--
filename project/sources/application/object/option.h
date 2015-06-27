@@ -102,6 +102,8 @@ private:
 
 	s32 cursor_x_;
 	s32 cursor_y_;
+	f32 select_menu_alpha_;
+	f32 plus_alpha_;
 	bool is_indication_;
 	bool is_select_;
 	KEY_CODE is_exchange_;

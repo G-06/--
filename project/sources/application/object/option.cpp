@@ -38,7 +38,9 @@ const f32 Option::VOLUME_RATE	= VOLUME_MAX / 10;
 // constructor
 //=============================================================================
 Option::Option(void)
-	:cursor_y_(0)
+	:cursor_y_(0),
+	select_menu_alpha_(1),
+	plus_alpha_(-0.05f)
 {
 	option_data_._bgm_volume = 1.0f;
 	option_data_._se_volume  = 1.0f;
@@ -292,47 +294,61 @@ void Option::Update(void)
 		}
 		else
 		{
+			if(select_menu_alpha_ + plus_alpha_ > 1.0f || select_menu_alpha_ + plus_alpha_ < 0.0f)
+			{
+				plus_alpha_ *= -1;
+			}
+			select_menu_alpha_ += plus_alpha_;
+
 			INPUT_EVENT input_event = GET_DIRECT_INPUT->GetTrigger(INPUT_EVENT_PAD_4,INPUT_EVENT_PAD_25);
 
 			switch(cursor_y_)
 			{
 				case Option::OPTION_KEY_CONFIG_OK:
 				{
+					key_config_ok_->SetAlpha(select_menu_alpha_);
 					key_config_ok_->Select(true);
 					if(input_event != INPUT_EVENT_MAX)
 					{
 						Exchange(&option_data_._decide_key,input_event);
 						is_select_ = true;
+						key_config_ok_->SetAlpha(1);
 					}
 					break;
 				}
 				case Option::OPTION_KEY_CONFIG_CANCEL:
 				{
+					key_config_cancel_->SetAlpha(select_menu_alpha_);
 					key_config_cancel_->Select(true);
 					if(input_event != INPUT_EVENT_MAX)
 					{
 						Exchange(&option_data_._cancel_key,input_event);
 						is_select_ = true;
+						key_config_cancel_->SetAlpha(1);
 					}
 					break;
 				}
 				case Option::OPTION_KEY_CONFIG_SPECIAL:
 				{
+					key_config_special_->SetAlpha(select_menu_alpha_);
 					key_config_special_->Select(true);
 					if(input_event != INPUT_EVENT_MAX)
 					{
 						Exchange(&option_data_._light_key,input_event);
 						is_select_ = true;
+						key_config_special_->SetAlpha(1);
 					}
 					break;
 				}
 				case Option::OPTION_KEY_CONFIG_PAUSE:
 				{
+					key_config_pause_->SetAlpha(select_menu_alpha_);
 					key_config_pause_->Select(true);
 					if(input_event != INPUT_EVENT_MAX)
 					{
 						Exchange(&option_data_._pause_key,input_event);
 						is_select_ = true;
+						key_config_pause_->SetAlpha(1);
 					}
 					break;
 				}

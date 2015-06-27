@@ -51,6 +51,8 @@ public:
 	// ‘I‘ð
 	void Select(bool is_select);
 
+	void SetAlpha(f32 alpha);
+
 	void __set_button_number_texture(INPUT_EVENT button);
 
 private:
