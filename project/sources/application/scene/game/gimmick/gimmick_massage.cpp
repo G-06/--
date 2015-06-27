@@ -15,7 +15,6 @@
 #include "application/object/message_window.h"
 #include "application/object/tutorial_back.h"
 
-
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
