@@ -24,6 +24,7 @@
 #include "../gimmick/gimmick_move_ground.h"
 
 #include "../gimmick/gimmick_tutorial_text.h"
+#include "../gimmick/gimmick_massage.h"
 
 
 #include "object/object_light_gauge.h"
@@ -782,6 +783,13 @@ void NormalStage::CollisionGimmick(void)
 					DEBUG_TOOL.__debug_display()->Print("hit text\n");
 					break;
 				}
+				case Gimmick::TYPE_MASSAGE:
+				{
+					GimmickMassage::DATA* data = (GimmickMassage::DATA*)(*it)->GetPointer();
+					data->_is_hit=true;
+					DEBUG_TOOL.__debug_display()->Print("hit massage\n");
+					break;
+				}
 			}
 		}
 	}
@@ -986,6 +994,34 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					u32 massage = atoi(word);
 
 					GimmickTutorialText* gimmick = new GimmickTutorialText();
+					gimmick->__type(massage);
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+
+					//無いと死ぬ
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+
+					break;
+				}
+				case Gimmick::TYPE_MASSAGE:
+				{
+					//みる
+					i += FindWord(word,&data[i],",\n\0");
+					//xを文字列からfloatに
+					f32 x = atof(word);
+					//次へ
+					i++;
+					//みる
+					i += FindWord(word,&data[i],",\n\0");
+					//yを文字列からfloatに
+					f32 y = atof(word);
+					i++;
+					//メッセージ番号
+					i += FindWord(word,&data[i],",\n\0");
+					u32 massage = atoi(word);
+
+					GimmickMassage* gimmick = new GimmickMassage();
 					gimmick->__type(massage);
 					gimmick->Initialize();
 					gimmick->__position(D3DXVECTOR2(x,y));

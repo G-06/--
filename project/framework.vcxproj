@@ -69,6 +69,7 @@
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_check_point.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_goal_point.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_massage.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_move_ground.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_obstacle.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_start_point.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_check_point.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_goal_point.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_massage.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_move_ground.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_obstacle.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h" />

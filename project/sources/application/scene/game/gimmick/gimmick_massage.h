@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-// gimmick
+// メッセージてきすと
 //
-// Author		: Kenji Kabutomori
+// Author		: kitazawa taichi
 //
 //*****************************************************************************
 
@@ -10,73 +10,83 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _GIMMICK_H_
-#define _GIMMICK_H_
+#ifndef _GIMMICK_MASSAGE_H_
+#define _GIMMICK_MASSAGE_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
+#include "gimmick.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
+class TextBox;
+class MessageWindow;
+class TutorialBack;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Gimmick : public Basic
+class GimmickMassage : public Gimmick
 {
 public:
-	enum TYPE
+	enum MASSAGE_TYPE
 	{
-		TYPE_START_POINT = 0,
-		TYPE_CHECK_POINT,
-		TYPE_GOAL_POINT,
-		TYPE_OBSTACLE,
-		TYPE_DISAPPEAR_GROUND,
-		TYPE_MOVE_GROUND,
-		TYPE_TUTORIAL_TEXT,
-		TYPE_LENS,
-		TYPE_MASSAGE,
-		TYPE_MAX,
+		MASSAGE_TYPE_STAFF_TITLE=0,
+		MASSAGE_TYPE_STAFF_MAKER,
+		MASSAGE_TYPE_STAFF_LEADER,
+		MASSAGE_TYPE_STAFF_DESIGNER,
+		MASSAGE_TYPE_STAFF_PLANER_1,
+		MASSAGE_TYPE_STAFF_PLANER_2,
+		MASSAGE_TYPE_STAFF_PROGRAMMER_1,
+		MASSAGE_TYPE_STAFF_PROGRAMMER_2,
+		MASSAGE_TYPE_STAFF_PROGRAMMER_3,
+		MASSAGE_TYPE_STAFF_SPECIAL_1,
+		MASSAGE_TYPE_MAX
+
+	};
+
+	struct DATA
+	{
+		bool _is_hit;
 	};
 
 	// constructor
-	Gimmick(TYPE type);
+	GimmickMassage(void);
 
 	// destructor
-	virtual ~Gimmick(void);
+	virtual ~GimmickMassage(void);
 
 	// initialize
-	virtual bool Initialize(void);
+	bool Initialize(void);
 
 	// uninitialize
-	virtual void Uninitialize(void);
+	void Uninitialize(void);
 
 	// update
-	virtual void Update(void);
+	void Update(void);
 
 	// draw
-	virtual void Draw(void);
+	void Draw(void);
 
-	// get pointer
-	virtual void* GetPointer(void) { return nullptr; }
-
+	void* GetPointer(void);
 	// accessor
-	void __position(const D3DXVECTOR2& position) { position_ = position; }
-	const D3DXVECTOR2& __position(void) { return position_; }
-	const D3DXVECTOR2& __size(void) { return size_; }
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
-	TYPE __type(void)const { return type_; }
+	void __type(u32 type){type_ = (MASSAGE_TYPE)type;};
 
-protected:
+private:
+	TextBox* txtbox_;
 	D3DXVECTOR2 position_;
-	D3DXVECTOR2 offset_position_;
-	D3DXVECTOR2 size_;
-	TYPE type_;
+	DATA data_;
+
+	MASSAGE_TYPE type_;
+
+	TutorialBack* back_;
+	bool back_flag_;
+
+	u32 wait_;
 };
 
-#endif	// _OBJECT_START_POINT_H_
+#endif	// _GIMMICK_CHECK_POINT_H_
 
 //---------------------------------- EOF --------------------------------------
