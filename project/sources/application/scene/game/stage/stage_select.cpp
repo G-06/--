@@ -275,7 +275,6 @@ void StageSelect::SelectUpdate()
 	{
 		regions_[i].region_->Update();
 	}
-
 }
 
 //=============================================================================
@@ -361,31 +360,31 @@ void StageSelect::YorNUpdate()
 					next_stage_factory_ = new StageOneFactory();
 					break;
 				case TYPE_STAGE2:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageTwoFactory();
 					break;
 				case TYPE_STAGE3:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageThreeFactory();
 					break;
 				case TYPE_STAGE4:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageFourFactory();
 					break;
 				case TYPE_STAGE5:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageFiveFactory();
 					break;
 				case TYPE_STAGE6:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageSixFactory();
 					break;
 				case TYPE_STAGE7:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageSevenFactory();
 					break;
 				case TYPE_STAGE8:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageEightFactory();
 					break;
 				case TYPE_STAGE9:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageNineFactory();
 					break;
 				case TYPE_STAGE10:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageTenFactory();
 					break;
 				}
 			}
