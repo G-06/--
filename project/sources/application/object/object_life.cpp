@@ -1,115 +1,108 @@
 //*****************************************************************************
 //
-// title luminescence
+// object_life
 //
 // Author	: masato masuda
-//
-// ”­Œõ‚µ‚Ä‚é‚â‚Â
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "title_luminescence.h"
+#include "object_life.h"
 #include "render/sprite.h"
 #include "system/system.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-//const D3DXVECTOR2 Titleluminescence::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
-const D3DXVECTOR2 Titleluminescence::DEFAULT_POSITION = D3DXVECTOR2(0.0f, 0.0f);
-const D3DXVECTOR2 Titleluminescence::DEFAULT_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH, 360.0f);
-const f32 DEFAULT_ALPHA_SPEED = -0.0075f;
+const D3DXVECTOR2 ObjectLife::LIFE_SIZE = D3DXVECTOR2(46.0f,38.0f);
+const D3DXVECTOR2 ObjectLife::LIFE_POSITION = D3DXVECTOR2(0.0f,0.0f);
 
 //=============================================================================
 // constructor
 //=============================================================================
-Titleluminescence::Titleluminescence(void)
-	:sprite_(nullptr)
-	,alpha_speed_(DEFAULT_ALPHA_SPEED)
-	,alpha_(1.0f)
+ObjectLife::ObjectLife(void)
+	: life_(nullptr)
+	, is_life_(true)
+	, size_(LIFE_SIZE)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-Titleluminescence::~Titleluminescence(void)
+ObjectLife::~ObjectLife(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool Titleluminescence::Initialize(void)
+bool ObjectLife::Initialize(void)
 {
-	sprite_ = new Sprite();
-	sprite_->Initialize();
-	sprite_->__size(DEFAULT_SIZE);
-	sprite_->__position(DEFAULT_POSITION);
-	sprite_->__point(Sprite::POINT_LEFT_UP);
-	sprite_->__texture_id(Texture::TEXTURE_ID_TITLE_LUMINESCENCE);
-	sprite_->SetParameter();
+	life_ = new Sprite();
+	life_->Initialize();
+	life_->__point(Sprite::POINT_CENTER);
+	life_->__size(LIFE_SIZE);
+	life_->__texture_id(Texture::TEXTURE_ID_GAME_LIFE);
+	life_->__left(0.0f);
+	life_->__right(0.5f);
+	life_->SetParameter();
+
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void Titleluminescence::Uninitialize(void)
+void ObjectLife::Uninitialize(void)
 {
-	SafeRelease(sprite_);
+	SafeRelease(life_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void Titleluminescence::Update(void)
+void ObjectLife::Update(void)
 {
+	if(is_life_)
+	{
+		life_->__left(0.0f);
+		life_->__right(0.5f);
+	}
+	else
+	{
+		life_->__left(0.5f);
+		life_->__right(1.0f);
+	}
+	life_->SetParameter();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void Titleluminescence::Draw(void)
+void ObjectLife::Draw(void)
 {
-	sprite_->Draw();
+	life_->Draw();
 }
 
 //=============================================================================
-// __color
+// __position
 //=============================================================================
-void Titleluminescence::__color(const D3DXCOLOR& color)
+void ObjectLife::__position(const D3DXVECTOR2 position)
 {
-	sprite_->__color(color);
-	sprite_->SetParameter();
+	life_->__position(position);
+	life_->SetParameter();
 }
 
 //=============================================================================
-// __color
+// __size
 //=============================================================================
-const D3DXCOLOR Titleluminescence::__color(void)
+void ObjectLife::__size(const D3DXVECTOR2 size)
 {
-	return (D3DXCOLOR)sprite_->__color();
-}
-
-//=============================================================================
-// ResetAlphaSpeed
-//=============================================================================
-void Titleluminescence::ResetAlphaSpeed(void)
-{
-	alpha_speed_ = DEFAULT_ALPHA_SPEED;
-}
-
-//=============================================================================
-// __texture_id
-//=============================================================================
-void Titleluminescence::__texture_id(const Texture::TEXTURE_ID& texture_id)
-{
-	sprite_->__texture_id(texture_id);
-	sprite_->SetParameter();
+	life_->__size(size);
+	life_->SetParameter();
 }
 
 //---------------------------------- EOF --------------------------------------

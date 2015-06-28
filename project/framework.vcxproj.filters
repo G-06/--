@@ -526,11 +526,17 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_massage.h">
       <Filter>sources\application\scene\game\gimmick</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\object_lens.h">
+    <ClInclude Include="sources\application\object\object_life.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_player_life .h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_lens.h">
       <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_lens.h">
+      <Filter>sources\application\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -906,11 +912,17 @@
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_massage.cpp">
       <Filter>sources\application\scene\game\gimmick</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\object\object_lens.cpp">
+    <ClCompile Include="sources\application\object\object_life.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_player_life .cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_lens.cpp">
       <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_lens.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -29,6 +29,7 @@
 
 #include "object/object_light_gauge.h"
 #include "object/object_player_icon.h"
+#include "object/object_player_life .h"
 #include "collision/collision_map.h"
 #include "object/pause/pause.h"
 #include "object/message_window.h"
@@ -45,6 +46,7 @@
 //*****************************************************************************
 const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,90.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(17.0f,80.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_LIFE_POSITION = D3DXVECTOR2(180.0f,60.0f);
 const u32 DEST_FRAME_COUNT = 20;
 
 //=============================================================================
@@ -52,14 +54,26 @@ const u32 DEST_FRAME_COUNT = 20;
 //=============================================================================
 NormalStage::NormalStage(const TYPE& type)
 	:Stage(type)
+	,game_player_(nullptr)
+	,map_(nullptr)
 	,is_pause_(false)
 	,is_clear_(false)
+	,is_start_(true)
 	,is_option_(false)
 	,is_pause_input_(false)
+	,stage_offset_(nullptr)
+	,object_light_gauge_(nullptr)
+	,object_player_icon_(nullptr)
+	,object_player_life_(nullptr)
 	,pause_(nullptr)
-	,message_window_(nullptr)
-	,is_start_(true)
 	,option_(nullptr)
+	,message_window_(nullptr)
+	,assert_effect_start_(nullptr)
+	,assert_effect_clear_(nullptr)
+	,select_record_(nullptr)
+	,game_bg_(nullptr)
+	,time_count_(0)
+	,position_(0.0f,0.0f)
 {
 	type_ = type;
 }
@@ -93,6 +107,10 @@ bool NormalStage::Initialize(void)
 	object_player_icon_ = new ObjectPlayerIcon();
 	object_player_icon_->Initialize();
 	object_player_icon_->__position(DEFAULT_PLAYER_ICON_POSITION);
+
+	object_player_life_ = new ObjectPlayerLife();
+	object_player_life_->Initialize();
+	object_player_life_->__position(DEFAULT_PLAYER_LIFE_POSITION);
 
 	if(!SafeInitialize(stage_offset_))
 	{
@@ -132,8 +150,6 @@ bool NormalStage::Initialize(void)
 	// option
 	option_ = new Option();
 	option_->Initialize();
-	//option_->Load();
-	//option_->__is_indication(false);
 
 	return true;
 }
@@ -152,6 +168,8 @@ void NormalStage::Uninitialize(void)
 	SafeRelease(object_light_gauge_);
 
 	SafeRelease(object_player_icon_);
+
+	SafeRelease(object_player_life_);
 
 	SafeRelease(select_record_);
 
@@ -366,6 +384,8 @@ void NormalStage::Update(void)
 
 			object_light_gauge_->Update();
 
+			object_player_life_->__life(game_player_->__life());
+			object_player_life_->Update();
 
 			if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
 			{
@@ -469,6 +489,7 @@ void NormalStage::Draw(void)
 	game_player_->Draw();
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
+	object_player_life_->Draw();
 	select_record_->Draw();
 
 	assert_effect_start_->Draw();
