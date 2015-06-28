@@ -493,6 +493,9 @@
     <ClInclude Include="sources\application\scene\game\stage\stage_1.h">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_lightning.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -833,6 +836,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\stage\stage_1.cpp">
       <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_lightning.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
