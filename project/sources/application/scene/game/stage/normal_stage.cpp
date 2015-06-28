@@ -22,7 +22,7 @@
 #include "../gimmick/gimmick_obstacle.h"
 #include "../gimmick/gimmick_disappear_ground.h"
 #include "../gimmick/gimmick_move_ground.h"
-
+#include "../gimmick/gimmick_lens.h"
 #include "../gimmick/gimmick_tutorial_text.h"
 #include "../gimmick/gimmick_massage.h"
 
@@ -776,6 +776,36 @@ void NormalStage::CollisionGimmick(void)
 					}
 					break;
 				}
+				case Gimmick::TYPE_LENS:
+				{
+					GimmickLens::DATA* data = (GimmickLens::DATA*)(*it)->GetPointer();
+
+					if(collision_map.IsHit(player_position,player_old_position + data->_move,gimmick_position,player_size.x,player_size.y,gimmick_size.x,gimmick_size.y))
+					{
+						if(game_player_->__is_light())
+						{
+							//game_player_->__position(gimmick_position);
+							
+
+							//game_player_->__position(data->_shotposition);
+							
+							game_player_->ChangeDirection(data->_shotvec);
+							
+						}
+						else if(collision_map.__vector().y > 0)
+						{
+							game_player_->Accelerate(data->_move);
+							game_player_->HitStage(collision_map.__position(),true);
+						}
+						else
+						{
+							game_player_->HitStage(collision_map.__position());
+						}
+
+						DEBUG_TOOL.__debug_display()->Print("hit lens\n");
+					}
+					break;
+				}
 				case Gimmick::TYPE_TUTORIAL_TEXT:
 				{
 					GimmickTutorialText::DATA* data = (GimmickTutorialText::DATA*)(*it)->GetPointer();
@@ -969,6 +999,39 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					gimmick->__start_position(D3DXVECTOR2(x,y));
 					gimmick->__end_position(D3DXVECTOR2(end_x,end_y));
 					gimmick->__speed(speed);
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
+				case Gimmick::TYPE_LENS:
+				{
+					i += FindWord(word,&data[i],",\n\0");
+					f32 x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					u32 vec = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 end_x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 end_y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 speed = atof(word);
+
+
+					GimmickLens* gimmick = new GimmickLens();
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick->__shot_vec(vec);
+					gimmick->__start_position(D3DXVECTOR2(x,y));
+					gimmick->__end_position(D3DXVECTOR2(end_x,end_y));
+					gimmick->__speed(speed);
+
 					gimmick_container_.push_back(gimmick);
 					i += FindWord(word,&data[i],"\n\0");
 					break;

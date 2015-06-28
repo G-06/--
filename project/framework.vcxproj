@@ -23,6 +23,7 @@
     <ClCompile Include="sources\application\object\object_check_point.cpp" />
     <ClCompile Include="sources\application\object\object_disappear_ground.cpp" />
     <ClCompile Include="sources\application\object\object_goal_point.cpp" />
+    <ClCompile Include="sources\application\object\object_lens.cpp" />
     <ClCompile Include="sources\application\object\object_light_gauge.cpp" />
     <ClCompile Include="sources\application\object\object_move_ground.cpp" />
     <ClCompile Include="sources\application\object\object_obstacle.cpp" />
@@ -69,6 +70,7 @@
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_check_point.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_goal_point.cpp" />
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_lens.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_massage.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_move_ground.cpp" />
     <ClCompile Include="sources\application\scene\game\gimmick\gimmick_obstacle.cpp" />
@@ -154,6 +156,7 @@
     <ClInclude Include="sources\application\object\object_check_point.h" />
     <ClInclude Include="sources\application\object\object_disappear_ground.h" />
     <ClInclude Include="sources\application\object\object_goal_point.h" />
+    <ClInclude Include="sources\application\object\object_lens.h" />
     <ClInclude Include="sources\application\object\object_light_gauge.h" />
     <ClInclude Include="sources\application\object\object_move_ground.h" />
     <ClInclude Include="sources\application\object\object_obstacle.h" />
@@ -202,6 +205,7 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_check_point.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_disappear_ground.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_goal_point.h" />
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_lens.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_massage.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_move_ground.h" />
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_obstacle.h" />
@@ -324,6 +328,7 @@
     <TargetName>$(ProjectName)</TargetName>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath);$(SolutionDir)sources;$(SolutionDir)sources\interface;$(SolutionDir)sources\interface\character;$(SolutionDir)sources\interface\graphic;$(SolutionDir)sources\interface\input;$(SolutionDir)sources\interface\sound;$(SolutionDir)sources\common;$(SolutionDir)sources\application;$(SolutionDir)sources\application;$(SolutionDir)sources\interface;$(SolutionDir)sources\interface\character</IncludePath>
     <IntDir>$(Configuration)\</IntDir>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|Win32'">
     <LinkIncremental>true</LinkIncremental>
