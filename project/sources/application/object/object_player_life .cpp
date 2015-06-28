@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// title circle
+// object_player_life
 //
 // Author	: masato masuda
 //
@@ -9,95 +9,110 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "title_circle.h"
+#include "object_player_life .h"
+#include "object_life.h"
 #include "render/sprite.h"
 #include "system/system.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 TitleCircle::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
-const D3DXVECTOR2 TitleCircle::DEFAULT_SIZE = D3DXVECTOR2(700.0, 700.0f);
+const f32 scale = 0.9f;
+const D3DXVECTOR2 ObjectPlayerLife::LIFE_SIZE = D3DXVECTOR2(46.0f * scale,38.0f * scale);
+const D3DXVECTOR2 ObjectPlayerLife::LIFE_POSITION = D3DXVECTOR2(0.0f,0.0f);
 
 //=============================================================================
 // constructor
 //=============================================================================
-TitleCircle::TitleCircle(void)
-	:sprite_(nullptr)
+ObjectPlayerLife::ObjectPlayerLife(void)
+	: life_(0)
+	, provision_position_(0.0f, 0.0f)
 {
+	for(int i = 0 ; i < LIFE_MAX ; i++){
+		life_icon_[i] = nullptr;
+	}
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-TitleCircle::~TitleCircle(void)
+ObjectPlayerLife::~ObjectPlayerLife(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool TitleCircle::Initialize(void)
+bool ObjectPlayerLife::Initialize(void)
 {
-	sprite_ = new Sprite();
-	sprite_->Initialize();
-	sprite_->__size(DEFAULT_SIZE);
-	sprite_->__position(DEFAULT_POSITION);
-	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__texture_id(Texture::TEXTURE_ID_TITLE_CIRCLE);
-	sprite_->SetParameter();
+	for(int i = 0 ; i < LIFE_MAX ; i++)
+	{
+		life_icon_[i] = new ObjectLife();
+		life_icon_[i]->Initialize();
+		life_icon_[i]->__is_life(true);
+
+		const D3DXVECTOR2 position = D3DXVECTOR2(LIFE_POSITION.x + (LIFE_SIZE.x * i), LIFE_POSITION.y);
+		life_icon_[i]->__position(position);
+		life_icon_[i]->__size(LIFE_SIZE);
+	}
+
+	provision_position_ = LIFE_POSITION;
+
 	return true;
 }
 
 //=============================================================================
 // uninitialize
 //=============================================================================
-void TitleCircle::Uninitialize(void)
+void ObjectPlayerLife::Uninitialize(void)
 {
-	SafeRelease(sprite_);
+	for(int i = 0 ; i < LIFE_MAX ; i++){
+		SafeRelease(life_icon_[i]);
+	}
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void TitleCircle::Update(void)
+void ObjectPlayerLife::Update(void)
 {
+	for(int i = 0 ; i < LIFE_MAX ; i++){
+
+		if(i < life_)
+		{
+			life_icon_[i]->__is_life(true);
+		}
+		else
+		{
+			life_icon_[i]->__is_life(false);
+		}
+		life_icon_[i]->Update();
+	}
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void TitleCircle::Draw(void)
+void ObjectPlayerLife::Draw(void)
 {
-	sprite_->Draw();
-}
-
-//=============================================================================
-// AddRotation
-//=============================================================================
-void TitleCircle::AddRotation(const f32 rotation)
-{
-	f32 old_rotation = sprite_->__rotation();
-	f32 temp_rotation = old_rotation + rotation;
-
-	// normalize
-	if( temp_rotation > D3DX_PI ){
-		temp_rotation -= ( 2.0f * D3DX_PI );
+	for(int i = 0 ; i < LIFE_MAX ; i++){
+		life_icon_[i]->Draw();
 	}
-	if( temp_rotation < -(D3DX_PI) ){
-		temp_rotation += ( 2.0f * D3DX_PI );
-	}
-
-	sprite_->__rotation(temp_rotation);
 }
 
 //=============================================================================
-// __texture_id
+// __position
 //=============================================================================
-void TitleCircle::__texture_id(const Texture::TEXTURE_ID& texture_id)
+void ObjectPlayerLife::__position(const D3DXVECTOR2 position)
 {
-	sprite_->__texture_id(texture_id);
-	sprite_->SetParameter();
+	provision_position_ = position;
+
+	for(int i = 0 ; i < LIFE_MAX ; i++)
+	{
+		const D3DXVECTOR2 pos = D3DXVECTOR2(provision_position_.x + (LIFE_SIZE.x * i), provision_position_.y);
+		life_icon_[i]->__position(pos);
+	}
 }
+
 
 //---------------------------------- EOF --------------------------------------

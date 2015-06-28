@@ -35,10 +35,10 @@ const f32 PUSH_START_ALPHA_MIN = 0.0f;
 
 // luminesceneÇÃì_ñ≈êîíl
 const f32 LUMINESCENCE_ALPHA_MAX = 1.1f;
-const f32 LUMINESCENCE_ALPHA_MIN = 0.2f;
+const f32 LUMINESCENCE_ALPHA_MIN = 0.15f;
 
 // circleÇÃâÒì]
-const f32 CIRCLE_ROTATION = 0.01f;
+const f32 CIRCLE_ROTATION = 0.005f;
 
 // select position
 const f32 SELECT_OFFSET_Y = 100.0f;

@@ -23,11 +23,13 @@
     <ClCompile Include="sources\application\object\object_check_point.cpp" />
     <ClCompile Include="sources\application\object\object_disappear_ground.cpp" />
     <ClCompile Include="sources\application\object\object_goal_point.cpp" />
+    <ClCompile Include="sources\application\object\object_life.cpp" />
     <ClCompile Include="sources\application\object\object_light_gauge.cpp" />
     <ClCompile Include="sources\application\object\object_move_ground.cpp" />
     <ClCompile Include="sources\application\object\object_obstacle.cpp" />
     <ClCompile Include="sources\application\object\object_player.cpp" />
     <ClCompile Include="sources\application\object\object_player_icon.cpp" />
+    <ClCompile Include="sources\application\object\object_player_life .cpp" />
     <ClCompile Include="sources\application\object\object_record.cpp" />
     <ClCompile Include="sources\application\object\object_start_point.cpp" />
     <ClCompile Include="sources\application\object\option.cpp" />
@@ -154,11 +156,13 @@
     <ClInclude Include="sources\application\object\object_check_point.h" />
     <ClInclude Include="sources\application\object\object_disappear_ground.h" />
     <ClInclude Include="sources\application\object\object_goal_point.h" />
+    <ClInclude Include="sources\application\object\object_life.h" />
     <ClInclude Include="sources\application\object\object_light_gauge.h" />
     <ClInclude Include="sources\application\object\object_move_ground.h" />
     <ClInclude Include="sources\application\object\object_obstacle.h" />
     <ClInclude Include="sources\application\object\object_player.h" />
     <ClInclude Include="sources\application\object\object_player_icon.h" />
+    <ClInclude Include="sources\application\object\object_player_life .h" />
     <ClInclude Include="sources\application\object\object_record.h" />
     <ClInclude Include="sources\application\object\object_start_point.h" />
     <ClInclude Include="sources\application\object\option.h" />
