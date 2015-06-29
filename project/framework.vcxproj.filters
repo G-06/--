@@ -538,6 +538,21 @@
     <ClInclude Include="sources\application\object\object_lens.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_skeleton.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_dead.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_lightning.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_locus.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_mirror.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -923,6 +938,21 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\object_lens.cpp">
       <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_skeleton.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_dead.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_lightning.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_locus.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_mirror.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

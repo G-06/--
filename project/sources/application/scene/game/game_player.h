@@ -24,6 +24,9 @@
 // forward declaration
 //*****************************************************************************
 class ObjectPlayer;
+class EffectDead;
+class EffectLightning;
+class EffectLocus;
 
 //*****************************************************************************
 // class definition
@@ -156,6 +159,9 @@ private:
 	u32 check_point_priority_;
 	D3DXVECTOR2 acceleration_;
 	ObjectPlayer*		player_;				// プレイヤースプライト
+	EffectLightning* lightning_start_;
+	EffectDead* nyas_dead_;
+	EffectLocus* nyas_locus_[100];
 	bool is_preview_light_;
 	bool is_force_light_;
 };

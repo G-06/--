@@ -126,6 +126,12 @@
 #define TEXTURE_OPTION_KEY_14				202
 #define TEXTURE_OPTION_KEY_15				203
 
+// effect
+#define TEXTURE_EFFECT_LIGHTNING			204
+#define TEXTURE_EFFECT_NYAS_DEAD			205
+#define TEXTURE_EFFECT_MIRROR				206
+#define TEXTURE_EFFECT_SKELETON				207
+
 //*****************************************************************************
 // bgm
 //*****************************************************************************
