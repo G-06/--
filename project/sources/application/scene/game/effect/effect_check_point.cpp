@@ -41,7 +41,7 @@ bool EffectCheckPoint::Initialize(void)
 	sprite_ = new Sprite();
 	SafeInitialize(sprite_);
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__size(D3DXVECTOR2(128.0f,64.0f));
+	sprite_->__size(D3DXVECTOR2(512.0f,128.0f));
 	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_CHECK_POINT);
 	sprite_->SetParameter();
 

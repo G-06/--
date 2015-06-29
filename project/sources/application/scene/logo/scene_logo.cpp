@@ -16,6 +16,13 @@
 #include "scene/factory/scene_factory.h"
 #include "system/system.h"
 
+
+//=============================================================================
+// constant definition
+//=============================================================================
+const u32 START_FRAME_COUNT = 30;
+const u32 END_FRAME_COUNT = 20;
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -23,6 +30,8 @@ SceneLogo::SceneLogo(void)
 	:Scene(TYPE_LOGO)
 	,logo_neko_(nullptr)
 	,logo_bg_(nullptr)
+	,frame_count_(0)
+	,end_count_(0)
 {
 }
 
@@ -75,20 +84,28 @@ void SceneLogo::Update(void)
 	}
 	else
 	{
-		if(!logo_neko_->__is_active())
-		{
-			logo_neko_->Start();
-		}
+		frame_count_++;
 
-		logo_neko_->Update();
-		logo_bg_->Update();
-
-		//タイトルに行くタイミングを見計らっている
-		if(logo_neko_->__is_end())
-		{
-			if(next_scene_factory_ == nullptr)
+		const u32 START_FRAME_COUNT = 45;
+		if(frame_count_ >= START_FRAME_COUNT){
+			if(!logo_neko_->__is_active())
 			{
-				next_scene_factory_ = new TitleFactory();
+				logo_neko_->Start();
+			}
+
+			logo_neko_->Update();
+			logo_bg_->Update();
+
+			//タイトルに行くタイミングを見計らっている
+			if(logo_neko_->__is_end() )
+			{
+				end_count_++;
+				if( end_count_ > END_FRAME_COUNT ){
+					if(next_scene_factory_ == nullptr)
+					{
+						next_scene_factory_ = new TitleFactory();
+					}
+				}
 			}
 		}
 	}

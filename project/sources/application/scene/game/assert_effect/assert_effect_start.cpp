@@ -16,7 +16,7 @@
 // constant definition
 //*****************************************************************************
 const u32 AssertEffectStart::SRIDE_IN_FRAME = 30;
-const u32 AssertEffectStart::STOP_FRAME = 60;
+const u32 AssertEffectStart::STOP_FRAME = 90;
 const u32 AssertEffectStart::SRIDE_OUT_FRAME = 30;
 
 //=============================================================================
@@ -46,6 +46,7 @@ bool AssertEffectStart::Initialize(void)
 	sprite_->Initialize();
 	sprite_->__point(Sprite::POINT_CENTER);
 	sprite_->__size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,200.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_START);
 	sprite_->SetParameter();
 
 	return true;
