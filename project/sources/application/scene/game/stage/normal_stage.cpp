@@ -813,15 +813,18 @@ void NormalStage::CollisionGimmick(void)
 							game_player_->ChangeDirection(data->_shotvec);
 							
 						}
-						else if(collision_map.__vector().y > 0)
-						{
-							game_player_->Accelerate(data->_move);
-							game_player_->HitStage(collision_map.__position(),true);
-						}
-						else
-						{
-							game_player_->HitStage(collision_map.__position());
-						}
+
+						// æ‚é”»’è
+						
+						//else if(collision_map.__vector().y > 0)
+						//{
+						//	game_player_->Accelerate(data->_move);
+						//	game_player_->HitStage(collision_map.__position(),true);
+						//}
+						//else
+						//{
+						//	game_player_->HitStage(collision_map.__position());
+						//}
 
 						DEBUG_TOOL.__debug_display()->Print("hit lens\n");
 					}

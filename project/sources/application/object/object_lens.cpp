@@ -2,7 +2,7 @@
 //
 // object lens
 //
-// Author		: Kenji Kabutomori
+// Author		: Haruki Saito
 //
 //*****************************************************************************
 
