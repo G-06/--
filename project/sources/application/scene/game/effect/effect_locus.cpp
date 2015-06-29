@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// effect lightning
+// effect locus
 //
 // Author		: Ryotaro Arai
 //
@@ -9,57 +9,42 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "effect_lightning.h"
+#include "effect_locus.h"
 #include "render/sprite.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const Animation::DATA EffectLightning::LIGHTNING_EFFECT[EffectLightning::LIGHTNING_EFFECT_PATTERN] =
-{
-	Animation::DATA(3,1,0),
-	Animation::DATA(3,2,1),
-	Animation::DATA(3,3,2),
-	Animation::DATA(3,4,3),
-	Animation::DATA(3,5,4),
-	Animation::DATA(3,6,5),
-	Animation::DATA(3,7,6),
-	Animation::DATA(3,0,7),
-};
 
 
 //=============================================================================
 // constructor
 //=============================================================================
-EffectLightning::EffectLightning(void)
-	:Effect(TYPE_LIGHTNING)
+EffectLocus::EffectLocus(void)
+	:Effect(TYPE_LOCUS)
 	,sprite_(nullptr)
-	,frame_count_(0)
+	,alpha_(1)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-EffectLightning::~EffectLightning(void)
+EffectLocus::~EffectLocus(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool EffectLightning::Initialize(void)
+bool EffectLocus::Initialize(void)
 {
-	animation_ = new Animation();
-	animation_->Add(&LIGHTNING_EFFECT[0], sizeof(Animation::DATA)*EffectLightning::LIGHTNING_EFFECT_PATTERN);
-	animation_->Start(0);
-
 	sprite_ = new Sprite();
 	SafeInitialize(sprite_);
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__size(D3DXVECTOR2(384.0f,384.0f));
-	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_LIGHTNING);
-	sprite_->__division_width(EffectLightning::LIGHTNING_EFFECT_PATTERN);
+	sprite_->__size(D3DXVECTOR2(256.0f,256.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_NYAS_LIGHT);
+	sprite_->__division_width(6);
 	sprite_->__index(0);
 	sprite_->SetParameter();
 
@@ -69,33 +54,31 @@ bool EffectLightning::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void EffectLightning::Uninitialize(void)
+void EffectLocus::Uninitialize(void)
 {
 	SafeRelease(sprite_);
-	SafeRelease(animation_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void EffectLightning::Update(void)
+void EffectLocus::Update(void)
 {
-	frame_count_++;
+	alpha_ -= 0.02f;
 
-	if(frame_count_ > 24)
+	if(alpha_ <= 0)
 	{
 		is_death_ = true;
 	}
 
-	animation_->Update();
-	sprite_->__index(animation_->__current_index());
+	sprite_->__color(D3DXCOLOR(255,255,255,alpha_));
 	sprite_->SetParameter();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void EffectLightning::Draw(void)
+void EffectLocus::Draw(void)
 {
 	sprite_->__position(position_ - offset_position_);
 	sprite_->Draw();

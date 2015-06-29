@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// effect lightning
+// effect skeleton
 //
 // Author		: Ryotaro Arai
 //
@@ -9,13 +9,13 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "effect_lightning.h"
+#include "effect_skeleton.h"
 #include "render/sprite.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const Animation::DATA EffectLightning::LIGHTNING_EFFECT[EffectLightning::LIGHTNING_EFFECT_PATTERN] =
+const Animation::DATA EffectSkeleton::SKELETON_EFFECT[EffectSkeleton::SKELETON_EFFECT_PATTERN] =
 {
 	Animation::DATA(3,1,0),
 	Animation::DATA(3,2,1),
@@ -24,15 +24,15 @@ const Animation::DATA EffectLightning::LIGHTNING_EFFECT[EffectLightning::LIGHTNI
 	Animation::DATA(3,5,4),
 	Animation::DATA(3,6,5),
 	Animation::DATA(3,7,6),
-	Animation::DATA(3,0,7),
+	Animation::DATA(3,0,7)
 };
 
 
 //=============================================================================
 // constructor
 //=============================================================================
-EffectLightning::EffectLightning(void)
-	:Effect(TYPE_LIGHTNING)
+EffectSkeleton::EffectSkeleton(void)
+	:Effect(TYPE_SKELETON)
 	,sprite_(nullptr)
 	,frame_count_(0)
 {
@@ -41,25 +41,25 @@ EffectLightning::EffectLightning(void)
 //=============================================================================
 // destructor
 //=============================================================================
-EffectLightning::~EffectLightning(void)
+EffectSkeleton::~EffectSkeleton(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool EffectLightning::Initialize(void)
+bool EffectSkeleton::Initialize(void)
 {
 	animation_ = new Animation();
-	animation_->Add(&LIGHTNING_EFFECT[0], sizeof(Animation::DATA)*EffectLightning::LIGHTNING_EFFECT_PATTERN);
+	animation_->Add(&SKELETON_EFFECT[0], sizeof(Animation::DATA)*EffectSkeleton::SKELETON_EFFECT_PATTERN);
 	animation_->Start(0);
 
 	sprite_ = new Sprite();
 	SafeInitialize(sprite_);
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__size(D3DXVECTOR2(384.0f,384.0f));
-	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_LIGHTNING);
-	sprite_->__division_width(EffectLightning::LIGHTNING_EFFECT_PATTERN);
+	sprite_->__size(D3DXVECTOR2(256.0f,256.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_SKELETON);
+	sprite_->__division_width(EffectSkeleton::SKELETON_EFFECT_PATTERN);
 	sprite_->__index(0);
 	sprite_->SetParameter();
 
@@ -69,7 +69,7 @@ bool EffectLightning::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void EffectLightning::Uninitialize(void)
+void EffectSkeleton::Uninitialize(void)
 {
 	SafeRelease(sprite_);
 	SafeRelease(animation_);
@@ -78,7 +78,7 @@ void EffectLightning::Uninitialize(void)
 //=============================================================================
 // update
 //=============================================================================
-void EffectLightning::Update(void)
+void EffectSkeleton::Update(void)
 {
 	frame_count_++;
 
@@ -95,7 +95,7 @@ void EffectLightning::Update(void)
 //=============================================================================
 // draw
 //=============================================================================
-void EffectLightning::Draw(void)
+void EffectSkeleton::Draw(void)
 {
 	sprite_->__position(position_ - offset_position_);
 	sprite_->Draw();

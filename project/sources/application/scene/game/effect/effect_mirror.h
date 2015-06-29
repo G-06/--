@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-// effect
+// effect mirror
 //
-// Author		: Kenji Kabutomori
+// Author		: Ryotaro Arai
 //
 //*****************************************************************************
 
@@ -10,66 +10,52 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _EFFECT_H_
-#define _EFFECT_H_
+#ifndef _EFFECT_MIRROR_H_
+#define _EFFECT_MIRROR_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
+#include "effect.h"
+#include "common/animation/animation.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Effect : public Basic
+class EffectMirror : public Effect
 {
 public:
-	enum TYPE
-	{
-		TYPE_CHECK_POINT = 0,
-		TYPE_LIGHTNING,
-		TYPE_NYAS_DEAD,
-		TYPE_LOCUS,
-		TYPE_MIRROR,
-		TYPE_SKELETON,
-		TYPE_MAX,
-	};
-
 	// constructor
-	Effect(TYPE type);
+	EffectMirror(void);
 
 	// destructor
-	virtual ~Effect(void);
+	virtual ~EffectMirror(void);
 
 	// initialize
-	virtual bool Initialize(void);
+	bool Initialize(void);
 
 	// uninitialize
-	virtual void Uninitialize(void);
+	void Uninitialize(void);
 
 	// update
-	virtual void Update(void);
+	void Update(void);
 
 	// draw
-	virtual void Draw(void);
+	void Draw(void);
 
-	// accessor
-	void __position(const D3DXVECTOR2& position) { position_ = position; }
-	const D3DXVECTOR2& __position(void) { return position_; }
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
-	TYPE __type(void)const { return type_; }
-	bool __is_death(void)const { return is_death_; }
-protected:
-	D3DXVECTOR2 position_;
-	D3DXVECTOR2 offset_position_;
-	TYPE type_;
-	bool is_death_;
+private:
+	static const s32 MIRROR_EFFECT_PATTERN = 12;
+	static const Animation::DATA MIRROR_EFFECT[MIRROR_EFFECT_PATTERN];
+	Sprite* sprite_;
+	u32 frame_count_;
+	Animation* animation_;
 };
 
-#endif	// _EFFECT_H_
+#endif	// _EFFECT_MIRROR_H_
 
 //---------------------------------- EOF --------------------------------------

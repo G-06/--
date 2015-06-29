@@ -14,6 +14,9 @@
 #include "application/object/object_player.h"
 #include "system/system.h"
 #include "system/direct_input/input_event_buffer.h"
+#include "effect/effect_lightning.h"
+#include "effect/effect_dead.h"
+#include "effect/effect_locus.h"
 
 //*****************************************************************************
 // constant definition
@@ -70,6 +73,12 @@ bool GamePlayer::Initialize(void)
 	player_= new ObjectPlayer();
 	player_->Initialize();
 	player_->__position(position_);
+	lightning_start_ = nullptr;
+	nyas_dead_ = nullptr;
+	for(s32 i = 0; i < 100; i++)
+	{
+		nyas_locus_[i] = nullptr;
+	}
 
 	return true;
 }
@@ -80,6 +89,12 @@ bool GamePlayer::Initialize(void)
 void GamePlayer::Uninitialize(void)
 {
 	SafeRelease(player_);
+	SafeRelease(lightning_start_);
+	SafeRelease(nyas_dead_);
+	for(s32 i = 0; i < 100; i++)
+	{
+		SafeRelease(nyas_locus_[i]);
+	}
 }
 
 //=============================================================================
@@ -123,7 +138,6 @@ void GamePlayer::Update(void)
 		{
 			vector.x = 1.0f;
 		}
-
 		ChangeLightMode(vector);
 	}
 
@@ -181,6 +195,18 @@ void GamePlayer::Update(void)
 	}
 	else
 	{
+		for(s32 i = 0; i < 100; i++)
+		{
+			if(nyas_locus_[i] == nullptr)
+			{
+				nyas_locus_[i] = new EffectLocus();
+				nyas_locus_[i]->Initialize();
+				nyas_locus_[i]->__position(position_);
+				nyas_locus_[i]->__offset_position(offset_position_);
+				break;
+			}
+		}
+
 		sp_--;
 		if(sp_ <= 0 || sp_ > sp_max_)
 		{
@@ -211,6 +237,45 @@ void GamePlayer::Update(void)
 	is_sp_recover_speed_up_ = false;
 	sp_recover_speed_ = DEFAULT_SP_RECOVER_SPEED;
 
+	if(lightning_start_)
+	{
+		lightning_start_->__offset_position(offset_position_);
+		lightning_start_->Update();
+
+		if(lightning_start_->__is_death())
+		{
+			lightning_start_->Uninitialize();
+			delete lightning_start_;
+			lightning_start_ = nullptr;
+		}
+	}
+	if(nyas_dead_)
+	{
+		nyas_dead_->__offset_position(offset_position_);
+		nyas_dead_->Update();
+
+		if(nyas_dead_->__is_death())
+		{
+			nyas_dead_->Uninitialize();
+			delete nyas_dead_;
+			nyas_dead_ = nullptr;
+		}
+	}
+	for(s32 i = 0; i < 100; i++)
+	{
+		if(nyas_locus_[i])
+		{
+			nyas_locus_[i]->__offset_position(offset_position_);
+			nyas_locus_[i]->Update();
+
+			if(nyas_locus_[i]->__is_death())
+			{
+				nyas_locus_[i]->Uninitialize();
+				delete nyas_locus_[i];
+				nyas_locus_[i] = nullptr;
+			}
+		}
+	}
 }
 
 //=============================================================================
@@ -220,6 +285,23 @@ void GamePlayer::Draw(void)
 {
 	player_->__position(position_ - offset_position_);
 	player_->Draw();
+
+	for(s32 i = 0; i < 100; i++)
+	{
+		if(nyas_locus_[i])
+		{
+			nyas_locus_[i]->Draw();
+		}
+	}
+
+	if(lightning_start_)
+	{
+		lightning_start_->Draw();
+	}
+	if(nyas_dead_)
+	{
+		nyas_dead_->Draw();
+	}
 }
 
 //=============================================================================
@@ -315,6 +397,16 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 			}
 
 			player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
+			if(lightning_start_)
+			{
+				lightning_start_->Uninitialize();
+				delete lightning_start_;
+				lightning_start_ = nullptr;
+			}
+			lightning_start_ = new EffectLightning();
+			lightning_start_->Initialize();
+			lightning_start_->__position(position_);
+			lightning_start_->__offset_position(offset_position_);
 		}
 	}
 }
@@ -351,6 +443,10 @@ void GamePlayer::Dead(void)
 	if(life_ > 0)
 	{
 		life_--;
+		nyas_dead_ = new EffectDead();
+		nyas_dead_->Initialize();
+		nyas_dead_->__position(position_);
+		nyas_dead_->__offset_position(offset_position_);
 
 		position_ = return_position_;
 		old_position_ = position_;

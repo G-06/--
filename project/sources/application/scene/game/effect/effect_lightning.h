@@ -49,12 +49,13 @@ public:
 	void Draw(void);
 
 private:
-	static const Animation::DATA LIGHTNING_EFFECT[13];
+	static const s32 LIGHTNING_EFFECT_PATTERN = 8;
+	static const Animation::DATA LIGHTNING_EFFECT[LIGHTNING_EFFECT_PATTERN];
 	Sprite* sprite_;
 	u32 frame_count_;
 	Animation* animation_;
 };
 
-#endif	// _EFFECT_CHECK_POINT_H_
+#endif	// _EFFECT_LIGHTNING_H_
 
 //---------------------------------- EOF --------------------------------------
