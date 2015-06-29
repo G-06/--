@@ -50,12 +50,9 @@ public:
 	void Draw(void);
 
 	void __set_stage_id(Stage::TYPE id){stage_id_ = id;};
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; };
+	void __offset_position(const D3DXVECTOR2& offset_position);
 	void __set_time(u32 time);
 	void __set_position(D3DXVECTOR2 pos);
-
-
-
 
 private:
 
@@ -65,7 +62,6 @@ private:
 	u32 time_;			//reko-do
 	Number* number_[TEXTURE_MAX];	//jikann 
 	D3DXVECTOR2 offset_position_;
-	D3DXVECTOR2 def_position;
 };
 
 #endif	// _

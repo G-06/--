@@ -44,6 +44,8 @@ bool SelectRecord::Initialize(void)
 	back_ = new RecordBack();
 	back_->Initialize();
 
+	off_position_ = D3DXVECTOR2(0.0f,0.0f);
+
 	return true;
 }
 
