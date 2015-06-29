@@ -18,6 +18,7 @@
 
 static const D3DXVECTOR2 DEFAULT_POS_NUM(680.f,500.f);		// デフォルトポジション 数字の一番左端の位置
 
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -42,10 +43,10 @@ bool ObjectRecord::Initialize(void)
 	{
 		number_[i] = new Number();
 		number_[i] -> Initialize();
-		number_[i] ->__Set_position(D3DXVECTOR2((f32)35*i+DEFAULT_POS_NUM.x,DEFAULT_POS_NUM.y));
+		number_[i] ->__Set_position(D3DXVECTOR2((f32)35*i+0,0));
 	}
 	//位置
-	offset_position_ = D3DXVECTOR2(0,0);
+	offset_position_ = D3DXVECTOR2(0.0f,0.0f);
 	time_ =0;
 	__set_time(time_);
 
@@ -71,10 +72,8 @@ void ObjectRecord::Update(void)
 {
 	for(int i=0;i<TEXTURE_MAX;i++)
 	{
-		number_[i]->__offset_position(offset_position_);
 		number_[i]->Update();
 	}
-
 }
 
 //=============================================================================
@@ -157,7 +156,6 @@ void ObjectRecord::__set_time(u32 time)
 	number_[6]->__Set_index((u32)workB);
 	workA -= (u32)workB;
 	workA /= 10;
-
 }
 
 //=============================================================================
@@ -167,8 +165,18 @@ void ObjectRecord::__set_position(D3DXVECTOR2 pos)
 {
 	for(int i=0;i<TEXTURE_MAX;i++)
 	{
-		number_[i]->__Set_position(D3DXVECTOR2((f32)35*i+(pos.x-140),pos.y));
+		number_[i]->__Set_position(D3DXVECTOR2((f32)35*i+(pos.x-125),pos.y));
 	}
+}
+
+void  ObjectRecord::__offset_position(const D3DXVECTOR2& offset_position)
+{
+	offset_position_ = offset_position; 
+	for(int i=0;i<TEXTURE_MAX;i++)
+	{
+		number_[i]->__offset_position(offset_position_);
+	}
+
 }
 
 

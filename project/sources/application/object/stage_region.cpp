@@ -26,7 +26,7 @@
 const D3DXVECTOR2 StageRegion::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
 const f32 MOVE_SPEED = 60.f;				// まとまりの移動速度 フレーム数で指定
 const f32 MOVE_FREAM = 960.0f/MOVE_SPEED;
-static const D3DXVECTOR2 DEFAULT_POS_BACK(800.f,500.f);		// デフォルトポジション 数字の一番左端の位置
+static const D3DXVECTOR2 DEFAULT_POS_NUM(800.f,500.f);		// デフォルトポジション 数字の一番左端の位置
 
 
 //=============================================================================
@@ -85,10 +85,11 @@ bool StageRegion::Initialize(void)
 	{
 		return false;
 	}
+	record_->__set_position(DEFAULT_POS_NUM);
 
 	move_falg_ = false;
 
-	return true;
+	return true;	
 }
 
 //=============================================================================
