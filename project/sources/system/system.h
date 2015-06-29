@@ -35,6 +35,9 @@
 #define GET_SE System::GetInstance().__xaudio2()->__se()
 #define GET_OPTION_DATA System::GetInstance().__option_data();
 
+class Record;
+
+
 //*****************************************************************************
 // class definition
 //*****************************************************************************
@@ -56,9 +59,21 @@ public:
 	DirectInput* __direct_input(void)const { return direct_input_; }
 	XAudio2* __xaudio2(void)const { return xaudio2_; }
 	OPTION_DATA* __option_data(void) { return &option_data_; }
-
+	//今いるステージ
 	static void __set_current_stage(u32 stage){current_stage_ = stage;};
 	static u32 __get_current_stage(void){return current_stage_;};
+
+	//ファイル読み込み
+	static void FileLoad(const s8* file_name);
+	//レコードセーブ ステージ番号　レコード
+	static void RecordSave(const u32 stage_num, const u32 record);
+	//レコード取得 ステージ番号　レコード返す
+	static u32 RecordLoad(const u32 stage_num);
+	//ファイルセーブ
+	static void FileSave(const s8* file_name);
+	//ファイルクリアしてセーブ
+	static void FileSaveClear(const s8* file_name, const u32 stage_num);
+
 
 private:
 	System(void);
@@ -73,6 +88,8 @@ private:
 	OPTION_DATA option_data_;
 	
 	static u32 current_stage_;
+	static Record* record_;
+
 };
 
 #endif // _SYSYEM_H_

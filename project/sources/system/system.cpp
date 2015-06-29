@@ -11,9 +11,11 @@
 //*****************************************************************************
 #include "system.h"
 #include "window/main_window.h"
+#include "application/object/record.h"
 
 System System::instance_;
 u32 System::current_stage_=1;
+Record* System::record_;
 
 //=============================================================================
 // constructor
@@ -101,6 +103,12 @@ bool System::Setup(HINSTANCE hinstance)
 	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT,instance_.option_data_._light_key);
 	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE,instance_.option_data_._pause_key);
 
+
+	//レコード読み込み初期化
+	instance_.record_ = new Record();
+	instance_.record_->Initialize();
+
+
 	return true;
 }
 
@@ -121,7 +129,51 @@ void System::Shutdown(void)
 	// release xaudio2
 	SafeRelease(instance_.xaudio2_);
 
+	SafeRelease(instance_.record_);
+
+
 	timeEndPeriod(0);
 }
+
+//
+//ファイルの読み込み
+//
+void System::FileLoad(const s8* file_name)
+{
+	instance_.record_->LoadFile(file_name);
+}
+
+//
+//レコード保存
+//
+void System::RecordSave(const u32 stage_num, const u32 record)
+{
+	instance_.record_->__record(stage_num,record);
+}
+
+//
+//レコードロード
+//
+u32 System::RecordLoad(const u32 stage_num)
+{
+	return (instance_.record_->__record(stage_num));
+}
+
+//
+//ファイルセーブ
+//
+void System::FileSave(const s8* file_name)
+{
+	instance_.record_->SaveFile(file_name);
+}
+
+//
+//ファイルクリアしてセーブ
+//
+void System::FileSaveClear(const s8* file_name, const u32 stage_num)
+{
+	instance_.record_->SaveFileClear(file_name,stage_num);
+}
+
 
 //-----------------------------------EOF---------------------------------------
