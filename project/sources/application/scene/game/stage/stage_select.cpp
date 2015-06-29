@@ -18,7 +18,6 @@
 #include "system/system.h"
 #include "scene/game/scene_game.h"
 #include "application/object/stage_select/select_arrow.h"
-#include "application/object/record.h"
 #include "application/object/message_window.h"
 #include "scene/factory/scene_factory.h"
 #include "application/object/object_player.h"
@@ -69,30 +68,25 @@ bool StageSelect::Initialize(void)
 	select_arrow_ = new SelectArrow();
 	select_arrow_ ->Initialize();
 
-	//レコード読み込み初期化
-	record_ = new Record();
-	record_->Initialize();
-
-	//record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
 	//レコードファイル読み込み
-	record_->LoadFile("data/stage/record.bin");
+	System::FileLoad("data/stage/record.bin");
+//	System::FileSaveClear("data/stage/record.bin",TYPE_MAX-1);
 
 	////レコード保存（てきとー）
-	record_->__record(0,0);
-	record_->__record(1,0);
-	record_->__record(2,0);
-	record_->__record(3,0);
-	record_->__record(4,0);
-	record_->__record(5,0);
-	record_->__record(6,0);
-	record_->__record(7,0);
-	record_->__record(8,0);
-	record_->__record(9,0);
-	record_->__record(10,0);
+	System::RecordSave(0,10);
+	System::RecordSave(1,20);
+	System::RecordSave(2,30);
+	System::RecordSave(3,40);
+	System::RecordSave(4,50);
+	System::RecordSave(5,60);
+	System::RecordSave(6,70);
+	System::RecordSave(7,80);
+	System::RecordSave(8,90);
+	System::RecordSave(9,100);
+	System::RecordSave(10,110);
 
 	//レコードファイル出力
-	record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
-//	record_->LoadFile("data/stage/record.bin");
+	System::FileLoad("data/stage/record.bin");
 
 	//今のステージ
 	current_stage_ = System::__get_current_stage();
@@ -106,8 +100,7 @@ bool StageSelect::Initialize(void)
 		regions_[i].region_->__set_position(regions_[i].position_);
 		regions_[i].type_ = ((TYPE)(i+1));
 		regions_[i].region_->__set_stage_id(regions_[i].type_);
-		regions_[i].region_->__set_time(record_->__record(i));
-		int a = record_->__record(i);
+		regions_[i].region_->__set_time(System::RecordLoad(i));
 	}
 
 	// message_window
@@ -132,7 +125,6 @@ void StageSelect::Uninitialize(void)
 	SafeRelease(select_bg_);
 	SafeRelease(select_arrow_);	
 	SafeRelease(message_window_);
-	SafeRelease(record_);
 	SafeRelease(nas_);
 	for(u32 i=0;i<TYPE_MAX-1;i++)
 	{

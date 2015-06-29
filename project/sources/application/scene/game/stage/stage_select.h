@@ -29,7 +29,6 @@ class StageRegion;
 class SelectBg;
 class SelectArrow;
 class MessageWindow;
-class Record;
 class ObjectPlayer;
 
 //*****************************************************************************
@@ -90,8 +89,6 @@ protected:
 	SelectArrow* select_arrow_;
 
 	u32	current_stage_;
-
-	Record* record_;
 
 	// message_window
 	MessageWindow* message_window_;
