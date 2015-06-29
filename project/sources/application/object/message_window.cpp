@@ -307,4 +307,17 @@ void MessageWindow::__title_texture_id_(const Texture::TEXTURE_ID& texture_id)
 	title_->__texture_id(texture_id);
 }
 
+//=============================================================================
+// __select_texture_id_
+//=============================================================================
+void MessageWindow::__select_texture_id_(const s32& select_num,const Texture::TEXTURE_ID& texture_id)
+{
+	if(select_num >= SELECT_MAX){
+		return;
+	}
+
+	frame_[select_num]->__texture_id(texture_id);
+}
+
+
 //---------------------------------- EOF --------------------------------------
