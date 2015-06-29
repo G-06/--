@@ -13,6 +13,7 @@
 #include "window/main_window.h"
 
 System System::instance_;
+u32 System::current_stage_=1;
 
 //=============================================================================
 // constructor
