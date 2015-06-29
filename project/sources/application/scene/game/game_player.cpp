@@ -162,7 +162,8 @@ void GamePlayer::Update(void)
 
 		if(is_sp_recover_speed_up_)
 		{
-			sp_recover_speed_ *= 2;
+			sp_recover_speed_ = sp_max_;
+			is_enable_light_ = true;
 		}
 
 		if(is_sp_down_)
@@ -181,7 +182,16 @@ void GamePlayer::Update(void)
 	}
 	else
 	{
-		sp_--;
+		if(is_sp_recover_speed_up_)
+		{
+			sp_ = sp_max_;
+			is_enable_light_ = true;
+		}
+		else
+		{
+			sp_--;
+		}
+		
 		if(sp_ <= 0 || sp_ > sp_max_)
 		{
 			sp_ = 0;

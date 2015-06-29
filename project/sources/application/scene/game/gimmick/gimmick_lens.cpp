@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-// gimmick disappear ground
+// gimmick lens
 //
-// Author		: Kenji Kabutomori
+// Author		: Haruki Saito
 //
 //*****************************************************************************
 
@@ -94,7 +94,7 @@ void GimmickLens::Update(void)
 			
 			data_._shotvec = D3DXVECTOR2(position_.x - LENS_FORCE,position_.y + LENS_FORCE) - position_;
 			data_._shotposition = D3DXVECTOR2(position_.x - LENS_PUSH_LENGTH.x,position_.y + LENS_PUSH_LENGTH.y);
-
+			
 			break;
 		}
 	case 2:
