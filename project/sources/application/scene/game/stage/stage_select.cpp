@@ -94,12 +94,15 @@ bool StageSelect::Initialize(void)
 	record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
 //	record_->LoadFile("data/stage/record.bin");
 
+	//今のステージ
+	current_stage_ = System::__get_current_stage();
+
 	////セレクト枠xステージ数
 	for(u32 i=0;i<TYPE_MAX-1;i++)
 	{
 		regions_[i].region_ = new StageRegion();
 		regions_[i].region_->Initialize();
-		regions_[i].position_ = D3DXVECTOR2(i*REGION_INTERVAL,0.0f);
+		regions_[i].position_ = D3DXVECTOR2((i*REGION_INTERVAL)-((current_stage_-1)*REGION_MOVE),0.0f);
 		regions_[i].region_->__set_position(regions_[i].position_);
 		regions_[i].type_ = ((TYPE)(i+1));
 		regions_[i].region_->__set_stage_id(regions_[i].type_);
@@ -116,8 +119,6 @@ bool StageSelect::Initialize(void)
 
 	update_type_ = UPDATE_TYPE_SELECT;
 
-	//今のステージ
-	current_stage_ = TYPE_TUTORIAL;
 	flag_ = 0;
 
 	return true;
@@ -349,6 +350,9 @@ void StageSelect::YorNUpdate()
 		{
 			if(next_stage_factory_ == nullptr)
 			{
+				//ナウステージおしえます
+				System::__set_current_stage(current_stage_);
+
 				//ゲームに移る
 				switch(current_stage_)
 				{

@@ -134,6 +134,9 @@ bool SceneTitle::Initialize(void)
 	//option_->Load();
 	//option_->__is_indication(false);
 
+	//選択中のステージをチュートリアルに戻す
+	System::__set_current_stage(1);
+
 	frame_count_ = 0;
 	current_select_ = 0;
 
