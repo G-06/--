@@ -23,7 +23,7 @@
 EffectLocus::EffectLocus(void)
 	:Effect(TYPE_LOCUS)
 	,sprite_(nullptr)
-	,alpha_(1)
+	,alpha_(0.5f)
 {
 }
 
@@ -64,7 +64,7 @@ void EffectLocus::Uninitialize(void)
 //=============================================================================
 void EffectLocus::Update(void)
 {
-	alpha_ -= 0.02f;
+	alpha_ -= 0.01f;
 
 	if(alpha_ <= 0)
 	{

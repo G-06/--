@@ -283,9 +283,6 @@ void GamePlayer::Update(void)
 //=============================================================================
 void GamePlayer::Draw(void)
 {
-	player_->__position(position_ - offset_position_);
-	player_->Draw();
-
 	for(s32 i = 0; i < 100; i++)
 	{
 		if(nyas_locus_[i])
@@ -302,6 +299,8 @@ void GamePlayer::Draw(void)
 	{
 		nyas_dead_->Draw();
 	}
+	player_->__position(position_ - offset_position_);
+	player_->Draw();
 }
 
 //=============================================================================
