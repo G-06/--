@@ -69,13 +69,13 @@ bool StageSelect::Initialize(void)
 	select_arrow_ ->Initialize();
 
 	//レコードファイル読み込み
-	System::FileLoad("data/stage/record.bin");
+//	System::FileLoad("data/stage/record.bin");
 
-	////レコード保存（てきとー）
+	////レコード初期化
 	//System::RecordSave(0,65535);
-	System::RecordSave(1,65535);
-	System::RecordSave(2,65535);
-	System::RecordSave(3,65535);
+	//System::RecordSave(1,65535);
+	//System::RecordSave(2,65535);
+	//System::RecordSave(3,65535);
 	//System::RecordSave(4,65535);
 	//System::RecordSave(5,65535);
 	//System::RecordSave(6,65535);
@@ -85,7 +85,7 @@ bool StageSelect::Initialize(void)
 	//System::RecordSave(10,65535);
 
 	////レコードファイル出力
-	System::FileSave("data/stage/record.bin");
+//	System::FileSave("data/stage/record.bin");
 
 	//今のステージ
 	current_stage_ = System::__get_current_stage();

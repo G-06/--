@@ -107,6 +107,7 @@ bool System::Setup(HINSTANCE hinstance)
 	//ƒŒƒR[ƒh“Ç‚Ýž‚Ý‰Šú‰»
 	instance_.record_ = new Record();
 	instance_.record_->Initialize();
+	instance_.record_->LoadFile("data/stage/record.bin");
 
 	return true;
 }
@@ -116,6 +117,9 @@ bool System::Setup(HINSTANCE hinstance)
 //=============================================================================
 void System::Shutdown(void)
 {
+	instance_.record_->SaveFile("data/stage/record.bin");
+
+
 	// release window
 	SafeRelease(instance_.window_);
 
