@@ -95,7 +95,7 @@ bool StageSelect::Initialize(void)
 	{
 		regions_[i].region_ = new StageRegion();
 		regions_[i].region_->Initialize();
-		regions_[i].position_ = D3DXVECTOR2((i*REGION_INTERVAL)-((current_stage_-1)*REGION_MOVE),0.0f);
+		regions_[i].position_ = D3DXVECTOR2((i*REGION_INTERVAL)-((current_stage_-1)*REGION_MOVE), 50.0f);
 		regions_[i].region_->__set_position(regions_[i].position_);
 		regions_[i].type_ = ((TYPE)(i+1));
 		regions_[i].region_->__set_stage_id(regions_[i].type_);
@@ -274,6 +274,8 @@ void StageSelect::SelectUpdate()
 //=============================================================================
 void StageSelect::MassageUpdate()
 {
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_SELECT_STRING_RETURN_TITLE);
+
 	//十字キー入力時
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 	{
@@ -323,6 +325,8 @@ void StageSelect::MassageUpdate()
 //=============================================================================
 void StageSelect::YorNUpdate()
 {
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_SELECT_STRING_STAGE_OK);
+
 	//十字キー入力時
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 	{

@@ -55,6 +55,9 @@ public:
 private:
 	Logo* logo_neko_;
 	LogoBg* logo_bg_;
+
+	u32 frame_count_;
+	u32 end_count_;
 };
 
 #endif	// _SCENE_LOGO_H_

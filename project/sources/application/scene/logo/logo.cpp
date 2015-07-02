@@ -18,7 +18,7 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 Logo::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
-const D3DXVECTOR2 Logo::DEFAULT_SIZE = D3DXVECTOR2(400.0f,400.0f);
+const D3DXVECTOR2 Logo::DEFAULT_SIZE = D3DXVECTOR2(512.0f,512.0f);
 const u32 Logo::DEFAULT_DIVISION_WIDTH = 3;
 const u32 Logo::DEFAULT_DIVISION_HEIGHT = 1;
 const Animation::DATA Logo::ANIMATION_DATA[] =

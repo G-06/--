@@ -16,7 +16,7 @@
 #include "../object_record.h"
 #include "select_record_back.h"
 
-static const D3DXVECTOR2 DEFAULT_POS_NUM(680.f,500.f);		// デフォルトポジション 数字の一番左端の位置
+static const D3DXVECTOR2 DEFAULT_POS_NUM(680.f,450.f);		// デフォルトポジション 数字の一番左端の位置
 
 //=============================================================================
 // constructor

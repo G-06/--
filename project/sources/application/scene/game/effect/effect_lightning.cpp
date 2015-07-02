@@ -1,55 +1,67 @@
 //*****************************************************************************
 //
-// object lens
+// effect lightning
 //
-// Author		: Haruki Saito
+// Author		: Ryotaro Arai
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "object_lens.h"
+#include "effect_lightning.h"
 #include "render/sprite.h"
-#include "system/system.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectLens::SIZE	= D3DXVECTOR2(128.0f,128.0f);
-const u32 ObjectLens::DIVISION_WIDTH	= 1;
-const u32 ObjectLens::DIVISION_HEIGHT	= 1;
+const Animation::DATA EffectLightning::LIGHTNING_EFFECT[EffectLightning::LIGHTNING_EFFECT_PATTERN] =
+{
+	Animation::DATA(3,1,0),
+	Animation::DATA(3,2,1),
+	Animation::DATA(3,3,2),
+	Animation::DATA(3,4,3),
+	Animation::DATA(3,5,4),
+	Animation::DATA(3,6,5),
+	Animation::DATA(3,7,6),
+	Animation::DATA(3,0,7),
+};
+
 
 //=============================================================================
 // constructor
 //=============================================================================
-ObjectLens::ObjectLens(void)
-	:object_lens_(nullptr)
-	,position_(0.0f,0.0f)
-	,size_(0.0f,0.0f)
+EffectLightning::EffectLightning(void)
+	:Effect(TYPE_LIGHTNING)
+	,sprite_(nullptr)
+	,frame_count_(0)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-ObjectLens::~ObjectLens(void)
+EffectLightning::~EffectLightning(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool ObjectLens::Initialize(void)
+bool EffectLightning::Initialize(void)
 {
-	object_lens_ = new Sprite();
-	object_lens_->Initialize();
-	object_lens_->__point(Sprite::POINT_CENTER);
-	object_lens_->__division_width(DIVISION_WIDTH);
-	object_lens_->__division_height(DIVISION_HEIGHT);
-	object_lens_->__size(SIZE);
-	object_lens_->__texture_id(Texture::TEXTURE_ID_LENS);
-	object_lens_->SetParameter();
+	animation_ = new Animation();
+	animation_->Add(&LIGHTNING_EFFECT[0], sizeof(Animation::DATA)*EffectLightning::LIGHTNING_EFFECT_PATTERN);
+	animation_->Start(0);
+
+	sprite_ = new Sprite();
+	SafeInitialize(sprite_);
+	sprite_->__point(Sprite::POINT_CENTER);
+	sprite_->__size(D3DXVECTOR2(384.0f,384.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_LIGHTNING);
+	sprite_->__division_width(EffectLightning::LIGHTNING_EFFECT_PATTERN);
+	sprite_->__index(0);
+	sprite_->SetParameter();
 
 	return true;
 }
@@ -57,28 +69,36 @@ bool ObjectLens::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void ObjectLens::Uninitialize(void)
+void EffectLightning::Uninitialize(void)
 {
-	SafeRelease(object_lens_);
+	SafeRelease(sprite_);
+	SafeRelease(animation_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void ObjectLens::Update(void)
+void EffectLightning::Update(void)
 {
-	
+	frame_count_++;
+
+	if(frame_count_ > 24)
+	{
+		is_death_ = true;
+	}
+
+	animation_->Update();
+	sprite_->__index(animation_->__current_index());
+	sprite_->SetParameter();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void ObjectLens::Draw(void)
+void EffectLightning::Draw(void)
 {
-	object_lens_->__position(position_);
-	object_lens_->Draw();
+	sprite_->__position(position_ - offset_position_);
+	sprite_->Draw();
 }
-
-
 
 //---------------------------------- EOF --------------------------------------

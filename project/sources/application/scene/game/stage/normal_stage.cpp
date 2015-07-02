@@ -245,7 +245,7 @@ void NormalStage::Update(void)
 			}
 		}
 	}
-	else if(game_player_->__life() < 0)
+	else if(game_player_->__life() <= 0)
 	{
 		if(next_stage_factory_ == nullptr)
 		{
@@ -298,21 +298,21 @@ void NormalStage::Update(void)
 									const s32 current_select = pause_->__is_select();
 									switch(current_select)
 									{
-									case Pause::SELECT_TYPE_TITLE_BACK:
-										{
-											if(next_stage_factory_ == nullptr)
-											{
-												is_pause_input_ = true;
-												next_scene_factory_ = new TitleFactory();
-											}
-											break;
-										}
 									case Pause::SELECT_TYPE_STAGESELECT_BACK:
 										{
 											if(next_stage_factory_ == nullptr)
 											{
 												is_pause_input_ = true;
 												next_stage_factory_ = new SelectFactory();
+											}
+											break;
+										}
+									case Pause::SELECT_TYPE_TITLE_BACK:
+										{
+											if(next_stage_factory_ == nullptr)
+											{
+												is_pause_input_ = true;
+												next_scene_factory_ = new TitleFactory();
 											}
 											break;
 										}
@@ -347,11 +347,13 @@ void NormalStage::Update(void)
 							case Pause::SELECT_TYPE_TITLE_BACK:
 								{
 									message_window_->Show();
+									message_window_->__title_texture_id_(Texture::TEXTURE_ID_PAUSE_STRUNG_CONFIRM_TITLE);
 									break;
 								}
 							case Pause::SELECT_TYPE_STAGESELECT_BACK:
 								{
 									message_window_->Show();
+									message_window_->__title_texture_id_(Texture::TEXTURE_ID_PAUSE_STRUNG_CONFIRM_SELECT);
 									break;
 								}
 							case Pause::SELECT_TYPE_OPTION:
@@ -395,9 +397,6 @@ void NormalStage::Update(void)
 
 			object_light_gauge_->Update();
 
-			object_player_life_->__life(game_player_->__life());
-			object_player_life_->Update();
-
 			if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
 			{
 				game_player_->__position(D3DXVECTOR2(map_->__size().x - game_player_->__size().x * 0.5f,game_player_->__position().y));
@@ -416,6 +415,9 @@ void NormalStage::Update(void)
 
 			CollisionGimmick();
 			CollisionChip();
+
+			object_player_life_->__life(game_player_->__life());
+			object_player_life_->Update();
 
 			auto predfunc = [](Effect* effect)->bool
 			{
@@ -493,6 +495,8 @@ void NormalStage::Draw(void)
 	}
 
 	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+	
+	
 	{
 		(*it)->Draw();
 	}
@@ -824,15 +828,18 @@ void NormalStage::CollisionGimmick(void)
 							game_player_->ChangeDirection(data->_shotvec);
 							
 						}
-						else if(collision_map.__vector().y > 0)
-						{
-							game_player_->Accelerate(data->_move);
-							game_player_->HitStage(collision_map.__position(),true);
-						}
-						else
-						{
-							game_player_->HitStage(collision_map.__position());
-						}
+
+						// æ‚é”»’è
+						
+						//else if(collision_map.__vector().y > 0)
+						//{
+						//	game_player_->Accelerate(data->_move);
+						//	game_player_->HitStage(collision_map.__position(),true);
+						//}
+						//else
+						//{
+						//	game_player_->HitStage(collision_map.__position());
+						//}
 
 						DEBUG_TOOL.__debug_display()->Print("hit lens\n");
 					}
@@ -1044,7 +1051,7 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					f32 y = atof(word);
 					i++;
 					i += FindWord(word,&data[i],",\n\0");
-					u32 vec = atof(word);
+					u32 vec = atoi(word);
 					i++;
 					i += FindWord(word,&data[i],",\n\0");
 					f32 end_x = atof(word);

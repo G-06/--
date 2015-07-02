@@ -1,55 +1,52 @@
 //*****************************************************************************
 //
-// object lens
+// effect locus
 //
-// Author		: Haruki Saito
+// Author		: Ryotaro Arai
 //
 //*****************************************************************************
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "object_lens.h"
+#include "effect_locus.h"
 #include "render/sprite.h"
-#include "system/system.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectLens::SIZE	= D3DXVECTOR2(128.0f,128.0f);
-const u32 ObjectLens::DIVISION_WIDTH	= 1;
-const u32 ObjectLens::DIVISION_HEIGHT	= 1;
+
 
 //=============================================================================
 // constructor
 //=============================================================================
-ObjectLens::ObjectLens(void)
-	:object_lens_(nullptr)
-	,position_(0.0f,0.0f)
-	,size_(0.0f,0.0f)
+EffectLocus::EffectLocus(void)
+	:Effect(TYPE_LOCUS)
+	,sprite_(nullptr)
+	,alpha_(1)
 {
 }
 
 //=============================================================================
 // destructor
 //=============================================================================
-ObjectLens::~ObjectLens(void)
+EffectLocus::~EffectLocus(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool ObjectLens::Initialize(void)
+bool EffectLocus::Initialize(void)
 {
-	object_lens_ = new Sprite();
-	object_lens_->Initialize();
-	object_lens_->__point(Sprite::POINT_CENTER);
-	object_lens_->__division_width(DIVISION_WIDTH);
-	object_lens_->__division_height(DIVISION_HEIGHT);
-	object_lens_->__size(SIZE);
-	object_lens_->__texture_id(Texture::TEXTURE_ID_LENS);
-	object_lens_->SetParameter();
+	sprite_ = new Sprite();
+	SafeInitialize(sprite_);
+	sprite_->__point(Sprite::POINT_CENTER);
+	sprite_->__size(D3DXVECTOR2(256.0f,256.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_NYAS_LIGHT);
+	sprite_->__division_width(6);
+	sprite_->__index(0);
+	sprite_->SetParameter();
 
 	return true;
 }
@@ -57,28 +54,34 @@ bool ObjectLens::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void ObjectLens::Uninitialize(void)
+void EffectLocus::Uninitialize(void)
 {
-	SafeRelease(object_lens_);
+	SafeRelease(sprite_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void ObjectLens::Update(void)
+void EffectLocus::Update(void)
 {
-	
+	alpha_ -= 0.02f;
+
+	if(alpha_ <= 0)
+	{
+		is_death_ = true;
+	}
+
+	sprite_->__color(D3DXCOLOR(255,255,255,alpha_));
+	sprite_->SetParameter();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void ObjectLens::Draw(void)
+void EffectLocus::Draw(void)
 {
-	object_lens_->__position(position_);
-	object_lens_->Draw();
+	sprite_->__position(position_ - offset_position_);
+	sprite_->Draw();
 }
-
-
 
 //---------------------------------- EOF --------------------------------------
