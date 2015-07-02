@@ -27,6 +27,7 @@
     <ClCompile Include="sources\application\object\object_life.cpp" />
     <ClCompile Include="sources\application\object\object_light_gauge.cpp" />
     <ClCompile Include="sources\application\object\object_move_ground.cpp" />
+    <ClCompile Include="sources\application\object\object_newrecord.cpp" />
     <ClCompile Include="sources\application\object\object_obstacle.cpp" />
     <ClCompile Include="sources\application\object\object_player.cpp" />
     <ClCompile Include="sources\application\object\object_player_icon.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="sources\application\object\object_life.h" />
     <ClInclude Include="sources\application\object\object_light_gauge.h" />
     <ClInclude Include="sources\application\object\object_move_ground.h" />
+    <ClInclude Include="sources\application\object\object_newrecord.h" />
     <ClInclude Include="sources\application\object\object_obstacle.h" />
     <ClInclude Include="sources\application\object\object_player.h" />
     <ClInclude Include="sources\application\object\object_player_icon.h" />

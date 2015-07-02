@@ -538,6 +538,9 @@
     <ClInclude Include="sources\application\object\object_lens.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\object_newrecord.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -922,6 +925,9 @@
       <Filter>sources\application\scene\game\gimmick</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\object\object_lens.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_newrecord.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>

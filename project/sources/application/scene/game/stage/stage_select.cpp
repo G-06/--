@@ -73,9 +73,9 @@ bool StageSelect::Initialize(void)
 
 	////レコード保存（てきとー）
 	//System::RecordSave(0,65535);
-	//System::RecordSave(1,65535);
-	//System::RecordSave(2,65535);
-	//System::RecordSave(3,65535);
+	System::RecordSave(1,65535);
+	System::RecordSave(2,65535);
+	System::RecordSave(3,65535);
 	//System::RecordSave(4,65535);
 	//System::RecordSave(5,65535);
 	//System::RecordSave(6,65535);
