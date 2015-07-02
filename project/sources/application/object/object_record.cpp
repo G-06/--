@@ -90,72 +90,97 @@ void ObjectRecord::Draw(void)
 
 void ObjectRecord::__set_time(u32 time)
 {
-	time_=time;
-	//
-	u32 workA=0;
-	f32 workB=0;
+	if(time == 65535)
+	{
+		for(int i=0;i<TEXTURE_MAX;i++)
+		{
+			number_[i]->__Set_index(10);
+		}
+		//‚±‚ë‚ñ
+		number_[2]->__Set_index(11);
+		//dotto
+		number_[5]->__Set_index(12);
+	}
+	else if(time >= 0)
+	{
+		time_=time;
+		//
+		u32 workA=0;
+		f32 workB=0;
 
-	u32 min=0;
-	u32 sec=0;
-	u32 mlisec=0;
+		u32 min=0;
+		u32 sec=0;
+		u32 mlisec=0;
 
-	workA = time_;
+		workA = time_;
 
-	//ƒ~ƒŠ•b‚ð‚¾‚·
-	mlisec=workA%60;
-	workA-=mlisec;
-	workA /= 60;
-	//•b‚ðŠ„‚èo‚·
-	sec = workA%60;
-	workA -= sec;
-	workA/=60;
-	//‚Ó‚ñ‚ðŠ„‚èo‚·
-	min=workA;
+		//ƒ~ƒŠ•b‚ð‚¾‚·
+		mlisec=workA%60;
+		workA-=mlisec;
+		workA /= 60;
+		//•b‚ðŠ„‚èo‚·
+		sec = workA%60;
+		workA -= sec;
+		workA/=60;
+		//‚Ó‚ñ‚ðŠ„‚èo‚·
+		min=workA;
 
-	workA = min;
-	//•ª@‚P‚O‚ÌˆÊ
-	workB = (f32)(workA%10);
-	number_[1]->__Set_index((u32)workB);
-	workA -= (u32)workB;
-	workA /= 10;
+		workA = min;
+		//•ª@‚P‚O‚ÌˆÊ
+		workB = (f32)(workA%10);
+		number_[1]->__Set_index((u32)workB);
+		workA -= (u32)workB;
+		workA /= 10;
 
-	//•ª@‚P‚ÌˆÊ
-	workB = (f32)(workA%10);
-	number_[0]->__Set_index((u32)workB);
-	workA -= (u32)workB;
-	workA /= 10;
+		//•ª@‚P‚ÌˆÊ
+		workB = (f32)(workA%10);
+		number_[0]->__Set_index((u32)workB);
+		workA -= (u32)workB;
+		workA /= 10;
 
-	//‚±‚ë‚ñ
-	number_[2]->__Set_index(11);
+		//‚±‚ë‚ñ
+		number_[2]->__Set_index(11);
 
-	workA = sec;
-	//•b@‚P‚O‚ÌˆÊ
-	workB = (f32)(workA%10);
-	number_[4]->__Set_index((u32)workB);
-	workA -= (u32)workB;
-	workA /= 10;
+		workA = sec;
+		//•b@‚P‚O‚ÌˆÊ
+		workB = (f32)(workA%10);
+		number_[4]->__Set_index((u32)workB);
+		workA -= (u32)workB;
+		workA /= 10;
 
-	//•b@‚P‚ÌˆÊ
-	workB = (f32)(workA%10);
-	number_[3]->__Set_index((u32)workB);
-	workA -= (u32)workB;
-	workA /= 10;
+		//•b@‚P‚ÌˆÊ
+		workB = (f32)(workA%10);
+		number_[3]->__Set_index((u32)workB);
+		workA -= (u32)workB;
+		workA /= 10;
 
-	//dotto
-	number_[5]->__Set_index(12);
+		//dotto
+		number_[5]->__Set_index(12);
 
-	workA = mlisec;
-	//•b@‚P‚O‚ÌˆÊ
-	workB = (f32)(workA%10);
-	number_[7]->__Set_index((u32)workB);
-	workA -= (u32)workB;
-	workA /= 10;
+		workA = mlisec;
+		//•b@‚P‚O‚ÌˆÊ
+		workB = (f32)(workA%10);
+		number_[7]->__Set_index((u32)workB);
+		workA -= (u32)workB;
+		workA /= 10;
 
-	//•b@‚P‚ÌˆÊ
-	workB = (f32)(workA%10);
-	number_[6]->__Set_index((u32)workB);
-	workA -= (u32)workB;
-	workA /= 10;
+		//•b@‚P‚ÌˆÊ
+		workB = (f32)(workA%10);
+		number_[6]->__Set_index((u32)workB);
+		workA -= (u32)workB;
+		workA /= 10;
+	}
+	else
+	{
+		for(int i=0;i<TEXTURE_MAX;i++)
+		{
+			number_[i]->__Set_index(10);
+		}
+		//‚±‚ë‚ñ
+		number_[2]->__Set_index(11);
+		//dotto
+		number_[5]->__Set_index(12);
+	}
 }
 
 //=============================================================================

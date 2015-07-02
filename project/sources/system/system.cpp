@@ -108,7 +108,6 @@ bool System::Setup(HINSTANCE hinstance)
 	instance_.record_ = new Record();
 	instance_.record_->Initialize();
 
-
 	return true;
 }
 
@@ -129,47 +128,47 @@ void System::Shutdown(void)
 	// release xaudio2
 	SafeRelease(instance_.xaudio2_);
 
+	//record
 	SafeRelease(instance_.record_);
-
 
 	timeEndPeriod(0);
 }
 
-//
+//=============================================================================
 //ファイルの読み込み
-//
+//=============================================================================
 void System::FileLoad(const s8* file_name)
 {
 	instance_.record_->LoadFile(file_name);
 }
 
-//
+//=============================================================================
 //レコード保存
-//
+//=============================================================================
 void System::RecordSave(const u32 stage_num, const u32 record)
 {
 	instance_.record_->__record(stage_num,record);
 }
 
-//
+//=============================================================================
 //レコードロード
-//
+//=============================================================================
 u32 System::RecordLoad(const u32 stage_num)
 {
 	return (instance_.record_->__record(stage_num));
 }
 
-//
+//=============================================================================
 //ファイルセーブ
-//
+//=============================================================================
 void System::FileSave(const s8* file_name)
 {
 	instance_.record_->SaveFile(file_name);
 }
 
-//
+//=============================================================================
 //ファイルクリアしてセーブ
-//
+//=============================================================================
 void System::FileSaveClear(const s8* file_name, const u32 stage_num)
 {
 	instance_.record_->SaveFileClear(file_name,stage_num);

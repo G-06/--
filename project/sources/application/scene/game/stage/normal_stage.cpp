@@ -220,6 +220,15 @@ void NormalStage::Update(void)
 		assert_effect_clear_->__is_assert(true);
 		game_player_->Clear();
 
+		System::FileLoad("data/stage/record.bin");
+		u32 oldRecord = System::RecordLoad((System::__get_current_stage()-1));
+
+		if(time_count_<oldRecord)
+		{
+			System::RecordSave((System::__get_current_stage()-1),time_count_);
+		}
+		System::FileSave("data/stage/record.bin");
+
 		assert_effect_clear_->SetTime(time_count_);
 		assert_effect_clear_->Update();
 
