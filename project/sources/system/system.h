@@ -57,6 +57,9 @@ public:
 	XAudio2* __xaudio2(void)const { return xaudio2_; }
 	OPTION_DATA* __option_data(void) { return &option_data_; }
 
+	static void __set_current_stage(u32 stage){current_stage_ = stage;};
+	static u32 __get_current_stage(void){return current_stage_;};
+
 private:
 	System(void);
 	System(const System& system);
@@ -68,6 +71,8 @@ private:
 	DirectInput* direct_input_;
 	XAudio2* xaudio2_;
 	OPTION_DATA option_data_;
+	
+	static u32 current_stage_;
 };
 
 #endif // _SYSYEM_H_

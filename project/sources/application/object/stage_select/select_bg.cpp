@@ -13,9 +13,6 @@
 #include "select_bg.h"
 #include "render/sprite.h"
 #include "system/system.h"
-const f32 MOVE_SPEED = 20.f;				// まとまりの移動速度 フレーム数で指定
-const f32 MOVE_FREAM = 0.06f/MOVE_SPEED;
-
 
 //=============================================================================
 // constructor
@@ -64,17 +61,8 @@ void SelectBg::Uninitialize(void)
 //=============================================================================
 void SelectBg::Update(void)
 {
-	if(move_<distmove_)
-	{
-		move_+=MOVE_FREAM;
-	}
-	if(move_>distmove_)
-	{
-		move_-=MOVE_FREAM;
-	}
-	bg_->__left(uv_.x+move_);
-	bg_->__right(uv_.y+move_);
 	bg_->SetParameter();
+
 }
 
 //=============================================================================
@@ -83,6 +71,16 @@ void SelectBg::Update(void)
 void SelectBg::Draw(void)
 {
 	bg_->Draw();
+}
+
+
+void SelectBg::__set_move_uv(f32 uv_move)
+{
+	uv_.x+=uv_move;
+	uv_.y+=uv_move;
+
+	bg_->__left(uv_.x);
+	bg_->__right(uv_.y);
 }
 
 //---------------------------------- EOF --------------------------------------

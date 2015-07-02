@@ -22,7 +22,7 @@
 // constant definition
 //*****************************************************************************
 const f32 GamePlayer::LIGHT_SPEED = (30.0f);
-const f32 GamePlayer::SPEED = (1.7f);
+const f32 GamePlayer::SPEED = (1.75f);
 const f32 GamePlayer::DECREMENT = (0.9f);
 const f32 GamePlayer::JUMP_SPEED = (-70.0f);
 const s32 GamePlayer::DEFAULT_LIFE_MAX = 3;
@@ -77,7 +77,8 @@ bool GamePlayer::Initialize(void)
 	nyas_dead_ = nullptr;
 	for(s32 i = 0; i < 100; i++)
 	{
-		nyas_locus_[i] = nullptr;
+		nyas_locus_[i] = new EffectLocus();
+		nyas_locus_[i]->Initialize();
 	}
 
 	return true;
@@ -176,7 +177,8 @@ void GamePlayer::Update(void)
 
 		if(is_sp_recover_speed_up_)
 		{
-			sp_recover_speed_ *= 2;
+			sp_recover_speed_ = sp_max_;
+			is_enable_light_ = true;
 		}
 
 		if(is_sp_down_)
@@ -197,12 +199,11 @@ void GamePlayer::Update(void)
 	{
 		for(s32 i = 0; i < 100; i++)
 		{
-			if(nyas_locus_[i] == nullptr)
+			if(nyas_locus_[i]->__is_free())
 			{
-				nyas_locus_[i] = new EffectLocus();
-				nyas_locus_[i]->Initialize();
 				nyas_locus_[i]->__position(position_);
 				nyas_locus_[i]->__offset_position(offset_position_);
+				nyas_locus_[i]->Start();
 				break;
 			}
 		}
@@ -263,16 +264,14 @@ void GamePlayer::Update(void)
 	}
 	for(s32 i = 0; i < 100; i++)
 	{
-		if(nyas_locus_[i])
+		if(!nyas_locus_[i]->__is_free())
 		{
 			nyas_locus_[i]->__offset_position(offset_position_);
 			nyas_locus_[i]->Update();
 
 			if(nyas_locus_[i]->__is_death())
 			{
-				nyas_locus_[i]->Uninitialize();
-				delete nyas_locus_[i];
-				nyas_locus_[i] = nullptr;
+				nyas_locus_[i]->__is_free(true);
 			}
 		}
 	}
@@ -285,7 +284,7 @@ void GamePlayer::Draw(void)
 {
 	for(s32 i = 0; i < 100; i++)
 	{
-		if(nyas_locus_[i])
+		if(!nyas_locus_[i]->__is_free())
 		{
 			nyas_locus_[i]->Draw();
 		}

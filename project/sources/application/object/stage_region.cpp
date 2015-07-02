@@ -26,7 +26,7 @@
 const D3DXVECTOR2 StageRegion::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
 const f32 MOVE_SPEED = 60.f;				// まとまりの移動速度 フレーム数で指定
 const f32 MOVE_FREAM = 960.0f/MOVE_SPEED;
-static const D3DXVECTOR2 DEFAULT_POS_BACK(800.f,500.f);		// デフォルトポジション 数字の一番左端の位置
+static const D3DXVECTOR2 DEFAULT_POS_NUM(800.f,480.f);		// デフォルトポジション 数字の一番左端の位置
 
 
 //=============================================================================
@@ -85,13 +85,11 @@ bool StageRegion::Initialize(void)
 	{
 		return false;
 	}
-	//レコード背景
-	record_back_ = new RecordBack();
-	record_back_->Initialize();
+	record_->__set_position(DEFAULT_POS_NUM);
 
 	move_falg_ = false;
 
-	return true;
+	return true;	
 }
 
 //=============================================================================
@@ -103,8 +101,6 @@ void StageRegion::Uninitialize(void)
 	SafeRelease(stage_name_);
 	SafeRelease(stage_image_);
 	SafeRelease(record_);
-	SafeRelease(record_back_);
-
 }
 
 //=============================================================================
@@ -130,14 +126,12 @@ void StageRegion::Update(void)
 	select_frame_->__offset_position(region_pos_);
 	stage_name_->__offset_position(region_pos_);
 	stage_image_->__offset_position(region_pos_);
-	record_back_ ->__offset_position(region_pos_);
 	record_->__offset_position(region_pos_);
 
 	//子の更新
 	select_frame_->Update();
 	stage_name_->Update();
 	stage_image_->Update();
-	record_back_ ->Update();
 	record_->Update();
 }
 
@@ -151,7 +145,6 @@ void StageRegion::Draw(void)
 	stage_name_->Draw();
 	if(type_ != Stage::TYPE_TUTORIAL)
 	{
-		record_back_->Draw();
 		record_ ->Draw();
 	}
 }

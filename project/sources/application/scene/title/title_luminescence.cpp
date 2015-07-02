@@ -21,7 +21,7 @@
 //const D3DXVECTOR2 Titleluminescence::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
 const D3DXVECTOR2 Titleluminescence::DEFAULT_POSITION = D3DXVECTOR2(0.0f, 0.0f);
 const D3DXVECTOR2 Titleluminescence::DEFAULT_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH, 360.0f);
-const f32 DEFAULT_ALPHA_SPEED = -0.005f;
+const f32 DEFAULT_ALPHA_SPEED = -0.0075f;
 
 //=============================================================================
 // constructor

@@ -35,10 +35,10 @@ const f32 PUSH_START_ALPHA_MIN = 0.0f;
 
 // luminesceneの点滅数値
 const f32 LUMINESCENCE_ALPHA_MAX = 1.1f;
-const f32 LUMINESCENCE_ALPHA_MIN = 0.2f;
+const f32 LUMINESCENCE_ALPHA_MIN = 0.15f;
 
 // circleの回転
-const f32 CIRCLE_ROTATION = 0.01f;
+const f32 CIRCLE_ROTATION = 0.005f;
 
 // select position
 const f32 SELECT_OFFSET_Y = 100.0f;
@@ -133,6 +133,9 @@ bool SceneTitle::Initialize(void)
 	option_->Initialize();
 	//option_->Load();
 	//option_->__is_indication(false);
+
+	//選択中のステージをチュートリアルに戻す
+	System::__set_current_stage(1);
 
 	frame_count_ = 0;
 	current_select_ = 0;

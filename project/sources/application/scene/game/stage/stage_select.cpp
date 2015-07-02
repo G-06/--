@@ -30,6 +30,9 @@ const u32 DEST_FRAME_COUNT = 20;						// ウィンドウ開閉の時間
 const f32 REGION_INTERVAL = (850.0f*0.87f)*1.3f;		// レギオンの間隔
 const f32 REGION_MOVE = 960.f;							// レギオンの間隔
 
+static const u32 RIGHT = 1;
+static const u32 LEFT = 2;
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -70,28 +73,41 @@ bool StageSelect::Initialize(void)
 	record_ = new Record();
 	record_->Initialize();
 
+	//record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
 	//レコードファイル読み込み
 	record_->LoadFile("data/stage/record.bin");
 
 	////レコード保存（てきとー）
-	//record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
 	record_->__record(0,0);
-	record_->__record(1,3600);
-	record_->__record(2,1800);
+	record_->__record(1,0);
+	record_->__record(2,0);
+	record_->__record(3,0);
+	record_->__record(4,0);
+	record_->__record(5,0);
+	record_->__record(6,0);
+	record_->__record(7,0);
+	record_->__record(8,0);
+	record_->__record(9,0);
+	record_->__record(10,0);
 
 	//レコードファイル出力
 	record_->SaveFileClear("data/stage/record.bin",TYPE_MAX-1);
+//	record_->LoadFile("data/stage/record.bin");
+
+	//今のステージ
+	current_stage_ = System::__get_current_stage();
 
 	////セレクト枠xステージ数
 	for(u32 i=0;i<TYPE_MAX-1;i++)
 	{
 		regions_[i].region_ = new StageRegion();
 		regions_[i].region_->Initialize();
-		regions_[i].position_ = D3DXVECTOR2(i*REGION_INTERVAL,0.0f);
+		regions_[i].position_ = D3DXVECTOR2((i*REGION_INTERVAL)-((current_stage_-1)*REGION_MOVE), 50.0f);
 		regions_[i].region_->__set_position(regions_[i].position_);
 		regions_[i].type_ = ((TYPE)(i+1));
 		regions_[i].region_->__set_stage_id(regions_[i].type_);
 		regions_[i].region_->__set_time(record_->__record(i));
+		int a = record_->__record(i);
 	}
 
 	// message_window
@@ -103,8 +119,7 @@ bool StageSelect::Initialize(void)
 
 	update_type_ = UPDATE_TYPE_SELECT;
 
-	//今のステージ
-	current_stage_ = TYPE_TUTORIAL;
+	flag_ = 0;
 
 	return true;
 }
@@ -192,12 +207,12 @@ void StageSelect::SelectUpdate()
 		//必要以上に右に行かない
 		if(current_stage_ !=TYPE_MAX-1)
 		{
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 			{
 				for(u32 i=0;i<TYPE_MAX-1;i++)
 				{
 					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(-REGION_MOVE,0.0f));
-					select_bg_->__set_distmove(-0.06f);
+					flag_=RIGHT;
 				}
 				current_stage_++;
 				nas_->__is_flip(false);
@@ -207,12 +222,12 @@ void StageSelect::SelectUpdate()
 		//必要以上に左に行かない
 		if(current_stage_!=TYPE_TUTORIAL)
 		{
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
 			{
 				for(u32 i=0;i<TYPE_MAX-1;i++)
 				{
 					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(REGION_MOVE,0.0f));
-					select_bg_->__set_distmove(0.06f);
+					flag_=LEFT;
 				}
 				current_stage_--;
 				nas_->__is_flip(true);
@@ -238,6 +253,17 @@ void StageSelect::SelectUpdate()
 			}
 		}
 	}
+	else if(regions_[0].region_->__get_move_falg() == true)	//レギオンが動いているとき
+	{
+		if(flag_==RIGHT)
+		{
+			select_bg_->__set_move_uv(-0.006f);
+		}
+		else if(flag_==LEFT)
+		{
+			select_bg_->__set_move_uv(0.006f);
+		}
+	}
 	//背景更新
 	select_bg_->Update();
 
@@ -250,7 +276,6 @@ void StageSelect::SelectUpdate()
 	{
 		regions_[i].region_->Update();
 	}
-
 }
 
 //=============================================================================
@@ -258,6 +283,8 @@ void StageSelect::SelectUpdate()
 //=============================================================================
 void StageSelect::MassageUpdate()
 {
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_SELECT_STRING_RETURN_TITLE);
+
 	//十字キー入力時
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 	{
@@ -307,6 +334,8 @@ void StageSelect::MassageUpdate()
 //=============================================================================
 void StageSelect::YorNUpdate()
 {
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_SELECT_STRING_STAGE_OK);
+
 	//十字キー入力時
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 	{
@@ -325,6 +354,9 @@ void StageSelect::YorNUpdate()
 		{
 			if(next_stage_factory_ == nullptr)
 			{
+				//ナウステージおしえます
+				System::__set_current_stage(current_stage_);
+
 				//ゲームに移る
 				switch(current_stage_)
 				{
@@ -336,7 +368,31 @@ void StageSelect::YorNUpdate()
 					next_stage_factory_ = new StageOneFactory();
 					break;
 				case TYPE_STAGE2:
-					next_stage_factory_ = new TutorialFactory();
+					next_stage_factory_ = new StageTwoFactory();
+					break;
+				case TYPE_STAGE3:
+					next_stage_factory_ = new StageThreeFactory();
+					break;
+				case TYPE_STAGE4:
+					next_stage_factory_ = new StageFourFactory();
+					break;
+				case TYPE_STAGE5:
+					next_stage_factory_ = new StageFiveFactory();
+					break;
+				case TYPE_STAGE6:
+					next_stage_factory_ = new StageSixFactory();
+					break;
+				case TYPE_STAGE7:
+					next_stage_factory_ = new StageSevenFactory();
+					break;
+				case TYPE_STAGE8:
+					next_stage_factory_ = new StageEightFactory();
+					break;
+				case TYPE_STAGE9:
+					next_stage_factory_ = new StageNineFactory();
+					break;
+				case TYPE_STAGE10:
+					next_stage_factory_ = new StageTenFactory();
 					break;
 				}
 			}

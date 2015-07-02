@@ -48,7 +48,14 @@ public:
 	// draw
 	void Draw(void);
 
+	void Start(void);
+
+	bool __is_free(void){ return is_free_;}
+	void __is_free(bool is_free){ is_free_ = is_free;}
+
 private:
+	static const D3DXVECTOR2 DOWN_SIZE;
+	bool is_free_;
 	Sprite* sprite_;
 	f32 alpha_;
 };

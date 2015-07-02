@@ -58,6 +58,7 @@ bool AssertEffectClear::Initialize(void)
 	sprite_->Initialize();
 	sprite_->__point(Sprite::POINT_CENTER);
 	sprite_->__size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,200.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_CLEAR);
 	position_ = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 1.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
 	sprite_->SetParameter();
 

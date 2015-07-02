@@ -15,6 +15,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
+const D3DXVECTOR2 MOVE_DISAPPEAR_SIZE	= D3DXVECTOR2(256.0f,64.0f);
 
 //=============================================================================
 // constructor
@@ -23,7 +24,7 @@ GimmickDisappearGround::GimmickDisappearGround(void)
 	:Gimmick(TYPE_DISAPPEAR_GROUND)
 	,frame_count_(0)
 {
-	size_ = D3DXVECTOR2(128.0f,128.0f);
+	size_ = MOVE_DISAPPEAR_SIZE;
 }
 
 //=============================================================================

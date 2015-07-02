@@ -27,6 +27,7 @@ class StageOffset;
 class Gimmick;
 class ObjectLightGauge;
 class ObjectPlayerIcon;
+class ObjectPlayerLife;
 class Pause;
 class MessageWindow;
 class GameBg;
@@ -87,9 +88,11 @@ protected:
 	StageOffset* stage_offset_;
 	ObjectLightGauge* object_light_gauge_;
 	ObjectPlayerIcon* object_player_icon_;
+	ObjectPlayerLife* object_player_life_;
 	std::list<Gimmick*> gimmick_container_;
 	std::list<Effect*> effect_container_;
 	u32 time_count_;
+	s32 effect_timer_;
 	D3DXVECTOR2 position_;
 	bool is_pause_;
 	bool is_option_;
@@ -109,6 +112,7 @@ protected:
 private:
 	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;
 	static const D3DXVECTOR2 DEFAULT_PLAYER_ICON_POSITION;
+	static const D3DXVECTOR2 DEFAULT_PLAYER_LIFE_POSITION;
 };
 
 #endif	// _NORMAL_STAGE_H_

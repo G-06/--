@@ -22,12 +22,14 @@
 #include "../gimmick/gimmick_obstacle.h"
 #include "../gimmick/gimmick_disappear_ground.h"
 #include "../gimmick/gimmick_move_ground.h"
-
+#include "../gimmick/gimmick_lens.h"
 #include "../gimmick/gimmick_tutorial_text.h"
+#include "../gimmick/gimmick_massage.h"
 
 
 #include "object/object_light_gauge.h"
 #include "object/object_player_icon.h"
+#include "object/object_player_life .h"
 #include "collision/collision_map.h"
 #include "object/pause/pause.h"
 #include "object/message_window.h"
@@ -36,6 +38,8 @@
 #include "../effect/effect_check_point.h"
 #include "../assert_effect/assert_effect_start.h"
 #include "../assert_effect/assert_effect_clear.h"
+#include "../effect/effect_mirror.h"
+#include "../effect/effect_skeleton.h"
 #include "object/stage_select/select_record.h"
 #include "object/option.h"
 
@@ -44,6 +48,7 @@
 //*****************************************************************************
 const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,90.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(17.0f,80.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_LIFE_POSITION = D3DXVECTOR2(180.0f,60.0f);
 const u32 DEST_FRAME_COUNT = 20;
 
 //=============================================================================
@@ -51,14 +56,27 @@ const u32 DEST_FRAME_COUNT = 20;
 //=============================================================================
 NormalStage::NormalStage(const TYPE& type)
 	:Stage(type)
+	,game_player_(nullptr)
+	,map_(nullptr)
 	,is_pause_(false)
 	,is_clear_(false)
+	,is_start_(true)
 	,is_option_(false)
 	,is_pause_input_(false)
+	,stage_offset_(nullptr)
+	,object_light_gauge_(nullptr)
+	,object_player_icon_(nullptr)
+	,object_player_life_(nullptr)
 	,pause_(nullptr)
-	,message_window_(nullptr)
-	,is_start_(true)
 	,option_(nullptr)
+	,message_window_(nullptr)
+	,assert_effect_start_(nullptr)
+	,assert_effect_clear_(nullptr)
+	,select_record_(nullptr)
+	,game_bg_(nullptr)
+	,time_count_(0)
+	,position_(0.0f,0.0f)
+	,effect_timer_(0)
 {
 	type_ = type;
 }
@@ -92,6 +110,10 @@ bool NormalStage::Initialize(void)
 	object_player_icon_ = new ObjectPlayerIcon();
 	object_player_icon_->Initialize();
 	object_player_icon_->__position(DEFAULT_PLAYER_ICON_POSITION);
+
+	object_player_life_ = new ObjectPlayerLife();
+	object_player_life_->Initialize();
+	object_player_life_->__position(DEFAULT_PLAYER_LIFE_POSITION);
 
 	if(!SafeInitialize(stage_offset_))
 	{
@@ -131,8 +153,6 @@ bool NormalStage::Initialize(void)
 	// option
 	option_ = new Option();
 	option_->Initialize();
-	//option_->Load();
-	//option_->__is_indication(false);
 
 	return true;
 }
@@ -151,6 +171,8 @@ void NormalStage::Uninitialize(void)
 	SafeRelease(object_light_gauge_);
 
 	SafeRelease(object_player_icon_);
+
+	SafeRelease(object_player_life_);
 
 	SafeRelease(select_record_);
 
@@ -215,7 +237,7 @@ void NormalStage::Update(void)
 			}
 		}
 	}
-	else if(game_player_->__life() < 0)
+	else if(game_player_->__life() <= 0)
 	{
 		if(next_stage_factory_ == nullptr)
 		{
@@ -268,21 +290,21 @@ void NormalStage::Update(void)
 									const s32 current_select = pause_->__is_select();
 									switch(current_select)
 									{
-									case Pause::SELECT_TYPE_TITLE_BACK:
-										{
-											if(next_stage_factory_ == nullptr)
-											{
-												is_pause_input_ = true;
-												next_scene_factory_ = new TitleFactory();
-											}
-											break;
-										}
 									case Pause::SELECT_TYPE_STAGESELECT_BACK:
 										{
 											if(next_stage_factory_ == nullptr)
 											{
 												is_pause_input_ = true;
 												next_stage_factory_ = new SelectFactory();
+											}
+											break;
+										}
+									case Pause::SELECT_TYPE_TITLE_BACK:
+										{
+											if(next_stage_factory_ == nullptr)
+											{
+												is_pause_input_ = true;
+												next_scene_factory_ = new TitleFactory();
 											}
 											break;
 										}
@@ -317,11 +339,13 @@ void NormalStage::Update(void)
 							case Pause::SELECT_TYPE_TITLE_BACK:
 								{
 									message_window_->Show();
+									message_window_->__title_texture_id_(Texture::TEXTURE_ID_PAUSE_STRUNG_CONFIRM_TITLE);
 									break;
 								}
 							case Pause::SELECT_TYPE_STAGESELECT_BACK:
 								{
 									message_window_->Show();
+									message_window_->__title_texture_id_(Texture::TEXTURE_ID_PAUSE_STRUNG_CONFIRM_SELECT);
 									break;
 								}
 							case Pause::SELECT_TYPE_OPTION:
@@ -365,7 +389,6 @@ void NormalStage::Update(void)
 
 			object_light_gauge_->Update();
 
-
 			if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
 			{
 				game_player_->__position(D3DXVECTOR2(map_->__size().x - game_player_->__size().x * 0.5f,game_player_->__position().y));
@@ -384,6 +407,9 @@ void NormalStage::Update(void)
 
 			CollisionGimmick();
 			CollisionChip();
+
+			object_player_life_->__life(game_player_->__life());
+			object_player_life_->Update();
 
 			auto predfunc = [](Effect* effect)->bool
 			{
@@ -461,6 +487,8 @@ void NormalStage::Draw(void)
 	}
 
 	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+	
+	
 	{
 		(*it)->Draw();
 	}
@@ -468,6 +496,7 @@ void NormalStage::Draw(void)
 	game_player_->Draw();
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
+	object_player_life_->Draw();
 	select_record_->Draw();
 
 	assert_effect_start_->Draw();
@@ -592,6 +621,10 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 				if(game_player_->__is_light())
 				{
 					game_player_->__position(collision_map.__position());
+					EffectMirror* effect = new EffectMirror();
+					effect->Initialize();
+					effect->__position(game_player_->__position());
+					effect_container_.push_back(effect);
 
 					if(collision_map.__vector().x != 0.0f)
 					{
@@ -623,9 +656,18 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 				if(game_player_->__is_light())
 				{
 					game_player_->__is_force_light(true);
+					effect_timer_++;
+					if(effect_timer_ % 20 == 0)
+					{
+						EffectSkeleton* effect = new EffectSkeleton();
+						effect->Initialize();
+						effect->__position(game_player_->__position());
+						effect_container_.push_back(effect);
+					}
 				}
 				else
 				{
+					effect_timer_ = 0;
 					if(collision_map.__vector().y > 0)
 					{
 						game_player_->HitStage(collision_map.__position(),true);
@@ -775,11 +817,51 @@ void NormalStage::CollisionGimmick(void)
 					}
 					break;
 				}
+				case Gimmick::TYPE_LENS:
+				{
+					GimmickLens::DATA* data = (GimmickLens::DATA*)(*it)->GetPointer();
+
+					if(collision_map.IsHit(player_position,player_old_position + data->_move,gimmick_position,player_size.x,player_size.y,gimmick_size.x,gimmick_size.y))
+					{
+						if(game_player_->__is_light())
+						{
+							//game_player_->__position(gimmick_position);
+							
+
+							//game_player_->__position(data->_shotposition);
+							
+							game_player_->ChangeDirection(data->_shotvec);
+							
+						}
+
+						// 乗る判定
+						
+						//else if(collision_map.__vector().y > 0)
+						//{
+						//	game_player_->Accelerate(data->_move);
+						//	game_player_->HitStage(collision_map.__position(),true);
+						//}
+						//else
+						//{
+						//	game_player_->HitStage(collision_map.__position());
+						//}
+
+						DEBUG_TOOL.__debug_display()->Print("hit lens\n");
+					}
+					break;
+				}
 				case Gimmick::TYPE_TUTORIAL_TEXT:
 				{
 					GimmickTutorialText::DATA* data = (GimmickTutorialText::DATA*)(*it)->GetPointer();
 					data->_is_hit=true;
 					DEBUG_TOOL.__debug_display()->Print("hit text\n");
+					break;
+				}
+				case Gimmick::TYPE_MASSAGE:
+				{
+					GimmickMassage::DATA* data = (GimmickMassage::DATA*)(*it)->GetPointer();
+					data->_is_hit=true;
+					DEBUG_TOOL.__debug_display()->Print("hit massage\n");
 					break;
 				}
 			}
@@ -965,6 +1047,39 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					i += FindWord(word,&data[i],"\n\0");
 					break;
 				}
+				case Gimmick::TYPE_LENS:
+				{
+					i += FindWord(word,&data[i],",\n\0");
+					f32 x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					u32 vec = atoi(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 end_x = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 end_y = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 speed = atof(word);
+
+
+					GimmickLens* gimmick = new GimmickLens();
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick->__shot_vec(vec);
+					gimmick->__start_position(D3DXVECTOR2(x,y));
+					gimmick->__end_position(D3DXVECTOR2(end_x,end_y));
+					gimmick->__speed(speed);
+
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+					break;
+				}
 				case Gimmick::TYPE_TUTORIAL_TEXT:
 				{
 					//みる
@@ -986,6 +1101,34 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					u32 massage = atoi(word);
 
 					GimmickTutorialText* gimmick = new GimmickTutorialText();
+					gimmick->__type(massage);
+					gimmick->Initialize();
+					gimmick->__position(D3DXVECTOR2(x,y));
+
+					//無いと死ぬ
+					gimmick_container_.push_back(gimmick);
+					i += FindWord(word,&data[i],"\n\0");
+
+					break;
+				}
+				case Gimmick::TYPE_MASSAGE:
+				{
+					//みる
+					i += FindWord(word,&data[i],",\n\0");
+					//xを文字列からfloatに
+					f32 x = atof(word);
+					//次へ
+					i++;
+					//みる
+					i += FindWord(word,&data[i],",\n\0");
+					//yを文字列からfloatに
+					f32 y = atof(word);
+					i++;
+					//メッセージ番号
+					i += FindWord(word,&data[i],",\n\0");
+					u32 massage = atoi(word);
+
+					GimmickMassage* gimmick = new GimmickMassage();
 					gimmick->__type(massage);
 					gimmick->Initialize();
 					gimmick->__position(D3DXVECTOR2(x,y));

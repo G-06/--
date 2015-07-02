@@ -17,8 +17,7 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 TitleCircle::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
-const f32 circle_scale = 0.4f;
-const D3DXVECTOR2 TitleCircle::DEFAULT_SIZE = D3DXVECTOR2(2147.0f * circle_scale, 2147.0f * circle_scale);
+const D3DXVECTOR2 TitleCircle::DEFAULT_SIZE = D3DXVECTOR2(700.0, 700.0f);
 
 //=============================================================================
 // constructor

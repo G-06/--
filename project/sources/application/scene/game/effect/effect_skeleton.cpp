@@ -17,14 +17,14 @@
 //*****************************************************************************
 const Animation::DATA EffectSkeleton::SKELETON_EFFECT[EffectSkeleton::SKELETON_EFFECT_PATTERN] =
 {
-	Animation::DATA(3,1,0),
-	Animation::DATA(3,2,1),
-	Animation::DATA(3,3,2),
-	Animation::DATA(3,4,3),
-	Animation::DATA(3,5,4),
-	Animation::DATA(3,6,5),
-	Animation::DATA(3,7,6),
-	Animation::DATA(3,0,7)
+	Animation::DATA(2,1,0),
+	Animation::DATA(2,2,1),
+	Animation::DATA(2,3,2),
+	Animation::DATA(2,4,3),
+	Animation::DATA(2,5,4),
+	Animation::DATA(2,6,5),
+	Animation::DATA(2,7,6),
+	Animation::DATA(2,0,7)
 };
 
 
@@ -58,6 +58,7 @@ bool EffectSkeleton::Initialize(void)
 	SafeInitialize(sprite_);
 	sprite_->__point(Sprite::POINT_CENTER);
 	sprite_->__size(D3DXVECTOR2(256.0f,256.0f));
+	sprite_->__color(D3DXCOLOR(255,255,255,0.7f));
 	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_SKELETON);
 	sprite_->__division_width(EffectSkeleton::SKELETON_EFFECT_PATTERN);
 	sprite_->__index(0);
@@ -82,7 +83,7 @@ void EffectSkeleton::Update(void)
 {
 	frame_count_++;
 
-	if(frame_count_ > 24)
+	if(frame_count_ > 16)
 	{
 		is_death_ = true;
 	}

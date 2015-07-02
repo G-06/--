@@ -490,22 +490,67 @@
     <ClInclude Include="sources\application\object\tutorial_back.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\game\stage\stage_1.h">
+    <ClInclude Include="sources\application\object\object_record.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_10.h">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\game\effect\effect_lightning.h">
+    <ClInclude Include="sources\application\scene\game\stage\stage_01.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_02.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_03.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_04.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_05.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_06.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_07.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_08.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\stage\stage_09.h">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_massage.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_life.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_player_life .h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick_lens.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\object\object_lens.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_skeleton.h">
       <Filter>sources\application\scene\game\effect</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\scene\game\effect\effect_dead.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_lightning.h">
       <Filter>sources\application\scene\game\effect</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\scene\game\effect\effect_locus.h">
       <Filter>sources\application\scene\game\effect</Filter>
     </ClInclude>
     <ClInclude Include="sources\application\scene\game\effect\effect_mirror.h">
-      <Filter>sources\application\scene\game\effect</Filter>
-    </ClInclude>
-    <ClInclude Include="sources\application\scene\game\effect\effect_skeleton.h">
       <Filter>sources\application\scene\game\effect</Filter>
     </ClInclude>
   </ItemGroup>
@@ -846,22 +891,67 @@
     <ClCompile Include="sources\application\object\tutorial_back.cpp">
       <Filter>sources\application\object</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\game\stage\stage_1.cpp">
+    <ClCompile Include="sources\application\object\object_record.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_10.cpp">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClCompile>
-    <ClCompile Include="sources\application\scene\game\effect\effect_lightning.cpp">
+    <ClCompile Include="sources\application\scene\game\stage\stage_01.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_02.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_03.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_04.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_05.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_06.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_07.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_08.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\stage\stage_09.cpp">
+      <Filter>sources\application\scene\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_massage.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_life.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_player_life .cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\gimmick\gimmick_lens.cpp">
+      <Filter>sources\application\scene\game\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_lens.cpp">
+      <Filter>sources\application\object</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_skeleton.cpp">
       <Filter>sources\application\scene\game\effect</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\effect\effect_dead.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_lightning.cpp">
       <Filter>sources\application\scene\game\effect</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\effect\effect_locus.cpp">
       <Filter>sources\application\scene\game\effect</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\effect\effect_mirror.cpp">
-      <Filter>sources\application\scene\game\effect</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\scene\game\effect\effect_skeleton.cpp">
       <Filter>sources\application\scene\game\effect</Filter>
     </ClCompile>
   </ItemGroup>
