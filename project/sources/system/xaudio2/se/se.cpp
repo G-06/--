@@ -37,17 +37,17 @@ SE::~SE(void)
 //=============================================================================
 bool SE::Initialize(void)
 {
-	for(u32 i = SE_ID_TEST;i < SE_ID_MAX;++i)
+	for(u32 i = SE_ID_DECIDE;i < SE_ID_MAX;++i)
 	{
-		xaudio2_sound_[i - SE_ID_TEST] = new XAudio2Sound(ixaudio2_);
+		xaudio2_sound_[i - SE_ID_DECIDE] = new XAudio2Sound(ixaudio2_);
 
-		if(!SafeInitialize(xaudio2_sound_[i - SE_ID_TEST]))
+		if(!SafeInitialize(xaudio2_sound_[i - SE_ID_DECIDE]))
 		{
-			SafeRelease(xaudio2_sound_[i - SE_ID_TEST]);
+			SafeRelease(xaudio2_sound_[i - SE_ID_DECIDE]);
 			return false;
 		}
 
-		xaudio2_sound_[i - SE_ID_TEST]->LoadFromResource(MAKEINTRESOURCE(i));
+		xaudio2_sound_[i - SE_ID_DECIDE]->LoadFromResource(MAKEINTRESOURCE(i));
 	}
 
 	return true;
@@ -58,9 +58,9 @@ bool SE::Initialize(void)
 //=============================================================================
 void SE::Uninitialize(void)
 {
-	for(u32 i = SE_ID_TEST;i < SE_ID_MAX;++i)
+	for(u32 i = SE_ID_DECIDE;i < SE_ID_MAX;++i)
 	{
-		SafeRelease(xaudio2_sound_[i - SE_ID_TEST]);
+		SafeRelease(xaudio2_sound_[i - SE_ID_DECIDE]);
 	}
 }
 
@@ -110,8 +110,8 @@ bool SE::Play(const SE_ID& se_id)
 		return false;
 	}
 
-	ixaudio2_source_voices_[number] = xaudio2_sound_[se_id - SE_ID_TEST]->CreateCloneIXAudio2SourceVoice();
-	xaudio2_sound_[se_id - SE_ID_TEST]->CloneXAudio2Buffer(&xaudio2_buffers_[number]);
+	ixaudio2_source_voices_[number] = xaudio2_sound_[se_id - SE_ID_DECIDE]->CreateCloneIXAudio2SourceVoice();
+	xaudio2_sound_[se_id - SE_ID_DECIDE]->CloneXAudio2Buffer(&xaudio2_buffers_[number]);
 	ixaudio2_source_voices_[number]->SetVolume(volume_);
 	ixaudio2_source_voices_[number]->SubmitSourceBuffer(&xaudio2_buffers_[number]);
 	ixaudio2_source_voices_[number]->Start(0);

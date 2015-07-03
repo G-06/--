@@ -136,13 +136,27 @@
 //*****************************************************************************
 // bgm
 //*****************************************************************************
-#define BGM_TEST				300
-#define BGM_TEST2				301
+#define BGM_TITLE				300
+#define BGM_TUTORIAL			301
+#define BGM_CREDIT				302
+#define BGM_STAGE_SELECT		303
+#define BGM_STAGE_01			304
 
 //*****************************************************************************
 // se
 //*****************************************************************************
-#define SE_TEST					400
-#define SE_TEST2				401
+#define SE_DECIDE				400
+#define SE_CANCEL				401
+#define SE_WINDOW_OPEN			402
+#define SE_WINDOW_CLOSE			403
+#define SE_NYAS_JUMP			404
+#define SE_NYAS_LIGHT			405
+#define SE_NYAS_LIGHT_START		406
+#define SE_REFLECTION			407
+#define SE_DEATH				408
+#define SE_CHECK_POINT			409
+#define SE_NEW_RECORD			410
+#define SE_GOAL					411
+#define SE_STAGE_START			412
 
 //---------------------------------- EOF --------------------------------------

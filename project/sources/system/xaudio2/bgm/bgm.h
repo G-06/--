@@ -33,8 +33,12 @@ public:
 	enum BGM_ID
 	{
 		BGM_ID_NONE = -1,
-		BGM_ID_TEST = BGM_TEST,
-		BGM_ID_TEST2,
+
+		BGM_ID_TITLE = BGM_TITLE,
+		BGM_ID_TUTORIAL,
+		BGM_ID_CREDIT,
+		BGM_ID_STAGE_SELECT,
+		BGM_ID_STAGE_01,
 		BGM_ID_MAX,
 	};
 
@@ -78,7 +82,7 @@ private:
 	u32 fade_frame_;
 	u32 frame_count_;
 	f32 volume_;
-	XAudio2Sound* xaudio2_sound_[BGM_ID_MAX - BGM_ID_TEST];
+	XAudio2Sound* xaudio2_sound_[BGM_ID_MAX - BGM_ID_TITLE];
 };
 
 #endif // _BGM_H_

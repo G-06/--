@@ -33,8 +33,19 @@ public:
 	enum SE_ID
 	{
 		SE_ID_NONE = -1,
-		SE_ID_TEST = SE_TEST,
-		SE_ID_TEST2,
+		SE_ID_DECIDE = SE_DECIDE,
+		SE_ID_CANCEL,
+		SE_ID_WINDOW_OPEN,
+		SE_ID_WINDOW_CLOSE,
+		SE_ID_NYAS_JUMP,
+		SE_ID_NYAS_LIGHT,
+		SE_ID_NYAS_LIGHT_START,
+		SE_ID_REFLECTION,
+		SE_ID_DEATH,
+		SE_ID_CHECK_POINT,
+		SE_ID_NEW_RECORD,
+		SE_ID_GOAL,
+		SE_ID_STAGE_START,
 		SE_ID_MAX,
 	};
 
@@ -70,7 +81,7 @@ private:
 
 	IXAudio2* ixaudio2_;
 	f32 volume_;
-	XAudio2Sound* xaudio2_sound_[SE_ID_MAX - SE_ID_TEST];
+	XAudio2Sound* xaudio2_sound_[SE_ID_MAX - SE_ID_DECIDE];
 	IXAudio2SourceVoice* ixaudio2_source_voices_[SE_MAX];
 	bool is_use_[SE_MAX];
 	XAUDIO2_BUFFER xaudio2_buffers_[SE_MAX];

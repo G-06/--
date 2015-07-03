@@ -39,17 +39,17 @@ BGM::~BGM(void)
 //=============================================================================
 bool BGM::Initialize(void)
 {
-	for(u32 i = BGM_ID_TEST;i < BGM_ID_MAX;++i)
+	for(u32 i = BGM_ID_TITLE;i < BGM_ID_MAX;++i)
 	{
-		xaudio2_sound_[i - BGM_ID_TEST] = new XAudio2Sound(ixaudio2_);
+		xaudio2_sound_[i - BGM_ID_TITLE] = new XAudio2Sound(ixaudio2_);
 
-		if(!SafeInitialize(xaudio2_sound_[i - BGM_ID_TEST]))
+		if(!SafeInitialize(xaudio2_sound_[i - BGM_ID_TITLE]))
 		{
-			SafeRelease(xaudio2_sound_[i - BGM_ID_TEST]);
+			SafeRelease(xaudio2_sound_[i - BGM_ID_TITLE]);
 			return false;
 		}
 
-		xaudio2_sound_[i - BGM_ID_TEST]->LoadFromResource(MAKEINTRESOURCE(i));
+		xaudio2_sound_[i - BGM_ID_TITLE]->LoadFromResource(MAKEINTRESOURCE(i));
 	}
 
 	return true;
@@ -60,9 +60,9 @@ bool BGM::Initialize(void)
 //=============================================================================
 void BGM::Uninitialize(void)
 {
-	for(u32 i = BGM_ID_TEST;i < BGM_ID_MAX;++i)
+	for(u32 i = BGM_ID_TITLE;i < BGM_ID_MAX;++i)
 	{
-		SafeRelease(xaudio2_sound_[i - BGM_ID_TEST]);
+		SafeRelease(xaudio2_sound_[i - BGM_ID_TITLE]);
 	}
 }
 
@@ -77,17 +77,17 @@ void BGM::Update(void)
 
 		if(preview_bgm_ != BGM_ID_NONE && current_bgm_ != preview_bgm_)
 		{
-			xaudio2_sound_[preview_bgm_ - BGM_ID_TEST]->SetVolume(volume_ / fade_frame_ * ((s32)fade_frame_ - (s32)frame_count_));
+			xaudio2_sound_[preview_bgm_ - BGM_ID_TITLE]->SetVolume(volume_ / fade_frame_ * ((s32)fade_frame_ - (s32)frame_count_));
 
-			if(xaudio2_sound_[preview_bgm_ - BGM_ID_TEST]->__volume() <= 0.0f)
+			if(xaudio2_sound_[preview_bgm_ - BGM_ID_TITLE]->__volume() <= 0.0f)
 			{
-				xaudio2_sound_[preview_bgm_ - BGM_ID_TEST]->Stop();
+				xaudio2_sound_[preview_bgm_ - BGM_ID_TITLE]->Stop();
 			}
 		}
 
 		if(current_bgm_ != BGM_ID_NONE)
 		{
-			xaudio2_sound_[current_bgm_ - BGM_ID_TEST]->SetVolume(volume_ / fade_frame_ * frame_count_);
+			xaudio2_sound_[current_bgm_ - BGM_ID_TITLE]->SetVolume(volume_ / fade_frame_ * frame_count_);
 		}
 	}
 }
@@ -99,9 +99,9 @@ bool BGM::Play(const BGM_ID& bgm_id)
 {
 	if(preview_bgm_ != BGM_ID_NONE)
 	{
-		if(xaudio2_sound_[preview_bgm_ - BGM_ID_TEST]->__is_play())
+		if(xaudio2_sound_[preview_bgm_ - BGM_ID_TITLE]->__is_play())
 		{
-			xaudio2_sound_[preview_bgm_ - BGM_ID_TEST]->Stop();
+			xaudio2_sound_[preview_bgm_ - BGM_ID_TITLE]->Stop();
 		}
 	}
 
@@ -113,21 +113,21 @@ bool BGM::Play(const BGM_ID& bgm_id)
 		if(is_fade_)
 		{
 			frame_count_ = 0;
-			xaudio2_sound_[current_bgm_ - BGM_ID_TEST]->SetVolume(0.0f);
+			xaudio2_sound_[current_bgm_ - BGM_ID_TITLE]->SetVolume(0.0f);
 		}
 		else
 		{
 			frame_count_ = fade_frame_;
-			xaudio2_sound_[current_bgm_ - BGM_ID_TEST]->SetVolume(volume_);
+			xaudio2_sound_[current_bgm_ - BGM_ID_TITLE]->SetVolume(volume_);
 		}
 
 		if(is_loop_)
 		{
-			return xaudio2_sound_[current_bgm_ - BGM_ID_TEST]->Play(0);
+			return xaudio2_sound_[current_bgm_ - BGM_ID_TITLE]->Play(0);
 		}
 		else
 		{
-			return xaudio2_sound_[current_bgm_ - BGM_ID_TEST]->Play(1);
+			return xaudio2_sound_[current_bgm_ - BGM_ID_TITLE]->Play(1);
 		}
 	}
 
@@ -141,12 +141,12 @@ void BGM::Stop(void)
 {
 	if(current_bgm_ != BGM_ID_NONE)
 	{
-		xaudio2_sound_[current_bgm_ - BGM_ID_TEST]->Stop();
+		xaudio2_sound_[current_bgm_ - BGM_ID_TITLE]->Stop();
 	}
 
 	if(preview_bgm_ != BGM_ID_NONE)
 	{
-		xaudio2_sound_[preview_bgm_ - BGM_ID_TEST]->Stop();
+		xaudio2_sound_[preview_bgm_ - BGM_ID_TITLE]->Stop();
 	}
 }
 
@@ -164,7 +164,7 @@ void BGM::SetVolume(const f32& volume)
 
 	if(current_bgm_ != BGM_ID_NONE)
 	{
-		xaudio2_sound_[current_bgm_ - BGM_ID_TEST]->SetVolume(volume_);
+		xaudio2_sound_[current_bgm_ - BGM_ID_TITLE]->SetVolume(volume_);
 	}
 }
 
