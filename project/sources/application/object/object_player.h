@@ -75,7 +75,7 @@ public:
 	void __position(const D3DXVECTOR2& position){ position_ = position; }
 	void __is_flip(bool is_flip) { is_flip_ = is_flip; }
 	const ANIMATION_TYPE& __animation_type(void)const { return animation_type_; }
-
+	bool __is_animation_end(void) { return is_animation_end_; }
 private:
 	struct ANIMATION_TEXTURE_DATA
 	{
@@ -123,7 +123,7 @@ private:
 	Sprite*		player_;				// プレイヤースプライト
 	Animation*	animation_;
 	ANIMATION_TYPE animation_type_;
-
+	bool is_animation_end_;
 };
 
 #endif	// _OBJECT_PLAYER_H_

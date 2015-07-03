@@ -157,7 +157,7 @@ void ObjectRecord::__set_time(u32 time)
 		//dotto
 		number_[5]->__Set_index(12);
 
-		workA = mlisec;
+		workA = mlisec * 100 / 60;
 		//•b@‚P‚O‚ÌˆÊ
 		workB = (f32)(workA%10);
 		number_[7]->__Set_index((u32)workB);

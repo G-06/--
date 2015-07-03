@@ -166,7 +166,6 @@ bool ObjectPlayer::Initialize(void)
 	player_->__position(position_);
 	player_->__point(Sprite::POINT_CENTER);
 	player_->SetParameter();
-
 	return true;
 }
 
@@ -184,7 +183,13 @@ void ObjectPlayer::Uninitialize(void)
 //=============================================================================
 void ObjectPlayer::Update(void)
 {
+	is_animation_end_ = false;
 	animation_->Update();
+	if(animation_->__is_end())
+	{
+		is_animation_end_ = animation_->__is_end();
+	}
+
 	player_->__index(animation_->__current_index());
 	player_->__is_flip(is_flip_);
 	player_->SetParameter();
