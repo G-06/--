@@ -40,28 +40,6 @@ bool Application::Initialize(void)
 	// is loop
 	is_loop_ = true;
 
-	// create scene manager
-	scene_manager_ = new SceneManager();
-
-
-	// initialize scene manager
-	if(!SafeInitialize(scene_manager_))
-	{
-		Uninitialize();
-		ASSERT("failed initialize scene manager");
-		return false;
-	}
-
-	// create frame controller
-	frame_controller_ = new FrameController();
-
-	// initialize frame controller
-	if(!SafeInitialize(frame_controller_))
-	{
-		Uninitialize();
-		ASSERT("failed initialize frame controller");
-	}
-
 	// keyboard
 	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LEFT,INPUT_EVENT_LEFT);
 	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_RIGHT,INPUT_EVENT_RIGHT);
@@ -87,7 +65,29 @@ bool Application::Initialize(void)
 	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,INPUT_EVENT_PAD_6);
 	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE,INPUT_EVENT_PAD_13);
 
-	//GET_DIRECT_INPUT->SaveInputEventVertual();
+	GET_DIRECT_INPUT->SaveInputEventVertual();
+
+	// create scene manager
+	scene_manager_ = new SceneManager();
+
+
+	// initialize scene manager
+	if(!SafeInitialize(scene_manager_))
+	{
+		Uninitialize();
+		ASSERT("failed initialize scene manager");
+		return false;
+	}
+
+	// create frame controller
+	frame_controller_ = new FrameController();
+
+	// initialize frame controller
+	if(!SafeInitialize(frame_controller_))
+	{
+		Uninitialize();
+		ASSERT("failed initialize frame controller");
+	}
 
 	return true;
 }

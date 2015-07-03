@@ -497,14 +497,13 @@ void NormalStage::Draw(void)
 		(*it)->Draw();
 	}
 
+	game_player_->Draw();
+
 	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
-	
-	
 	{
 		(*it)->Draw();
 	}
 
-	game_player_->Draw();
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
 	object_player_life_->Draw();

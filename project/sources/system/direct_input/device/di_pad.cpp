@@ -172,42 +172,42 @@ void DIPad::Update(void)
 		input_event_buffer_->SetRelease(static_cast<INPUT_EVENT>(i + INPUT_EVENT_PAD_L_LEFT),release_key);
 	}
 
-	static const s8 input_type_name[][256] =
-	{
-		"DIRECT_INPUT",
-		"X_INPUT",
-	};
-
-	static const s8 button_name[][256] =
-	{
-		"L_LEFT",
-		"L_RIGHT",
-		"L_UP",
-		"L_DOWN",
-		"R_LEFT",
-		"R_RIGHT",
-		"R_UP",
-		"R_DOWN",
-	};
-
-	DEBUG_TOOL.__debug_display()->Print("Input Type : %s\n",input_type_name[input_type_]);
-
-	for(u32 i = 0; i <= PAD_KEY_MAX;++i)
-	{
-		DEBUG_TOOL.__debug_display()->Print("%s : %d\n",button_name[i],input_event_buffer_->CheckPress(static_cast<INPUT_EVENT>(i + INPUT_EVENT_PAD_L_LEFT)));
-	}
-
-	DEBUG_TOOL.__debug_display()->Print("Button : ");
-
-	for(u32 i = 0; i < PAD_BUTTON_MAX;++i)
-	{
-		if(input_event_buffer_->CheckPress(static_cast<INPUT_EVENT>(i + INPUT_EVENT_PAD_0)))
-		{
-			DEBUG_TOOL.__debug_display()->Print("%d,",i);
-		}
-	}
-
-	DEBUG_TOOL.__debug_display()->Print("\n");
+	//static const s8 input_type_name[][256] =
+	//{
+	//	"DIRECT_INPUT",
+	//	"X_INPUT",
+	//};
+	//
+	//static const s8 button_name[][256] =
+	//{
+	//	"L_LEFT",
+	//	"L_RIGHT",
+	//	"L_UP",
+	//	"L_DOWN",
+	//	"R_LEFT",
+	//	"R_RIGHT",
+	//	"R_UP",
+	//	"R_DOWN",
+	//};
+	//
+	//DEBUG_TOOL.__debug_display()->Print("Input Type : %s\n",input_type_name[input_type_]);
+	//
+	//for(u32 i = 0; i <= PAD_KEY_MAX;++i)
+	//{
+	//	DEBUG_TOOL.__debug_display()->Print("%s : %d\n",button_name[i],input_event_buffer_->CheckPress(static_cast<INPUT_EVENT>(i + INPUT_EVENT_PAD_L_LEFT)));
+	//}
+	//
+	//DEBUG_TOOL.__debug_display()->Print("Button : ");
+	//
+	//for(u32 i = 0; i < PAD_BUTTON_MAX;++i)
+	//{
+	//	if(input_event_buffer_->CheckPress(static_cast<INPUT_EVENT>(i + INPUT_EVENT_PAD_0)))
+	//	{
+	//		DEBUG_TOOL.__debug_display()->Print("%d,",i);
+	//	}
+	//}
+	//
+	//DEBUG_TOOL.__debug_display()->Print("\n");
 }
 
 //=============================================================================
