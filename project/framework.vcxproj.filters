@@ -553,6 +553,9 @@
     <ClInclude Include="sources\application\scene\game\effect\effect_mirror.h">
       <Filter>sources\application\scene\game\effect</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\object_newrecord.h">
+      <Filter>sources\application\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -953,6 +956,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\effect\effect_mirror.cpp">
       <Filter>sources\application\scene\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\object_newrecord.cpp">
+      <Filter>sources\application\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

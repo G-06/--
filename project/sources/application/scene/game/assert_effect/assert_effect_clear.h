@@ -23,6 +23,7 @@
 //*****************************************************************************
 class Sprite;
 class SelectRecord;
+class ObjectNewRecord;
 
 //*****************************************************************************
 // class definition
@@ -54,6 +55,7 @@ public:
 	// accessor
 	bool __is_stop(void) { return is_stop_; }
 	void __time(u32 time) { time_ = time; }
+	void __set_newrecord_flag(bool flag){new_record_flag_ = flag;};
 
 private:
 	static const u32 SRIDE_IN_FRAME;
@@ -65,18 +67,23 @@ private:
 	static const D3DXVECTOR2 CLEAR_END_POSITION;
 	static const D3DXVECTOR2 RECORD_START_POSITION;
 	static const D3DXVECTOR2 RECORD_END_POSITION;
+	static const D3DXVECTOR2 NEW_RECORD_START_POSITION;
+	static const D3DXVECTOR2 NEW_RECORD_END_POSITION;
 
 	Sprite* sprite_;
 	SelectRecord* record_;
+	ObjectNewRecord* new_record_;
 
 	D3DXVECTOR2 position_;
 	D3DXVECTOR2 purpose_position_;
 	D3DXVECTOR2 record_position_;
+	D3DXVECTOR2 new_record_position_;
 	f32 record_alpha_;
 
 	u32 frame_count_;
 	u32 time_;
 	bool is_stop_;
+	bool new_record_flag_;
 };
 
 #endif	// _ASSERT_EFFECT_CLEAR_H_
