@@ -70,20 +70,6 @@ bool StageSelect::Initialize(void)
 
 	//レコードファイル読み込み
 //	System::FileLoad("data/stage/record.bin");
-
-	////レコード初期化
-	//System::RecordSave(0,65535);
-	//System::RecordSave(1,65535);
-	//System::RecordSave(2,65535);
-	//System::RecordSave(3,65535);
-	//System::RecordSave(4,65535);
-	//System::RecordSave(5,65535);
-	//System::RecordSave(6,65535);
-	//System::RecordSave(7,65535);
-	//System::RecordSave(8,65535);
-	//System::RecordSave(9,65535);
-	//System::RecordSave(10,65535);
-
 	////レコードファイル出力
 //	System::FileSave("data/stage/record.bin");
 
@@ -164,10 +150,10 @@ void StageSelect::Update(void)
 			nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
 		}
 		nas_->Update();
-
-		message_window_->Update();
 	}
+		message_window_->Update();
 }
+
 
 //=============================================================================
 // draw
@@ -266,6 +252,27 @@ void StageSelect::SelectUpdate()
 	for(u32 i=0;i<TYPE_MAX-1;i++)
 	{
 		regions_[i].region_->Update();
+	}
+
+	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_R))
+	{
+		//レコード初期化
+		System::RecordSave(0,65535);
+		System::RecordSave(1,65535);
+		System::RecordSave(2,65535);
+		System::RecordSave(3,65535);
+		System::RecordSave(4,65535);
+		System::RecordSave(5,65535);
+		System::RecordSave(6,65535);
+		System::RecordSave(7,65535);
+		System::RecordSave(8,65535);
+		System::RecordSave(9,65535);
+		System::RecordSave(10,65535);
+
+		if(next_stage_factory_ == nullptr)
+		{
+			next_stage_factory_ = new SelectFactory();
+		}
 	}
 }
 
