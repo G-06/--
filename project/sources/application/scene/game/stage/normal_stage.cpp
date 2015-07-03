@@ -46,9 +46,9 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,90.0f);
-const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(17.0f,80.0f);
-const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_LIFE_POSITION = D3DXVECTOR2(180.0f,60.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,70.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(21.0f,60.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_LIFE_POSITION = D3DXVECTOR2(180.0f,40.0f);
 const u32 DEST_FRAME_COUNT = 20;
 
 //=============================================================================
@@ -209,6 +209,7 @@ void NormalStage::Uninitialize(void)
 //=============================================================================
 void NormalStage::Update(void)
 {
+	//開始直後
 	if(is_start_)
 	{
 		assert_effect_start_->Update();
@@ -218,13 +219,13 @@ void NormalStage::Update(void)
 			is_start_ = false;
 		}
 	}
+	//クリア時
 	else if(is_clear_)
 	{
 		assert_effect_clear_->__is_assert(true);
 		game_player_->Clear();
 
 		//レコード参照
-//		System::FileLoad("data/stage/record.bin");
 		u32 oldRecord = System::RecordLoad((System::__get_current_stage()-1));
 		//レコード比較
 		if(time_count_<oldRecord)
@@ -232,7 +233,6 @@ void NormalStage::Update(void)
 			System::RecordSave((System::__get_current_stage()-1),time_count_);
 			assert_effect_clear_->__set_newrecord_flag(true);
 		}
-//		System::FileSave("data/stage/record.bin");
 
 		assert_effect_clear_->SetTime(time_count_);
 		assert_effect_clear_->Update();
@@ -248,6 +248,7 @@ void NormalStage::Update(void)
 			}
 		}
 	}
+	//残機が消えたとき
 	else if(game_player_->__life() <= 0)
 	{
 		if(next_stage_factory_ == nullptr)
@@ -255,12 +256,16 @@ void NormalStage::Update(void)
 			next_stage_factory_ = new SelectFactory();
 		}
 	}
+	//プレイヤーが生きてるゲーム中
 	else
 	{
+		//ポーズしているとき
 		if(is_pause_)
 		{
+			//ポーズメニューが出てるとき
 			if(!is_pause_input_ && !pause_->__is_move())
 			{
+				//オプション更新
 				if(is_option_)
 				{
 					option_->Update();
@@ -272,6 +277,7 @@ void NormalStage::Update(void)
 				}
 				else
 				{
+					//選択肢を選んでるとき
 					if(message_window_->__is_show())
 					{
 						// メッセージの選択処理
@@ -378,50 +384,53 @@ void NormalStage::Update(void)
 				} // is_option
 			} // !pause_->__is_move()
 		}
+		//ゲームを遊んでいるときの更新
 		else
 		{
+			//時間カウント
 			time_count_++;
-
+			//プレイヤー更新
 			game_player_->Update();
-
+			//プレイヤーアイコン更新
 			object_player_icon_->Update();
-
+			//ギミック更新
 			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 			{
 				(*it)->Update();
 			}
-
+			//光化以外のエフェクト更新　光化はプレイヤーの中
 			for(auto it = effect_container_.begin();it != effect_container_.end();++it)
 			{
 				(*it)->Update();
 			}
-
+			//ゲージサイズ計算
 			object_light_gauge_->__rate((f32)game_player_->__sp() / (f32)game_player_->__sp_max() * 100.0f);
-
+			//ゲージ更新
 			object_light_gauge_->Update();
-
+			//マップとの当たり判定？
 			if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
 			{
 				game_player_->__position(D3DXVECTOR2(map_->__size().x - game_player_->__size().x * 0.5f,game_player_->__position().y));
 			}
-
+			//画面外横に行かない判定？
 			if(game_player_->__position().x - game_player_->__size().x * 0.5f < 0)
 			{
 				game_player_->__position(D3DXVECTOR2(game_player_->__size().x * 0.5f,game_player_->__position().y));
 			}
-
+			//画面外死
 			if(game_player_->__position().y > map_->__size().y)
 			{
 				game_player_->Dead();
 				game_bg_->ReSetUv();
 			}
-
+			//ギミックとの当たり判定
 			CollisionGimmick();
+			//マップチップとの当たり判定
 			CollisionChip();
-
+			//残機の更新
 			object_player_life_->__life(game_player_->__life());
 			object_player_life_->Update();
-
+			//エフェクトが死んだときの解放？
 			auto predfunc = [](Effect* effect)->bool
 			{
 				if(effect->__is_death())
@@ -432,10 +441,10 @@ void NormalStage::Update(void)
 				}
 				return false;
 			};
-
+			//？
 			effect_container_.erase(remove_if(effect_container_.begin(),effect_container_.end(),predfunc),effect_container_.end());
 
-			// offset
+			// offsetによる各オブジェクト類の位置更新
 			stage_offset_->__reference_position(game_player_->__position());
 			stage_offset_->Update();
 
@@ -463,7 +472,8 @@ void NormalStage::Update(void)
 				is_pause_ = true;
 				pause_->Show();
 			}
-		}
+		}	//ポーズしているとき
+
 		select_record_->__set_time(time_count_);
 		select_record_->Update();
 		pause_->Update();
