@@ -65,7 +65,7 @@ bool Application::Initialize(void)
 	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,INPUT_EVENT_PAD_6);
 	//GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE,INPUT_EVENT_PAD_13);
 
-	GET_DIRECT_INPUT->SaveInputEventVertual();
+	//GET_DIRECT_INPUT->SaveInputEventVertual();
 
 	// create scene manager
 	scene_manager_ = new SceneManager();
