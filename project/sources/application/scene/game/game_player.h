@@ -161,7 +161,7 @@ private:
 	ObjectPlayer*		player_;				// プレイヤースプライト
 	EffectLightning* lightning_start_;
 	EffectDead* nyas_dead_;
-	EffectLocus* nyas_locus_[100];
+	EffectLocus* nyas_locus_[1000];
 	bool is_preview_light_;
 	bool is_force_light_;
 };

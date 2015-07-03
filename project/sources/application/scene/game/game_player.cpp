@@ -75,7 +75,7 @@ bool GamePlayer::Initialize(void)
 	player_->__position(position_);
 	lightning_start_ = nullptr;
 	nyas_dead_ = nullptr;
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < 1000; i++)
 	{
 		nyas_locus_[i] = new EffectLocus();
 		nyas_locus_[i]->Initialize();
@@ -92,7 +92,7 @@ void GamePlayer::Uninitialize(void)
 	SafeRelease(player_);
 	SafeRelease(lightning_start_);
 	SafeRelease(nyas_dead_);
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < 1000; i++)
 	{
 		SafeRelease(nyas_locus_[i]);
 	}
@@ -197,7 +197,7 @@ void GamePlayer::Update(void)
 	}
 	else
 	{
-		for(s32 i = 0; i < 100; i++)
+		for(s32 i = 0; i < 1000; i++)
 		{
 			if(nyas_locus_[i]->__is_free())
 			{
@@ -262,7 +262,7 @@ void GamePlayer::Update(void)
 			nyas_dead_ = nullptr;
 		}
 	}
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < 1000; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
@@ -282,7 +282,7 @@ void GamePlayer::Update(void)
 //=============================================================================
 void GamePlayer::Draw(void)
 {
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < 1000; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{

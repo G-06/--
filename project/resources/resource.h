@@ -131,7 +131,7 @@
 #define TEXTURE_EFFECT_NYAS_DEAD			205
 #define TEXTURE_EFFECT_MIRROR				206
 #define TEXTURE_EFFECT_SKELETON				207
-
+#define TEXTURE_EFFECT_LOCUS				208
 
 //*****************************************************************************
 // bgm
