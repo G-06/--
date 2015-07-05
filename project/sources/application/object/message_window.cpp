@@ -307,4 +307,17 @@ void MessageWindow::__title_texture_id_(const Texture::TEXTURE_ID& texture_id)
 	title_->__texture_id(texture_id);
 }
 
+//=============================================================================
+// __select_texture_id_
+//-----------------------------------------------------------------------------
+// select_number	:	‘I‘ğˆ‚Ì”Ô†
+//=============================================================================
+void MessageWindow::__select_frame_texture_id_(	const s32 select_number,
+												const Texture::TEXTURE_ID& texture_id)
+{
+	if(select_number < 0 || select_number >= SELECT_MAX) return;
+
+	frame_[select_number]->__texture_id(texture_id);
+}
+
 //---------------------------------- EOF --------------------------------------

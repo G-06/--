@@ -289,6 +289,9 @@ void NormalStage::Update(void)
 							if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 							{
 								const s32 current_select = message_window_->__is_select();
+
+								message_window_->__select_frame_texture_id_(current_select, Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
 								if(current_select == MessageWindow::MESSAGE_NO)
 								{
 									message_window_->Close();
@@ -361,8 +364,6 @@ void NormalStage::Update(void)
 								}
 							case Pause::SELECT_TYPE_OPTION:
 								{
-									//is_pause_ = false;
-									//pause_->Close();
 									is_option_ = true;
 									option_->__is_indication(true);
 									break;

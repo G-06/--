@@ -73,6 +73,7 @@ public:
 	void __title_size(const D3DXVECTOR2& size){title_size_ = size;}
 	void __select_size(const D3DXVECTOR2& size){select_size_ = size;}
 	void __title_texture_id_(const Texture::TEXTURE_ID& texture_id);
+	void __select_frame_texture_id_(const s32 select_number, const Texture::TEXTURE_ID& texture_id);
 
 	// ‘I‘ðŽˆ‚ÌˆÚ“®
 	void SelectUp(void);

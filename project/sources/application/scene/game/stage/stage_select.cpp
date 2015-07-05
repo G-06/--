@@ -295,6 +295,9 @@ void StageSelect::MassageUpdate()
 	//決定キー押されたとき
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
+		// 枠を決定色に変更
+		message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
 		//イエスの時
 		if(message_window_->__is_select() == 0)
 		{
@@ -347,6 +350,9 @@ void StageSelect::YorNUpdate()
 	//決定キー押されたとき
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
+		// 枠を決定色に変更
+		message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
 		//イエスの時
 		if(message_window_->__is_select() == 0)
 		{
