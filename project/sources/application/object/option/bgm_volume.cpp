@@ -3,6 +3,7 @@
 // bgm volume
 //
 // Author		: Ryotaro Arai
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -13,10 +14,18 @@
 #include "render/sprite.h"
 #include "system/system.h"
 #include "../option.h"
+#include "object/option/option_sprite_smooth.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
+// string
+const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
+const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 225.f);
+// gauge
+const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(75.0f, 75.0f);
+const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f, DEFAULT_POSITION.y);
+
 const f32 BgmVolume::VOLUME_MAX = 1.0f;
 const f32 BgmVolume::VOLUME_MIN = 0.0f;
 const D3DXVECTOR2 BgmVolume::SIZE = D3DXVECTOR2(270.0f,30.0f);
@@ -26,6 +35,9 @@ const D3DXVECTOR2 BgmVolume::SIZE = D3DXVECTOR2(270.0f,30.0f);
 //=============================================================================
 BgmVolume::BgmVolume(void)
 	:bgm_volume_(1.0f)
+	,volume_gauge_(NULL)
+	,bgm_string_(NULL)
+	,bgm_string_frame_(NULL)
 {
 }
 
@@ -41,19 +53,23 @@ BgmVolume::~BgmVolume(void)
 //=============================================================================
 bool BgmVolume::Initialize(void)
 {
-	volume_gage_ = new Sprite();
-	volume_gage_->Initialize();
-	volume_gage_->__size(D3DXVECTOR2(bgm_volume_ * SIZE.x,SIZE.y));
-	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,225.f));
-	volume_gage_->SetParameter();
+	volume_gauge_ = new OptionSpriteSmooth();
+	volume_gauge_->Initialize();
+	volume_gauge_->__size(D3DXVECTOR2(bgm_volume_ * SIZE.x,SIZE.y));
+	volume_gauge_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,225.f));
+	volume_gauge_->__point(Sprite::POINT_LEFT_UP);
 
-	bgm_button_ = new Sprite();
-	bgm_button_->Initialize();
-	bgm_button_->__size(Option::DEFAULT_MENU_SIZE);
-	bgm_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,225.f));
-	bgm_button_->__texture_id(Texture::TEXTURE_ID_OPTION_STRING_BGM_VOLUME);
-	bgm_button_->__point(Sprite::POINT_CENTER);
-	bgm_button_->SetParameter();
+	bgm_string_ = new OptionSpriteSmooth();
+	bgm_string_->Initialize();
+	bgm_string_->__size(DEFAULT_SIZE);
+	bgm_string_->__position(DEFAULT_POSITION);
+	bgm_string_->__texture_id(Texture::TEXTURE_ID_OPTION_STRING_BGM_VOLUME);
+
+	bgm_string_frame_ = new OptionSpriteSmooth();
+	bgm_string_frame_->Initialize();
+	bgm_string_frame_->__size(DEFAULT_SIZE);
+	bgm_string_frame_->__position(DEFAULT_POSITION);
+	bgm_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 
 	return true;
 }
@@ -63,8 +79,9 @@ bool BgmVolume::Initialize(void)
 //=============================================================================
 void BgmVolume::Uninitialize(void)
 {
-	SafeRelease(volume_gage_);
-	SafeRelease(bgm_button_);
+	SafeRelease(volume_gauge_);
+	SafeRelease(bgm_string_);
+	SafeRelease(bgm_string_frame_);
 }
 
 //=============================================================================
@@ -72,6 +89,9 @@ void BgmVolume::Uninitialize(void)
 //=============================================================================
 void BgmVolume::Update(void)
 {
+	bgm_string_->Update();
+	bgm_string_frame_->Update();
+	volume_gauge_->Update();
 }
 
 //=============================================================================
@@ -79,8 +99,9 @@ void BgmVolume::Update(void)
 //=============================================================================
 void BgmVolume::Draw(void)
 {
-	bgm_button_->Draw();
-	volume_gage_->Draw();
+	bgm_string_frame_->Draw();
+	bgm_string_->Draw();
+	volume_gauge_->Draw();
 }
 
 //=============================================================================
@@ -99,8 +120,7 @@ void BgmVolume::Adjustvolume(f32 volume)
 	}
 
 	bgm_volume_ = volume;
-	volume_gage_->__size(D3DXVECTOR2(bgm_volume_ * SIZE.x,SIZE.y));
-	volume_gage_->SetParameter();
+	volume_gauge_->__size(D3DXVECTOR2(bgm_volume_ * SIZE.x,SIZE.y));
 }
 
 //=============================================================================
@@ -110,14 +130,12 @@ void BgmVolume::Select(bool is_select)
 {
 	if(is_select == true)
 	{
-		bgm_button_->__size(Option::EXPAND_MENU_SIZE);
+		bgm_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 	}
 	else
 	{
-		bgm_button_->__size(Option::DEFAULT_MENU_SIZE);
+		bgm_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 	}
-	
-	bgm_button_->SetParameter();
 }
 
 

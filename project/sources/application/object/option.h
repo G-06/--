@@ -3,7 +3,7 @@
 // option
 //
 // Author		: Ryotaro Arai
-//
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -89,16 +89,28 @@ private:
 	static const f32 VOLUME_RATE;
 
 	OptionBg* option_bg_;
+	OptionLogo* option_logo_;
+	VolumeLogo* volume_logo_;
+	KeyconfigLogo* keyconfig_logo_;
+
 	KeyConfigOk* key_config_ok_;
 	KeyConfigCancel* key_config_cancel_;
 	KeyConfigSpecial* key_config_special_;
 	KeyConfigPause* key_config_pause_;
 	KeyConfigJump* key_config_jump_;
-	OptionLogo* option_logo_;
-	VolumeLogo* volume_logo_;
-	KeyconfigLogo* keyconfig_logo_;
+
 	BgmVolume* bgm_volume_;
 	SeVolume* se_volume_;
+
+	//OptionSpriteSmooth* bg_;
+	//OptionSpriteSmooth* logo_;
+	//OptionSpriteSmooth* volume_logo_;
+	//OptionSpriteSmooth* keyconfig_logo_;
+	//OptionSpriteSmooth* key_config_ok_;
+	//OptionSpriteSmooth* key_config_cancel_;
+	//OptionSpriteSmooth* key_config_special_;
+	//OptionSpriteSmooth* key_config_pause_;
+	//OptionSpriteSmooth* key_config_jump_;
 
 	s32 cursor_x_;
 	s32 cursor_y_;

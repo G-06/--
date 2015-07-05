@@ -3,6 +3,7 @@
 // key config cancel
 //
 // Author		: Ryotaro Arai
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -22,7 +23,7 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
+class OptionSpriteSmooth;
 
 //*****************************************************************************
 // class definition
@@ -56,12 +57,14 @@ public:
 	void __set_button_number_texture(INPUT_EVENT button);
 
 private:
-	Sprite* cancel_button_;
-	Sprite* set_button_number_;
+	OptionSpriteSmooth* cancel_button_;
+	OptionSpriteSmooth* cancel_button_frame_;
+	OptionSpriteSmooth* set_button_number_;
+	OptionSpriteSmooth* set_button_number_frame_;
 
 	u32 current_key_event_;
 };
 
-#endif	// _OPTION_MENU_H_
+#endif	// _KEY_CONFIG_CANCEL_H_
 
 //---------------------------------- EOF --------------------------------------

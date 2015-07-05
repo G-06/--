@@ -3,6 +3,7 @@
 // volume logo
 //
 // Author		: Ryotaro Arai
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -12,11 +13,22 @@
 #include "volume_logo.h"
 #include "render/sprite.h"
 #include "system/system.h"
+#include "../option.h"
+#include "object/option/option_sprite_smooth.h"
+
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+//const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
+const f32 SIZE_SCALE = 1.5f;
+const D3DXVECTOR2 DEFAULT_SIZE = D3DXVECTOR2(256.0f * SIZE_SCALE, 64.0f * SIZE_SCALE);
+const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 300, 175.f);
 
 //=============================================================================
 // constructor
 //=============================================================================
 VolumeLogo::VolumeLogo(void)
+	:sprite_(NULL)
 {
 }
 
@@ -32,13 +44,13 @@ VolumeLogo::~VolumeLogo(void)
 //=============================================================================
 bool VolumeLogo::Initialize(void)
 {
-	sprite_ = new Sprite();
+	sprite_ = new OptionSpriteSmooth();
 	sprite_->Initialize();
-	sprite_->__size(D3DXVECTOR2(350, 100));
-	sprite_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 300,175.f));
+	sprite_->__size(DEFAULT_SIZE);
+	sprite_->__position(DEFAULT_POSITION);
 	sprite_->__point(Sprite::POINT_CENTER);
 	sprite_->__texture_id(Texture::TEXTURE_ID_OPTION_STRING_SOUND_CONFIG);
-	sprite_->SetParameter();
+
 	return true;
 }
 
@@ -55,6 +67,7 @@ void VolumeLogo::Uninitialize(void)
 //=============================================================================
 void VolumeLogo::Update(void)
 {
+	sprite_->Update();
 }
 
 //=============================================================================

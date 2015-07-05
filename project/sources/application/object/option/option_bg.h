@@ -3,6 +3,7 @@
 // option bg
 //
 // Author		: Ryotaro Arai
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -21,7 +22,7 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
+class OptionSpriteSmooth;
 
 //*****************************************************************************
 // class definition
@@ -46,8 +47,9 @@ public:
 
 	// draw
 	void Draw(void);
+
 private:
-	Sprite* sprite_;
+	OptionSpriteSmooth* sprite_;
 };
 
 #endif	// _OPTION_BG_H_

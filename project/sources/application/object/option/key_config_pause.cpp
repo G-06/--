@@ -3,6 +3,7 @@
 // key config pause
 //
 // Author		: Ryotaro Arai
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -12,11 +13,27 @@
 #include "key_config_pause.h"
 #include "render/sprite.h"
 #include "../option.h"
+#include "object/option/option_sprite_smooth.h"
+
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+// string
+const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
+const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 525.0f);
+// number
+const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(75.0f, 75.0f);
+const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f, DEFAULT_POSITION.y);
 
 //=============================================================================
 // constructor
 //=============================================================================
 KeyConfigPause::KeyConfigPause(void)
+	:pause_button_(NULL)
+	,pause_button_frame_(NULL)
+	,set_button_number_(NULL)
+	,set_button_number_frame_(NULL)
+	,current_key_event_(NULL)
 {
 }
 
@@ -32,21 +49,29 @@ KeyConfigPause::~KeyConfigPause(void)
 //=============================================================================
 bool KeyConfigPause::Initialize(void)
 {
-	pause_button_ = new Sprite();
+	pause_button_ = new OptionSpriteSmooth();
 	pause_button_->Initialize();
-	pause_button_->__size(Option::DEFAULT_MENU_SIZE);
-	pause_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,525.0f));
+	pause_button_->__size(DEFAULT_SIZE);
+	pause_button_->__position(DEFAULT_POSITION);
 	pause_button_->__texture_id(Texture::TEXTURE_ID_OPTION_STRING_OP_PAUSE);
-	pause_button_->__point(Sprite::POINT_CENTER);
-	pause_button_->SetParameter();
 
-	set_button_number_ = new Sprite();
+	pause_button_frame_ = new OptionSpriteSmooth();
+	pause_button_frame_->Initialize();
+	pause_button_frame_->__size(DEFAULT_SIZE);
+	pause_button_frame_->__position(DEFAULT_POSITION);
+	pause_button_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
+
+	set_button_number_ = new OptionSpriteSmooth();
 	set_button_number_->Initialize();
-	set_button_number_->__size(D3DXVECTOR2(75,75));
-	set_button_number_->__position(D3DXVECTOR2(pause_button_->__position().x + 300, pause_button_->__position().y));
+	set_button_number_->__size(DEFAULT_NUM_SIZE);
+	set_button_number_->__position(DEFAULT_NUM_POSITION);
 	set_button_number_->__texture_id(Texture::TEXTURE_ID_OPTION_KEY_01);
-	set_button_number_->__point(Sprite::POINT_CENTER);
-	set_button_number_->SetParameter();
+
+	set_button_number_frame_ = new OptionSpriteSmooth();
+	set_button_number_frame_->Initialize();
+	set_button_number_frame_->__size(DEFAULT_NUM_SIZE);
+	set_button_number_frame_->__position(DEFAULT_NUM_POSITION);
+	set_button_number_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 
 	current_key_event_ = NULL;
 
@@ -59,7 +84,9 @@ bool KeyConfigPause::Initialize(void)
 void KeyConfigPause::Uninitialize(void)
 {
 	SafeRelease(pause_button_);
+	SafeRelease(pause_button_frame_);
 	SafeRelease(set_button_number_);
+	SafeRelease(set_button_number_frame_);
 }
 
 //=============================================================================
@@ -67,6 +94,10 @@ void KeyConfigPause::Uninitialize(void)
 //=============================================================================
 void KeyConfigPause::Update(void)
 {
+	pause_button_->Update();
+	pause_button_frame_->Update();
+	set_button_number_->Update();
+	set_button_number_frame_->Update();
 }
 
 //=============================================================================
@@ -74,7 +105,9 @@ void KeyConfigPause::Update(void)
 //=============================================================================
 void KeyConfigPause::Draw(void)
 {
+	pause_button_frame_->Draw();
 	pause_button_->Draw();
+	set_button_number_frame_->Draw();
 	set_button_number_->Draw();
 }
 
@@ -85,14 +118,12 @@ void KeyConfigPause::Select(bool is_select)
 {
 	if(is_select == true)
 	{
-		pause_button_->__size(Option::EXPAND_MENU_SIZE);
+		pause_button_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 	}
 	else
 	{
-		pause_button_->__size(Option::DEFAULT_MENU_SIZE);
+		pause_button_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 	}
-	
-	pause_button_->SetParameter();
 }
 
 //=============================================================================
@@ -150,7 +181,6 @@ void KeyConfigPause::__set_button_number_texture(INPUT_EVENT button)
 			set_button_number_->__texture_id(Texture::TEXTURE_ID_NONE);
 			break;
 	}
-	set_button_number_->SetParameter();
 }
 
 
@@ -160,8 +190,6 @@ void KeyConfigPause::__set_button_number_texture(INPUT_EVENT button)
 void KeyConfigPause::SetAlpha(f32 alpha)
 {
 	pause_button_->__color(D3DXCOLOR(1,1,1,alpha));
-
-	pause_button_->SetParameter();
 }
 
 

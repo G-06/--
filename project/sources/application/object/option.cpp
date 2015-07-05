@@ -3,7 +3,7 @@
 // option
 //
 // Author		: Ryotaro Arai
-//
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -25,10 +25,13 @@
 #include "system/system.h"
 #include "system/direct_input/input_event_buffer.h"
 
+#include "../object/option/option_sprite_smooth.h"
+
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 Option::DEFAULT_MENU_SIZE = D3DXVECTOR2(300.f, 100.f);
+const f32 MENU_SCALE = 0.9f;
+const D3DXVECTOR2 Option::DEFAULT_MENU_SIZE = D3DXVECTOR2(256.0f * MENU_SCALE, 64.0f * MENU_SCALE);
 const D3DXVECTOR2 Option::EXPAND_MENU_SIZE = D3DXVECTOR2(450.f, 150.f);
 const f32 Option::VOLUME_MIN	= 0.0f;
 const f32 Option::VOLUME_MAX	= 1.0f;
@@ -38,9 +41,18 @@ const f32 Option::VOLUME_RATE	= VOLUME_MAX / 10;
 // constructor
 //=============================================================================
 Option::Option(void)
-	:cursor_y_(0),
-	select_menu_alpha_(1),
-	plus_alpha_(-0.05f)
+	:cursor_y_(0)
+	,select_menu_alpha_(1)
+	,plus_alpha_(-0.05f)
+	,option_bg_(NULL)
+	,option_logo_(NULL)
+	,volume_logo_(NULL)
+	,keyconfig_logo_(NULL)
+	,key_config_ok_(NULL)
+	,key_config_cancel_(NULL)
+	,key_config_special_(NULL)
+	,key_config_pause_(NULL)
+	,key_config_jump_(NULL)
 {
 	option_data_._bgm_volume = 1.0f;
 	option_data_._se_volume  = 1.0f;
@@ -360,6 +372,17 @@ void Option::Update(void)
 		}
 	}
 
+	option_bg_->Update();
+	key_config_ok_->Update();
+	key_config_cancel_->Update();
+	key_config_special_->Update();
+	key_config_pause_->Update();
+	//key_config_jump_->Update();
+	option_logo_->Update();
+	volume_logo_->Update();
+	keyconfig_logo_->Update();
+	bgm_volume_->Update();
+	se_volume_->Update();
 
 	key_config_ok_->__set_button_number_texture(option_data_._decide_key);
 	key_config_cancel_->__set_button_number_texture(option_data_._cancel_key);
@@ -417,6 +440,9 @@ void Option::Exchange(INPUT_EVENT* out_input_event,INPUT_EVENT input_event)
 	*out_input_event = input_event;
 }
 
+//=============================================================================
+// Load
+//=============================================================================
 void Option::Load(void)
 {
 	FILE* fp = fopen("data/option_data.bin", "rb");

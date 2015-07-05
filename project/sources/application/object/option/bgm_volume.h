@@ -3,6 +3,7 @@
 // bgm volume
 //
 // Author		: Ryotaro Arai
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -21,7 +22,7 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
+class OptionSpriteSmooth;
 
 //*****************************************************************************
 // class definition
@@ -56,12 +57,14 @@ private:
 	static const f32 VOLUME_MAX;
 	static const f32 VOLUME_MIN;
 	static const D3DXVECTOR2 SIZE;
-	Sprite* volume_gage_;
-	Sprite* bgm_button_;
+
+	OptionSpriteSmooth* volume_gauge_;
+	OptionSpriteSmooth* bgm_string_;
+	OptionSpriteSmooth* bgm_string_frame_;
 
 	f32 bgm_volume_;
 };
 
-#endif	// _OPTION_MENU_H_
+#endif	// _BGM_VOLUME_H_
 
 //---------------------------------- EOF --------------------------------------

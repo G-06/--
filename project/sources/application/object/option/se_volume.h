@@ -3,6 +3,7 @@
 // se volume
 //
 // Author		: Ryotaro Arai
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -21,7 +22,7 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
+class OptionSpriteSmooth;
 
 //*****************************************************************************
 // class definition
@@ -53,12 +54,14 @@ public:
 	void Select(bool is_select);
 
 private:
-	Sprite* volume_gage_;
-	Sprite* se_button_;
+
+	OptionSpriteSmooth* volume_gauge_;
+	OptionSpriteSmooth* se_string_;
+	OptionSpriteSmooth* se_string_frame_;
 
 	f32 se_volume_;
 };
 
-#endif	// _OPTION_MENU_H_
+#endif	// _SE_VOLUME_H_
 
 //---------------------------------- EOF --------------------------------------

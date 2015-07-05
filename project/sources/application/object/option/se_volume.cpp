@@ -13,11 +13,27 @@
 #include "render/sprite.h"
 #include "system/system.h"
 #include "../option.h"
+#include "object/option/option_sprite_smooth.h"
+
+//*****************************************************************************
+// constant definition
+//*****************************************************************************
+// string
+const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
+const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 275.0f);
+// gauge
+const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(75.0f, 75.0f);
+const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f, DEFAULT_POSITION.y);
+
 
 //=============================================================================
 // constructor
 //=============================================================================
 SeVolume::SeVolume(void)
+	:se_volume_(5.0f)
+	,volume_gauge_(NULL)
+	,se_string_(NULL)
+	,se_string_frame_(NULL)
 {
 }
 
@@ -33,21 +49,23 @@ SeVolume::~SeVolume(void)
 //=============================================================================
 bool SeVolume::Initialize(void)
 {
-	se_volume_ = 5;
+	volume_gauge_ = new OptionSpriteSmooth();
+	volume_gauge_->Initialize();
+	volume_gauge_->__size(D3DXVECTOR2(se_volume_*30.f, 30.f));
+	volume_gauge_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,275.f));
+	volume_gauge_->__point(Sprite::POINT_LEFT_UP);
 
-	volume_gage_ = new Sprite();
-	volume_gage_->Initialize();
-	volume_gage_->__size(D3DXVECTOR2(se_volume_*30.f, 30.f));
-	volume_gage_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,275.f));
-	volume_gage_->SetParameter();
+	se_string_ = new OptionSpriteSmooth();
+	se_string_->Initialize();
+	se_string_->__size(DEFAULT_SIZE);
+	se_string_->__position(DEFAULT_POSITION);
+	se_string_->__texture_id(Texture::TEXTURE_ID_OPTION_STRING_SE_VOLUME);
 
-	se_button_ = new Sprite();
-	se_button_->Initialize();
-	se_button_->__size(Option::DEFAULT_MENU_SIZE);
-	se_button_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2 - 250,275.0f));
-	se_button_->__texture_id(Texture::TEXTURE_ID_OPTION_STRING_SE_VOLUME);
-	se_button_->__point(Sprite::POINT_CENTER);
-	se_button_->SetParameter();
+	se_string_frame_ = new OptionSpriteSmooth();
+	se_string_frame_->Initialize();
+	se_string_frame_->__size(DEFAULT_SIZE);
+	se_string_frame_->__position(DEFAULT_POSITION);
+	se_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 
 	return true;
 }
@@ -57,8 +75,9 @@ bool SeVolume::Initialize(void)
 //=============================================================================
 void SeVolume::Uninitialize(void)
 {
-	SafeRelease(volume_gage_);
-	SafeRelease(se_button_);
+	SafeRelease(volume_gauge_);
+	SafeRelease(se_string_);
+	SafeRelease(se_string_frame_);
 }
 
 //=============================================================================
@@ -66,6 +85,9 @@ void SeVolume::Uninitialize(void)
 //=============================================================================
 void SeVolume::Update(void)
 {
+	se_string_->Update();
+	se_string_frame_->Update();
+	volume_gauge_->Update();
 }
 
 //=============================================================================
@@ -73,8 +95,9 @@ void SeVolume::Update(void)
 //=============================================================================
 void SeVolume::Draw(void)
 {
-	se_button_->Draw();
-	volume_gage_->Draw();
+	se_string_frame_->Draw();
+	se_string_->Draw();
+	volume_gauge_->Draw();
 }
 
 //=============================================================================
@@ -83,8 +106,7 @@ void SeVolume::Draw(void)
 void SeVolume::Adjustvolume(f32 volume)
 {
 	se_volume_ = volume;
-	volume_gage_->__size(D3DXVECTOR2(se_volume_*9*30.f, 30.0f));
-	volume_gage_->SetParameter();
+	volume_gauge_->__size(D3DXVECTOR2(se_volume_*9*30.f, 30.0f));
 }
 
 //=============================================================================
@@ -94,14 +116,12 @@ void SeVolume::Select(bool is_select)
 {
 	if(is_select == true)
 	{
-		se_button_->__size(Option::EXPAND_MENU_SIZE);
+		se_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 	}
 	else
 	{
-		se_button_->__size(Option::DEFAULT_MENU_SIZE);
+		se_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 	}
-	
-	se_button_->SetParameter();
 }
 
 
