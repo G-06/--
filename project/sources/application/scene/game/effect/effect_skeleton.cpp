@@ -35,6 +35,7 @@ EffectSkeleton::EffectSkeleton(void)
 	:Effect(TYPE_SKELETON)
 	,sprite_(nullptr)
 	,frame_count_(0)
+	,is_free_(true)
 {
 }
 
@@ -52,7 +53,6 @@ bool EffectSkeleton::Initialize(void)
 {
 	animation_ = new Animation();
 	animation_->Add(&SKELETON_EFFECT[0], sizeof(Animation::DATA)*EffectSkeleton::SKELETON_EFFECT_PATTERN);
-	animation_->Start(0);
 
 	sprite_ = new Sprite();
 	SafeInitialize(sprite_);
@@ -86,6 +86,7 @@ void EffectSkeleton::Update(void)
 	if(frame_count_ > 31)
 	{
 		is_death_ = true;
+		animation_->Stop();
 	}
 
 	animation_->Update();
@@ -102,4 +103,16 @@ void EffectSkeleton::Draw(void)
 	sprite_->Draw();
 }
 
+//=============================================================================
+// start
+//=============================================================================
+void EffectSkeleton::Start(void)
+{
+	frame_count_ = 0;
+	is_death_ = false;
+	is_free_ = false;
+	animation_->Start(0);
+	sprite_->__index(0);
+	sprite_->SetParameter();
+}
 //---------------------------------- EOF --------------------------------------

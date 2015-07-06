@@ -154,6 +154,14 @@ bool NormalStage::Initialize(void)
 	option_ = new Option();
 	option_->Initialize();
 
+	for(s32 i = 0; i < 1000; i++)
+	{
+		effect_mirror_[i] = new EffectMirror();
+		effect_mirror_[i]->Initialize();
+		effect_skeleton_[i] = new EffectSkeleton();
+		effect_skeleton_[i]->Initialize();
+	}
+
 	return true;
 }
 
@@ -202,6 +210,12 @@ void NormalStage::Uninitialize(void)
 	SafeRelease(game_bg_);
 
 	SafeRelease(option_);
+
+	for(s32 i = 0; i < 1000; i++)
+	{
+		SafeRelease(effect_mirror_[i]);
+		SafeRelease(effect_skeleton_[i]);
+	}
 }
 
 //=============================================================================
@@ -385,6 +399,18 @@ void NormalStage::Update(void)
 				(*it)->Update();
 			}
 
+			for(s32 i = 0; i < 1000; i++)
+			{
+				if(effect_mirror_[i]->__is_free() == false)
+				{
+					effect_mirror_[i]->Update();
+				}
+				if(effect_skeleton_[i]->__is_free() == false)
+				{
+					effect_skeleton_[i]->Update();
+				}
+			}
+
 			object_light_gauge_->__rate((f32)game_player_->__sp() / (f32)game_player_->__sp_max() * 100.0f);
 
 			object_light_gauge_->Update();
@@ -422,6 +448,18 @@ void NormalStage::Update(void)
 				return false;
 			};
 
+			for(s32 i = 0; i < 1000; i++)
+			{
+				if(effect_mirror_[i]->__is_death())
+				{
+					effect_mirror_[i]->__is_free(true);
+				}
+				if(effect_skeleton_[i]->__is_death())
+				{
+					effect_skeleton_[i]->__is_free(true);
+				}
+			}
+
 			effect_container_.erase(remove_if(effect_container_.begin(),effect_container_.end(),predfunc),effect_container_.end());
 
 			// offset
@@ -445,6 +483,18 @@ void NormalStage::Update(void)
 			for(auto it = effect_container_.begin();it != effect_container_.end();++it)
 			{
 				(*it)->__offset_position(stage_offset_->__position());
+			}
+
+			for(s32 i = 0; i < 1000; i++)
+			{
+				if(effect_mirror_[i]->__is_free() == false)
+				{
+					effect_mirror_[i]->__offset_position(stage_offset_->__position());
+				}
+				if(effect_skeleton_[i]->__is_free() == false)
+				{
+					effect_skeleton_[i]->__offset_position(stage_offset_->__position());
+				}
 			}
 
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_PAUSE) && !pause_->__is_move())
@@ -487,10 +537,20 @@ void NormalStage::Draw(void)
 	}
 
 	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
-	
-	
 	{
 		(*it)->Draw();
+	}
+
+	for(s32 i = 0; i < 1000; i++)
+	{
+		if(effect_mirror_[i]->__is_free() == false)
+		{
+			effect_mirror_[i]->Draw();
+		}
+		if(effect_skeleton_[i]->__is_free() == false)
+		{
+			effect_skeleton_[i]->Draw();
+		}
 	}
 
 	game_player_->Draw();
@@ -621,10 +681,15 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 				if(game_player_->__is_light())
 				{
 					game_player_->__position(collision_map.__position());
-					EffectMirror* effect = new EffectMirror();
-					effect->Initialize();
-					effect->__position(game_player_->__position());
-					effect_container_.push_back(effect);
+					for(s32 i = 0; i < 1000; i++)
+					{
+						if(effect_mirror_[i]->__is_free())
+						{
+							effect_mirror_[i]->Start();
+							effect_mirror_[i]->__position(game_player_->__position());
+							break;
+						}
+					}
 
 					if(collision_map.__vector().x != 0.0f)
 					{
@@ -659,10 +724,15 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 					effect_timer_++;
 					if(effect_timer_ % 20 == 0)
 					{
-						EffectSkeleton* effect = new EffectSkeleton();
-						effect->Initialize();
-						effect->__position(game_player_->__position());
-						effect_container_.push_back(effect);
+						for(s32 i = 0; i < 1000; i++)
+						{
+							if(effect_skeleton_[i]->__is_free())
+							{
+								effect_skeleton_[i]->Start();
+								effect_skeleton_[i]->__position(game_player_->__position());
+								break;
+							}
+						}
 					}
 				}
 				else

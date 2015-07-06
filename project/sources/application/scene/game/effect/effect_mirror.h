@@ -48,11 +48,17 @@ public:
 	// draw
 	void Draw(void);
 
+	void Start(void);
+
+	bool __is_free(void){ return is_free_;}
+	void __is_free(bool is_free){ is_free_ = is_free;}
+
 private:
 	static const s32 MIRROR_EFFECT_PATTERN = 12;
 	static const Animation::DATA MIRROR_EFFECT[MIRROR_EFFECT_PATTERN];
 	Sprite* sprite_;
 	u32 frame_count_;
+	bool is_free_;
 	Animation* animation_;
 };
 

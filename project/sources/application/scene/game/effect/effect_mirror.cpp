@@ -39,6 +39,7 @@ EffectMirror::EffectMirror(void)
 	:Effect(TYPE_MIRROR)
 	,sprite_(nullptr)
 	,frame_count_(0)
+	,is_free_(true)
 {
 }
 
@@ -56,7 +57,6 @@ bool EffectMirror::Initialize(void)
 {
 	animation_ = new Animation();
 	animation_->Add(&MIRROR_EFFECT[0], sizeof(Animation::DATA)*EffectMirror::MIRROR_EFFECT_PATTERN);
-	animation_->Start(0);
 
 	sprite_ = new Sprite();
 	SafeInitialize(sprite_);
@@ -89,6 +89,7 @@ void EffectMirror::Update(void)
 	if(frame_count_ > 24)
 	{
 		is_death_ = true;
+		animation_->Stop();
 	}
 
 	animation_->Update();
@@ -103,6 +104,19 @@ void EffectMirror::Draw(void)
 {
 	sprite_->__position(position_ - offset_position_);
 	sprite_->Draw();
+}
+
+//=============================================================================
+// start
+//=============================================================================
+void EffectMirror::Start(void)
+{
+	frame_count_ = 0;
+	is_death_ = false;
+	is_free_ = false;
+	animation_->Start(0);
+	sprite_->__index(0);
+	sprite_->SetParameter();
 }
 
 //---------------------------------- EOF --------------------------------------
