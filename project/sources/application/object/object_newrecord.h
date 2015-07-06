@@ -49,7 +49,7 @@ public:
 	// draw
 	void Draw(void);
 
-	void __set_position(D3DXVECTOR2 position){position_=position;};
+	void __set_position(D3DXVECTOR2 position);
 
 
 private:

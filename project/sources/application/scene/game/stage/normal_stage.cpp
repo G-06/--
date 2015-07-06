@@ -223,7 +223,29 @@ void NormalStage::Update(void)
 	else if(is_clear_)
 	{
 		assert_effect_clear_->__is_assert(true);
-		game_player_->Clear();
+		//プレイヤー更新
+		game_player_->Update();
+		//マップとの当たり判定？
+		if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
+		{
+			game_player_->__position(D3DXVECTOR2(map_->__size().x - game_player_->__size().x * 0.5f,game_player_->__position().y));
+		}
+		//画面外横に行かない判定？
+		if(game_player_->__position().x - game_player_->__size().x * 0.5f < 0)
+		{
+			game_player_->__position(D3DXVECTOR2(game_player_->__size().x * 0.5f,game_player_->__position().y));
+		}
+		//マップチップとの当たり判定
+		CollisionChip();
+		// offsetによる各オブジェクト類の位置更新
+		stage_offset_->__reference_position(game_player_->__position());
+		stage_offset_->Update();
+		game_player_->__offset_position(stage_offset_->__position());
+		map_->__position(-stage_offset_->__position());
+
+
+
+
 
 		//レコード参照
 		u32 oldRecord = System::RecordLoad((System::__get_current_stage()-1));
@@ -248,16 +270,14 @@ void NormalStage::Update(void)
 			}
 		}
 	}
-	//残機が消えたとき
-	else if(game_player_->__life() <= 0)
+	else if(game_player_->__life() <= 0)	//残機が消えたとき
 	{
 		if(next_stage_factory_ == nullptr)
 		{
 			next_stage_factory_ = new SelectFactory();
 		}
 	}
-	//プレイヤーが生きてるゲーム中
-	else
+	else	//プレイヤーが生きてるゲーム中
 	{
 		//ポーズしているとき
 		if(is_pause_)
@@ -489,6 +509,8 @@ void NormalStage::Update(void)
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_C))
 	{
 		is_clear_ = true;
+		game_player_->Clear();
+
 	}
 
 #endif
@@ -805,6 +827,7 @@ void NormalStage::CollisionGimmick(void)
 				{
 					DEBUG_TOOL.__debug_display()->Print("hit goal point\n");
 					is_clear_ = true;
+					game_player_->Clear();
 					break;
 				}
 				case Gimmick::TYPE_OBSTACLE:

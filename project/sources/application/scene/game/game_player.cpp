@@ -292,10 +292,12 @@ void GamePlayer::UpdateLive(void)
 //=============================================================================
 void GamePlayer::UpdateDead(void)
 {
+	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_DEAD);
+	player_->Update();
 	nyas_dead_->__offset_position(offset_position_);
 	nyas_dead_->Update();
 
-	if(nyas_dead_->__is_death())	//死ぬアニメが終わった時
+	if(nyas_dead_->__is_death())	//死ぬエフェクトが終わった時
 	{
 		nyas_dead_->Uninitialize();
 		delete nyas_dead_;
@@ -311,7 +313,19 @@ void GamePlayer::UpdateDead(void)
 //=============================================================================
 void GamePlayer::UpdateClear(void)
 {
+	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JOY);
 
+	is_fly_ = true;
+	is_force_light_ = false;
+	old_position_ = position_;
+	position_ += move_ + acceleration_;
+	acceleration_ = D3DXVECTOR2(0.0f,0.0f);
+
+	player_->__is_flip(is_left_);
+	player_->Update();
+	is_sp_down_ = false;
+	is_sp_recover_speed_up_ = false;
+	sp_recover_speed_ = DEFAULT_SP_RECOVER_SPEED;
 }
 
 
@@ -328,16 +342,16 @@ void GamePlayer::Draw(void)
 		}
 	}
 
-	if(lightning_start_)
+	if(lightning_start_)	//光化エフェクト？
 	{
 		lightning_start_->Draw();
 	}
-	if(nyas_dead_)
+	if(nyas_dead_)	//死ぬエフェクト？
 	{
 		nyas_dead_->Draw();
 	}
 	player_->__position(position_ - offset_position_);
-	player_->Draw();
+	player_->Draw();	//プレイヤー
 }
 
 //=============================================================================
@@ -500,6 +514,7 @@ void GamePlayer::Dead(void)
 //=============================================================================
 void GamePlayer::Clear(void)
 {
+	Status_ = CAT_STATUS_CLEAR;
 }
 
 //---------------------------------- EOF --------------------------------------

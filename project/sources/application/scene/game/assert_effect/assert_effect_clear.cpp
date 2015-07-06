@@ -124,12 +124,16 @@ void AssertEffectClear::Update(void)
 		{
 			vector = RECORD_END_POSITION - RECORD_START_POSITION;
 			record_position_ = RECORD_START_POSITION + vector * 1.0f / (f32)SRIDE_OUT_FRAME * (f32)(frame_count_ - SRIDE_IN_FRAME - STOP_FRAME - SRIDE_OUT_FRAME);
-
 			vector = NEW_RECORD_END_POSITION - NEW_RECORD_START_POSITION;
 			new_record_position_ = NEW_RECORD_START_POSITION + vector * 1.0f / (f32)SRIDE_OUT_FRAME * (f32)(frame_count_ - SRIDE_IN_FRAME - STOP_FRAME - SRIDE_OUT_FRAME);
 			new_record_->__set_position(new_record_position_);
 			new_record_->Update();
 		}
+		//else if(frame_count_ <= SRIDE_IN_FRAME + STOP_FRAME + SRIDE_OUT_FRAME + RECORD_SRIDE_IN_FRAME+20)
+		//{
+		//	//
+
+		//}
 		else
 		{
 			is_stop_ = true;

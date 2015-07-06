@@ -36,9 +36,9 @@ class GamePlayer : public Basic
 public:
 	enum CAT_STATUS
 	{
-		CAT_STATUS_LIVE = 0,
-		CAT_STATUS_DEAD,
-		CAT_STATUS_CLEAR,
+		CAT_STATUS_LIVE = 0,	//生きてる　ゲーム遊べる
+		CAT_STATUS_DEAD,		//死んだ　チェックポイントから復活
+		CAT_STATUS_CLEAR,		//クリア　
 		CAT_STATUS_MAX
 	};
 
@@ -140,6 +140,7 @@ private:
 			,_division_height(division_height)
 		{}
 	};
+
 
 	static const f32 LIGHT_SPEED;
 	static const f32 SPEED;

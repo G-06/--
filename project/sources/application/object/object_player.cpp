@@ -4,6 +4,7 @@
 //
 // Author		: Ryotaro Arai
 //				: Kenji Kabutomori
+//				: Taichi Kitazawa
 //
 //*****************************************************************************
 
@@ -29,7 +30,10 @@ const u32 ObjectPlayer::ANIMATION_DATA_SIZE[ANIMATION_TYPE_MAX] =
 	ANIMATION_DATA_SIZE_DAMAGE,
 	ANIMATION_DATA_SIZE_GAME_START,
 	ANIMATION_DATA_SIZE_GAME_END,
+	ANIMATION_DATA_SIZE_DEAD,
+	ANIMATION_DATA_SIZE_JOY
 };
+
 
 const Animation::DATA ObjectPlayer::WAIT_ANIMATION_DATA[ANIMATION_DATA_SIZE_WAIT] =
 {
@@ -101,6 +105,26 @@ const Animation::DATA ObjectPlayer::GAME_END_ANIMATION_DATA[ANIMATION_DATA_SIZE_
 {
 	Animation::DATA(4,0,0),
 };
+//Ž€‚ñ‚¾‚Æ‚«
+const Animation::DATA ObjectPlayer::DEAD_ANIMATION_DATA[ANIMATION_DATA_SIZE_DEAD] =
+{
+	Animation::DATA(2,1,0),
+	Animation::DATA(2,2,1),
+	Animation::DATA(2,3,2),
+	Animation::DATA(2,4,3),
+	Animation::DATA(2,5,4),
+	Animation::DATA(2,0,5),
+};
+//kuria
+const Animation::DATA ObjectPlayer::JOY_ANIMATION_DATA[ANIMATION_DATA_SIZE_JOY] =
+{
+	Animation::DATA(2,1,0),
+	Animation::DATA(2,2,1),
+	Animation::DATA(2,3,2),
+	Animation::DATA(2,4,3),
+	Animation::DATA(2,5,4),
+	Animation::DATA(2,0,5),
+};
 
 const Animation::DATA* ObjectPlayer::ANIMATION_DATA[ANIMATION_TYPE_MAX] =
 {
@@ -113,7 +137,9 @@ const Animation::DATA* ObjectPlayer::ANIMATION_DATA[ANIMATION_TYPE_MAX] =
 	LIGHT_ANIMATION_DATA,
 	DAMAGE_ANIMATION_DATA,
 	GAME_START_ANIMATION_DATA,
-	GAME_END_ANIMATION_DATA
+	GAME_END_ANIMATION_DATA,
+	DEAD_ANIMATION_DATA,
+	JOY_ANIMATION_DATA
 };
 
 const ObjectPlayer::ANIMATION_TEXTURE_DATA ObjectPlayer::TEXTURE_DATA[ANIMATION_TYPE_MAX] =
@@ -128,6 +154,8 @@ const ObjectPlayer::ANIMATION_TEXTURE_DATA ObjectPlayer::TEXTURE_DATA[ANIMATION_
 	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_DAMAGE,1,1),
 	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_START,1,1),
 	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_CLEAR,1,1),
+	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_JUMP,3,2),	//Ž€‚ñ‚¾‚Æ‚«
+	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_JUMP,3,2),	//kuria
 };
 
 const D3DXVECTOR2 ObjectPlayer::DEFAULT_SIZE = D3DXVECTOR2(200.0f,200.0f);
