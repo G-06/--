@@ -330,7 +330,7 @@ void NormalStage::Update(void)
 							}
 						} // is_show
 					}
-					else
+					else	//‘I‘ğˆ‚ğ‘I‚ñ‚Å‚¢‚È‚¢‚Æ‚«H
 					{
 						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
 						{
@@ -701,35 +701,47 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			}
 			break;
 		}
-		case 5:
+		case 5:		//€™
 		{
-			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if((game_player_->__Get_status()) == GamePlayer::CAT_STATUS_LIVE)
 			{
-				game_player_->Dead();
+				if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->Dead();
+				}
 			}
 			break;
 		}
-		case 6:
+		case 6:		//€™
 		{
-			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if((game_player_->__Get_status()) == GamePlayer::CAT_STATUS_LIVE)
 			{
-				game_player_->Dead();
+				if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->Dead();
+				}
 			}
 			break;
 		}
-		case 7:
+		case 7:		//€™
 		{
-			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if((game_player_->__Get_status()) == GamePlayer::CAT_STATUS_LIVE)
 			{
-				game_player_->Dead();
+				if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->Dead();
+				}
 			}
 			break;
 		}
-		case 8:
+		case 8:		//€™
 		{
-			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+			if((game_player_->__Get_status()) == GamePlayer::CAT_STATUS_LIVE)
 			{
-				game_player_->Dead();
+				if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
+				{
+					game_player_->Dead();
+				}
 			}
 			break;
 		}
