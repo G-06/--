@@ -110,7 +110,7 @@ protected:
 	TYPE type_;
 
 	bool gameover_;
-	u32 time_;
+	u32 time;
 
 private:
 	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;
