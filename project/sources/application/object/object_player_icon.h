@@ -48,8 +48,17 @@ public:
 	// draw
 	void Draw(void);
 
+	enum ICON_TYPE{
+		ICON_TYPE_NORMAL = 0,
+		ICON_TYPE_SMILE,
+		ICON_TYPE_CRY,
+		ICON_TYPE_ANGER,
+		ICON_TYPE_MAX
+	};
+
 	// accessor
 	void __position(const D3DXVECTOR2& position) { position_ = position; }
+	void __animation_index(const ICON_TYPE type);
 
 private:
 	static const D3DXVECTOR2 DEFAULT_SIZE;

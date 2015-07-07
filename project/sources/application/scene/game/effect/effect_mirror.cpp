@@ -89,6 +89,7 @@ void EffectMirror::Update(void)
 	if(frame_count_ > 24)
 	{
 		is_death_ = true;
+		is_free_ = true;
 		animation_->Stop();
 	}
 

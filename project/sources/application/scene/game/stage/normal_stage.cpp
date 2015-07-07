@@ -47,7 +47,7 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,70.0f);
-const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(21.0f,60.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(21.0f,65.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_LIFE_POSITION = D3DXVECTOR2(180.0f,40.0f);
 const u32 DEST_FRAME_COUNT = 20;
 
@@ -239,6 +239,11 @@ void NormalStage::Update(void)
 		assert_effect_clear_->__is_assert(true);
 		//プレイヤー更新
 		game_player_->Update();
+
+		// 笑顔
+		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_SMILE);
+		object_player_icon_->Update();
+
 		//マップとの当たり判定？
 		if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
 		{
@@ -256,10 +261,6 @@ void NormalStage::Update(void)
 		stage_offset_->Update();
 		game_player_->__offset_position(stage_offset_->__position());
 		map_->__position(-stage_offset_->__position());
-
-
-
-
 
 		//レコード参照
 		u32 oldRecord = System::RecordLoad((System::__get_current_stage()-1));
@@ -286,6 +287,10 @@ void NormalStage::Update(void)
 	}
 	else if(game_player_->__life() <= 0)	//残機が消えたとき
 	{
+		// 怒り
+		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_ANGER);
+		object_player_icon_->Update();
+
 		if(next_stage_factory_ == nullptr)
 		{
 			next_stage_factory_ = new SelectFactory();
@@ -428,6 +433,24 @@ void NormalStage::Update(void)
 			game_player_->Update();
 			//プレイヤーアイコン更新
 			object_player_icon_->Update();
+			if(game_player_->__Get_status() != GamePlayer::CAT_STATUS_DEAD)
+			{
+				f32 light_rate = (f32)game_player_->__sp() / (f32)game_player_->__sp_max();
+				if(light_rate >= 0.5f)
+				{
+					object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_NORMAL);
+				}
+				else
+				{
+					object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_CRY);
+				}
+			}
+			else
+			{
+				object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_ANGER);
+			}
+
+
 			//ギミック更新
 			for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 			{
