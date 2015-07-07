@@ -31,7 +31,7 @@ const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
 const D3DXVECTOR2 GamePlayer::DEFAULT_SIZE = D3DXVECTOR2(130.0f,197.0f);
 
-const u32 GamePlayer::DEAD_TIME = 45;
+const u32 GamePlayer::DEAD_TIME = 45;		//死ぬアニメのフレーム数の合計
 
 //=============================================================================
 // constructor
