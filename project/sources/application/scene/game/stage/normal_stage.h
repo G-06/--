@@ -36,6 +36,8 @@ class AssertEffectStart;
 class AssertEffectClear;
 class SelectRecord;
 class Option;
+class EffectMirror;
+class EffectSkeleton;
 
 //*****************************************************************************
 // class definition
@@ -108,6 +110,9 @@ protected:
 	SelectRecord* select_record_;
 	GameBg* game_bg_;
 	TYPE type_;
+
+	EffectMirror* effect_mirror_[1000];
+	EffectSkeleton* effect_skeleton_[1000];
 
 private:
 	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;

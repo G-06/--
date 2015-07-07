@@ -125,6 +125,11 @@ bool Record::SaveFile(const s8* file_name)
 
 	fopen_s(&file,file_name,"wb");
 
+	if(file == nullptr)
+	{
+		return false;
+	}
+
 	// ステージ数保存
 	fwrite(&stage_num_, sizeof(u32), 1, file);
 
