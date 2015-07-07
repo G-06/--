@@ -891,6 +891,7 @@ void NormalStage::CollisionGimmick(void)
 					{
 						game_player_->__check_point_priority(data->_priority);
 						game_player_->__return_position(gimmick_position);
+						game_player_->Heal(1);
 						EffectCheckPoint* effect = new EffectCheckPoint();
 						effect->Initialize();
 						effect->__position(gimmick_position);

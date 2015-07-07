@@ -403,9 +403,6 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h">
       <Filter>sources\application\scene\game\gimmick</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h">
-      <Filter>sources\application\scene\game\gimmick</Filter>
-    </ClInclude>
     <ClInclude Include="sources\application\scene\game\stage\normal_stage.h">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
@@ -555,6 +552,9 @@
     </ClInclude>
     <ClInclude Include="sources\application\object\object_newrecord.h">
       <Filter>sources\application\object</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

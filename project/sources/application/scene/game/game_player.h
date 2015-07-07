@@ -84,6 +84,9 @@ public:
 	// dead
 	void Dead(void);
 
+	// heal
+	void GamePlayer::Heal(u32 health);
+
 	// clear
 	void Clear(void);
 
