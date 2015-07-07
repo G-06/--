@@ -20,9 +20,9 @@
 //*****************************************************************************
 // string
 const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
-const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 375.0f);
+const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 410.0f);
 // number
-const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(75.0f, 75.0f);
+const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(DEFAULT_SIZE.y, DEFAULT_SIZE.y);
 const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f, DEFAULT_POSITION.y);
 
 
@@ -119,12 +119,10 @@ void KeyConfigOk::Select(bool is_select)
 	if(is_select == true)
 	{
 		select_button_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
-//		select_button_->__size(Option::EXPAND_MENU_SIZE);
 	}
 	else
 	{
 		select_button_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
-//		select_button_->__size(Option::DEFAULT_MENU_SIZE);
 	}
 }
 
@@ -192,7 +190,26 @@ void KeyConfigOk::__set_button_number_texture(INPUT_EVENT button)
 //=============================================================================
 void KeyConfigOk::SetAlpha(f32 alpha)
 {
-	select_button_->__color(D3DXCOLOR(1,1,1,alpha));
+	set_button_number_->__color(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
+}
+
+//=============================================================================
+// __position
+//=============================================================================
+void KeyConfigOk::__position(const D3DXVECTOR2 position, const float offset_x)
+{
+	select_button_frame_->__position(position);
+	select_button_->__position(position);
+	set_button_number_frame_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
+	set_button_number_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
+}
+
+//=============================================================================
+// __texture_id
+//=============================================================================
+void KeyConfigOk::__texture_id_frame(const Texture::TEXTURE_ID& texture_id)
+{
+	select_button_frame_->__texture_id(texture_id);
 }
 
 

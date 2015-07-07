@@ -52,6 +52,7 @@ public:
 	void Adjustvolume(f32 volume);
 
 	void Select(bool is_select);
+	void __position(const D3DXVECTOR2 position, const float offset_x);
 
 private:
 

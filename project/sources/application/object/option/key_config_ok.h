@@ -55,6 +55,8 @@ public:
 	void SetAlpha(f32 alpha);
 
 	void __set_button_number_texture(INPUT_EVENT button);
+	void __position(const D3DXVECTOR2 position, const float offset_x);
+	void __texture_id_frame(const Texture::TEXTURE_ID& texture_id);
 
 private:
 	OptionSpriteSmooth* select_button_;

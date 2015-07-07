@@ -114,6 +114,22 @@ bool Option::Initialize(void)
 
 	option_data_ = *GET_OPTION_DATA;
 
+	// position
+	const D3DXVECTOR2 MENU_OFFSETT = D3DXVECTOR2(400.0f, 10.0f);
+
+	const D3DXVECTOR2 DEF_LOGO_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 190.f);
+	volume_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 320.0f, 130.f));
+	bgm_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y), 300.0f);
+	se_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y + DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y), 300.0f);
+
+	const D3DXVECTOR2 DEF_MENU_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 390.0f);
+	keyconfig_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 275.0f, 330.f));
+	key_config_ok_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y), MENU_OFFSETT.x);
+	key_config_cancel_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y), MENU_OFFSETT.x);
+	key_config_special_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 2), MENU_OFFSETT.x);
+	key_config_pause_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 3), MENU_OFFSETT.x);
+
+
 	is_select_ = true;
 	bgm_volume_->Select(true);
 	bgm_volume_->Adjustvolume(option_data_._bgm_volume);
@@ -320,11 +336,13 @@ void Option::Update(void)
 				{
 					key_config_ok_->SetAlpha(select_menu_alpha_);
 					key_config_ok_->Select(true);
+					key_config_ok_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 					if(input_event != INPUT_EVENT_MAX)
 					{
+						key_config_ok_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 						Exchange(&option_data_._decide_key,input_event);
 						is_select_ = true;
-						key_config_ok_->SetAlpha(1);
+						key_config_ok_->SetAlpha(1.0f);
 					}
 					break;
 				}
@@ -332,11 +350,13 @@ void Option::Update(void)
 				{
 					key_config_cancel_->SetAlpha(select_menu_alpha_);
 					key_config_cancel_->Select(true);
+					key_config_cancel_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 					if(input_event != INPUT_EVENT_MAX)
 					{
+						key_config_cancel_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 						Exchange(&option_data_._cancel_key,input_event);
 						is_select_ = true;
-						key_config_cancel_->SetAlpha(1);
+						key_config_cancel_->SetAlpha(1.0f);
 					}
 					break;
 				}
@@ -344,11 +364,13 @@ void Option::Update(void)
 				{
 					key_config_special_->SetAlpha(select_menu_alpha_);
 					key_config_special_->Select(true);
+					key_config_special_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 					if(input_event != INPUT_EVENT_MAX)
 					{
+						key_config_special_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 						Exchange(&option_data_._light_key,input_event);
 						is_select_ = true;
-						key_config_special_->SetAlpha(1);
+						key_config_special_->SetAlpha(1.0f);
 					}
 					break;
 				}
@@ -356,11 +378,13 @@ void Option::Update(void)
 				{
 					key_config_pause_->SetAlpha(select_menu_alpha_);
 					key_config_pause_->Select(true);
+					key_config_pause_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 					if(input_event != INPUT_EVENT_MAX)
 					{
+						key_config_pause_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 						Exchange(&option_data_._pause_key,input_event);
 						is_select_ = true;
-						key_config_pause_->SetAlpha(1);
+						key_config_pause_->SetAlpha(1.0f);
 					}
 					break;
 				}

@@ -22,7 +22,7 @@
 const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
 const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 275.0f);
 // gauge
-const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(75.0f, 75.0f);
+const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(DEFAULT_SIZE.y, DEFAULT_SIZE.y);
 const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f, DEFAULT_POSITION.y);
 
 
@@ -51,7 +51,7 @@ bool SeVolume::Initialize(void)
 {
 	volume_gauge_ = new OptionSpriteSmooth();
 	volume_gauge_->Initialize();
-	volume_gauge_->__size(D3DXVECTOR2(se_volume_*30.f, 30.f));
+	volume_gauge_->__size(D3DXVECTOR2(se_volume_* (DEFAULT_SIZE.x), DEFAULT_SIZE.y));
 	volume_gauge_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,275.f));
 	volume_gauge_->__point(Sprite::POINT_LEFT_UP);
 
@@ -106,7 +106,7 @@ void SeVolume::Draw(void)
 void SeVolume::Adjustvolume(f32 volume)
 {
 	se_volume_ = volume;
-	volume_gauge_->__size(D3DXVECTOR2(se_volume_*9*30.f, 30.0f));
+	volume_gauge_->__size(D3DXVECTOR2(se_volume_ * (DEFAULT_SIZE.x * 1.5f), DEFAULT_SIZE.y));
 }
 
 //=============================================================================
@@ -122,6 +122,16 @@ void SeVolume::Select(bool is_select)
 	{
 		se_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 	}
+}
+
+//=============================================================================
+// __position
+//=============================================================================
+void SeVolume::__position(const D3DXVECTOR2 position, const float offset_x)
+{
+	se_string_->__position(position);
+	se_string_frame_->__position(position);
+	volume_gauge_->__position(D3DXVECTOR2(position.x + offset_x, position.y - DEFAULT_SIZE.y * 0.5f));
 }
 
 

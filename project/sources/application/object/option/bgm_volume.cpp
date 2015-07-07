@@ -21,9 +21,9 @@
 //*****************************************************************************
 // string
 const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
-const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 225.f);
+const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 205.f);
 // gauge
-const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(75.0f, 75.0f);
+const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(DEFAULT_SIZE.y, DEFAULT_SIZE.y);
 const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f, DEFAULT_POSITION.y);
 
 const f32 BgmVolume::VOLUME_MAX = 1.0f;
@@ -120,7 +120,7 @@ void BgmVolume::Adjustvolume(f32 volume)
 	}
 
 	bgm_volume_ = volume;
-	volume_gauge_->__size(D3DXVECTOR2(bgm_volume_ * SIZE.x,SIZE.y));
+	volume_gauge_->__size(D3DXVECTOR2(bgm_volume_ * (DEFAULT_SIZE.x * 1.5f), DEFAULT_SIZE.y));
 }
 
 //=============================================================================
@@ -136,6 +136,16 @@ void BgmVolume::Select(bool is_select)
 	{
 		bgm_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 	}
+}
+
+//=============================================================================
+// __position
+//=============================================================================
+void BgmVolume::__position(const D3DXVECTOR2 position, const float offset_x)
+{
+	bgm_string_->__position(position);
+	bgm_string_frame_->__position(position);
+	volume_gauge_->__position(D3DXVECTOR2(position.x + offset_x, position.y - DEFAULT_SIZE.y * 0.5f));
 }
 
 

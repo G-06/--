@@ -48,6 +48,8 @@ public:
 	// draw
 	void Draw(void);
 
+	void __position(const D3DXVECTOR2 position);
+
 private:
 	OptionSpriteSmooth* sprite_;
 };

@@ -22,7 +22,7 @@
 const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
 const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 475.0f);
 // number
-const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(75.0f, 75.0f);
+const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(DEFAULT_SIZE.y, DEFAULT_SIZE.y);
 const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f, DEFAULT_POSITION.y);
 
 //=============================================================================
@@ -189,7 +189,26 @@ void KeyConfigSpecial::__set_button_number_texture(INPUT_EVENT button)
 //=============================================================================
 void KeyConfigSpecial::SetAlpha(f32 alpha)
 {
-	special_button_->__color(D3DXCOLOR(1,1,1,alpha));
+	set_button_number_->__color(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
+}
+
+//=============================================================================
+// __position
+//=============================================================================
+void KeyConfigSpecial::__position(const D3DXVECTOR2 position, const float offset_x)
+{
+	special_button_->__position(position);
+	special_button_frame_->__position(position);
+	set_button_number_frame_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
+	set_button_number_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
+}
+
+//=============================================================================
+// __texture_id
+//=============================================================================
+void KeyConfigSpecial::__texture_id_frame(const Texture::TEXTURE_ID& texture_id)
+{
+	special_button_frame_->__texture_id(texture_id);
 }
 
 

@@ -22,7 +22,7 @@
 //const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
 const f32 SIZE_SCALE = 1.5f;
 const D3DXVECTOR2 DEFAULT_SIZE = D3DXVECTOR2(256.0f * SIZE_SCALE, 64.0f * SIZE_SCALE);
-const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 300, 175.f);
+const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 320.0f, 140.f);
 
 //=============================================================================
 // constructor
@@ -76,6 +76,14 @@ void VolumeLogo::Update(void)
 void VolumeLogo::Draw(void)
 {
 	sprite_->Draw();
+}
+
+//=============================================================================
+// __position
+//=============================================================================
+void VolumeLogo::__position(const D3DXVECTOR2 position)
+{
+	sprite_->__position(position);
 }
 
 //---------------------------------- EOF --------------------------------------

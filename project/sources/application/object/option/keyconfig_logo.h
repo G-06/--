@@ -3,6 +3,7 @@
 // keyconfig logo
 //
 // Author		: Ryotaro Arai
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -21,7 +22,7 @@
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
-class Sprite;
+class OptionSpriteSmooth;
 
 //*****************************************************************************
 // class definition
@@ -46,10 +47,13 @@ public:
 
 	// draw
 	void Draw(void);
+
+	void __position(const D3DXVECTOR2 position);
+
 private:
-	Sprite* sprite_;
+	OptionSpriteSmooth* sprite_;
 };
 
-#endif	// _OPTION_BG_H_
+#endif	// _KEYCONFIG_LOGO_H_
 
 //---------------------------------- EOF --------------------------------------
