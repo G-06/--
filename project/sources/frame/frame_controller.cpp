@@ -91,12 +91,12 @@ void FrameController::Wait(void)
 {
 	u32 current_time = timer_->GetTime();
 
-	if(frame_time_ > current_time)
+	if(frame_time_ > (current_time + 1))
 	{
 		Sleep(frame_time_ - current_time - 1);
-		frame_count_++;
-		sum_time_ += timer_->GetTime();
 	}
+	frame_count_++;
+	sum_time_ += timer_->GetTime();
 }
 
 //---------------------------------- EOF --------------------------------------
