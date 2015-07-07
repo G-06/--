@@ -108,12 +108,16 @@ const Animation::DATA ObjectPlayer::GAME_END_ANIMATION_DATA[ANIMATION_DATA_SIZE_
 //Ž€‚ñ‚¾‚Æ‚«
 const Animation::DATA ObjectPlayer::DEAD_ANIMATION_DATA[ANIMATION_DATA_SIZE_DEAD] =
 {
-	Animation::DATA(2,1,0),
-	Animation::DATA(2,2,1),
-	Animation::DATA(2,3,2),
-	Animation::DATA(2,4,3),
-	Animation::DATA(2,5,4),
-	Animation::DATA(2,0,5),
+	Animation::DATA(5,1,0),
+	Animation::DATA(5,2,1),
+	Animation::DATA(5,3,2),
+	Animation::DATA(5,4,3),
+	Animation::DATA(5,5,4),
+	Animation::DATA(5,6,5),
+	Animation::DATA(5,7,6),
+	Animation::DATA(5,8,7),
+	Animation::DATA(5,8,8),
+
 };
 //kuria
 const Animation::DATA ObjectPlayer::JOY_ANIMATION_DATA[ANIMATION_DATA_SIZE_JOY] =
@@ -154,7 +158,7 @@ const ObjectPlayer::ANIMATION_TEXTURE_DATA ObjectPlayer::TEXTURE_DATA[ANIMATION_
 	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_DAMAGE,1,1),
 	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_START,1,1),
 	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_CLEAR,1,1),
-	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_JUMP,3,2),	//Ž€‚ñ‚¾‚Æ‚«
+	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_DAMAGE,9,1),	//Ž€‚ñ‚¾‚Æ‚«
 	ANIMATION_TEXTURE_DATA(Texture::TEXTURE_ID_NYAS_JUMP,3,2),	//kuria
 };
 

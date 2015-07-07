@@ -170,7 +170,7 @@ private:
 	D3DXVECTOR2 acceleration_;
 	ObjectPlayer*		player_;				// プレイヤースプライト
 	EffectLightning* lightning_start_;
-	EffectDead* nyas_dead_;
+//	EffectDead* nyas_dead_;
 	EffectLocus* nyas_locus_[100];
 	bool is_preview_light_;
 	bool is_force_light_;
@@ -180,6 +180,7 @@ private:
 	void UpdateLive(void);		//生きてるときの更新
 	void UpdateDead(void);		//死んでるときの更新
 	void UpdateClear(void);		//クリアした時の更新
+	u32 dead_cnt_;
 
 };
 

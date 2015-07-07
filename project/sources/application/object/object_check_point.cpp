@@ -51,7 +51,7 @@ bool ObjectCheckPoint::Initialize(void)
 	object_check_point_->__texture_id(Texture::TEXTURE_ID_GAME_CHECK_POINT);
 	object_check_point_->__division_width(2);
 	object_check_point_->__division_height(1);
-	object_check_point_->__index(0);
+	object_check_point_->__index(1);
 	object_check_point_->SetParameter();
 
 	return true;
@@ -83,7 +83,7 @@ void ObjectCheckPoint::Draw(void)
 
 void ObjectCheckPoint::Hit(void)
 {
-	object_check_point_->__index(1);
+	object_check_point_->__index(0);
 	object_check_point_->SetParameter();
 }
 

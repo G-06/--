@@ -13,7 +13,7 @@
 #include "effect_dead.h"
 #include "render/sprite.h"
 
-static const u32 PLAY_TIME = 32;
+static const u32 PLAY_TIME = 45;
 
 //*****************************************************************************
 // constant definition
