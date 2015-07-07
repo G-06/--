@@ -61,13 +61,20 @@ bool GimmickTutorialText::Initialize(void)
 		txtbox_->Print("ジャンプキーでジャンプするニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_LIGHT:
-		txtbox_->Print("光化キーで光化するニャス",TEXT_COLOR);
+		txtbox_->Print("光化キーで光化するニャス\n"
+						"ガラスは光化でとおれるニャス",TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_GLAS:
 		txtbox_->Print("光化中でないととおれないニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_MIRROR:
 		txtbox_->Print("光化してぶつかると反射するニャス", TEXT_COLOR);
+		break;
+	case MASSAGE_TYPE_DOWNZONE:
+		txtbox_->Print("この中に入ると光化できないニャス", TEXT_COLOR);
+		break;
+	case MASSAGE_TYPE_UPZONE:
+		txtbox_->Print("この中は何回でも光化できるニャス", TEXT_COLOR);
 		break;
 	default:
 		txtbox_->Print("表示する文字がないニャス", TEXT_COLOR);
