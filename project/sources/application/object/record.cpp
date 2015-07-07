@@ -15,7 +15,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const u32 CLEAR_NUMBER = 0;
+const u32 CLEAR_NUMBER = 65535;
 
 //=============================================================================
 // constructor
@@ -124,6 +124,11 @@ bool Record::SaveFile(const s8* file_name)
 	FILE* file = nullptr;
 
 	fopen_s(&file,file_name,"wb");
+
+	if(file == nullptr)
+	{
+		return false;
+	}
 
 	// ステージ数保存
 	fwrite(&stage_num_, sizeof(u32), 1, file);

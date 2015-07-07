@@ -20,7 +20,7 @@
 // constant definition
 //*****************************************************************************
 const u32 DEST_FRAME_COUNT = 15;						// ウィンドウ開閉の時間
-const D3DXVECTOR2 DEFAULT_POS_BACK (DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.3f);		//テキスト背景の位置
+const D3DXVECTOR2 DEFAULT_POS_BACK (DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.32f);		//テキスト背景の位置
 const D3DXVECTOR2 DEFAULT_TXT_BACK (DEFAULT_SCREEN_WIDTH * 0.25f, DEFAULT_SCREEN_HEIGHT * 0.2f);	//文字の開始位置
 const D3DXCOLOR TEXT_COLOR = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
 
@@ -61,13 +61,20 @@ bool GimmickTutorialText::Initialize(void)
 		txtbox_->Print("ジャンプキーでジャンプするニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_LIGHT:
-		txtbox_->Print("光化キーで光化するニャス",TEXT_COLOR);
+		txtbox_->Print("光化キーで光化するニャス\n"
+						"ガラスは光化でとおれるニャス",TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_GLAS:
 		txtbox_->Print("光化中でないととおれないニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_MIRROR:
 		txtbox_->Print("光化してぶつかると反射するニャス", TEXT_COLOR);
+		break;
+	case MASSAGE_TYPE_DOWNZONE:
+		txtbox_->Print("この中に入ると光化できないニャス", TEXT_COLOR);
+		break;
+	case MASSAGE_TYPE_UPZONE:
+		txtbox_->Print("この中は何回でも光化できるニャス", TEXT_COLOR);
 		break;
 	default:
 		txtbox_->Print("表示する文字がないニャス", TEXT_COLOR);

@@ -117,8 +117,8 @@ bool System::Setup(HINSTANCE hinstance)
 //=============================================================================
 void System::Shutdown(void)
 {
+	//instance_.record_->SaveFileClear("data/stage/record.bin",11);
 	instance_.record_->SaveFile("data/stage/record.bin");
-
 
 	// release window
 	SafeRelease(instance_.window_);

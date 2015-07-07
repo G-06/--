@@ -4,6 +4,7 @@
 //
 // Author		: Ryotaro Arai
 //				: Kenji Kabutomori
+//				: Taichi Kitazawa
 //
 //*****************************************************************************
 
@@ -75,11 +76,13 @@ bool GamePlayer::Initialize(void)
 	player_->__position(position_);
 	lightning_start_ = nullptr;
 	nyas_dead_ = nullptr;
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < 1000; i++)
 	{
 		nyas_locus_[i] = new EffectLocus();
 		nyas_locus_[i]->Initialize();
 	}
+
+	Status_ = CAT_STATUS_LIVE;
 
 	return true;
 }
@@ -92,7 +95,7 @@ void GamePlayer::Uninitialize(void)
 	SafeRelease(player_);
 	SafeRelease(lightning_start_);
 	SafeRelease(nyas_dead_);
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < 1000; i++)
 	{
 		SafeRelease(nyas_locus_[i]);
 	}
@@ -103,53 +106,72 @@ void GamePlayer::Uninitialize(void)
 //=============================================================================
 void GamePlayer::Update(void)
 {
+	switch(Status_)
+	{
+	case CAT_STATUS_LIVE:	//生きてるときの更新
+		UpdateLive();
+		break;
+	case CAT_STATUS_DEAD:	//死んでるときの更新
+		UpdateDead();
+		break;
+	case CAT_STATUS_CLEAR:	//クリアしたときの更新
+		UpdateClear();
+		break;
+	}
+}
+
+//=============================================================================
+// ネコが生きてるときの更新
+//=============================================================================
+void GamePlayer::UpdateLive(void)
+{
 	is_preview_light_ = is_force_light_;
 
-	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
+	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))		//右行くとき
 	{
 		Move(1.0);
 	}
-	else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
+	else if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))	//左行くとき
 	{
 		Move(-1.0);
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))	//ジャンプ
 	{
 		Jump();
 	}
 
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LIGHT))
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LIGHT))	//光化
 	{
 		D3DXVECTOR2 vector = D3DXVECTOR2(0.0f,0.0f);
 
-		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_UP))
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_UP))	//光化方向
 		{
 			vector.y = -1.0f;
 		}
-		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_DOWN))
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_DOWN))	//光化方向
 		{
 			vector.y = 1.0f;
 		}
-		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))	//光化方向
 		{
 			vector.x = -1.0f;
 		}
-		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
+		if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))	//光化方向
 		{
 			vector.x = 1.0f;
 		}
 		ChangeLightMode(vector);
 	}
 
-	if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LIGHT))
+	if(!GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LIGHT))	//光化解除？
 	{
 		StopLightMode();
 	}
-	
-	if(is_light_ == false)
+
+	if(is_light_ == false)		//光化してないとき？
 	{
-		if(is_fly_ == false)
+		if(is_fly_ == false)	//空中にいないとき
 		{
 			if(move_.x <= 0.9f && move_.x >= -0.9f)
 			{
@@ -164,7 +186,7 @@ void GamePlayer::Update(void)
 				player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
 			}
 		}
-		else
+		else	//空中にいるとき
 		{
 			if(player_->__animation_type() != ObjectPlayer::ANIMATION_TYPE_JUMP)
 			{
@@ -195,9 +217,9 @@ void GamePlayer::Update(void)
 			sp_ = sp_max_;
 		}
 	}
-	else
+	else	//光化しているとき？
 	{
-		for(s32 i = 0; i < 100; i++)
+		for(s32 i = 0; i < 1000; i++)
 		{
 			if(nyas_locus_[i]->__is_free())
 			{
@@ -207,12 +229,20 @@ void GamePlayer::Update(void)
 				break;
 			}
 		}
-
-		sp_--;
-		if(sp_ <= 0 || sp_ > sp_max_)
+		
+		if(is_sp_recover_speed_up_)
 		{
-			sp_ = 0;
-			StopLightMode();
+			sp_recover_speed_ = sp_max_;
+			is_enable_light_ = true;
+		}
+		else
+		{
+			sp_--;
+			if(sp_ <= 0 || sp_ > sp_max_)
+			{
+				sp_ = 0;
+				StopLightMode();
+			}
 		}
 	}
 
@@ -238,7 +268,7 @@ void GamePlayer::Update(void)
 	is_sp_recover_speed_up_ = false;
 	sp_recover_speed_ = DEFAULT_SP_RECOVER_SPEED;
 
-	if(lightning_start_)
+	if(lightning_start_)	//光化はじめ？
 	{
 		lightning_start_->__offset_position(offset_position_);
 		lightning_start_->Update();
@@ -262,7 +292,7 @@ void GamePlayer::Update(void)
 			nyas_dead_ = nullptr;
 		}
 	}
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < 1000; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
@@ -278,11 +308,53 @@ void GamePlayer::Update(void)
 }
 
 //=============================================================================
+// ネコが死んでるときの更新
+//=============================================================================
+void GamePlayer::UpdateDead(void)
+{
+	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_DEAD);
+	player_->Update();
+	nyas_dead_->__offset_position(offset_position_);
+	nyas_dead_->Update();
+
+	if(nyas_dead_->__is_death())	//死ぬエフェクトが終わった時
+	{
+		nyas_dead_->Uninitialize();
+		delete nyas_dead_;
+		nyas_dead_ = nullptr;
+		Status_ = CAT_STATUS_LIVE;
+		position_ = return_position_;
+		old_position_ = position_;
+	}
+}
+
+//=============================================================================
+// ネコがクリアした時の更新
+//=============================================================================
+void GamePlayer::UpdateClear(void)
+{
+	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JOY);
+
+	is_fly_ = true;
+	is_force_light_ = false;
+	old_position_ = position_;
+	position_ += move_ + acceleration_;
+	acceleration_ = D3DXVECTOR2(0.0f,0.0f);
+
+	player_->__is_flip(is_left_);
+	player_->Update();
+	is_sp_down_ = false;
+	is_sp_recover_speed_up_ = false;
+	sp_recover_speed_ = DEFAULT_SP_RECOVER_SPEED;
+}
+
+
+//=============================================================================
 // draw
 //=============================================================================
 void GamePlayer::Draw(void)
 {
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < 1000; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
@@ -290,16 +362,16 @@ void GamePlayer::Draw(void)
 		}
 	}
 
-	if(lightning_start_)
+	if(lightning_start_)	//光化エフェクト？
 	{
 		lightning_start_->Draw();
 	}
-	if(nyas_dead_)
+	if(nyas_dead_)	//死ぬエフェクト？
 	{
 		nyas_dead_->Draw();
 	}
 	player_->__position(position_ - offset_position_);
-	player_->Draw();
+	player_->Draw();	//プレイヤー
 }
 
 //=============================================================================
@@ -434,7 +506,7 @@ void GamePlayer::ChangeDirection(const D3DXVECTOR2& vector)
 }
 
 //=============================================================================
-// dead
+//死んだとき
 //=============================================================================
 void GamePlayer::Dead(void)
 {
@@ -446,11 +518,10 @@ void GamePlayer::Dead(void)
 		nyas_dead_->__position(position_);
 		nyas_dead_->__offset_position(offset_position_);
 
-		position_ = return_position_;
-		old_position_ = position_;
 		is_enable_light_ = true;
 		is_light_ = false;
 		move_ = D3DXVECTOR2(0.0f,0.0f);
+		Status_ = CAT_STATUS_DEAD;
 	}
 	else
 	{
@@ -459,10 +530,25 @@ void GamePlayer::Dead(void)
 }
 
 //=============================================================================
+// Heal
+//=============================================================================
+void GamePlayer::Heal(u32 health)
+{
+
+	life_ += health;
+	if(life_ > DEFAULT_LIFE_MAX)
+	{
+		life_ = DEFAULT_LIFE_MAX;
+	}
+
+}
+
+//=============================================================================
 // clear
 //=============================================================================
 void GamePlayer::Clear(void)
 {
+	Status_ = CAT_STATUS_CLEAR;
 }
 
 //---------------------------------- EOF --------------------------------------

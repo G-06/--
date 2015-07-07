@@ -403,9 +403,6 @@
     <ClInclude Include="sources\application\scene\game\gimmick\gimmick_start_point.h">
       <Filter>sources\application\scene\game\gimmick</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h">
-      <Filter>sources\application\scene\game\gimmick</Filter>
-    </ClInclude>
     <ClInclude Include="sources\application\scene\game\stage\normal_stage.h">
       <Filter>sources\application\scene\game\stage</Filter>
     </ClInclude>
@@ -556,8 +553,8 @@
     <ClInclude Include="sources\application\object\object_newrecord.h">
       <Filter>sources\application\object</Filter>
     </ClInclude>
-    <ClInclude Include="sources\application\object\option\option_sprite_smooth.h">
-      <Filter>sources\application\object\option</Filter>
+    <ClInclude Include="sources\application\scene\game\gimmick\gimmick.h">
+      <Filter>sources\application\scene\game\gimmick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -962,9 +959,6 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\object_newrecord.cpp">
       <Filter>sources\application\object</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\application\object\option\option_sprite_smooth.cpp">
-      <Filter>sources\application\object\option</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
