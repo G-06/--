@@ -666,7 +666,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			}
 			break;
 		}
-		case 3:
+		case 3://‹¾
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{

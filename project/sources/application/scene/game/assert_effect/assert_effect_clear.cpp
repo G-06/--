@@ -31,7 +31,7 @@ const D3DXVECTOR2 AssertEffectClear::RECORD_START_POSITION = D3DXVECTOR2(DEFAULT
 const D3DXVECTOR2 AssertEffectClear::RECORD_END_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
 
 const D3DXVECTOR2 AssertEffectClear::NEW_RECORD_START_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 1.5f);
-const D3DXVECTOR2 AssertEffectClear::NEW_RECORD_END_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.7f);
+const D3DXVECTOR2 AssertEffectClear::NEW_RECORD_END_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.3f);
 
 
 //=============================================================================
@@ -124,15 +124,12 @@ void AssertEffectClear::Update(void)
 		{
 			vector = RECORD_END_POSITION - RECORD_START_POSITION;
 			record_position_ = RECORD_START_POSITION + vector * 1.0f / (f32)SRIDE_OUT_FRAME * (f32)(frame_count_ - SRIDE_IN_FRAME - STOP_FRAME - SRIDE_OUT_FRAME);
-			vector = NEW_RECORD_END_POSITION - NEW_RECORD_START_POSITION;
-			new_record_position_ = NEW_RECORD_START_POSITION + vector * 1.0f / (f32)SRIDE_OUT_FRAME * (f32)(frame_count_ - SRIDE_IN_FRAME - STOP_FRAME - SRIDE_OUT_FRAME);
-			new_record_->__set_position(new_record_position_);
 		}
-		//else if(frame_count_ <= SRIDE_IN_FRAME + STOP_FRAME + SRIDE_OUT_FRAME + RECORD_SRIDE_IN_FRAME+20)
-		//{
-
-
-		//}
+		else if(frame_count_ <= SRIDE_IN_FRAME + STOP_FRAME + SRIDE_OUT_FRAME + RECORD_SRIDE_IN_FRAME+10)
+		{
+			vector = NEW_RECORD_END_POSITION - NEW_RECORD_START_POSITION;
+			new_record_position_ = RECORD_START_POSITION + vector * 1.0f / (f32)SRIDE_OUT_FRAME * (f32)(frame_count_ - SRIDE_IN_FRAME - STOP_FRAME - SRIDE_OUT_FRAME);
+		}
 		else
 		{
 			is_stop_ = true;
@@ -155,6 +152,7 @@ void AssertEffectClear::Draw(void)
 
 		if(new_record_flag_ == true)
 		{
+			new_record_->__set_position(new_record_position_);
 			new_record_->Draw();
 		}
 	}
