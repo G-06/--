@@ -842,6 +842,7 @@ void NormalStage::CollisionGimmick(void)
 							//game_player_->__position(data->_shotposition);
 							
 							game_player_->ChangeDirection(data->_shotvec);
+							game_player_->__is_hit_lens(true);
 							
 						}
 

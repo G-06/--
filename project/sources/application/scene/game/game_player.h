@@ -106,12 +106,14 @@ public:
 	s32 __life(void)const { return life_; }
 	u32 __check_point_priority(void) { return check_point_priority_; }
 	void __check_point_priority(u32 check_point_priority) { check_point_priority_ = check_point_priority; }
+	
 	bool __is_light(void) { return is_light_; }
 	bool __is_preview_light(void) { return is_preview_light_; }
 	bool __is_force_light(void) { return is_force_light_; }
 	void __is_force_light(bool is_force_light) { is_force_light_ = is_force_light; }
 	void __is_sp_recover_speed_up(bool is_sp_recover_speed_up) { is_sp_recover_speed_up_ = is_sp_recover_speed_up; }
 	void __is_sp_down(bool is_sp_down) { is_sp_down_ = is_sp_down; }
+	void __is_hit_lens(bool is_hit_lens){ is_hit_lens_ = is_hit_lens; }
 
 private:
 	enum ANIMATION_TYPE
@@ -136,6 +138,7 @@ private:
 	};
 
 	static const f32 LIGHT_SPEED;
+	static const f32 LENS_LIGHT_SPEED;
 	static const f32 SPEED;
 	static const f32 DECREMENT;
 	static const f32 JUMP_SPEED;
@@ -152,6 +155,7 @@ private:
 	bool		is_light_;				// 光化フラグ
 	bool		is_fly_;				// 空中フラグ
 	bool		is_enable_light_;
+	bool		is_hit_lens_;			// レンズフラグ
 	s32 life_;
 	s32 sp_;
 	s32 sp_max_;

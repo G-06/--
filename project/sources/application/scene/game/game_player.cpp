@@ -22,6 +22,7 @@
 // constant definition
 //*****************************************************************************
 const f32 GamePlayer::LIGHT_SPEED = (30.0f);
+const f32 GamePlayer::LENS_LIGHT_SPEED = (50.0f);
 const f32 GamePlayer::SPEED = (1.75f);
 const f32 GamePlayer::DECREMENT = (0.9f);
 const f32 GamePlayer::JUMP_SPEED = (-70.0f);
@@ -42,6 +43,7 @@ GamePlayer::GamePlayer(void)
 	,sp_recover_speed_(2)
 	,is_sp_recover_speed_up_(false)
 	,is_sp_down_(false)
+	,is_hit_lens_(false)
 {
 }
 
@@ -67,6 +69,7 @@ bool GamePlayer::Initialize(void)
 	is_light_ = false;
 	is_fly_ = true;
 	is_enable_light_ = true;
+	
 	life_ = DEFAULT_LIFE_MAX;
 	sp_max_ = DEFAULT_SP_MAX;
 	sp_ = sp_max_;
@@ -149,6 +152,7 @@ void GamePlayer::Update(void)
 	
 	if(is_light_ == false)
 	{
+		is_hit_lens_ = false;
 		if(is_fly_ == false)
 		{
 			if(move_.x <= 0.9f && move_.x >= -0.9f)
@@ -388,18 +392,39 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 			{
 				if(is_left_)
 				{
-					move_.x = -LIGHT_SPEED;
+					if(is_hit_lens_)
+					{
+						move_.x = -LENS_LIGHT_SPEED;
+					}
+					else
+					{
+						move_.x = -LIGHT_SPEED;
+					}
 					move_.y = 0.0f;
 				}
 				else
 				{
-					move_.x = LIGHT_SPEED;
+					if(is_hit_lens_)
+					{
+						move_.x = LENS_LIGHT_SPEED;
+					}
+					else
+					{
+						move_.x = LIGHT_SPEED;
+					}
 					move_.y = 0.0f;
 				}
 			}
 			else
 			{
-				move_ = normalize_vector * LIGHT_SPEED;
+				if(is_hit_lens_)
+				{
+					move_ = normalize_vector * LENS_LIGHT_SPEED;
+				}
+				else
+				{
+					move_ = normalize_vector * LIGHT_SPEED;
+				}
 			}
 
 			player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
@@ -437,7 +462,14 @@ void GamePlayer::ChangeDirection(const D3DXVECTOR2& vector)
 	{
 		D3DXVECTOR2 normalize_vector;
 		D3DXVec2Normalize(&normalize_vector,&vector);
-		move_ = normalize_vector * LIGHT_SPEED;
+		if(is_hit_lens_)
+		{
+			move_ = normalize_vector * LENS_LIGHT_SPEED;
+		}
+		else
+		{
+			move_ = normalize_vector * LIGHT_SPEED;
+		}
 	}
 }
 
