@@ -73,4 +73,13 @@ void ObjectNewRecord::Draw(void)
 	sprite_->Draw();
 }
 
+//=============================================================================
+// SetPosition
+//=============================================================================
+void ObjectNewRecord::__set_position(D3DXVECTOR2 position)
+{
+	position_=position;
+	sprite_->__position(position_);
+}
+
 //---------------------------------- EOF --------------------------------------

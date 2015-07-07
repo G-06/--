@@ -17,7 +17,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 TutorialBack::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
+const D3DXVECTOR2 TutorialBack::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.6f);
 const D3DXVECTOR2 TutorialBack::DEFAULT_SIZE = D3DXVECTOR2(0.0f, 0.0f);
 
 const u32 DEST_FRAME_COUNT = 30;
@@ -25,13 +25,10 @@ const s32 DEFAULT_SELECT = 1;
 const D3DXCOLOR CLEAR_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
 const D3DXCOLOR SHOW_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-const D3DXVECTOR2 WINDOW_SCALE = D3DXVECTOR2(1.4f, 1.0f);
-const D3DXVECTOR2 WINDOW_SIZE = D3DXVECTOR2(512.f * WINDOW_SCALE.x, 512.0f * WINDOW_SCALE.y);
-const D3DXVECTOR2 TITLE_SIZE = D3DXVECTOR2(500.0f, 60.0f);
-const D3DXVECTOR2 SELECT_SIZE = D3DXVECTOR2(270.0f, 80.0f);
+const D3DXVECTOR2 WINDOW_SCALE = D3DXVECTOR2(2.2f, 0.5f);
+//const D3DXVECTOR2 WINDOW_SCALE = D3DXVECTOR2(1.4f, 1.0f);
 
-const D3DXVECTOR2 SELECT_POSITION_OFFSET = D3DXVECTOR2(170.0f, 60.0f);
-const D3DXVECTOR2 TITLE_POSITION_OFFSET = D3DXVECTOR2(0.0f, -80.0f);
+const D3DXVECTOR2 WINDOW_SIZE = D3DXVECTOR2(512.f * WINDOW_SCALE.x, 512.0f * WINDOW_SCALE.y);
 
 // string texture_id
 const Texture::TEXTURE_ID SELECT_STRING_TEXTURE[] = {
@@ -120,7 +117,6 @@ void TutorialBack::Show(void)
 	window_->__dest_color(SHOW_COLOR);
 	window_->__dest_frame(dest_frame_count_);
 	window_->StartMove();
-
 }
 
 //=============================================================================
@@ -142,8 +138,6 @@ void TutorialBack::Close(void)
 	window_->__dest_color(CLEAR_COLOR);
 	window_->__dest_frame(dest_frame_count_);
 	window_->StartMove();
-
 }
-
 
 //---------------------------------- EOF --------------------------------------

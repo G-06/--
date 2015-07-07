@@ -34,6 +34,14 @@ class EffectLocus;
 class GamePlayer : public Basic
 {
 public:
+	enum CAT_STATUS
+	{
+		CAT_STATUS_LIVE = 0,	//生きてる　ゲーム遊べる
+		CAT_STATUS_DEAD,		//死んだ　チェックポイントから復活
+		CAT_STATUS_CLEAR,		//クリア　
+		CAT_STATUS_MAX
+	};
+
 	// constructor
 	GamePlayer(void);
 
@@ -110,6 +118,7 @@ public:
 	void __is_sp_recover_speed_up(bool is_sp_recover_speed_up) { is_sp_recover_speed_up_ = is_sp_recover_speed_up; }
 	void __is_sp_down(bool is_sp_down) { is_sp_down_ = is_sp_down; }
 
+	u32 __Get_status(void){return (u32)Status_;};
 private:
 	enum ANIMATION_TYPE
 	{
@@ -131,6 +140,7 @@ private:
 			,_division_height(division_height)
 		{}
 	};
+
 
 	static const f32 LIGHT_SPEED;
 	static const f32 SPEED;
@@ -164,6 +174,13 @@ private:
 	EffectLocus* nyas_locus_[1000];
 	bool is_preview_light_;
 	bool is_force_light_;
+
+	CAT_STATUS Status_;		//プレイヤーの状態
+
+	void UpdateLive(void);		//生きてるときの更新
+	void UpdateDead(void);		//死んでるときの更新
+	void UpdateClear(void);		//クリアした時の更新
+
 };
 
 #endif	// _PLAYER_H_

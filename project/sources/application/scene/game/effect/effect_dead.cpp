@@ -3,6 +3,7 @@
 // effect dead
 //
 // Author		: Ryotaro Arai
+//				: Taichi Kitazawa
 //
 //*****************************************************************************
 
@@ -11,6 +12,8 @@
 //*****************************************************************************
 #include "effect_dead.h"
 #include "render/sprite.h"
+
+static const u32 PLAY_TIME = 32;
 
 //*****************************************************************************
 // constant definition
@@ -82,7 +85,7 @@ void EffectDead::Update(void)
 {
 	frame_count_++;
 
-	if(frame_count_ > 32)
+	if(frame_count_ > PLAY_TIME)	//死ぬエフェクトの再生が終わり
 	{
 		is_death_ = true;
 	}
