@@ -315,10 +315,39 @@ void GamePlayer::UpdateClear(void)
 {
 	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JOY);
 
+	if(lightning_start_)	//Œõ‰»‚Í‚¶‚ßH
+	{
+		lightning_start_->__offset_position(offset_position_);
+		lightning_start_->Update();
+
+		if(lightning_start_->__is_death())
+		{
+			lightning_start_->Uninitialize();
+			delete lightning_start_;
+			lightning_start_ = nullptr;
+		}
+	}
+	for(s32 i = 0; i < 100; i++)
+	{
+		if(!nyas_locus_[i]->__is_free())
+		{
+			nyas_locus_[i]->__offset_position(offset_position_);
+			nyas_locus_[i]->Update();
+
+			if(nyas_locus_[i]->__is_death())
+			{
+				nyas_locus_[i]->__is_free(true);
+			}
+		}
+	}
 	is_fly_ = true;
 	is_force_light_ = false;
 	old_position_ = position_;
-	position_ += move_ + acceleration_;
+	D3DXVECTOR2 t_move = move_;
+	D3DXVECTOR2 t_acceleration = acceleration_;
+	t_move.x = 0.0f;
+	t_acceleration.x = 0.0f;
+	position_ += t_move + t_acceleration;
 	acceleration_ = D3DXVECTOR2(0.0f,0.0f);
 
 	player_->__is_flip(is_left_);

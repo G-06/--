@@ -235,6 +235,16 @@ void NormalStage::Update(void)
 		{
 			game_player_->__position(D3DXVECTOR2(game_player_->__size().x * 0.5f,game_player_->__position().y));
 		}
+		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+		{
+			(*it)->__offset_position(stage_offset_->__position());
+		}
+
+		for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+		{
+			(*it)->__offset_position(stage_offset_->__position());
+		}
+
 		//マップチップとの当たり判定
 		CollisionChip();
 		// offsetによる各オブジェクト類の位置更新
