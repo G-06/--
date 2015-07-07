@@ -109,6 +109,9 @@ protected:
 	GameBg* game_bg_;
 	TYPE type_;
 
+	bool gameover_;
+	u32 time;
+
 private:
 	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;
 	static const D3DXVECTOR2 DEFAULT_PLAYER_ICON_POSITION;

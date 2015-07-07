@@ -77,6 +77,7 @@ NormalStage::NormalStage(const TYPE& type)
 	,time_count_(0)
 	,position_(0.0f,0.0f)
 	,effect_timer_(0)
+	,gameover_(false)
 {
 	type_ = type;
 }
@@ -153,6 +154,8 @@ bool NormalStage::Initialize(void)
 	// option
 	option_ = new Option();
 	option_->Initialize();
+
+	time =0;
 
 	return true;
 }
@@ -253,10 +256,6 @@ void NormalStage::Update(void)
 		game_player_->__offset_position(stage_offset_->__position());
 		map_->__position(-stage_offset_->__position());
 
-
-
-
-
 		//レコード参照
 		u32 oldRecord = System::RecordLoad((System::__get_current_stage()-1));
 		//レコード比較
@@ -280,12 +279,24 @@ void NormalStage::Update(void)
 			}
 		}
 	}
-	else if(game_player_->__life() <= 0)	//残機が消えたとき
+	else if(gameover_)
 	{
-		if(next_stage_factory_ == nullptr)
+		if(time==game_player_->DEAD_TIME+5)
 		{
-			next_stage_factory_ = new SelectFactory();
+			if(next_stage_factory_ == nullptr)
+			{
+				next_stage_factory_ = new SelectFactory();
+			}
 		}
+		else
+		{
+			game_player_->Update();
+		}
+		time++;
+	}
+	else if(game_player_->__life() <= 0)	//残機が尽きたとき
+	{
+		gameover_ = true;
 	}
 	else	//プレイヤーが生きてるゲーム中
 	{

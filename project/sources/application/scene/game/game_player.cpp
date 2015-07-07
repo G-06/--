@@ -31,7 +31,7 @@ const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
 const D3DXVECTOR2 GamePlayer::DEFAULT_SIZE = D3DXVECTOR2(130.0f,197.0f);
 
-static const u32 DEAD_TIME = 45;
+const u32 GamePlayer::DEAD_TIME = 45;
 
 //=============================================================================
 // constructor
@@ -325,10 +325,13 @@ void GamePlayer::UpdateDead(void)
 
 	if(dead_cnt_ == DEAD_TIME)	//死ぬエフェクトが終わった時
 	{
-		Status_ = CAT_STATUS_LIVE;
-		position_ = return_position_;
-		old_position_ = position_;
-		dead_cnt_ = 0;
+		if(life_ > 0)
+		{
+			Status_ = CAT_STATUS_LIVE;
+			position_ = return_position_;
+			old_position_ = position_;
+			dead_cnt_ = 0;
+		}
 	}
 	dead_cnt_++;
 }
@@ -541,20 +544,12 @@ void GamePlayer::ChangeDirection(const D3DXVECTOR2& vector)
 //=============================================================================
 void GamePlayer::Dead(void)
 {
-	if(life_ > 0)
-	{
-		life_--;
+	life_--;
 
-		is_enable_light_ = true;
-		is_light_ = false;
-		move_ = D3DXVECTOR2(0.0f,0.0f);
-		Status_ = CAT_STATUS_DEAD;
-	}
-	else
-	{
-		life_--;
-		Status_ = CAT_STATUS_DEAD;
-	}
+	is_enable_light_ = true;
+	is_light_ = false;
+	move_ = D3DXVECTOR2(0.0f,0.0f);
+	Status_ = CAT_STATUS_DEAD;
 }
 
 //=============================================================================

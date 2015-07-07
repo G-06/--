@@ -119,6 +119,7 @@ public:
 	void __is_sp_down(bool is_sp_down) { is_sp_down_ = is_sp_down; }
 
 	u32 __Get_status(void){return (u32)Status_;};
+	static const u32 DEAD_TIME;
 private:
 	enum ANIMATION_TYPE
 	{
@@ -150,6 +151,7 @@ private:
 	static const s32 DEFAULT_SP_MAX;
 	static const s32 DEFAULT_SP_RECOVER_SPEED;
 	static const D3DXVECTOR2 DEFAULT_SIZE;
+
 	D3DXVECTOR2 position_;				// プレイヤー座標
 	D3DXVECTOR2 old_position_;			// プレイヤーの前回座標
 	D3DXVECTOR2 move_;					// プレイヤーの移動量
