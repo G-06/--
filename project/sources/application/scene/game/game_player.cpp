@@ -207,12 +207,20 @@ void GamePlayer::Update(void)
 				break;
 			}
 		}
-
-		sp_--;
-		if(sp_ <= 0 || sp_ > sp_max_)
+		
+		if(is_sp_recover_speed_up_)
 		{
-			sp_ = 0;
-			StopLightMode();
+			sp_recover_speed_ = sp_max_;
+			is_enable_light_ = true;
+		}
+		else
+		{
+			sp_--;
+			if(sp_ <= 0 || sp_ > sp_max_)
+			{
+				sp_ = 0;
+				StopLightMode();
+			}
 		}
 	}
 
@@ -456,6 +464,20 @@ void GamePlayer::Dead(void)
 	{
 		life_--;
 	}
+}
+
+//=============================================================================
+// Heal
+//=============================================================================
+void GamePlayer::Heal(u32 health)
+{
+
+	life_ += health;
+	if(life_ > DEFAULT_LIFE_MAX)
+	{
+		life_ = DEFAULT_LIFE_MAX;
+	}
+
 }
 
 //=============================================================================
