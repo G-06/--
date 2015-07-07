@@ -824,6 +824,7 @@ void NormalStage::CollisionGimmick(void)
 					GimmickCheckPoint::DATA* data = (GimmickCheckPoint::DATA*)(*it)->GetPointer();
 					if(game_player_->__check_point_priority() < data->_priority)
 					{
+						data->_hit = true;
 						game_player_->__check_point_priority(data->_priority);
 						game_player_->__return_position(gimmick_position);
 						EffectCheckPoint* effect = new EffectCheckPoint();

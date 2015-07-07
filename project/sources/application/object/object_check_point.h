@@ -47,6 +47,9 @@ public:
 	// draw
 	void Draw(void);
 
+	// “–‚½‚Á‚½Žž
+	void Hit(void);
+
 	// accessor
 	void __position(const D3DXVECTOR2& position) { position_ = position; }
 	const D3DXVECTOR2& __size(void) { return size_; }

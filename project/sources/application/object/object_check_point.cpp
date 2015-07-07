@@ -16,7 +16,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectCheckPoint::SIZE	= D3DXVECTOR2(128.0f,128.0f);
+const D3DXVECTOR2 ObjectCheckPoint::SIZE	= D3DXVECTOR2(150.0f,230.0f);
 const u32 ObjectCheckPoint::DIVISION_WIDTH	= 1;
 const u32 ObjectCheckPoint::DIVISION_HEIGHT	= 1;
 
@@ -49,6 +49,9 @@ bool ObjectCheckPoint::Initialize(void)
 	object_check_point_->__division_height(DIVISION_HEIGHT);
 	object_check_point_->__size(SIZE);
 	object_check_point_->__texture_id(Texture::TEXTURE_ID_GAME_CHECK_POINT);
+	object_check_point_->__division_width(2);
+	object_check_point_->__division_height(1);
+	object_check_point_->__index(0);
 	object_check_point_->SetParameter();
 
 	return true;
@@ -77,5 +80,13 @@ void ObjectCheckPoint::Draw(void)
 	object_check_point_->__position(position_);
 	object_check_point_->Draw();
 }
+
+void ObjectCheckPoint::Hit(void)
+{
+	object_check_point_->__index(1);
+	object_check_point_->SetParameter();
+}
+
+
 
 //---------------------------------- EOF --------------------------------------
