@@ -103,8 +103,8 @@ private:
 	static const u32 ANIMATION_DATA_SIZE_DAMAGE = 1 * 1;
 	static const u32 ANIMATION_DATA_SIZE_GAME_START = 1 * 1;
 	static const u32 ANIMATION_DATA_SIZE_GAME_END = 1 * 1;
-	static const u32 ANIMATION_DATA_SIZE_DEAD = 3 * 2;
-	static const u32 ANIMATION_DATA_SIZE_JOY = 3 * 2;
+	static const u32 ANIMATION_DATA_SIZE_DEAD = 9 * 1;
+	static const u32 ANIMATION_DATA_SIZE_JOY = 7 * 1;
 
 	static const u32 ANIMATION_DATA_SIZE[ANIMATION_TYPE_MAX];
 	static const Animation::DATA WAIT_ANIMATION_DATA[ANIMATION_DATA_SIZE_WAIT];

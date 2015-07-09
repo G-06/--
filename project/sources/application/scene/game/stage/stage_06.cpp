@@ -22,7 +22,7 @@
 // constructor
 //=============================================================================
 StageSix::StageSix(void)
-	:NormalStage(TYPE_TUTORIAL)
+	:NormalStage(TYPE_STAGE5)
 {
 }
 

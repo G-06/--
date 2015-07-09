@@ -35,10 +35,10 @@ bool ObjectBg::Initialize(void)
 {
 	bg_ = new Sprite();
 	bg_->Initialize();
-	bg_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
+//	bg_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
+	bg_->__size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__width()));
 	bg_->__position(D3DXVECTOR2(0.0f,0.0f));
 	bg_->__color(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-	//bg_->__texture_id(Texture::TEXTURE_ID_LOGO_BG);
 	bg_->SetParameter();
 
 	uv_x_ = D3DXVECTOR2(0.0f,1.0f);
@@ -93,7 +93,6 @@ void ObjectBg::__SetTexture(Texture::TEXTURE_ID texture)
 	bg_->SetParameter();
 }
 
-
 void ObjectBg::ReSetUv(void)
 {
 	uv_x_ = D3DXVECTOR2(0.0f,1.0f);
@@ -105,7 +104,11 @@ void ObjectBg::ReSetUv(void)
 	bg_->SetParameter();
 }
 
-
+void ObjectBg::__Set_size(D3DXVECTOR2 size)
+{
+	bg_->__size(size);
+	bg_->SetParameter();
+}
 
 
 //---------------------------------- EOF --------------------------------------

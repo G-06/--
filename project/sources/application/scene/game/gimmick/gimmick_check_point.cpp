@@ -23,6 +23,7 @@ GimmickCheckPoint::GimmickCheckPoint(void)
 	:Gimmick(TYPE_CHECK_POINT)
 {
 	data_._priority = 0;
+	data_._hit = false;
 	size_ = D3DXVECTOR2(128.0f,128.0f);
 }
 
@@ -41,6 +42,8 @@ bool GimmickCheckPoint::Initialize(void)
 	object_check_point_ = new ObjectCheckPoint();
 	object_check_point_->Initialize();
 
+	onece_ = false;
+
 	return true;
 }
 
@@ -57,6 +60,14 @@ void GimmickCheckPoint::Uninitialize(void)
 //=============================================================================
 void GimmickCheckPoint::Update(void)
 {
+	if(onece_ == false)
+	{
+		if(data_._hit == true)
+		{
+			object_check_point_->Hit();
+			onece_ = true;
+		}
+	}
 	object_check_point_->Update();
 }
 
@@ -76,5 +87,8 @@ void* GimmickCheckPoint::GetPointer(void)
 {
 	return &data_;
 }
+
+
+
 
 //---------------------------------- EOF --------------------------------------
