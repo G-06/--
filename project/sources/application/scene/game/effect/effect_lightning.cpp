@@ -82,7 +82,7 @@ void EffectLightning::Update(void)
 {
 	frame_count_++;
 
-	if(frame_count_ > 24)
+	if(frame_count_ > 23)
 	{
 		is_death_ = true;
 	}

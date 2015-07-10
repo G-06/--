@@ -154,7 +154,8 @@ bool NormalStage::Initialize(void)
 	option_ = new Option();
 	option_->Initialize();
 
-	for(s32 i = 0; i < 1000; i++)
+
+	for(s32 i = 0; i < EFFECT_STOCK_NUM; i++)
 	{
 		effect_mirror_[i] = new EffectMirror();
 		effect_mirror_[i]->Initialize();
@@ -211,7 +212,7 @@ void NormalStage::Uninitialize(void)
 
 	SafeRelease(option_);
 
-	for(s32 i = 0; i < 1000; i++)
+	for(s32 i = 0; i < EFFECT_STOCK_NUM; i++)
 	{
 		SafeRelease(effect_mirror_[i]);
 		SafeRelease(effect_skeleton_[i]);
@@ -399,13 +400,14 @@ void NormalStage::Update(void)
 				(*it)->Update();
 			}
 
-			for(s32 i = 0; i < 1000; i++)
+			
+			for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 			{
-				if(effect_mirror_[i]->__is_free() == false)
+				if(!effect_mirror_[i]->__is_free())
 				{
 					effect_mirror_[i]->Update();
 				}
-				if(effect_skeleton_[i]->__is_free() == false)
+				if(!effect_skeleton_[i]->__is_free())
 				{
 					effect_skeleton_[i]->Update();
 				}
@@ -448,18 +450,6 @@ void NormalStage::Update(void)
 				return false;
 			};
 
-			for(s32 i = 0; i < 1000; i++)
-			{
-				if(effect_mirror_[i]->__is_death())
-				{
-					effect_mirror_[i]->__is_free(true);
-				}
-				if(effect_skeleton_[i]->__is_death())
-				{
-					effect_skeleton_[i]->__is_free(true);
-				}
-			}
-
 			effect_container_.erase(remove_if(effect_container_.begin(),effect_container_.end(),predfunc),effect_container_.end());
 
 			// offset
@@ -485,13 +475,14 @@ void NormalStage::Update(void)
 				(*it)->__offset_position(stage_offset_->__position());
 			}
 
-			for(s32 i = 0; i < 1000; i++)
+			 
+			for(s32 i = 0;i < EFFECT_STOCK_NUM;i++)
 			{
-				if(effect_mirror_[i]->__is_free() == false)
+				if(!effect_mirror_[i]->__is_free())
 				{
 					effect_mirror_[i]->__offset_position(stage_offset_->__position());
 				}
-				if(effect_skeleton_[i]->__is_free() == false)
+				if(!effect_skeleton_[i]->__is_free())
 				{
 					effect_skeleton_[i]->__offset_position(stage_offset_->__position());
 				}
@@ -541,19 +532,22 @@ void NormalStage::Draw(void)
 		(*it)->Draw();
 	}
 
-	for(s32 i = 0; i < 1000; i++)
+	game_player_->Draw();
+
+	
+	for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 	{
-		if(effect_mirror_[i]->__is_free() == false)
+		if(!effect_mirror_[i]->__is_free())
 		{
 			effect_mirror_[i]->Draw();
 		}
-		if(effect_skeleton_[i]->__is_free() == false)
+		if(!effect_skeleton_[i]->__is_free())
 		{
 			effect_skeleton_[i]->Draw();
 		}
+
 	}
 
-	game_player_->Draw();
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
 	object_player_life_->Draw();
@@ -681,12 +675,13 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 				if(game_player_->__is_light())
 				{
 					game_player_->__position(collision_map.__position());
-					for(s32 i = 0; i < 1000; i++)
+					
+					for(s32 i = 0; i < EFFECT_STOCK_NUM; i++)
 					{
 						if(effect_mirror_[i]->__is_free())
 						{
-							effect_mirror_[i]->Start();
 							effect_mirror_[i]->__position(game_player_->__position());
+							effect_mirror_[i]->Start();
 							break;
 						}
 					}
@@ -724,12 +719,13 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 					effect_timer_++;
 					if(effect_timer_ % 20 == 0)
 					{
-						for(s32 i = 0; i < 1000; i++)
+						
+						for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 						{
 							if(effect_skeleton_[i]->__is_free())
 							{
-								effect_skeleton_[i]->Start();
 								effect_skeleton_[i]->__position(game_player_->__position());
+								effect_skeleton_[i]->Start();
 								break;
 							}
 						}

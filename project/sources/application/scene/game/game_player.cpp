@@ -42,6 +42,7 @@ GamePlayer::GamePlayer(void)
 	,sp_recover_speed_(2)
 	,is_sp_recover_speed_up_(false)
 	,is_sp_down_(false)
+	,locus_counter_(0)
 {
 }
 
@@ -75,7 +76,7 @@ bool GamePlayer::Initialize(void)
 	player_->__position(position_);
 	lightning_start_ = nullptr;
 	nyas_dead_ = nullptr;
-	for(s32 i = 0; i < 1000; i++)
+	for(s32 i = 0; i < LOCUS_NUM; i++)
 	{
 		nyas_locus_[i] = new EffectLocus();
 		nyas_locus_[i]->Initialize();
@@ -92,7 +93,7 @@ void GamePlayer::Uninitialize(void)
 	SafeRelease(player_);
 	SafeRelease(lightning_start_);
 	SafeRelease(nyas_dead_);
-	for(s32 i = 0; i < 1000; i++)
+	for(s32 i = 0; i < LOCUS_NUM; i++)
 	{
 		SafeRelease(nyas_locus_[i]);
 	}
@@ -149,6 +150,7 @@ void GamePlayer::Update(void)
 	
 	if(is_light_ == false)
 	{
+		locus_counter_ = 0;
 		if(is_fly_ == false)
 		{
 			if(move_.x <= 0.9f && move_.x >= -0.9f)
@@ -197,7 +199,9 @@ void GamePlayer::Update(void)
 	}
 	else
 	{
-		for(s32 i = 0; i < 1000; i++)
+		locus_counter_++;
+		
+		for(s32 i = 0; i < LOCUS_NUM; i++)
 		{
 			if(nyas_locus_[i]->__is_free())
 			{
@@ -262,18 +266,15 @@ void GamePlayer::Update(void)
 			nyas_dead_ = nullptr;
 		}
 	}
-	for(s32 i = 0; i < 1000; i++)
+	
+	for(s32 i = 0; i < LOCUS_NUM; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
 			nyas_locus_[i]->__offset_position(offset_position_);
 			nyas_locus_[i]->Update();
-
-			if(nyas_locus_[i]->__is_death())
-			{
-				nyas_locus_[i]->__is_free(true);
-			}
 		}
+		
 	}
 }
 
@@ -282,12 +283,14 @@ void GamePlayer::Update(void)
 //=============================================================================
 void GamePlayer::Draw(void)
 {
-	for(s32 i = 0; i < 1000; i++)
+	
+	for(s32 i = 0; i < LOCUS_NUM; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
 			nyas_locus_[i]->Draw();
 		}
+		
 	}
 
 	if(lightning_start_)

@@ -58,7 +58,8 @@ private:
 	u32 frame_count_;
 	Animation* animation_;
 	bool is_free_;
-	static const s32 SKELETON_EFFECT_PATTERN = (8);
+	static const s32 SKELETON_EFFECT_PATTERN = 8;
+	static const s32 SKELETON_FRAME = 23;
 	static const Animation::DATA SKELETON_EFFECT[SKELETON_EFFECT_PATTERN];
 };
 

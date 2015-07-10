@@ -55,6 +55,8 @@ public:
 
 private:
 	static const D3DXVECTOR2 DOWN_SIZE;
+	static const D3DXVECTOR2 LOCUS_SIZE;
+	static const f32 ADD_ALPHA;
 	bool is_free_;
 	Sprite* sprite_;
 	f32 alpha_;
