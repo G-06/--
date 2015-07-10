@@ -176,6 +176,7 @@ void Option::Uninitialize(void)
 	SafeRelease(bgm_volume_);
 	SafeRelease(se_volume_);
 	SafeRelease(message_window_);
+	SafeRelease(option_decide_);
 }
 
 //=============================================================================
