@@ -114,6 +114,7 @@ protected:
 	EffectMirror* effect_mirror_[1000];
 	EffectSkeleton* effect_skeleton_[1000];
 	bool gameover_;
+	bool warp_;
 	u32 time;
 
 private:

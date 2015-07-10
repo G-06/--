@@ -22,16 +22,17 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const f32 GamePlayer::LIGHT_SPEED = (30.0f);
+const f32 GamePlayer::LIGHT_SPEED = (27.0f);
 const f32 GamePlayer::SPEED = (1.75f);
 const f32 GamePlayer::DECREMENT = (0.9f);
 const f32 GamePlayer::JUMP_SPEED = (-70.0f);
 const s32 GamePlayer::DEFAULT_LIFE_MAX = 3;
 const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
-const D3DXVECTOR2 GamePlayer::DEFAULT_SIZE = D3DXVECTOR2(130.0f,197.0f);
+const D3DXVECTOR2 GamePlayer::DEFAULT_SIZE = D3DXVECTOR2(120.0f,197.0f);
 
 const u32 GamePlayer::DEAD_TIME = 45;		//死ぬアニメのフレーム数の合計
+const u32 GamePlayer::OUT_WABISABI = 80;	//ワープして消えた後の余韻
 
 //=============================================================================
 // constructor
@@ -87,6 +88,8 @@ bool GamePlayer::Initialize(void)
 	Status_ = CAT_STATUS_LIVE;
 
 	dead_cnt_ = 0;
+	warp_cnt_ = 0;
+	warp_out_ = false;
 
 	return true;
 }
@@ -120,6 +123,9 @@ void GamePlayer::Update(void)
 		break;
 	case CAT_STATUS_CLEAR:	//クリアしたときの更新
 		UpdateClear();
+		break;
+	case CAT_STATUS_WARP:	//ワープするときの更新
+		UpdateWarp();
 		break;
 	}
 }
@@ -407,6 +413,29 @@ void GamePlayer::UpdateClear(void)
 	sp_recover_speed_ = DEFAULT_SP_RECOVER_SPEED;
 }
 
+//=============================================================================
+//ワープしてるときの更新
+//=============================================================================
+void GamePlayer::UpdateWarp(void)
+{
+	D3DXVECTOR2 size;
+	warp_cnt_++;
+
+	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
+
+	if(warp_cnt_>=20)
+	{
+		size = player_->__Get_size();
+		size.y-=15.f;
+		player_->SetSize(size);
+		if((size.y < 0)&&(warp_cnt_>=80))
+		{
+			warp_out_ = true;
+		}
+	}
+
+	player_->Update();
+}
 
 //=============================================================================
 // draw
@@ -595,5 +624,7 @@ void GamePlayer::Clear(void)
 {
 	Status_ = CAT_STATUS_CLEAR;
 }
+
+
 
 //---------------------------------- EOF --------------------------------------

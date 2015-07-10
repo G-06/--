@@ -80,6 +80,7 @@ NormalStage::NormalStage(const TYPE& type)
 	,position_(0.0f,0.0f)
 	,effect_timer_(0)
 	,gameover_(false)
+	,warp_(false)
 {
 	type_ = type;
 }
@@ -137,21 +138,24 @@ bool NormalStage::Initialize(void)
 	game_bg_->Initialize();
 	game_bg_->__SetTexture(type_);
 
-	assert_effect_start_ = new AssertEffectStart();
-	assert_effect_start_->Initialize();
-	assert_effect_start_->__is_assert(true);
-
-	assert_effect_clear_ = new AssertEffectClear();
-	assert_effect_clear_->Initialize();
-
-	is_start_ = true;
-
+	//レコード
 	time_count_ = 0;
 	select_record_ = new SelectRecord();
 	select_record_->Initialize();
 	select_record_->__set_time(time_count_);
 	select_record_->__set_position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 290.0f,60.0f));
 	select_record_->Update();
+
+	assert_effect_start_ = new AssertEffectStart();
+	assert_effect_start_->Initialize();
+	assert_effect_start_->__is_assert(true);
+
+	assert_effect_clear_ = new AssertEffectClear();
+	assert_effect_clear_->Initialize();
+	assert_effect_clear_->set_record(select_record_);
+
+	is_start_ = true;
+
 
 	// option
 	option_ = new Option();
@@ -292,10 +296,22 @@ void NormalStage::Update(void)
 		{
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 			{
-				if(next_stage_factory_ == nullptr)
-				{
-					next_stage_factory_ = new SelectFactory();
-				}
+				game_player_->__Set_status(GamePlayer::CAT_STATUS_WARP);
+				warp_=true;
+				is_clear_ = false;
+			}
+		}
+	}
+	else if(warp_)
+	{
+		//プレイヤー更新
+		game_player_->Update();
+
+		if(game_player_->__Get_warpout()==true)
+		{
+			if(next_stage_factory_ == nullptr)
+			{
+				next_stage_factory_ = new SelectFactory();
 			}
 		}
 	}
