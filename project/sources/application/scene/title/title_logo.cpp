@@ -16,9 +16,9 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const float scale = 2.5f;
-const D3DXVECTOR2 TitleLogo::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,300.0f);
-const D3DXVECTOR2 TitleLogo::DEFAULT_SIZE = D3DXVECTOR2(343.0f * scale, 70.0f * scale);
+const float scale = 0.8f;
+const D3DXVECTOR2 TitleLogo::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,290.0f);
+const D3DXVECTOR2 TitleLogo::DEFAULT_SIZE = D3DXVECTOR2(1024.0f * scale, 604.0f * scale);
 
 
 //=============================================================================

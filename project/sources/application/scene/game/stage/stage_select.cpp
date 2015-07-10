@@ -350,14 +350,14 @@ void StageSelect::YorNUpdate()
 	//決定キー押されたとき
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
-		// 枠を決定色に変更
-		message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
-
 		//イエスの時
 		if(message_window_->__is_select() == 0)
 		{
 			if(next_stage_factory_ == nullptr)
 			{
+				// 枠を決定色に変更
+				message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
 				//ナウステージおしえます
 				System::__set_current_stage(current_stage_);
 
@@ -403,9 +403,12 @@ void StageSelect::YorNUpdate()
 		}
 		//メッセージを閉じる
 		if(message_window_->__is_select() == 1)
-		{	
+		{
 			if(message_window_->__is_move() == false)
 			{
+				// 枠を決定色に変更
+				message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
 				message_window_->Close();
 				update_type_ = UPDATE_TYPE_SELECT;
 			}
