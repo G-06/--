@@ -265,6 +265,48 @@ void MessageWindow::Close(void)
 }
 
 //=============================================================================
+// close
+//-----------------------------------------------------------------------------
+// —Ç‚¢Š´‚¶‚É•Â‚¶‚é
+//=============================================================================
+void MessageWindow::ForcingClose(void)
+{
+	is_show_ = false;
+	is_move_ = false;
+
+	// window
+	window_->__dest_position(window_position_);
+	window_->__dest_size(DEFAULT_SIZE);
+	window_->__dest_color(CLEAR_COLOR);
+	window_->__dest_frame(dest_frame_count_);
+	window_->ForcingDest();
+
+	// title
+	title_->__dest_position(window_position_);
+	title_->__dest_size(DEFAULT_SIZE);
+	title_->__dest_color(CLEAR_COLOR);
+	title_->__dest_frame(dest_frame_count_);
+	title_->ForcingDest();
+
+	for(int i = 0 ; i < SELECT_MAX ; i++){
+
+		// frame
+		frame_[i]->__dest_position(window_position_);
+		frame_[i]->__dest_size(DEFAULT_SIZE);
+		frame_[i]->__dest_color(CLEAR_COLOR);
+		frame_[i]->__dest_frame(dest_frame_count_);
+		frame_[i]->ForcingDest();
+
+		// select
+		select_[i]->__dest_position(window_position_);
+		select_[i]->__dest_size(DEFAULT_SIZE);
+		select_[i]->__dest_color(CLEAR_COLOR);
+		select_[i]->__dest_frame(dest_frame_count_);
+		select_[i]->ForcingDest();
+	}
+}
+
+//=============================================================================
 // SelectUp
 //=============================================================================
 void MessageWindow::SelectUp(void)

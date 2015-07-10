@@ -86,6 +86,8 @@ SceneTitle::~SceneTitle(void)
 //=============================================================================
 bool SceneTitle::Initialize(void)
 {
+	GET_BGM->Play(BGM::BGM_ID_TITLE);
+
 	bg_ = new TitleBg();
 	bg_->Initialize();
 

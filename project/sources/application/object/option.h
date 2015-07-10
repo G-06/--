@@ -35,6 +35,7 @@ class VolumeLogo;
 class KeyconfigLogo;
 class BgmVolume;
 class SeVolume;
+class OptionDecide;
 class MessageWindow;
 
 //*****************************************************************************
@@ -54,6 +55,15 @@ public:
 		OPTION_KEY_CONFIG_PAUSE,
 		OPTION_DECIDE,
 		OPTION_MAX
+	};
+
+	enum OPTION_MODE
+	{
+		OPTION_MODE_NONE = -1,
+		OPTION_MODE_OPTION = 0,
+		OPTION_MODE_DECIDE,
+		OPTION_MODE_CANCEL,
+		OPTION_MODE_MAX
 	};
 
 	static const D3DXVECTOR2 DEFAULT_MENU_SIZE;
@@ -90,6 +100,9 @@ private:
 	static const f32 VOLUME_MAX;
 	static const f32 VOLUME_RATE;
 
+	void UpdateModeDecide(void);
+	void UpdateModeCancel(void);
+
 	OptionBg* option_bg_;
 	OptionLogo* option_logo_;
 	VolumeLogo* volume_logo_;
@@ -104,6 +117,7 @@ private:
 	BgmVolume* bgm_volume_;
 	SeVolume* se_volume_;
 
+	OptionDecide* option_decide_;
 	MessageWindow* message_window_;
 
 	//OptionSpriteSmooth* bg_;
@@ -125,6 +139,8 @@ private:
 	KEY_CODE is_exchange_;
 
 	OPTION_DATA option_data_;
+
+	OPTION_MODE mode_;
 
 	s32 bgm_size_temp_;
 	s32 se_size_temp_;

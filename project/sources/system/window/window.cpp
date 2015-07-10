@@ -129,6 +129,7 @@ void Window::WaitReady(void)
 //=============================================================================
 void Window::WindowThread(Window* in_window)
 {
+#ifndef _RELEASE
 	// ウィンドウの作成
 	in_window->hwnd_ = CreateWindowEx(0,
 									  in_window->wndclassex_.lpszClassName,
@@ -143,6 +144,22 @@ void Window::WindowThread(Window* in_window)
 									  NULL,
 									  NULL);
 
+#else
+	// ウィンドウの作成
+	in_window->hwnd_ = CreateWindowEx(0,
+		in_window->wndclassex_.lpszClassName,
+		in_window->caption_name_.c_str(),
+		WS_VISIBLE,
+		0,
+		0,
+		in_window->width_,
+		in_window->height_,
+		NULL,
+		NULL,
+		NULL,
+		NULL);
+	SetWindowLong(in_window->hwnd_,GWL_STYLE,WS_POPUP);
+#endif
 	// ウインドウの表示
 	ShowWindow(in_window->hwnd_,SW_SHOW);
 

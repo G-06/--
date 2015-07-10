@@ -12,19 +12,21 @@
 #include "effect_locus.h"
 #include "render/sprite.h"
 #include "system/system.h"
+#include "scene/game/game_player.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 EffectLocus::DOWN_SIZE = D3DXVECTOR2(128.0f/50.0f, 128.0f/50.0f);
-
+const D3DXVECTOR2 EffectLocus::LOCUS_SIZE = D3DXVECTOR2(128.0f, 128.0f);
+const D3DXVECTOR2 EffectLocus::DOWN_SIZE = D3DXVECTOR2(LOCUS_SIZE.x/GamePlayer::LOCUS_NUM, LOCUS_SIZE.y/GamePlayer::LOCUS_NUM);
+const f32 EffectLocus::ADD_ALPHA = 0.002f;
 //=============================================================================
 // constructor
 //=============================================================================
 EffectLocus::EffectLocus(void)
 	:Effect(TYPE_LOCUS)
 	,sprite_(nullptr)
-	,alpha_(0.1f)
+	,alpha_(0.0f)
 	,is_free_(true)
 {
 }
@@ -44,7 +46,7 @@ bool EffectLocus::Initialize(void)
 	sprite_ = new Sprite();
 	SafeInitialize(sprite_);
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__size(D3DXVECTOR2(128.0f,128.0f));
+	sprite_->__size(LOCUS_SIZE);
 	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_LOCUS);
 	sprite_->SetParameter();
 
@@ -66,18 +68,21 @@ void EffectLocus::Update(void)
 {
 	alpha_ = 0.0f;
 
-	if(sprite_->__size() <= D3DXVECTOR2(128.0f/50*20, 128.0f/50*20))
+	if(sprite_->__size() <= D3DXVECTOR2(DOWN_SIZE.x/5*2, DOWN_SIZE.y/5*2))
 	{
 		sprite_->__size(sprite_->__size() - DOWN_SIZE - DOWN_SIZE);
-		alpha_+= -0.004f;
+		alpha_+= -ADD_ALPHA*2;
 	}
+	
+	sprite_->__size(sprite_->__size() - DOWN_SIZE);
 
 	if(sprite_->__size().x <= 0.0f && sprite_->__size().y <= 0.0f )
 	{
 		is_death_ = true;
+		is_free_ = true;
 	}
-	sprite_->__size(sprite_->__size() - DOWN_SIZE);
-	alpha_+= -0.002f;
+	
+	alpha_+= -ADD_ALPHA;
 	sprite_->__color(D3DXCOLOR(255,255,255,alpha_));
 	sprite_->SetParameter();
 }
@@ -101,11 +106,8 @@ void EffectLocus::Draw(void)
 //=============================================================================
 void EffectLocus::Start(void)
 {
-	alpha_ = 0.1f;
-
 	sprite_->__color(D3DXCOLOR(255,255,255,0.1f));
-	sprite_->__size(D3DXVECTOR2(128.0f,128.0f));
-	sprite_->SetParameter();
+	sprite_->__size(LOCUS_SIZE);
 	is_death_ = false;
 	is_free_ = false;
 }
