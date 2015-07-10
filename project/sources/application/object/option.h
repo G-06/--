@@ -35,6 +35,7 @@ class VolumeLogo;
 class KeyconfigLogo;
 class BgmVolume;
 class SeVolume;
+class MessageWindow;
 
 //*****************************************************************************
 // class definition
@@ -51,6 +52,7 @@ public:
 		OPTION_KEY_CONFIG_CANCEL,
 		OPTION_KEY_CONFIG_SPECIAL,
 		OPTION_KEY_CONFIG_PAUSE,
+		OPTION_DECIDE,
 		OPTION_MAX
 	};
 
@@ -102,6 +104,8 @@ private:
 	BgmVolume* bgm_volume_;
 	SeVolume* se_volume_;
 
+	MessageWindow* message_window_;
+
 	//OptionSpriteSmooth* bg_;
 	//OptionSpriteSmooth* logo_;
 	//OptionSpriteSmooth* volume_logo_;
@@ -122,7 +126,6 @@ private:
 
 	OPTION_DATA option_data_;
 
-	//KEY_CONFIG key_config_temp_[5];
 	s32 bgm_size_temp_;
 	s32 se_size_temp_;
 };

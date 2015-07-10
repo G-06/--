@@ -26,6 +26,7 @@
 #include "system/direct_input/input_event_buffer.h"
 
 #include "../object/option/option_sprite_smooth.h"
+#include "application/object/message_window.h"
 
 //*****************************************************************************
 // constant definition
@@ -36,6 +37,7 @@ const D3DXVECTOR2 Option::EXPAND_MENU_SIZE = D3DXVECTOR2(450.f, 150.f);
 const f32 Option::VOLUME_MIN	= 0.0f;
 const f32 Option::VOLUME_MAX	= 1.0f;
 const f32 Option::VOLUME_RATE	= VOLUME_MAX / 10;
+const u32 DEST_FRAME_COUNT = 20;				// ウィンドウ開閉の時間
 
 //=============================================================================
 // constructor
@@ -53,6 +55,7 @@ Option::Option(void)
 	,key_config_special_(NULL)
 	,key_config_pause_(NULL)
 	,key_config_jump_(NULL)
+	,message_window_(NULL)
 {
 	option_data_._bgm_volume = 1.0f;
 	option_data_._se_volume  = 1.0f;
@@ -117,17 +120,22 @@ bool Option::Initialize(void)
 	// position
 	const D3DXVECTOR2 MENU_OFFSETT = D3DXVECTOR2(400.0f, 10.0f);
 
-	const D3DXVECTOR2 DEF_LOGO_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 190.f);
-	volume_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 320.0f, 130.f));
+	const D3DXVECTOR2 DEF_LOGO_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 180.f);
+	volume_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 320.0f, DEF_LOGO_POS.y -60.0f));
 	bgm_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y), 300.0f);
 	se_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y + DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y), 300.0f);
 
-	const D3DXVECTOR2 DEF_MENU_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 390.0f);
-	keyconfig_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 275.0f, 330.f));
+	const D3DXVECTOR2 DEF_MENU_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 370.0f);
+	keyconfig_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 275.0f, 310.f));
 	key_config_ok_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y), MENU_OFFSETT.x);
 	key_config_cancel_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y), MENU_OFFSETT.x);
 	key_config_special_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 2), MENU_OFFSETT.x);
 	key_config_pause_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 3), MENU_OFFSETT.x);
+
+	// message_window
+	message_window_ = new MessageWindow();
+	message_window_->Initialize();
+	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
 
 	is_select_ = true;
@@ -158,6 +166,7 @@ void Option::Uninitialize(void)
 	SafeRelease(keyconfig_logo_);
 	SafeRelease(bgm_volume_);
 	SafeRelease(se_volume_);
+	SafeRelease(message_window_);
 }
 
 //=============================================================================
@@ -284,6 +293,11 @@ void Option::Update(void)
 					{
 						is_select_ = false;
 					}
+					break;
+				}
+				case OPTION_DECIDE:
+				{
+
 					break;
 				}
 				default:
