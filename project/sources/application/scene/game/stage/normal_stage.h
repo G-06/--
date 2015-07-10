@@ -111,15 +111,20 @@ protected:
 	GameBg* game_bg_;
 	TYPE type_;
 
-	EffectMirror* effect_mirror_[1000];
-	EffectSkeleton* effect_skeleton_[1000];
+private:
+	static const s32 EFFECT_STOCK_NUM = 20;
+
+protected:
 	bool gameover_;
 	u32 time;
+	EffectMirror* effect_mirror_[EFFECT_STOCK_NUM];
+	EffectSkeleton* effect_skeleton_[EFFECT_STOCK_NUM];
 
 private:
 	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;
 	static const D3DXVECTOR2 DEFAULT_PLAYER_ICON_POSITION;
 	static const D3DXVECTOR2 DEFAULT_PLAYER_LIFE_POSITION;
+
 };
 
 #endif	// _NORMAL_STAGE_H_

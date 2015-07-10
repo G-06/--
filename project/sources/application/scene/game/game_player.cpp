@@ -45,6 +45,7 @@ GamePlayer::GamePlayer(void)
 	,sp_recover_speed_(2)
 	,is_sp_recover_speed_up_(false)
 	,is_sp_down_(false)
+	,locus_counter_(0)
 {
 }
 
@@ -78,7 +79,7 @@ bool GamePlayer::Initialize(void)
 	player_->__position(position_);
 	lightning_start_ = nullptr;
 	nyas_dead_ = nullptr;
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < LOCUS_NUM; i++)
 	{
 		nyas_locus_[i] = new EffectLocus();
 		nyas_locus_[i]->Initialize();
@@ -99,7 +100,7 @@ void GamePlayer::Uninitialize(void)
 	SafeRelease(player_);
 	SafeRelease(lightning_start_);
 	SafeRelease(nyas_dead_);
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < LOCUS_NUM; i++)
 	{
 		SafeRelease(nyas_locus_[i]);
 	}
@@ -175,7 +176,8 @@ void GamePlayer::UpdateLive(void)
 
 	if(is_light_ == false)		//光化してないとき？
 	{
-		if(is_fly_ == false)	//空中にいないとき
+		locus_counter_ = 0;
+		if(is_fly_ == false)
 		{
 			if(move_.x <= 0.9f && move_.x >= -0.9f)
 			{
@@ -223,7 +225,9 @@ void GamePlayer::UpdateLive(void)
 	}
 	else	//光化しているとき？
 	{
-		for(s32 i = 0; i < 1000; i++)
+		locus_counter_++;
+		
+		for(s32 i = 0; i < LOCUS_NUM; i++)
 		{
 			if(nyas_locus_[i]->__is_free())
 			{
@@ -296,7 +300,7 @@ void GamePlayer::UpdateLive(void)
 			nyas_dead_ = nullptr;
 		}
 	}
-	for(s32 i = 0; i < 100; i++)
+	for(s32 i = 0; i < LOCUS_NUM; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
@@ -328,18 +332,15 @@ void GamePlayer::UpdateDead(void)
 			lightning_start_ = nullptr;
 		}
 	}
-	for(s32 i = 0; i < 100; i++)//光化中
+
+	for(s32 i = 0; i < LOCUS_NUM; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
 			nyas_locus_[i]->__offset_position(offset_position_);
 			nyas_locus_[i]->Update();
-
-			if(nyas_locus_[i]->__is_death())
-			{
-				nyas_locus_[i]->__is_free(true);
-			}
 		}
+		
 	}
 
 	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_DEAD);
@@ -377,7 +378,7 @@ void GamePlayer::UpdateClear(void)
 			lightning_start_ = nullptr;
 		}
 	}
-	for(s32 i = 0; i < 100; i++)//光化中
+	for(s32 i = 0; i < LOCUS_NUM; i++)//光化中
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
@@ -413,12 +414,14 @@ void GamePlayer::UpdateClear(void)
 //=============================================================================
 void GamePlayer::Draw(void)
 {
-	for(s32 i = 0; i < 100; i++)
+	
+	for(s32 i = 0; i < LOCUS_NUM; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
 			nyas_locus_[i]->Draw();
 		}
+		
 	}
 
 	if(lightning_start_)	//光化エフェクト？

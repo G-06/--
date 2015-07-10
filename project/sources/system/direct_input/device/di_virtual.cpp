@@ -55,10 +55,10 @@ void DIVirtual::Update(void)
 
 	for(u32 i = 0;i < KEY_MAX;++i)
 	{
+		press_key = false;
+
 		for(auto it = input_event_container_[i].begin();it != input_event_container_[i].end();++it)
 		{
-			press_key = false;
-
 			if(input_event_buffer_->CheckPress(*it))
 			{
 				// プレスキーの算出
