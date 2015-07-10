@@ -286,7 +286,11 @@ void NormalStage::Update(void)
 		if(time_count_<oldRecord)
 		{
 			System::RecordSave((System::__get_current_stage()-1),time_count_);
-			assert_effect_clear_->__set_newrecord_flag(true);
+
+			if(type_ != TYPE_TUTORIAL)
+			{
+				assert_effect_clear_->__set_newrecord_flag(true);
+			}
 		}
 
 		assert_effect_clear_->SetTime(time_count_);
