@@ -32,6 +32,7 @@ public:
 	struct DATA
 	{
 		u32 _priority;
+		bool _hit;
 	};
 
 	// constructor
@@ -53,6 +54,7 @@ public:
 	void Draw(void);
 
 	void* GetPointer(void);
+
 	// accessor
 	u32 __priority(void)const { return data_._priority; }
 	void __priority(u32 priority) { data_._priority = priority; }
@@ -60,6 +62,7 @@ public:
 private:
 	ObjectCheckPoint* object_check_point_;
 	DATA data_;
+	bool onece_;
 };
 
 #endif	// _GIMMICK_CHECK_POINT_H_

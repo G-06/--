@@ -62,6 +62,10 @@ private:
 	static const u32 STOP_FRAME;
 	static const u32 SRIDE_OUT_FRAME;
 	static const u32 RECORD_SRIDE_IN_FRAME;
+
+	static const u32 NEW_RECORD_SRIDE_IN_FRAME;
+	static const u32 NEW_RECORD_STOP_FRAME;
+
 	static const D3DXVECTOR2 CLEAR_START_POSITION;
 	static const D3DXVECTOR2 CLEAR_STOP_POSITION;
 	static const D3DXVECTOR2 CLEAR_END_POSITION;

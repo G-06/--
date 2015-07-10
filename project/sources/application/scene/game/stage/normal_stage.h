@@ -113,6 +113,8 @@ protected:
 
 	EffectMirror* effect_mirror_[1000];
 	EffectSkeleton* effect_skeleton_[1000];
+	bool gameover_;
+	u32 time;
 
 private:
 	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;

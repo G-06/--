@@ -13,8 +13,8 @@
 #include "system/system.h"
 #include "application/object/object_bg.h"
 
-static const D3DXVECTOR2 MOVE_FAR(0.00005f,0.0006f);
-static const D3DXVECTOR2 MOVE_NEAR(0.0001f,0.001f);
+static const D3DXVECTOR2 MOVE_FAR	(0.00005f,0.0004f);
+static const D3DXVECTOR2 MOVE_NEAR	(0.00006f,0.0004f);
 
 //=============================================================================
 // constructor
@@ -42,9 +42,11 @@ bool GameBg::Initialize(void)
 {
 	game_bg_far_ = new ObjectBg();
 	game_bg_far_->Initialize();
+	game_bg_far_->__Set_size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)(f32)GET_SYSTEM.__window()->__width()));
 
 	game_bg_near_ = new ObjectBg();
 	game_bg_near_->Initialize();
+	game_bg_near_->__Set_size(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width(),(f32)GET_SYSTEM.__window()->__height()));
 
 	return true;
 }
@@ -111,16 +113,43 @@ void GameBg::__SetTexture(Stage::TYPE type)
 		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_000);
 		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
 		break;
-		
 	case Stage::TYPE_STAGE1:
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_000);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
+		break;
+	case Stage::TYPE_STAGE2:
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_000);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
+		break;
+	case Stage::TYPE_STAGE3:
 		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_001);
-		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_001);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
+		break;
+	case Stage::TYPE_STAGE4:
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_001);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
+		break;
+	case Stage::TYPE_STAGE5:
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_001);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
+		break;
+	case Stage::TYPE_STAGE6:
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_002);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
+		break;
+	case Stage::TYPE_STAGE7:
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_002);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
+		break;
+	case Stage::TYPE_STAGE8:
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_002);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
 		break;
 
-	case Stage::TYPE_STAGE2:
-		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_002);
-		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_002);
-		break;
+
+
+
+
 	}
 }
 

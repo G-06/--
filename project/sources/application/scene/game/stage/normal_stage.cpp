@@ -50,6 +50,8 @@ const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(21.0f,65.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_LIFE_POSITION = D3DXVECTOR2(180.0f,40.0f);
 const u32 DEST_FRAME_COUNT = 20;
+static const u32 GAMEOVER_TIME = 50;	//ゲームプレイヤーの死ぬ時間プラスアルファな時間
+
 
 //=============================================================================
 // constructor
@@ -77,6 +79,7 @@ NormalStage::NormalStage(const TYPE& type)
 	,time_count_(0)
 	,position_(0.0f,0.0f)
 	,effect_timer_(0)
+	,gameover_(false)
 {
 	type_ = type;
 }
@@ -161,6 +164,7 @@ bool NormalStage::Initialize(void)
 		effect_skeleton_[i] = new EffectSkeleton();
 		effect_skeleton_[i]->Initialize();
 	}
+	time =0;
 
 	return true;
 }
@@ -254,6 +258,16 @@ void NormalStage::Update(void)
 		{
 			game_player_->__position(D3DXVECTOR2(game_player_->__size().x * 0.5f,game_player_->__position().y));
 		}
+		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+		{
+			(*it)->__offset_position(stage_offset_->__position());
+		}
+
+		for(auto it = effect_container_.begin();it != effect_container_.end();++it)
+		{
+			(*it)->__offset_position(stage_offset_->__position());
+		}
+
 		//マップチップとの当たり判定
 		CollisionChip();
 		// offsetによる各オブジェクト類の位置更新
@@ -285,16 +299,28 @@ void NormalStage::Update(void)
 			}
 		}
 	}
-	else if(game_player_->__life() <= 0)	//残機が消えたとき
+	else if(gameover_)
 	{
 		// 怒り
 		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_ANGER);
 		object_player_icon_->Update();
 
-		if(next_stage_factory_ == nullptr)
+		if(time==game_player_->DEAD_TIME+5)
 		{
-			next_stage_factory_ = new SelectFactory();
+			if(next_stage_factory_ == nullptr)
+			{
+				next_stage_factory_ = new SelectFactory();
+			}
 		}
+		else
+		{
+			game_player_->Update();
+		}
+		time++;
+	}
+	else if(game_player_->__life() <= 0)	//残機が尽きたとき
+	{
+		gameover_ = true;
 	}
 	else	//プレイヤーが生きてるゲーム中
 	{
@@ -745,7 +771,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			}
 			break;
 		}
-		case 3:
+		case 3://鏡
 		{
 			if(collision_map.IsHit(game_player_->__position(),game_player_->__old_position(),position,game_player_->__size().x * 0.5f,game_player_->__size().y * 0.5f,128 * 0.5f,128 * 0.5f))
 			{
@@ -913,6 +939,7 @@ void NormalStage::CollisionGimmick(void)
 					GimmickCheckPoint::DATA* data = (GimmickCheckPoint::DATA*)(*it)->GetPointer();
 					if(game_player_->__check_point_priority() < data->_priority)
 					{
+						data->_hit = true;
 						game_player_->__check_point_priority(data->_priority);
 						game_player_->__return_position(gimmick_position);
 						game_player_->Heal(1);

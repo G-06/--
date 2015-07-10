@@ -31,6 +31,8 @@ const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
 const D3DXVECTOR2 GamePlayer::DEFAULT_SIZE = D3DXVECTOR2(130.0f,197.0f);
 
+const u32 GamePlayer::DEAD_TIME = 45;		//死ぬアニメのフレーム数の合計
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -76,13 +78,15 @@ bool GamePlayer::Initialize(void)
 	player_->__position(position_);
 	lightning_start_ = nullptr;
 	nyas_dead_ = nullptr;
-	for(s32 i = 0; i < 1000; i++)
+	for(s32 i = 0; i < 100; i++)
 	{
 		nyas_locus_[i] = new EffectLocus();
 		nyas_locus_[i]->Initialize();
 	}
 
 	Status_ = CAT_STATUS_LIVE;
+
+	dead_cnt_ = 0;
 
 	return true;
 }
@@ -95,7 +99,7 @@ void GamePlayer::Uninitialize(void)
 	SafeRelease(player_);
 	SafeRelease(lightning_start_);
 	SafeRelease(nyas_dead_);
-	for(s32 i = 0; i < 1000; i++)
+	for(s32 i = 0; i < 100; i++)
 	{
 		SafeRelease(nyas_locus_[i]);
 	}
@@ -292,7 +296,7 @@ void GamePlayer::UpdateLive(void)
 			nyas_dead_ = nullptr;
 		}
 	}
-	for(s32 i = 0; i < 1000; i++)
+	for(s32 i = 0; i < 100; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
@@ -312,20 +316,46 @@ void GamePlayer::UpdateLive(void)
 //=============================================================================
 void GamePlayer::UpdateDead(void)
 {
+	if(lightning_start_)	//光化はじめ？
+	{
+		lightning_start_->__offset_position(offset_position_);
+		lightning_start_->Update();
+
+		if(lightning_start_->__is_death())
+		{
+			lightning_start_->Uninitialize();
+			delete lightning_start_;
+			lightning_start_ = nullptr;
+		}
+	}
+	for(s32 i = 0; i < 100; i++)//光化中
+	{
+		if(!nyas_locus_[i]->__is_free())
+		{
+			nyas_locus_[i]->__offset_position(offset_position_);
+			nyas_locus_[i]->Update();
+
+			if(nyas_locus_[i]->__is_death())
+			{
+				nyas_locus_[i]->__is_free(true);
+			}
+		}
+	}
+
 	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_DEAD);
 	player_->Update();
-	nyas_dead_->__offset_position(offset_position_);
-	nyas_dead_->Update();
 
-	if(nyas_dead_->__is_death())	//死ぬエフェクトが終わった時
+	if(dead_cnt_ == DEAD_TIME)	//死ぬエフェクトが終わった時
 	{
-		nyas_dead_->Uninitialize();
-		delete nyas_dead_;
-		nyas_dead_ = nullptr;
-		Status_ = CAT_STATUS_LIVE;
-		position_ = return_position_;
-		old_position_ = position_;
+		if(life_ > 0)
+		{
+			Status_ = CAT_STATUS_LIVE;
+			position_ = return_position_;
+			old_position_ = position_;
+			dead_cnt_ = 0;
+		}
 	}
+	dead_cnt_++;
 }
 
 //=============================================================================
@@ -335,10 +365,39 @@ void GamePlayer::UpdateClear(void)
 {
 	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JOY);
 
+	if(lightning_start_)	//光化はじめ？
+	{
+		lightning_start_->__offset_position(offset_position_);
+		lightning_start_->Update();
+
+		if(lightning_start_->__is_death())
+		{
+			lightning_start_->Uninitialize();
+			delete lightning_start_;
+			lightning_start_ = nullptr;
+		}
+	}
+	for(s32 i = 0; i < 100; i++)//光化中
+	{
+		if(!nyas_locus_[i]->__is_free())
+		{
+			nyas_locus_[i]->__offset_position(offset_position_);
+			nyas_locus_[i]->Update();
+
+			if(nyas_locus_[i]->__is_death())
+			{
+				nyas_locus_[i]->__is_free(true);
+			}
+		}
+	}
 	is_fly_ = true;
 	is_force_light_ = false;
 	old_position_ = position_;
-	position_ += move_ + acceleration_;
+	D3DXVECTOR2 t_move = move_;
+	D3DXVECTOR2 t_acceleration = acceleration_;
+	t_move.x = 0.0f;
+	t_acceleration.x = 0.0f;
+	position_ += t_move + t_acceleration;
 	acceleration_ = D3DXVECTOR2(0.0f,0.0f);
 
 	player_->__is_flip(is_left_);
@@ -354,7 +413,7 @@ void GamePlayer::UpdateClear(void)
 //=============================================================================
 void GamePlayer::Draw(void)
 {
-	for(s32 i = 0; i < 1000; i++)
+	for(s32 i = 0; i < 100; i++)
 	{
 		if(!nyas_locus_[i]->__is_free())
 		{
@@ -366,10 +425,7 @@ void GamePlayer::Draw(void)
 	{
 		lightning_start_->Draw();
 	}
-	if(nyas_dead_)	//死ぬエフェクト？
-	{
-		nyas_dead_->Draw();
-	}
+
 	player_->__position(position_ - offset_position_);
 	player_->Draw();	//プレイヤー
 }
@@ -510,23 +566,12 @@ void GamePlayer::ChangeDirection(const D3DXVECTOR2& vector)
 //=============================================================================
 void GamePlayer::Dead(void)
 {
-	if(life_ > 0)
-	{
-		life_--;
-		nyas_dead_ = new EffectDead();
-		nyas_dead_->Initialize();
-		nyas_dead_->__position(position_);
-		nyas_dead_->__offset_position(offset_position_);
+	life_--;
 
-		is_enable_light_ = true;
-		is_light_ = false;
-		move_ = D3DXVECTOR2(0.0f,0.0f);
-		Status_ = CAT_STATUS_DEAD;
-	}
-	else
-	{
-		life_--;
-	}
+	is_enable_light_ = true;
+	is_light_ = false;
+	move_ = D3DXVECTOR2(0.0f,0.0f);
+	Status_ = CAT_STATUS_DEAD;
 }
 
 //=============================================================================
