@@ -52,6 +52,8 @@ StageSelect::~StageSelect(void)
 //=============================================================================
 bool StageSelect::Initialize(void)
 {
+	GET_BGM->Play(BGM::BGM_ID_STAGE_SELECT);
+
 	//”wŒi
 	select_bg_ = new SelectBg();
 	select_bg_->Initialize();
