@@ -92,7 +92,7 @@ public:
 
 	void Load(void);
 
-	void __is_indication(const bool indication){ is_indication_ = indication;}
+	void __is_indication(const bool indication);
 	const bool __is_indication(void)const{ return is_indication_;}
 
 private:
@@ -142,8 +142,8 @@ private:
 
 	OPTION_MODE mode_;
 
-	s32 bgm_size_temp_;
-	s32 se_size_temp_;
+	f32 bgm_size_temp_;
+	f32 se_size_temp_;
 };
 
 #endif	// _OPTION_H_

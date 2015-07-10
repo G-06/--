@@ -59,6 +59,8 @@ Option::Option(void)
 	,message_window_(NULL)
 	,option_decide_(NULL)
 	,mode_(OPTION_MODE_OPTION)
+	,bgm_size_temp_(0.0f)
+	,se_size_temp_(0.0f)
 {
 	option_data_._bgm_volume = 1.0f;
 	option_data_._se_volume  = 1.0f;
@@ -145,7 +147,6 @@ bool Option::Initialize(void)
 	message_window_ = new MessageWindow();
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
-
 
 	is_select_ = true;
 	bgm_volume_->Select(true);
@@ -674,6 +675,12 @@ void Option::UpdateModeCancel(void)
 			// 枠色変更
 			message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 
+			// sonnd volume 戻す
+			GET_BGM->SetVolume(bgm_size_temp_);
+			GET_SE->SetVolume(se_size_temp_);
+			bgm_volume_->Adjustvolume(bgm_size_temp_);
+			se_volume_->Adjustvolume(se_size_temp_);
+
 			mode_ = OPTION_MODE_OPTION;
 			message_window_->ForcingClose();
 			is_indication_ = false;
@@ -704,5 +711,22 @@ void Option::UpdateModeCancel(void)
 		}
 	}
 }
+
+//=============================================================================
+// __is_indication
+//-----------------------------------------------------------------------------
+//=============================================================================
+void Option::__is_indication(const bool indication)
+{
+	is_indication_ = indication;
+
+	// オプションのキー設定を取ってくる
+	if(indication){
+		option_data_ = *GET_OPTION_DATA;
+		bgm_size_temp_ = option_data_._bgm_volume;
+		se_size_temp_ = option_data_._se_volume;
+	}
+}
+
 
 // EOF
