@@ -57,6 +57,9 @@ public:
 private:
 
 	OptionSpriteSmooth* volume_gauge_;
+	OptionSpriteSmooth* volume_gauge_frame_;
+	OptionSpriteSmooth* volume_gauge_back_;
+
 	OptionSpriteSmooth* se_string_;
 	OptionSpriteSmooth* se_string_frame_;
 

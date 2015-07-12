@@ -225,4 +225,13 @@ void OptionSpriteSmooth::__point(const Sprite::POINT point)
 	sprite_->SetParameter();
 }
 
+//=============================================================================
+// __right
+//=============================================================================
+void OptionSpriteSmooth::__right(const f32& right)
+{
+	sprite_->__right(right);
+	sprite_->SetParameter();
+}
+
 //---------------------------------- EOF --------------------------------------
