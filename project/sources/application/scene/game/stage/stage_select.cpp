@@ -188,6 +188,7 @@ void StageSelect::SelectUpdate()
 		{
 			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 			{
+				GET_SE->Play(SE::SE_ID_WINDOW_SELECT);
 				for(u32 i=0;i<TYPE_MAX-1;i++)
 				{
 					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(-REGION_MOVE,0.0f));
@@ -203,6 +204,7 @@ void StageSelect::SelectUpdate()
 		{
 			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
 			{
+				GET_SE->Play(SE::SE_ID_WINDOW_SELECT);
 				for(u32 i=0;i<TYPE_MAX-1;i++)
 				{
 					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(REGION_MOVE,0.0f));
@@ -216,6 +218,7 @@ void StageSelect::SelectUpdate()
 		//決定押されたとき
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 		{
+			GET_SE->Play(SE::SE_ID_DECIDE);
 			if(message_window_->__is_move() == false)
 			{
 				message_window_->Show();
@@ -225,6 +228,7 @@ void StageSelect::SelectUpdate()
 		//キャンセル押されたときメッセージ表示
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 		{
+			GET_SE->Play(SE::SE_ID_CANCEL);
 			if(message_window_->__is_move() == false)
 			{
 				message_window_->Show();
@@ -297,6 +301,7 @@ void StageSelect::MassageUpdate()
 	//決定キー押されたとき
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
+		GET_SE->Play(SE::SE_ID_DECIDE);
 		// 枠を決定色に変更
 		message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 
@@ -324,6 +329,7 @@ void StageSelect::MassageUpdate()
 	//キャンセル押されたときメッセージけし
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 	{
+		GET_SE->Play(SE::SE_ID_CANCEL);
 		if(message_window_->__is_move() == false)
 		{
 			message_window_->Close();
@@ -352,6 +358,7 @@ void StageSelect::YorNUpdate()
 	//決定キー押されたとき
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
+		GET_SE->Play(SE::SE_ID_DECIDE);
 		// 枠を決定色に変更
 		message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 
@@ -417,6 +424,7 @@ void StageSelect::YorNUpdate()
 	//キャンセル押されたときメッセージけし
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 	{
+		GET_SE->Play(SE::SE_ID_CANCEL);
 		if(message_window_->__is_move() == false)
 		{
 			message_window_->Close();

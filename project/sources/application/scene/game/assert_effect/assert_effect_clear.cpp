@@ -14,6 +14,7 @@
 #include "render/sprite.h"
 #include "object/stage_select/select_record.h"
 #include "object/object_newrecord.h"
+#include "system/system.h"
 
 //*****************************************************************************
 // constant definition
@@ -49,6 +50,7 @@ AssertEffectClear::AssertEffectClear(void)
 	,frame_count_(0)
 	,is_stop_(false)
 	,time_(0)
+	,is_first_(true)
 {
 }
 
@@ -134,6 +136,11 @@ void AssertEffectClear::Update(void)
 		}
 		else if(frame_count_ <= SRIDE_IN_FRAME + STOP_FRAME + SRIDE_OUT_FRAME + RECORD_SRIDE_IN_FRAME+NEW_RECORD_STOP_FRAME+NEW_RECORD_SRIDE_IN_FRAME)
 		{
+			if(is_first_)
+			{
+				is_first_ = false;
+				GET_SE->Play(SE::SE_ID_NEW_RECORD);
+			}
 			vector = NEW_RECORD_END_POSITION - NEW_RECORD_START_POSITION;
 			new_record_position_ = NEW_RECORD_START_POSITION + vector * 1.0f / (f32)SRIDE_OUT_FRAME * (f32)(frame_count_ - SRIDE_IN_FRAME - STOP_FRAME - SRIDE_OUT_FRAME);
 		}

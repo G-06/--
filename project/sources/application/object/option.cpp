@@ -179,11 +179,13 @@ void Option::Update(void)
 		{
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
 			{
+				GET_SE->Play(SE::SE_ID_CURSOR);
 				cursor_y_++;
 			}
 
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
 			{
+				GET_SE->Play(SE::SE_ID_CURSOR);
 				cursor_y_--;
 			}
 			if(cursor_y_ >= OPTION_MAX)
@@ -203,10 +205,12 @@ void Option::Update(void)
 					bgm_volume_->Select(true);
 					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 					{
+						GET_SE->Play(SE::SE_ID_CURSOR);
 						option_data_._bgm_volume -= VOLUME_RATE;
 					}
 					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
 					{
+						GET_SE->Play(SE::SE_ID_CURSOR);
 						option_data_._bgm_volume += VOLUME_RATE;
 					}
 
@@ -229,10 +233,12 @@ void Option::Update(void)
 
 					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 					{
+						GET_SE->Play(SE::SE_ID_CURSOR);
 						option_data_._se_volume -= VOLUME_RATE;
 					}
 					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
 					{
+						GET_SE->Play(SE::SE_ID_CURSOR);
 						option_data_._se_volume += VOLUME_RATE;
 					}
 
@@ -255,6 +261,7 @@ void Option::Update(void)
 					key_config_ok_->Select(true);
 					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 					{
+						GET_SE->Play(SE::SE_ID_DECIDE);
 						is_select_ = false;
 					}
 					break;
@@ -264,6 +271,7 @@ void Option::Update(void)
 					key_config_cancel_->Select(true);
 					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 					{
+						GET_SE->Play(SE::SE_ID_DECIDE);
 						is_select_ = false;
 					}
 					break;
@@ -273,6 +281,7 @@ void Option::Update(void)
 					key_config_special_->Select(true);
 					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 					{
+						GET_SE->Play(SE::SE_ID_DECIDE);
 						is_select_ = false;
 					}
 					break;
@@ -282,6 +291,7 @@ void Option::Update(void)
 					key_config_pause_->Select(true);
 					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 					{
+						GET_SE->Play(SE::SE_ID_DECIDE);
 						is_select_ = false;
 					}
 					break;
@@ -294,6 +304,7 @@ void Option::Update(void)
 
 			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 			{
+				GET_SE->Play(SE::SE_ID_CANCEL);
 				OPTION_DATA* option_data = GET_OPTION_DATA;
 
 				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,option_data->_decide_key);
@@ -339,6 +350,7 @@ void Option::Update(void)
 					key_config_ok_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 					if(input_event != INPUT_EVENT_MAX)
 					{
+						GET_SE->Play(SE::SE_ID_DECIDE);
 						key_config_ok_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 						Exchange(&option_data_._decide_key,input_event);
 						is_select_ = true;
@@ -353,6 +365,7 @@ void Option::Update(void)
 					key_config_cancel_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 					if(input_event != INPUT_EVENT_MAX)
 					{
+						GET_SE->Play(SE::SE_ID_DECIDE);
 						key_config_cancel_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 						Exchange(&option_data_._cancel_key,input_event);
 						is_select_ = true;
@@ -367,6 +380,7 @@ void Option::Update(void)
 					key_config_special_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 					if(input_event != INPUT_EVENT_MAX)
 					{
+						GET_SE->Play(SE::SE_ID_DECIDE);
 						key_config_special_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 						Exchange(&option_data_._light_key,input_event);
 						is_select_ = true;
@@ -381,6 +395,7 @@ void Option::Update(void)
 					key_config_pause_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 					if(input_event != INPUT_EVENT_MAX)
 					{
+						GET_SE->Play(SE::SE_ID_DECIDE);
 						key_config_pause_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 						Exchange(&option_data_._pause_key,input_event);
 						is_select_ = true;
