@@ -47,7 +47,7 @@ bool StageTwo::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/kuso.bin");
+	map_->LoadFromFile("data/map/ending.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 

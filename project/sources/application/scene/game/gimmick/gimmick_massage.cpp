@@ -71,15 +71,21 @@ bool GimmickMassage::Initialize(void)
 			txtbox_->Print("プランナー\n　ますこ　きょうすけ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_PROGRAMMER_1:
-			txtbox_->Print("プログラマー\n　あらい　りょうたろう", TEXT_COLOR);
+			txtbox_->Print("メインプログラマー\n　かぶともり　けんじ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_PROGRAMMER_2:
-			txtbox_->Print("プログラマー\n　きたざわ　たいち", TEXT_COLOR);
+			txtbox_->Print("プログラマー\n　あらい　りょうたろう", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_PROGRAMMER_3:
+			txtbox_->Print("プログラマー\n　きたざわ　たいち", TEXT_COLOR);
+		break;
+	case MASSAGE_TYPE_STAFF_PROGRAMMER_4:
 			txtbox_->Print("プログラマー\n　さいとう　はるき", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_SPECIAL_1:
+			txtbox_->Print("サウンド素材\n　ポケットサウンド\n　くらげ工匠\n　効果音ラボ\n", TEXT_COLOR);
+		break;
+	case MASSAGE_TYPE_STAFF_SPECIAL_2:
 			txtbox_->Print("スペシャルサンクス\n　やました　やすあき", TEXT_COLOR);
 		break;
 
