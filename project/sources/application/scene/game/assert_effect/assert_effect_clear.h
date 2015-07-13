@@ -55,7 +55,9 @@ public:
 	// accessor
 	bool __is_stop(void) { return is_stop_; }
 	void __time(u32 time) { time_ = time; }
-	void __set_newrecord_flag(bool flag){new_record_flag_ = flag;};
+	void __set_newrecord_flag(bool flag){new_record_flag_ = flag;}
+
+	void set_record(SelectRecord* record){ record_ = record;}
 
 private:
 	static const u32 SRIDE_IN_FRAME;

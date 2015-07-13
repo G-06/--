@@ -38,7 +38,8 @@ public:
 	{
 		CAT_STATUS_LIVE = 0,	//生きてる　ゲーム遊べる
 		CAT_STATUS_DEAD,		//死んだ　チェックポイントから復活
-		CAT_STATUS_CLEAR,		//クリア　
+		CAT_STATUS_CLEAR,		//クリア
+		CAT_STATUS_WARP,		//ワープ
 		CAT_STATUS_MAX
 	};
 
@@ -90,6 +91,9 @@ public:
 	// clear
 	void Clear(void);
 
+	//ワープするぜ
+	void Warp(void);
+
 	// 座標の取得
 	const D3DXVECTOR2& __position(void)const{ return position_; }
 
@@ -121,7 +125,11 @@ public:
 	void __is_sp_recover_speed_up(bool is_sp_recover_speed_up) { is_sp_recover_speed_up_ = is_sp_recover_speed_up; }
 	void __is_sp_down(bool is_sp_down) { is_sp_down_ = is_sp_down; }
 
-	u32 __Get_status(void){return (u32)Status_;};
+
+	u32 __Get_status(void){return (u32)Status_;}
+	void __Set_status(u32 status){ Status_ = (CAT_STATUS)status;}
+	bool __Get_warpout(void){return warp_out_;}
+
 	static const u32 DEAD_TIME;
 	static const s32 LOCUS_NUM = 40;
 
@@ -156,6 +164,7 @@ private:
 	static const s32 DEFAULT_SP_MAX;
 	static const s32 DEFAULT_SP_RECOVER_SPEED;
 	static const D3DXVECTOR2 DEFAULT_SIZE;
+	static const u32 OUT_WABISABI;	//ワープして消えた後の余韻
 
 	D3DXVECTOR2 position_;				// プレイヤー座標
 	D3DXVECTOR2 old_position_;			// プレイヤーの前回座標
@@ -189,8 +198,11 @@ private:
 	void UpdateLive(void);		//生きてるときの更新
 	void UpdateDead(void);		//死んでるときの更新
 	void UpdateClear(void);		//クリアした時の更新
-	u32 dead_cnt_;
+	void UpdateWarp(void);		//ワープしてるときの更新
+	u32 dead_cnt_;				//死んだときのアニメーションカウント
+	u32 warp_cnt_;				//ワープするときのアニメーション
 
+	bool warp_out_;
 };
 
 #endif	// _PLAYER_H_

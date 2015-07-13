@@ -78,6 +78,7 @@ public:
 	void __is_flip(bool is_flip) { is_flip_ = is_flip; }
 	const ANIMATION_TYPE& __animation_type(void)const { return animation_type_; }
 	bool __is_animation_end(void) { return is_animation_end_; }
+	const D3DXVECTOR2& __Get_size(void)const{return size_;}
 private:
 	struct ANIMATION_TEXTURE_DATA
 	{
