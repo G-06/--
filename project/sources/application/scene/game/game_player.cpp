@@ -399,6 +399,10 @@ void GamePlayer::UpdateClear(void)
 	}
 	is_fly_ = true;
 	is_force_light_ = false;
+
+	move_.y += DEFAULT_GRAVITY;
+	move_ *= DECREMENT;
+
 	old_position_ = position_;
 	D3DXVECTOR2 t_move = move_;
 	D3DXVECTOR2 t_acceleration = acceleration_;
@@ -406,6 +410,7 @@ void GamePlayer::UpdateClear(void)
 	t_acceleration.x = 0.0f;
 	position_ += t_move + t_acceleration;
 	acceleration_ = D3DXVECTOR2(0.0f,0.0f);
+	StopLightMode();
 
 	player_->__is_flip(is_left_);
 	player_->Update();
@@ -638,6 +643,8 @@ void GamePlayer::Heal(u32 health)
 void GamePlayer::Clear(void)
 {
 	Status_ = CAT_STATUS_CLEAR;
+	StopLightMode();
+
 }
 
 
