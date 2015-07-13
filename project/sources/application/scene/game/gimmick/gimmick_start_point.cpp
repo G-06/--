@@ -64,7 +64,7 @@ void GimmickStartPoint::Update(void)
 void GimmickStartPoint::Draw(void)
 {
 	object_start_point_->__position(position_ - offset_position_);
-	object_start_point_->Draw();
+	//object_start_point_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

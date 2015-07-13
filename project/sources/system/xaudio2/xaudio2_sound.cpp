@@ -196,7 +196,7 @@ void XAudio2Sound::CloneXAudio2Buffer(XAUDIO2_BUFFER* xaudio2_buffer)
 	xaudio2_buffer->AudioBytes = xaudio2_buffer_.AudioBytes;
 	xaudio2_buffer->pAudioData = xaudio2_buffer_.pAudioData;
 	xaudio2_buffer->Flags = XAUDIO2_END_OF_STREAM;
-	xaudio2_buffer->LoopCount = 1;
+	xaudio2_buffer->LoopCount = 0;
 }
 
 //=============================================================================

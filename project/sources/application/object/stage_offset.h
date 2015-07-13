@@ -41,8 +41,10 @@ public:
 
 	// accessor
 	const D3DXVECTOR2& __position(void)const { return position_; }
+	void __position(const D3DXVECTOR2& position) { position_ = position; }
 	void __stage_size(const D3DXVECTOR2& stage_size) { stage_size_ = stage_size; }
 	void __reference_position(const D3DXVECTOR2& reference_position) { reference_position_ = reference_position; }
+	const D3DXVECTOR2& __screen_size(void) { return screen_size_; }
 	void __screen_size(const D3DXVECTOR2& screen_size) { screen_size_ = screen_size; }
 
 private:

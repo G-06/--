@@ -576,7 +576,7 @@ void NormalStage::Update(void)
 			map_->__position(-stage_offset_->__position());
 
 			//”wŒiXV
-			game_bg_->__SetPosition(game_player_->__position());
+			game_bg_->__SetPosition(stage_offset_->__position());
 			game_bg_->__move(game_player_->__move());
 			game_bg_->Update();
 
@@ -1138,6 +1138,12 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					gimmick_container_.push_back(gimmick);
 					game_player_->__position(D3DXVECTOR2(x,y));
 					game_player_->__return_position(D3DXVECTOR2(x,y));
+					stage_offset_->__reference_position(D3DXVECTOR2(x,y));
+					stage_offset_->__position(D3DXVECTOR2(x - stage_offset_->__screen_size().x * 0.5f,y - stage_offset_->__screen_size().y * 0.5f));
+					stage_offset_->Update();
+					map_->__position(-stage_offset_->__position());
+					game_bg_->__SetPosition(stage_offset_->__position());
+
 					i += FindWord(word,&data[i],"\n\0");
 					break;
 				}
