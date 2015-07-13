@@ -665,7 +665,6 @@ void NormalStage::Draw(void)
 		{
 			effect_skeleton_[i]->Draw();
 		}
-
 	}
 
 	object_light_gauge_->Draw();
@@ -1366,6 +1365,11 @@ bool NormalStage::LoadFromFile(const s8* filename)
 	}
 
 	SafeDeleteArray(data);
+
+	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+	{
+		(*it)->__offset_position(stage_offset_->__position());
+	}
 
 	return true;
 }
