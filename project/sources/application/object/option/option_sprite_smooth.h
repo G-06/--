@@ -63,6 +63,7 @@ public:
 	const bool& __is_move(void){return is_move_;}
 	void __texture_id(const Texture::TEXTURE_ID& texture_id);
 	void __point(const Sprite::POINT point);
+	void __right(const f32& right);
 
 	// ˆÚ“®ŠJŽn
 	void StartMove(void);

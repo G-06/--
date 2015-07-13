@@ -26,6 +26,8 @@
 #include "system/direct_input/input_event_buffer.h"
 
 #include "../object/option/option_sprite_smooth.h"
+#include "application/object/message_window.h"
+#include "option/option_decide.h"
 
 //*****************************************************************************
 // constant definition
@@ -36,6 +38,7 @@ const D3DXVECTOR2 Option::EXPAND_MENU_SIZE = D3DXVECTOR2(450.f, 150.f);
 const f32 Option::VOLUME_MIN	= 0.0f;
 const f32 Option::VOLUME_MAX	= 1.0f;
 const f32 Option::VOLUME_RATE	= VOLUME_MAX / 10;
+const u32 DEST_FRAME_COUNT = 20;				// ウィンドウ開閉の時間
 
 //=============================================================================
 // constructor
@@ -53,6 +56,11 @@ Option::Option(void)
 	,key_config_special_(NULL)
 	,key_config_pause_(NULL)
 	,key_config_jump_(NULL)
+	,message_window_(NULL)
+	,option_decide_(NULL)
+	,mode_(OPTION_MODE_OPTION)
+	,bgm_size_temp_(0.0f)
+	,se_size_temp_(0.0f)
 {
 	option_data_._bgm_volume = 1.0f;
 	option_data_._se_volume  = 1.0f;
@@ -107,6 +115,9 @@ bool Option::Initialize(void)
 	se_volume_ = new SeVolume();
 	se_volume_->Initialize();
 
+	option_decide_ = new OptionDecide();
+	option_decide_->Initialize();
+
 	cursor_x_ = 0;
 	cursor_y_ = OPTION_VOLUME_BGM;
 	is_indication_ = false;
@@ -117,18 +128,25 @@ bool Option::Initialize(void)
 	// position
 	const D3DXVECTOR2 MENU_OFFSETT = D3DXVECTOR2(400.0f, 10.0f);
 
-	const D3DXVECTOR2 DEF_LOGO_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 190.f);
-	volume_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 320.0f, 130.f));
-	bgm_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y), 300.0f);
-	se_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y + DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y), 300.0f);
+	const D3DXVECTOR2 DEF_LOGO_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 160.f);
+	volume_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 320.0f, DEF_LOGO_POS.y - 60.0f));
+	bgm_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y), 250.0f);
+	se_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y + DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y), 250.0f);
 
-	const D3DXVECTOR2 DEF_MENU_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 390.0f);
-	keyconfig_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 275.0f, 330.f));
+	const D3DXVECTOR2 DEF_MENU_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 360.0f);
+	keyconfig_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 275.0f, 300.f));
 	key_config_ok_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y), MENU_OFFSETT.x);
 	key_config_cancel_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y), MENU_OFFSETT.x);
 	key_config_special_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 2), MENU_OFFSETT.x);
 	key_config_pause_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 3), MENU_OFFSETT.x);
 
+	// decide
+	option_decide_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 4), MENU_OFFSETT.x);
+
+	// message_window
+	message_window_ = new MessageWindow();
+	message_window_->Initialize();
+	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
 
 	is_select_ = true;
 	bgm_volume_->Select(true);
@@ -158,6 +176,8 @@ void Option::Uninitialize(void)
 	SafeRelease(keyconfig_logo_);
 	SafeRelease(bgm_volume_);
 	SafeRelease(se_volume_);
+	SafeRelease(message_window_);
+	SafeRelease(option_decide_);
 }
 
 //=============================================================================
@@ -174,152 +194,154 @@ void Option::Update(void)
 		key_config_jump_->Select(false);
 		bgm_volume_->Select(false);
 		se_volume_->Select(false);
+		option_decide_->Select(false);
 
 		if(is_select_)
 		{
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
+			if(mode_ == OPTION_MODE_OPTION)
 			{
-				cursor_y_++;
+				if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
+				{
+					cursor_y_++;
+				}
+
+				if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
+				{
+					cursor_y_--;
+				}
+				if(cursor_y_ >= OPTION_MAX)
+				{
+					cursor_y_ = OPTION_MIN + 1;
+				}
+
+				if(cursor_y_ <= OPTION_MIN)
+				{
+					cursor_y_ = OPTION_MAX - 1;
+				}
+
+				switch(cursor_y_)
+				{
+					case Option::OPTION_VOLUME_BGM:
+					{
+						bgm_volume_->Select(true);
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+						{
+							option_data_._bgm_volume -= VOLUME_RATE;
+						}
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+						{
+							option_data_._bgm_volume += VOLUME_RATE;
+						}
+
+						if(option_data_._bgm_volume > VOLUME_MAX)
+						{
+							option_data_._bgm_volume = VOLUME_MAX;
+						}
+
+						if(option_data_._bgm_volume < VOLUME_MIN)
+						{
+							option_data_._bgm_volume = VOLUME_MIN;
+						}
+						bgm_volume_->Adjustvolume(option_data_._bgm_volume);
+						GET_BGM->SetVolume(option_data_._bgm_volume);
+						break;
+					}
+					case Option::OPTION_VOLUME_SE:
+					{
+						se_volume_->Select(true);
+
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+						{
+							option_data_._se_volume -= VOLUME_RATE;
+						}
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+						{
+							option_data_._se_volume += VOLUME_RATE;
+						}
+
+						if(option_data_._se_volume > VOLUME_MAX)
+						{
+							option_data_._se_volume = VOLUME_MAX;
+						}
+
+						if(option_data_._se_volume < VOLUME_MIN)
+						{
+							option_data_._se_volume = VOLUME_MIN;
+						}
+						se_volume_->Adjustvolume(option_data_._se_volume);
+						GET_SE->SetVolume(option_data_._se_volume);
+
+						break;
+					}
+					case Option::OPTION_KEY_CONFIG_OK:
+					{
+						key_config_ok_->Select(true);
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+						{
+							is_select_ = false;
+						}
+						break;
+					}
+					case Option::OPTION_KEY_CONFIG_CANCEL:
+					{
+						key_config_cancel_->Select(true);
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+						{
+							is_select_ = false;
+						}
+						break;
+					}
+					case Option::OPTION_KEY_CONFIG_SPECIAL:
+					{
+						key_config_special_->Select(true);
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+						{
+							is_select_ = false;
+						}
+						break;
+					}
+					case Option::OPTION_KEY_CONFIG_PAUSE:
+					{
+						key_config_pause_->Select(true);
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+						{
+							is_select_ = false;
+						}
+						break;
+					}
+					case OPTION_DECIDE:
+					{
+						option_decide_->Select(true);
+						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+						{
+							mode_ = OPTION_MODE_DECIDE;
+							message_window_->Show();
+						}
+						break;
+					}
+					default:
+					{
+						break;
+					}
+				}
+
+				// cancel
+				if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+				{
+					mode_ = OPTION_MODE_CANCEL;
+					message_window_->Show();
+				}
 			}
-
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
+			else if(mode_ == OPTION_MODE_CANCEL)
 			{
-				cursor_y_--;
+				UpdateModeCancel();
 			}
-			if(cursor_y_ >= OPTION_MAX)
+			else if(mode_ == OPTION_MODE_DECIDE)
 			{
-				cursor_y_ = OPTION_MIN + 1;
-			}
-
-			if(cursor_y_ <= OPTION_MIN)
-			{
-				cursor_y_ = OPTION_MAX - 1;
-			}
-
-			switch(cursor_y_)
-			{
-				case Option::OPTION_VOLUME_BGM:
-				{
-					bgm_volume_->Select(true);
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
-					{
-						option_data_._bgm_volume -= VOLUME_RATE;
-					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
-					{
-						option_data_._bgm_volume += VOLUME_RATE;
-					}
-
-					if(option_data_._bgm_volume > VOLUME_MAX)
-					{
-						option_data_._bgm_volume = VOLUME_MAX;
-					}
-
-					if(option_data_._bgm_volume < VOLUME_MIN)
-					{
-						option_data_._bgm_volume = VOLUME_MIN;
-					}
-					bgm_volume_->Adjustvolume(option_data_._bgm_volume);
-					GET_BGM->SetVolume(option_data_._bgm_volume);
-					break;
-				}
-				case Option::OPTION_VOLUME_SE:
-				{
-					se_volume_->Select(true);
-
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
-					{
-						option_data_._se_volume -= VOLUME_RATE;
-					}
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
-					{
-						option_data_._se_volume += VOLUME_RATE;
-					}
-
-					if(option_data_._se_volume > VOLUME_MAX)
-					{
-						option_data_._se_volume = VOLUME_MAX;
-					}
-
-					if(option_data_._se_volume < VOLUME_MIN)
-					{
-						option_data_._se_volume = VOLUME_MIN;
-					}
-					se_volume_->Adjustvolume(option_data_._se_volume);
-					GET_SE->SetVolume(option_data_._se_volume);
-
-					break;
-				}
-				case Option::OPTION_KEY_CONFIG_OK:
-				{
-					key_config_ok_->Select(true);
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
-					{
-						is_select_ = false;
-					}
-					break;
-				}
-				case Option::OPTION_KEY_CONFIG_CANCEL:
-				{
-					key_config_cancel_->Select(true);
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
-					{
-						is_select_ = false;
-					}
-					break;
-				}
-				case Option::OPTION_KEY_CONFIG_SPECIAL:
-				{
-					key_config_special_->Select(true);
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
-					{
-						is_select_ = false;
-					}
-					break;
-				}
-				case Option::OPTION_KEY_CONFIG_PAUSE:
-				{
-					key_config_pause_->Select(true);
-					if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
-					{
-						is_select_ = false;
-					}
-					break;
-				}
-				default:
-				{
-					break;
-				}
-			}
-
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
-			{
-				OPTION_DATA* option_data = GET_OPTION_DATA;
-
-				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,option_data->_decide_key);
-				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,option_data->_cancel_key);
-				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT ,option_data->_light_key);
-				GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE ,option_data->_pause_key);
-
-				GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,option_data_._decide_key);
-				GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,option_data_._cancel_key);
-				GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT,option_data_._light_key);
-				GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE,option_data_._pause_key);
-
-				*option_data = option_data_;
-
-				FILE* fp = fopen("data/system/option_data.bin","wb");
-
-				if(fp != nullptr)
-				{
-					fwrite(&option_data_,sizeof(OPTION_DATA),1,fp);
-					fclose(fp);
-				}
-
-				is_indication_ = false;
-				cursor_y_ = 0;
+				UpdateModeDecide();
 			}
 		}
+		// キー変更入力
 		else
 		{
 			if(select_menu_alpha_ + plus_alpha_ > 1.0f || select_menu_alpha_ + plus_alpha_ < 0.0f)
@@ -393,8 +415,8 @@ void Option::Update(void)
 					break;
 				}
 			}
-		}
-	}
+		} // is_select_
+	} // is_indication_
 
 	option_bg_->Update();
 	key_config_ok_->Update();
@@ -407,12 +429,15 @@ void Option::Update(void)
 	keyconfig_logo_->Update();
 	bgm_volume_->Update();
 	se_volume_->Update();
+	option_decide_->Update();
 
 	key_config_ok_->__set_button_number_texture(option_data_._decide_key);
 	key_config_cancel_->__set_button_number_texture(option_data_._cancel_key);
 	key_config_special_->__set_button_number_texture(option_data_._light_key);
 	key_config_pause_->__set_button_number_texture(option_data_._pause_key);
 
+	// message_window
+	message_window_->Update();
 }
 
 //=============================================================================
@@ -433,6 +458,9 @@ void Option::Draw(void)
 		keyconfig_logo_->Draw();
 		bgm_volume_->Draw();
 		se_volume_->Draw();
+		option_decide_->Draw();
+
+		message_window_->Draw();
 	}
 }
 
@@ -489,3 +517,216 @@ void Option::Load(void)
 
 	//GET_DIRECT_INPUT->SaveInputEventVertual();
 }
+
+//=============================================================================
+// UpdateModeDecide
+//-----------------------------------------------------------------------------
+// 設定を保存する？のメッセージウィンドウ
+//=============================================================================
+void Option::UpdateModeDecide(void)
+{
+	option_decide_->__texture_id_frame(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+	// ウィンドウのタイトル
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_STRING_OP_CONFIRM_SAVE);
+
+	// yes no の選択
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+	{
+		message_window_->SelectDown();
+	}
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+	{
+		message_window_->SelectUp();
+	}
+
+	// 決定
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+	{
+		// YES
+		if(message_window_->__is_select() == MessageWindow::MESSAGE_YES)
+		{
+			// 枠色変更
+			message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+			mode_ = OPTION_MODE_OPTION;
+			message_window_->ForcingClose();
+			is_indication_ = false;
+			cursor_y_ = 0;
+
+			// save
+			OPTION_DATA* option_data = GET_OPTION_DATA;
+
+			GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,option_data->_decide_key);
+			GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,option_data->_cancel_key);
+			GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT ,option_data->_light_key);
+			GET_DIRECT_INPUT->UnregisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE ,option_data->_pause_key);
+
+			GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_DECIDE,option_data_._decide_key);
+			GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_CANCEL,option_data_._cancel_key);
+			GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT,option_data_._light_key);
+			GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE,option_data_._pause_key);
+
+			*option_data = option_data_;
+
+			FILE* fp = fopen("data/system/option_data.bin","wb");
+
+			if(fp != nullptr)
+			{
+				fwrite(&option_data_,sizeof(OPTION_DATA),1,fp);
+				fclose(fp);
+			}
+		}
+		// NO
+		else if(message_window_->__is_select() == MessageWindow::MESSAGE_NO)
+		{
+			// 枠色変更
+			message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+			// ウィンドウを閉じる
+			if(message_window_->__is_move() == false)
+			{
+				message_window_->Close();
+				mode_ = OPTION_MODE_OPTION;
+			}
+		}
+	}
+
+	// キャンセル
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+	{
+		if(message_window_->__is_move() == false)
+		{
+			message_window_->Close();
+			mode_ = OPTION_MODE_OPTION;
+		}
+	}
+}
+
+//=============================================================================
+// UpdateModeCancel
+//-----------------------------------------------------------------------------
+// 変更キャンセルして戻る？のメッセージウィンドウ
+//=============================================================================
+void Option::UpdateModeCancel(void)
+{
+	switch(cursor_y_)
+	{
+		case Option::OPTION_VOLUME_BGM:
+		{
+			bgm_volume_->Select(true);
+			break;
+		}
+		case Option::OPTION_VOLUME_SE:
+		{
+			se_volume_->Select(true);
+			break;
+		}
+		case Option::OPTION_KEY_CONFIG_OK:
+		{
+			key_config_ok_->Select(true);
+			break;
+		}
+		case Option::OPTION_KEY_CONFIG_CANCEL:
+		{
+			key_config_cancel_->Select(true);
+			break;
+		}
+		case Option::OPTION_KEY_CONFIG_SPECIAL:
+		{
+			key_config_special_->Select(true);
+			break;
+		}
+		case Option::OPTION_KEY_CONFIG_PAUSE:
+		{
+			key_config_pause_->Select(true);
+			break;
+		}
+		case OPTION_DECIDE:
+		{
+			option_decide_->Select(true);
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+	// ウィンドウのタイトル
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_STRING_OP_CONFIRM_CANCEL);
+
+	// yes no の選択
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+	{
+		message_window_->SelectDown();
+	}
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+	{
+		message_window_->SelectUp();
+	}
+
+	// 決定
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+	{
+		// YES
+		if(message_window_->__is_select() == MessageWindow::MESSAGE_YES)
+		{
+			// 枠色変更
+			message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+			// sonnd volume 戻す
+			GET_BGM->SetVolume(bgm_size_temp_);
+			GET_SE->SetVolume(se_size_temp_);
+			bgm_volume_->Adjustvolume(bgm_size_temp_);
+			se_volume_->Adjustvolume(se_size_temp_);
+
+			mode_ = OPTION_MODE_OPTION;
+			message_window_->ForcingClose();
+			is_indication_ = false;
+			cursor_y_ = 0;
+		}
+		// NO
+		else if(message_window_->__is_select() == MessageWindow::MESSAGE_NO)
+		{
+			// 枠色変更
+			message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+			// ウィンドウを閉じる
+			if(message_window_->__is_move() == false)
+			{
+				message_window_->Close();
+				mode_ = OPTION_MODE_OPTION;
+			}
+		}
+	}
+
+	// キャンセル
+	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
+	{
+		if(message_window_->__is_move() == false)
+		{
+			message_window_->Close();
+			mode_ = OPTION_MODE_OPTION;
+		}
+	}
+}
+
+//=============================================================================
+// __is_indication
+//-----------------------------------------------------------------------------
+//=============================================================================
+void Option::__is_indication(const bool indication)
+{
+	is_indication_ = indication;
+
+	// オプションのキー設定を取ってくる
+	if(indication){
+		option_data_ = *GET_OPTION_DATA;
+		bgm_size_temp_ = option_data_._bgm_volume;
+		se_size_temp_ = option_data_._se_volume;
+	}
+}
+
+
+// EOF

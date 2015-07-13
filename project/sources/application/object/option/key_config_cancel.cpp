@@ -162,12 +162,10 @@ void KeyConfigCancel::__set_button_number_texture(INPUT_EVENT button)
 
 		case INPUT_EVENT_PAD_11:
 			set_button_number_->__texture_id(Texture::TEXTURE_ID_OPTION_KEY_11);
-
 			break;
 
 		case INPUT_EVENT_PAD_12:
 			set_button_number_->__texture_id(Texture::TEXTURE_ID_OPTION_KEY_12);
-
 			break;
 
 		case INPUT_EVENT_PAD_13:
@@ -179,7 +177,11 @@ void KeyConfigCancel::__set_button_number_texture(INPUT_EVENT button)
 			break;
 
 		case INPUT_EVENT_PAD_15:
-			set_button_number_->__texture_id(Texture::TEXTURE_ID_NONE);
+			set_button_number_->__texture_id(Texture::TEXTURE_ID_OPTION_KEY_15);
+			break;
+
+		default :
+			set_button_number_->__texture_id(Texture::TEXTURE_ID_DOT);
 			break;
 	}
 }

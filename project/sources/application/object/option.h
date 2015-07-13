@@ -35,6 +35,8 @@ class VolumeLogo;
 class KeyconfigLogo;
 class BgmVolume;
 class SeVolume;
+class OptionDecide;
+class MessageWindow;
 
 //*****************************************************************************
 // class definition
@@ -51,7 +53,17 @@ public:
 		OPTION_KEY_CONFIG_CANCEL,
 		OPTION_KEY_CONFIG_SPECIAL,
 		OPTION_KEY_CONFIG_PAUSE,
+		OPTION_DECIDE,
 		OPTION_MAX
+	};
+
+	enum OPTION_MODE
+	{
+		OPTION_MODE_NONE = -1,
+		OPTION_MODE_OPTION = 0,
+		OPTION_MODE_DECIDE,
+		OPTION_MODE_CANCEL,
+		OPTION_MODE_MAX
 	};
 
 	static const D3DXVECTOR2 DEFAULT_MENU_SIZE;
@@ -80,13 +92,16 @@ public:
 
 	void Load(void);
 
-	void __is_indication(const bool indication){ is_indication_ = indication;}
+	void __is_indication(const bool indication);
 	const bool __is_indication(void)const{ return is_indication_;}
 
 private:
 	static const f32 VOLUME_MIN;
 	static const f32 VOLUME_MAX;
 	static const f32 VOLUME_RATE;
+
+	void UpdateModeDecide(void);
+	void UpdateModeCancel(void);
 
 	OptionBg* option_bg_;
 	OptionLogo* option_logo_;
@@ -101,6 +116,9 @@ private:
 
 	BgmVolume* bgm_volume_;
 	SeVolume* se_volume_;
+
+	OptionDecide* option_decide_;
+	MessageWindow* message_window_;
 
 	//OptionSpriteSmooth* bg_;
 	//OptionSpriteSmooth* logo_;
@@ -122,9 +140,10 @@ private:
 
 	OPTION_DATA option_data_;
 
-	//KEY_CONFIG key_config_temp_[5];
-	s32 bgm_size_temp_;
-	s32 se_size_temp_;
+	OPTION_MODE mode_;
+
+	f32 bgm_size_temp_;
+	f32 se_size_temp_;
 };
 
 #endif	// _OPTION_H_

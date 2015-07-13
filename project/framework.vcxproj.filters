@@ -559,6 +559,9 @@
     <ClInclude Include="sources\application\object\option\option_sprite_smooth.h">
       <Filter>sources\application\object\option</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\object\option\option_decide.h">
+      <Filter>sources\application\object\option</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -964,6 +967,9 @@
       <Filter>sources\application\object</Filter>
     </ClCompile>
     <ClCompile Include="sources\application\object\option\option_sprite_smooth.cpp">
+      <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\object\option\option_decide.cpp">
       <Filter>sources\application\object\option</Filter>
     </ClCompile>
   </ItemGroup>

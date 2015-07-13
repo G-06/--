@@ -18,7 +18,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 SIZE_SCALE = D3DXVECTOR2(1.1f,0.9f);
+const D3DXVECTOR2 SIZE_SCALE = D3DXVECTOR2(1.1f,1.0f);
 const D3DXVECTOR2 DEFAULT_SIZE = D3DXVECTOR2(853.0f * SIZE_SCALE.x, 700.0f * SIZE_SCALE.y);
 const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
 

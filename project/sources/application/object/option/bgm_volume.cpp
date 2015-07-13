@@ -28,7 +28,8 @@ const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f
 
 const f32 BgmVolume::VOLUME_MAX = 1.0f;
 const f32 BgmVolume::VOLUME_MIN = 0.0f;
-const D3DXVECTOR2 BgmVolume::SIZE = D3DXVECTOR2(270.0f,30.0f);
+const D3DXVECTOR2 SIZE_SCALE = D3DXVECTOR2(0.8f, 0.8f);
+const D3DXVECTOR2 BgmVolume::SIZE = D3DXVECTOR2(500.0f * SIZE_SCALE.x,100.0f * SIZE_SCALE.y);
 
 //=============================================================================
 // constructor
@@ -36,6 +37,8 @@ const D3DXVECTOR2 BgmVolume::SIZE = D3DXVECTOR2(270.0f,30.0f);
 BgmVolume::BgmVolume(void)
 	:bgm_volume_(1.0f)
 	,volume_gauge_(NULL)
+	,volume_gauge_frame_(NULL)
+	,volume_gauge_back_(NULL)
 	,bgm_string_(NULL)
 	,bgm_string_frame_(NULL)
 {
@@ -53,12 +56,29 @@ BgmVolume::~BgmVolume(void)
 //=============================================================================
 bool BgmVolume::Initialize(void)
 {
+	// gauge
 	volume_gauge_ = new OptionSpriteSmooth();
 	volume_gauge_->Initialize();
 	volume_gauge_->__size(D3DXVECTOR2(bgm_volume_ * SIZE.x,SIZE.y));
 	volume_gauge_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,225.f));
 	volume_gauge_->__point(Sprite::POINT_LEFT_UP);
+	volume_gauge_->__texture_id(Texture::TEXTURE_ID_OPTION_BGM_BAR);
 
+	volume_gauge_frame_ = new OptionSpriteSmooth();
+	volume_gauge_frame_->Initialize();
+	volume_gauge_frame_->__size(D3DXVECTOR2(SIZE.x,SIZE.y));
+	volume_gauge_frame_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,225.f));
+	volume_gauge_frame_->__point(Sprite::POINT_LEFT_UP);
+	volume_gauge_frame_->__texture_id(Texture::TEXTURE_ID_OPTION_BGM_BAR_FRAME);
+
+	volume_gauge_back_ = new OptionSpriteSmooth();
+	volume_gauge_back_->Initialize();
+	volume_gauge_back_->__size(D3DXVECTOR2(SIZE.x,SIZE.y));
+	volume_gauge_back_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,225.f));
+	volume_gauge_back_->__point(Sprite::POINT_LEFT_UP);
+	volume_gauge_back_->__texture_id(Texture::TEXTURE_ID_OPTION_BGM_BAR_BACK);
+
+	// string
 	bgm_string_ = new OptionSpriteSmooth();
 	bgm_string_->Initialize();
 	bgm_string_->__size(DEFAULT_SIZE);
@@ -80,6 +100,8 @@ bool BgmVolume::Initialize(void)
 void BgmVolume::Uninitialize(void)
 {
 	SafeRelease(volume_gauge_);
+	SafeRelease(volume_gauge_frame_);
+	SafeRelease(volume_gauge_back_);
 	SafeRelease(bgm_string_);
 	SafeRelease(bgm_string_frame_);
 }
@@ -92,6 +114,8 @@ void BgmVolume::Update(void)
 	bgm_string_->Update();
 	bgm_string_frame_->Update();
 	volume_gauge_->Update();
+	volume_gauge_frame_->Update();
+	volume_gauge_back_->Update();
 }
 
 //=============================================================================
@@ -101,7 +125,10 @@ void BgmVolume::Draw(void)
 {
 	bgm_string_frame_->Draw();
 	bgm_string_->Draw();
+
+	volume_gauge_back_->Draw();
 	volume_gauge_->Draw();
+	volume_gauge_frame_->Draw();
 }
 
 //=============================================================================
@@ -120,7 +147,8 @@ void BgmVolume::Adjustvolume(f32 volume)
 	}
 
 	bgm_volume_ = volume;
-	volume_gauge_->__size(D3DXVECTOR2(bgm_volume_ * (DEFAULT_SIZE.x * 1.5f), DEFAULT_SIZE.y));
+	volume_gauge_->__size(D3DXVECTOR2(bgm_volume_ * SIZE.x, SIZE.y));
+	volume_gauge_->__right(bgm_volume_);
 }
 
 //=============================================================================
@@ -145,7 +173,10 @@ void BgmVolume::__position(const D3DXVECTOR2 position, const float offset_x)
 {
 	bgm_string_->__position(position);
 	bgm_string_frame_->__position(position);
-	volume_gauge_->__position(D3DXVECTOR2(position.x + offset_x, position.y - DEFAULT_SIZE.y * 0.5f));
+
+	volume_gauge_->__position(D3DXVECTOR2(position.x + offset_x, position.y - SIZE.y * 0.5f));
+	volume_gauge_frame_->__position(D3DXVECTOR2(position.x + offset_x, position.y - SIZE.y * 0.5f));
+	volume_gauge_back_->__position(D3DXVECTOR2(position.x + offset_x, position.y - SIZE.y * 0.5f));
 }
 
 

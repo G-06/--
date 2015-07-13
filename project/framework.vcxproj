@@ -43,6 +43,7 @@
     <ClCompile Include="sources\application\object\option\key_config_pause.cpp" />
     <ClCompile Include="sources\application\object\option\key_config_special.cpp" />
     <ClCompile Include="sources\application\object\option\option_bg.cpp" />
+    <ClCompile Include="sources\application\object\option\option_decide.cpp" />
     <ClCompile Include="sources\application\object\option\option_logo.cpp" />
     <ClCompile Include="sources\application\object\option\option_sprite_smooth.cpp" />
     <ClCompile Include="sources\application\object\option\se_volume.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="sources\application\object\option\key_config_special.h" />
     <ClInclude Include="sources\application\object\option\option_bg.h" />
     <ClInclude Include="sources\application\object\option\option_data.h" />
+    <ClInclude Include="sources\application\object\option\option_decide.h" />
     <ClInclude Include="sources\application\object\option\option_logo.h" />
     <ClInclude Include="sources\application\object\option\option_sprite_smooth.h" />
     <ClInclude Include="sources\application\object\option\se_volume.h" />
