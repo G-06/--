@@ -177,6 +177,8 @@ void Pause::Show(void)
 	is_show_ = true;
 	is_move_ = true;
 
+	GET_SE->Play(SE::SE_ID_PAUSE);
+
 	// bg
 	const u32 frame_count = dest_frame_count_ -u32(dest_frame_count_ * FRAME_COUNT_RATE);
 	bg_->__position(DEFAULT_POSITION);
@@ -239,6 +241,8 @@ void Pause::Close(void)
 {
 	is_show_ = false;
 	is_move_ = true;
+
+	GET_SE->Play(SE::SE_ID_PAUSE);
 
 	// bg
 	const u32 frame_count = dest_frame_count_ -u32(dest_frame_count_ * FRAME_COUNT_RATE);

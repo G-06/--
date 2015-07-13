@@ -90,6 +90,7 @@ private:
 	u32 time_;
 	bool is_stop_;
 	bool new_record_flag_;
+	bool is_first_;
 };
 
 #endif	// _ASSERT_EFFECT_CLEAR_H_

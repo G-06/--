@@ -151,16 +151,20 @@
 //*****************************************************************************
 #define SE_DECIDE				400
 #define SE_CANCEL				401
-#define SE_WINDOW_OPEN			402
-#define SE_WINDOW_CLOSE			403
-#define SE_NYAS_JUMP			404
-#define SE_NYAS_LIGHT			405
-#define SE_NYAS_LIGHT_START		406
-#define SE_REFLECTION			407
-#define SE_DEATH				408
-#define SE_CHECK_POINT			409
-#define SE_NEW_RECORD			410
-#define SE_GOAL					411
-#define SE_STAGE_START			412
+#define SE_CURSOR				402
+#define SE_WINDOW_OPEN			403
+#define SE_WINDOW_CLOSE			404
+#define SE_WINDOW_SELECT		405
+#define SE_NYAS_JUMP			406
+#define SE_NYAS_LIGHT_END		407
+#define SE_NYAS_LIGHT_START		408
+#define SE_LIGHT_COLLISION		409
+#define SE_REFLECTION			410
+#define SE_DEATH				411
+#define SE_CHECK_POINT			412
+#define SE_NEW_RECORD			413
+#define SE_GOAL					414
+#define SE_STAGE_START			415
+#define SE_PAUSE				416
 
 //---------------------------------- EOF --------------------------------------

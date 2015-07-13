@@ -497,6 +497,7 @@ void GamePlayer::Jump(void)
 {
 	if(!is_fly_)
 	{
+		GET_SE->Play(SE::SE_ID_NYAS_JUMP);
 		is_fly_ = true;
 		move_.y = JUMP_SPEED;
 		player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JUMP);
@@ -511,6 +512,11 @@ void GamePlayer::HitStage(const D3DXVECTOR2& position,bool is_floor)
 	position_.x = position.x;
 
 	position_.y = position.y;
+
+	if(is_light_)
+	{
+		GET_SE->Play(SE::SE_ID_NYAS_LIGHT_COLLISION);
+	}
 
 	is_light_ = false;
 
@@ -565,6 +571,7 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 			lightning_start_->Initialize();
 			lightning_start_->__position(position_);
 			lightning_start_->__offset_position(offset_position_);
+			GET_SE->Play(SE::SE_ID_NYAS_LIGHT_START);
 		}
 	}
 }
@@ -604,6 +611,7 @@ void GamePlayer::Dead(void)
 	is_light_ = false;
 	move_ = D3DXVECTOR2(0.0f,0.0f);
 	Status_ = CAT_STATUS_DEAD;
+	GET_SE->Play(SE::SE_ID_DEATH);
 }
 
 //=============================================================================

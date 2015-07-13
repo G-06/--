@@ -382,6 +382,7 @@ void NormalStage::Update(void)
 
 							if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 							{
+								GET_SE->Play(SE::SE_ID_DECIDE);
 								const s32 current_select = message_window_->__is_select();
 
 								message_window_->__select_frame_texture_id_(current_select, Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
@@ -433,6 +434,7 @@ void NormalStage::Update(void)
 						}
 						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 						{
+							GET_SE->Play(SE::SE_ID_DECIDE);
 							// select
 							const s32 current_select = pause_->__is_select();
 							pause_->__select_texture_id_(current_select, Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
@@ -793,7 +795,8 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 				if(game_player_->__is_light())
 				{
 					game_player_->__position(collision_map.__position());
-					
+					GET_SE->Play(SE::SE_ID_REFLECTION);
+
 					for(s32 i = 0; i < EFFECT_STOCK_NUM; i++)
 					{
 						if(effect_mirror_[i]->__is_free())
@@ -956,6 +959,7 @@ void NormalStage::CollisionGimmick(void)
 					GimmickCheckPoint::DATA* data = (GimmickCheckPoint::DATA*)(*it)->GetPointer();
 					if(game_player_->__check_point_priority() < data->_priority)
 					{
+						GET_SE->Play(SE::SE_ID_CHECK_POINT);
 						data->_hit = true;
 						game_player_->__check_point_priority(data->_priority);
 						game_player_->__return_position(gimmick_position);
@@ -969,6 +973,7 @@ void NormalStage::CollisionGimmick(void)
 				}
 				case Gimmick::TYPE_GOAL_POINT:
 				{
+					GET_SE->Play(SE::SE_ID_GOAL);
 					DEBUG_TOOL.__debug_display()->Print("hit goal point\n");
 					is_clear_ = true;
 					game_player_->Clear();
@@ -1029,6 +1034,7 @@ void NormalStage::CollisionGimmick(void)
 
 							//game_player_->__position(data->_shotposition);
 							
+							GET_SE->Play(SE::SE_ID_REFLECTION);
 							game_player_->ChangeDirection(data->_shotvec);
 							
 						}
