@@ -583,7 +583,11 @@ void GamePlayer::StopLightMode(void)
 {
 	if(!is_force_light_)
 	{
-		is_light_ = false;
+		if(is_light_)
+		{
+			GET_SE->Play(SE::SE_ID_NYAS_LIGHT_END);
+			is_light_ = false;
+		}
 	}
 }
 
