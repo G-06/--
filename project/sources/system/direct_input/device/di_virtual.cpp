@@ -81,10 +81,13 @@ void DIVirtual::Update(void)
 		input_event_buffer_->SetRelease(static_cast<INPUT_EVENT>(i + INPUT_EVENT_VIRTUAL_LEFT),release_key);
 	}
 
+#ifndef _RELEASE
 	for(u32 i = 0;i < KEY_MAX;++i)
 	{
 		DEBUG_TOOL.__debug_display()->Print("%d,",input_event_buffer_->CheckPress(static_cast<INPUT_EVENT>(i + INPUT_EVENT_VIRTUAL_LEFT)));
 	}
+	DEBUG_TOOL.__debug_display()->Print("\n");
+#endif //_RELEASE
 }
 
 //=============================================================================

@@ -129,6 +129,9 @@ void GamePlayer::Update(void)
 		UpdateWarp();
 		break;
 	}
+#ifndef _RELEASE
+	DEBUG_TOOL.__debug_display()->Print("player position(%.1f,%.1f)\n",position_.x,position_.y);
+#endif // _RELEASE
 }
 
 //=============================================================================
@@ -539,44 +542,47 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 {
 	if(is_enable_light_)
 	{
-		D3DXVECTOR2 normalize_vector;
-		if(sp_ > 0)
+		if(!is_force_light_)
 		{
-			is_enable_light_ = false;
-			is_light_ = true;
-			is_fly_ = true;
-			D3DXVec2Normalize(&normalize_vector,&vector);
-
-			if(normalize_vector.x == 0.0f && normalize_vector.y == 0.0f)
+			D3DXVECTOR2 normalize_vector;
+			if(sp_ > 0)
 			{
-				if(is_left_)
+				is_enable_light_ = false;
+				is_light_ = true;
+				is_fly_ = true;
+				D3DXVec2Normalize(&normalize_vector,&vector);
+
+				if(normalize_vector.x == 0.0f && normalize_vector.y == 0.0f)
 				{
-					move_.x = -LIGHT_SPEED;
-					move_.y = 0.0f;
+					if(is_left_)
+					{
+						move_.x = -LIGHT_SPEED;
+						move_.y = 0.0f;
+					}
+					else
+					{
+						move_.x = LIGHT_SPEED;
+						move_.y = 0.0f;
+					}
 				}
 				else
 				{
-					move_.x = LIGHT_SPEED;
-					move_.y = 0.0f;
+					move_ = normalize_vector * LIGHT_SPEED;
 				}
-			}
-			else
-			{
-				move_ = normalize_vector * LIGHT_SPEED;
-			}
 
-			player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
-			if(lightning_start_)
-			{
-				lightning_start_->Uninitialize();
-				delete lightning_start_;
-				lightning_start_ = nullptr;
+				player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
+				if(lightning_start_)
+				{
+					lightning_start_->Uninitialize();
+					delete lightning_start_;
+					lightning_start_ = nullptr;
+				}
+				lightning_start_ = new EffectLightning();
+				lightning_start_->Initialize();
+				lightning_start_->__position(position_);
+				lightning_start_->__offset_position(offset_position_);
+				GET_SE->Play(SE::SE_ID_NYAS_LIGHT_START);
 			}
-			lightning_start_ = new EffectLightning();
-			lightning_start_->Initialize();
-			lightning_start_->__position(position_);
-			lightning_start_->__offset_position(offset_position_);
-			GET_SE->Play(SE::SE_ID_NYAS_LIGHT_START);
 		}
 	}
 }
