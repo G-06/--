@@ -59,6 +59,7 @@ public:
 	// —Ç‚¢Š´‚¶‚ÉŠJ•Â
 	void Show(void);
 	void Close(void);
+	void ForcingClose(void);
 
 	const bool& __is_show(void) {return is_show_;}
 	void __dest_frame_count(const u32& frame){dest_frame_count_ = frame;}

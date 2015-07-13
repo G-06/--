@@ -97,6 +97,8 @@ NormalStage::~NormalStage(void)
 //=============================================================================
 bool NormalStage::Initialize(void)
 {
+	GET_BGM->Play(BGM::BGM_ID_STAGE_01);
+
 	game_player_ = new GamePlayer();
 
 	if(!SafeInitialize(game_player_))
@@ -161,7 +163,8 @@ bool NormalStage::Initialize(void)
 	option_ = new Option();
 	option_->Initialize();
 
-	for(s32 i = 0; i < 1000; i++)
+
+	for(s32 i = 0; i < EFFECT_STOCK_NUM; i++)
 	{
 		effect_mirror_[i] = new EffectMirror();
 		effect_mirror_[i]->Initialize();
@@ -219,7 +222,7 @@ void NormalStage::Uninitialize(void)
 
 	SafeRelease(option_);
 
-	for(s32 i = 0; i < 1000; i++)
+	for(s32 i = 0; i < EFFECT_STOCK_NUM; i++)
 	{
 		SafeRelease(effect_mirror_[i]);
 		SafeRelease(effect_skeleton_[i]);
@@ -379,6 +382,7 @@ void NormalStage::Update(void)
 
 							if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 							{
+								GET_SE->Play(SE::SE_ID_DECIDE);
 								const s32 current_select = message_window_->__is_select();
 
 								message_window_->__select_frame_texture_id_(current_select, Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
@@ -430,6 +434,7 @@ void NormalStage::Update(void)
 						}
 						if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 						{
+							GET_SE->Play(SE::SE_ID_DECIDE);
 							// select
 							const s32 current_select = pause_->__is_select();
 							pause_->__select_texture_id_(current_select, Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
@@ -508,13 +513,14 @@ void NormalStage::Update(void)
 				(*it)->Update();
 			}
 
-			for(s32 i = 0; i < 1000; i++)
+			
+			for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 			{
-				if(effect_mirror_[i]->__is_free() == false)
+				if(!effect_mirror_[i]->__is_free())
 				{
 					effect_mirror_[i]->Update();
 				}
-				if(effect_skeleton_[i]->__is_free() == false)
+				if(!effect_skeleton_[i]->__is_free())
 				{
 					effect_skeleton_[i]->Update();
 				}
@@ -559,19 +565,6 @@ void NormalStage::Update(void)
 				return false;
 			};
 
-			for(s32 i = 0; i < 1000; i++)
-			{
-				if(effect_mirror_[i]->__is_death())
-				{
-					effect_mirror_[i]->__is_free(true);
-				}
-				if(effect_skeleton_[i]->__is_death())
-				{
-					effect_skeleton_[i]->__is_free(true);
-				}
-			}
-
-			//？
 			effect_container_.erase(remove_if(effect_container_.begin(),effect_container_.end(),predfunc),effect_container_.end());
 
 			// offsetによる各オブジェクト類の位置更新
@@ -597,13 +590,14 @@ void NormalStage::Update(void)
 				(*it)->__offset_position(stage_offset_->__position());
 			}
 
-			for(s32 i = 0; i < 1000; i++)
+			 
+			for(s32 i = 0;i < EFFECT_STOCK_NUM;i++)
 			{
-				if(effect_mirror_[i]->__is_free() == false)
+				if(!effect_mirror_[i]->__is_free())
 				{
 					effect_mirror_[i]->__offset_position(stage_offset_->__position());
 				}
-				if(effect_skeleton_[i]->__is_free() == false)
+				if(!effect_skeleton_[i]->__is_free())
 				{
 					effect_skeleton_[i]->__offset_position(stage_offset_->__position());
 				}
@@ -658,19 +652,22 @@ void NormalStage::Draw(void)
 		(*it)->Draw();
 	}
 
-	for(s32 i = 0; i < 1000; i++)
+	game_player_->Draw();
+
+	
+	for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 	{
-		if(effect_mirror_[i]->__is_free() == false)
+		if(!effect_mirror_[i]->__is_free())
 		{
 			effect_mirror_[i]->Draw();
 		}
-		if(effect_skeleton_[i]->__is_free() == false)
+		if(!effect_skeleton_[i]->__is_free())
 		{
 			effect_skeleton_[i]->Draw();
 		}
+
 	}
 
-	game_player_->Draw();
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
 	object_player_life_->Draw();
@@ -798,12 +795,14 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 				if(game_player_->__is_light())
 				{
 					game_player_->__position(collision_map.__position());
-					for(s32 i = 0; i < 1000; i++)
+					GET_SE->Play(SE::SE_ID_REFLECTION);
+
+					for(s32 i = 0; i < EFFECT_STOCK_NUM; i++)
 					{
 						if(effect_mirror_[i]->__is_free())
 						{
-							effect_mirror_[i]->Start();
 							effect_mirror_[i]->__position(game_player_->__position());
+							effect_mirror_[i]->Start();
 							break;
 						}
 					}
@@ -841,12 +840,13 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 					effect_timer_++;
 					if(effect_timer_ % 20 == 0)
 					{
-						for(s32 i = 0; i < 1000; i++)
+						
+						for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 						{
 							if(effect_skeleton_[i]->__is_free())
 							{
-								effect_skeleton_[i]->Start();
 								effect_skeleton_[i]->__position(game_player_->__position());
+								effect_skeleton_[i]->Start();
 								break;
 							}
 						}
@@ -959,6 +959,7 @@ void NormalStage::CollisionGimmick(void)
 					GimmickCheckPoint::DATA* data = (GimmickCheckPoint::DATA*)(*it)->GetPointer();
 					if(game_player_->__check_point_priority() < data->_priority)
 					{
+						GET_SE->Play(SE::SE_ID_CHECK_POINT);
 						data->_hit = true;
 						game_player_->__check_point_priority(data->_priority);
 						game_player_->__return_position(gimmick_position);
@@ -972,6 +973,7 @@ void NormalStage::CollisionGimmick(void)
 				}
 				case Gimmick::TYPE_GOAL_POINT:
 				{
+					GET_SE->Play(SE::SE_ID_GOAL);
 					DEBUG_TOOL.__debug_display()->Print("hit goal point\n");
 					is_clear_ = true;
 					game_player_->Clear();
@@ -1032,6 +1034,7 @@ void NormalStage::CollisionGimmick(void)
 
 							//game_player_->__position(data->_shotposition);
 							
+							GET_SE->Play(SE::SE_ID_REFLECTION);
 							game_player_->ChangeDirection(data->_shotvec);
 							
 						}

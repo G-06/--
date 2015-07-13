@@ -60,6 +60,9 @@ private:
 	static const D3DXVECTOR2 SIZE;
 
 	OptionSpriteSmooth* volume_gauge_;
+	OptionSpriteSmooth* volume_gauge_frame_;
+	OptionSpriteSmooth* volume_gauge_back_;
+
 	OptionSpriteSmooth* bgm_string_;
 	OptionSpriteSmooth* bgm_string_frame_;
 

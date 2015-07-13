@@ -14,6 +14,7 @@
 #include "object/message_sprite_smooth.h"
 #include "system/directx9/texture/texture.h"
 
+
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
@@ -158,6 +159,8 @@ void MessageWindow::Show(void)
 	is_show_ = true;
 	is_move_ = true;
 
+	GET_SE->Play(SE::SE_ID_WINDOW_OPEN);
+
 	// window
 	window_->__position(window_position_);
 	window_->__size(DEFAULT_SIZE);
@@ -220,6 +223,8 @@ void MessageWindow::Close(void)
 	is_show_ = false;
 	is_move_ = true;
 
+	GET_SE->Play(SE::SE_ID_WINDOW_CLOSE);
+
 	// window
 	window_->__position(window_->__position());
 	window_->__size(window_->__size());
@@ -265,6 +270,48 @@ void MessageWindow::Close(void)
 }
 
 //=============================================================================
+// close
+//-----------------------------------------------------------------------------
+// —Ç‚¢Š´‚¶‚É•Â‚¶‚é
+//=============================================================================
+void MessageWindow::ForcingClose(void)
+{
+	is_show_ = false;
+	is_move_ = false;
+
+	// window
+	window_->__dest_position(window_position_);
+	window_->__dest_size(DEFAULT_SIZE);
+	window_->__dest_color(CLEAR_COLOR);
+	window_->__dest_frame(dest_frame_count_);
+	window_->ForcingDest();
+
+	// title
+	title_->__dest_position(window_position_);
+	title_->__dest_size(DEFAULT_SIZE);
+	title_->__dest_color(CLEAR_COLOR);
+	title_->__dest_frame(dest_frame_count_);
+	title_->ForcingDest();
+
+	for(int i = 0 ; i < SELECT_MAX ; i++){
+
+		// frame
+		frame_[i]->__dest_position(window_position_);
+		frame_[i]->__dest_size(DEFAULT_SIZE);
+		frame_[i]->__dest_color(CLEAR_COLOR);
+		frame_[i]->__dest_frame(dest_frame_count_);
+		frame_[i]->ForcingDest();
+
+		// select
+		select_[i]->__dest_position(window_position_);
+		select_[i]->__dest_size(DEFAULT_SIZE);
+		select_[i]->__dest_color(CLEAR_COLOR);
+		select_[i]->__dest_frame(dest_frame_count_);
+		select_[i]->ForcingDest();
+	}
+}
+
+//=============================================================================
 // SelectUp
 //=============================================================================
 void MessageWindow::SelectUp(void)
@@ -295,6 +342,7 @@ void MessageWindow::SelectDown(void)
 //=============================================================================
 void MessageWindow::_ChangeSelect(const s32& now, const s32& old)
 {
+	GET_SE->Play(SE::SE_ID_CURSOR);
 	frame_[now]->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 	frame_[old]->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 }

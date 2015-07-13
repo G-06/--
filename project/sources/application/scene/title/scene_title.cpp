@@ -22,6 +22,7 @@
 #include "system/directx9/texture/texture.h"
 #include "object/option.h"
 
+
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
@@ -86,6 +87,8 @@ SceneTitle::~SceneTitle(void)
 //=============================================================================
 bool SceneTitle::Initialize(void)
 {
+	GET_BGM->Play(BGM::BGM_ID_TITLE);
+
 	bg_ = new TitleBg();
 	bg_->Initialize();
 
@@ -307,6 +310,7 @@ void SceneTitle::_UpdatePush(void)
 	// モード変更
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
+		GET_SE->Play(SE::SE_ID_DECIDE);
 		decide_interval_ = DESIDE_INTERVAL_COUNT;
 		mode_ = MODE_PUSH_INTERVAL;
 
@@ -337,12 +341,14 @@ void SceneTitle::_UpdateSelect(void)
 	// 選択肢移動の入力
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_UP))
 	{
+		GET_SE->Play(SE::SE_ID_CURSOR);
 		current_select_--;
 		input = true;
 		if(current_select_ < 0) current_select_ = SELECT_MAX - 1;
 	}
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DOWN))
 	{
+		GET_SE->Play(SE::SE_ID_CURSOR);
 		current_select_++;
 		input = true;
 		if(current_select_ >= SELECT_MAX) current_select_ = 0;
@@ -352,6 +358,7 @@ void SceneTitle::_UpdateSelect(void)
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 	{
 		// 選択肢を戻しておく
+		GET_SE->Play(SE::SE_ID_CANCEL);
 		mode_ = MODE_PUSH;
 		current_select_ = SELECT_START;
 		for(int i = 0 ; i < SELECT_MAX ; i++){
@@ -366,6 +373,7 @@ void SceneTitle::_UpdateSelect(void)
 	// 決定
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE) && !message_window_->__is_move())
 	{
+		GET_SE->Play(SE::SE_ID_DECIDE);
 		decide = true;
 
 		// 選択肢ごとに処理
@@ -429,6 +437,7 @@ void SceneTitle::_UpdateMessage(void)
 
 		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 		{
+			GET_SE->Play(SE::SE_ID_DECIDE);
 			const s32 current_select = message_window_->__is_select();
 			message_window_->__select_frame_texture_id_(current_select, Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 

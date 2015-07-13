@@ -14,7 +14,7 @@
 #include "system/system.h"
 
 const static D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(0.0f,-100.0f);
-const static D3DXVECTOR2 DEFAULT_SIZE = D3DXVECTOR2(250.0f,100.0f);
+const static D3DXVECTOR2 DEFAULT_SIZE = D3DXVECTOR2(512.0f,128.0f);
 
 //=============================================================================
 // constructor

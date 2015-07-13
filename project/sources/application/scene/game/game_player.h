@@ -131,6 +131,8 @@ public:
 	bool __Get_warpout(void){return warp_out_;}
 
 	static const u32 DEAD_TIME;
+	static const s32 LOCUS_NUM = 40;
+
 private:
 	enum ANIMATION_TYPE
 	{
@@ -177,6 +179,8 @@ private:
 	s32 sp_;
 	s32 sp_max_;
 	s32 sp_recover_speed_;
+	s32 locus_counter_;
+	s32 locus_while_counter_;
 	bool is_sp_recover_speed_up_;
 	bool is_sp_down_;
 	D3DXVECTOR2 return_position_;
@@ -185,7 +189,7 @@ private:
 	ObjectPlayer*		player_;				// プレイヤースプライト
 	EffectLightning* lightning_start_;
 	EffectDead* nyas_dead_;
-	EffectLocus* nyas_locus_[100];
+	EffectLocus* nyas_locus_[LOCUS_NUM];
 	bool is_preview_light_;
 	bool is_force_light_;
 

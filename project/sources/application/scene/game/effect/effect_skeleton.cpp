@@ -59,7 +59,7 @@ bool EffectSkeleton::Initialize(void)
 	sprite_->__point(Sprite::POINT_CENTER);
 	sprite_->__size(D3DXVECTOR2(256.0f,256.0f));
 	sprite_->__color(D3DXCOLOR(255,255,255,0.7f));
-	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_LIGHTNING);
+	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_SKELETON);
 	sprite_->__division_width(EffectSkeleton::SKELETON_EFFECT_PATTERN);
 	sprite_->__index(0);
 	sprite_->SetParameter();
@@ -83,9 +83,10 @@ void EffectSkeleton::Update(void)
 {
 	frame_count_++;
 
-	if(frame_count_ > 31)
+	if(frame_count_ > SKELETON_FRAME)
 	{
 		is_death_ = true;
+		is_free_ = true;
 		animation_->Stop();
 	}
 
@@ -113,6 +114,5 @@ void EffectSkeleton::Start(void)
 	is_free_ = false;
 	animation_->Start(0);
 	sprite_->__index(0);
-	sprite_->SetParameter();
 }
 //---------------------------------- EOF --------------------------------------

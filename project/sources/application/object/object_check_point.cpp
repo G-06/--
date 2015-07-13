@@ -16,7 +16,7 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectCheckPoint::SIZE	= D3DXVECTOR2(150.0f,230.0f);
+const D3DXVECTOR2 ObjectCheckPoint::SIZE	= D3DXVECTOR2(143.0f,230.0f);
 const u32 ObjectCheckPoint::DIVISION_WIDTH	= 1;
 const u32 ObjectCheckPoint::DIVISION_HEIGHT	= 1;
 

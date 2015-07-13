@@ -13,8 +13,8 @@
 #include "system/system.h"
 #include "application/object/object_bg.h"
 
-static const D3DXVECTOR2 MOVE_FAR	(0.00005f,0.0004f);
-static const D3DXVECTOR2 MOVE_NEAR	(0.00006f,0.0004f);
+static const D3DXVECTOR2 MOVE_FAR	(0.00003f,0.0003f);
+static const D3DXVECTOR2 MOVE_NEAR	(0.00004f,0.0003f);
 
 //=============================================================================
 // constructor
