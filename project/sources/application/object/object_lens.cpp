@@ -26,6 +26,7 @@ const u32 ObjectLens::DIVISION_HEIGHT	= 1;
 ObjectLens::ObjectLens(void)
 	:object_lens_(nullptr)
 	,position_(0.0f,0.0f)
+	,rotation_(0.0f)
 	,size_(0.0f,0.0f)
 {
 }
@@ -76,6 +77,7 @@ void ObjectLens::Update(void)
 void ObjectLens::Draw(void)
 {
 	object_lens_->__position(position_);
+	object_lens_->__rotation(rotation_);
 	object_lens_->Draw();
 }
 

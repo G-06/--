@@ -57,15 +57,17 @@ public:
 	// get pointer
 	void* GetPointer(void);
 
+	// rotation
+	void __rotation_to_shot_vector(void);
+
 	// accessor
 	void __shot_vec( u32 shotvec) { shot_vec_ = shotvec; }
 	void __start_position(const D3DXVECTOR2& start_position) { start_position_ = start_position; }
 	void __end_position(const D3DXVECTOR2& end_position) { end_position_ = end_position; }
 	void __speed(f32 speed) { speed_ = speed; }
 	void __rate(f32 rate) { rate_ = rate; }
+	void __rotation(const f32& rotation);
 	//bool __is_show(void) { return is_show_; }
-
-
 
 private:
 	ObjectLens* object_lens_;
@@ -74,7 +76,7 @@ private:
 	D3DXVECTOR2 end_position_;
 	f32 speed_;
 	f32 rate_;
-
+	f32 rotation_;
 
 	DATA data_;
 };
