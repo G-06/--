@@ -56,10 +56,10 @@ bool GimmickMassage::Initialize(void)
 			txtbox_->Print("ブルーニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_MAKER:
-			txtbox_->Print("☆つくった　ひとたち☆", TEXT_COLOR);
+			txtbox_->Print("☆つくった ひとたち☆", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_LEADER:
-			txtbox_->Print("リーダー\n　ますだ　まさと", TEXT_COLOR);
+			txtbox_->Print("リーダー\nますだ まさと", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_DESIGNER:
 			txtbox_->Print("デザイナー\n　はまだ　みさ", TEXT_COLOR);

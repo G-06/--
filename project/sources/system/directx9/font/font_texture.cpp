@@ -136,10 +136,18 @@ bool FontTexture::Create(void)
 	DeleteObject(hfont);
 	ReleaseDC(NULL,hdc);
 
-	width_ = (glyphmetrics.gmBlackBoxX + 3) / 4 * 4;
-	height_ = glyphmetrics.gmBlackBoxY;
-	offset_y_ = size_ - glyphmetrics.gmptGlyphOrigin.y;
-
+	if(character_code_ == ' ')
+	{
+		width_ = (u32)(size_ * 0.5f);
+		height_ = size_;
+		offset_y_ = 0;
+	}
+	else
+	{
+		width_ = (glyphmetrics.gmBlackBoxX + 3) / 4 * 4;
+		height_ = glyphmetrics.gmBlackBoxY;
+		offset_y_ = size_ - glyphmetrics.gmptGlyphOrigin.y;
+	}
 	// 
 	device_->CreateTexture(width_,height_,1,0,D3DFMT_A8R8G8B8,D3DPOOL_MANAGED,&texture_,nullptr);
 
@@ -149,12 +157,25 @@ bool FontTexture::Create(void)
 	int grad = 16; // 17階調の最大値
 	DWORD *texture_buffer = (DWORD*)locked_rect.pBits;   // テクスチャメモリへのポインタ
 
-	for(int y = 0; y < height_; y++)
+	if(character_code_ == ' ')
 	{
-		for(int x = 0; x < width_; x++)
+		for(int y = 0; y < height_; y++)
 		{
-			DWORD alpha = ptr[y * width_ + x] * 255 / grad;
-			texture_buffer[y * width_ + x] = (alpha << 24) | 0x00ffffff;
+			for(int x = 0; x < width_; x++)
+			{
+				texture_buffer[y * width_ + x] = (0 << 24) | 0x00ffffff;
+			}
+		}
+	}
+	else
+	{
+		for(int y = 0; y < height_; y++)
+		{
+			for(int x = 0; x < width_; x++)
+			{
+				DWORD alpha = ptr[y * width_ + x] * 255 / grad;
+				texture_buffer[y * width_ + x] = (alpha << 24) | 0x00ffffff;
+			}
 		}
 	}
 
