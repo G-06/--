@@ -565,18 +565,22 @@ void NormalStage::Update(void)
 				return false;
 			};
 
+			// effect
 			effect_container_.erase(remove_if(effect_container_.begin(),effect_container_.end(),predfunc),effect_container_.end());
 
 			// offsetによる各オブジェクト類の位置更新
 			stage_offset_->__reference_position(game_player_->__position());
 			stage_offset_->Update();
 
+			// player
 			game_player_->__offset_position(stage_offset_->__position());
 
+			// map
 			map_->__position(-stage_offset_->__position());
 
 			//背景更新
-			game_bg_->__SetPosition(stage_offset_->__position());
+			game_bg_->__position(game_player_->__position());
+			game_bg_->__position_player(game_player_->__position());
 			game_bg_->__move(game_player_->__move());
 			game_bg_->Update();
 
@@ -1141,7 +1145,7 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					stage_offset_->__position(D3DXVECTOR2(x - stage_offset_->__screen_size().x * 0.5f,y - stage_offset_->__screen_size().y * 0.5f));
 					stage_offset_->Update();
 					map_->__position(-stage_offset_->__position());
-					game_bg_->__SetPosition(stage_offset_->__position());
+					game_bg_->__position(stage_offset_->__position());
 
 					i += FindWord(word,&data[i],"\n\0");
 					break;
@@ -1285,6 +1289,7 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					gimmick->__start_position(D3DXVECTOR2(x,y));
 					gimmick->__end_position(D3DXVECTOR2(end_x,end_y));
 					gimmick->__speed(speed);
+					gimmick->__rotation_to_shot_vector();
 
 					gimmick_container_.push_back(gimmick);
 					i += FindWord(word,&data[i],"\n\0");
