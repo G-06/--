@@ -49,6 +49,8 @@
 const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,70.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(21.0f,65.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_LIFE_POSITION = D3DXVECTOR2(180.0f,40.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_TIMER_POSITION =		  D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 220.0f,50.0f);
+
 const u32 DEST_FRAME_COUNT = 20;
 static const u32 GAMEOVER_TIME = 50;	//ゲームプレイヤーの死ぬ時間プラスアルファな時間
 
@@ -145,7 +147,7 @@ bool NormalStage::Initialize(void)
 	select_record_ = new SelectRecord();
 	select_record_->Initialize();
 	select_record_->__set_time(time_count_);
-	select_record_->__set_position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 290.0f,60.0f));
+	select_record_->__set_position(DEFAULT_TIMER_POSITION);
 	select_record_->Update();
 
 	assert_effect_start_ = new AssertEffectStart();

@@ -40,6 +40,7 @@ public:
 		CAT_STATUS_DEAD,		//死んだ　チェックポイントから復活
 		CAT_STATUS_CLEAR,		//クリア
 		CAT_STATUS_WARP,		//ワープ
+		CAT_STATUS_STAGE_IN,	//ステージに入るとき
 		CAT_STATUS_MAX
 	};
 
