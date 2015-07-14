@@ -67,6 +67,8 @@ private:
 	bool is_end_;
 	bool is_active_;
 
+
+
 };
 
 #endif	// _TITLE_BG_H_
