@@ -19,14 +19,14 @@
 //*****************************************************************************
 const D3DXVECTOR2 EffectLocus::LOCUS_SIZE = D3DXVECTOR2(128.0f, 128.0f);
 const D3DXVECTOR2 EffectLocus::DOWN_SIZE = D3DXVECTOR2(LOCUS_SIZE.x/GamePlayer::LOCUS_NUM, LOCUS_SIZE.y/GamePlayer::LOCUS_NUM);
-const f32 EffectLocus::ADD_ALPHA = 0.002f;
+const f32 EffectLocus::ADD_ALPHA = 1.0f/35.0f;
 //=============================================================================
 // constructor
 //=============================================================================
 EffectLocus::EffectLocus(void)
 	:Effect(TYPE_LOCUS)
 	,sprite_(nullptr)
-	,alpha_(0.0f)
+	,alpha_(1.0f)
 	,is_free_(true)
 {
 }
@@ -66,8 +66,6 @@ void EffectLocus::Uninitialize(void)
 //=============================================================================
 void EffectLocus::Update(void)
 {
-	alpha_ = 0.0f;
-
 	if(sprite_->__size() <= D3DXVECTOR2(DOWN_SIZE.x/5*2, DOWN_SIZE.y/5*2))
 	{
 		sprite_->__size(sprite_->__size() - DOWN_SIZE - DOWN_SIZE);
@@ -95,10 +93,12 @@ void EffectLocus::Draw(void)
 	LPDIRECT3DDEVICE9 device;
 	device = GET_DIRECTX9_DEVICE;
 
-	device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
+	device->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+	device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	sprite_->__position(position_ - offset_position_);
 	sprite_->Draw();
 	device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }
 
 //=============================================================================
@@ -106,10 +106,12 @@ void EffectLocus::Draw(void)
 //=============================================================================
 void EffectLocus::Start(void)
 {
-	sprite_->__color(D3DXCOLOR(255,255,255,0.1f));
+	alpha_ = 1.0f;
+	sprite_->__color(D3DXCOLOR(255,255,255,1.0f));
 	sprite_->__size(LOCUS_SIZE);
 	is_death_ = false;
 	is_free_ = false;
+	sprite_->SetParameter();
 }
 
 //---------------------------------- EOF --------------------------------------
