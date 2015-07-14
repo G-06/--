@@ -16,7 +16,8 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 ObjectGoalPoint::SIZE	= D3DXVECTOR2(128.0f,128.0f);
+const D3DXVECTOR2 SCALE	= D3DXVECTOR2(1.1f,1.1f);
+const D3DXVECTOR2 ObjectGoalPoint::SIZE	= D3DXVECTOR2(256.0f * SCALE.x,256.0f * SCALE.y);
 const u32 ObjectGoalPoint::DIVISION_WIDTH	= 1;
 const u32 ObjectGoalPoint::DIVISION_HEIGHT	= 1;
 
