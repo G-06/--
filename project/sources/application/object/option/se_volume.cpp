@@ -26,7 +26,7 @@ const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(DEFAULT_SIZE.y, DEFAULT_SIZE.y)
 const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f, DEFAULT_POSITION.y);
 
 const D3DXVECTOR2 SIZE_SCALE = D3DXVECTOR2(0.8f, 0.8f);
-const D3DXVECTOR2 BAR_SIZE = D3DXVECTOR2(500.0f * SIZE_SCALE.x,100.0f * SIZE_SCALE.y);
+const D3DXVECTOR2 BAR_SIZE = D3DXVECTOR2(470.0f * SIZE_SCALE.x,78.0f * SIZE_SCALE.y);
 
 //=============================================================================
 // constructor
@@ -57,7 +57,7 @@ bool SeVolume::Initialize(void)
 	volume_gauge_ = new OptionSpriteSmooth();
 	volume_gauge_->Initialize();
 	volume_gauge_->__size(D3DXVECTOR2(se_volume_* BAR_SIZE.x, BAR_SIZE.y));
-	volume_gauge_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,275.f));
+	volume_gauge_->__position(D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()/2,225.f));
 	volume_gauge_->__point(Sprite::POINT_LEFT_UP);
 	volume_gauge_->__texture_id(Texture::TEXTURE_ID_OPTION_SE_BAR);
 
