@@ -195,11 +195,14 @@ private:
 	bool is_force_light_;
 
 	CAT_STATUS Status_;		//プレイヤーの状態
+	D3DXCOLOR	color_;
+
 
 	void UpdateLive(void);		//生きてるときの更新
 	void UpdateDead(void);		//死んでるときの更新
 	void UpdateClear(void);		//クリアした時の更新
 	void UpdateWarp(void);		//ワープしてるときの更新
+	void UpdateStageIn(void);
 	u32 dead_cnt_;				//死んだときのアニメーションカウント
 	u32 warp_cnt_;				//ワープするときのアニメーション
 

@@ -86,7 +86,9 @@ bool GamePlayer::Initialize(void)
 		nyas_locus_[i]->Initialize();
 	}
 
-	Status_ = CAT_STATUS_LIVE;
+	color_ = D3DXCOLOR(1.0f,1.0f,1.0f,0.0f);
+
+	Status_ = CAT_STATUS_STAGE_IN;
 
 	dead_cnt_ = 0;
 	warp_cnt_ = 0;
@@ -128,11 +130,33 @@ void GamePlayer::Update(void)
 	case CAT_STATUS_WARP:	//ワープするときの更新
 		UpdateWarp();
 		break;
+	case CAT_STATUS_STAGE_IN:	//ワープするときの更新
+		UpdateStageIn();
+		break;
 	}
 #ifndef _RELEASE
 	DEBUG_TOOL.__debug_display()->Print("player position(%.1f,%.1f)\n",position_.x,position_.y);
 #endif // _RELEASE
 }
+
+//=============================================================================
+// ステージに入るときの更新
+//=============================================================================
+void GamePlayer::UpdateStageIn(void)
+{
+	player_->__color(color_);
+	if(color_.a>=1.0f)
+	{
+		color_.a = 1.0f;
+		Status_ = CAT_STATUS_LIVE;
+	}
+
+	color_.a+=0.01;
+
+	UpdateLive();
+
+}
+
 
 //=============================================================================
 // ネコが生きてるときの更新

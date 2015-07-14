@@ -15,9 +15,11 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
+#define		RADIAN(deg)		( (D3DX_PI / 180) * deg )
 const u32 LENS_FORCE = 300;
 const D3DXVECTOR2 LENS_PUSH_LENGTH = D3DXVECTOR2(140.0f,140.0f);
 const D3DXVECTOR2 LENS_SIZE = D3DXVECTOR2(128.0f,128.0f);
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -28,6 +30,7 @@ GimmickLens::GimmickLens(void)
 	,end_position_(0.0f,0.0f)
 	,speed_(0.0f)
 	,rate_(0.0f)
+	,rotation_(0.0f)
 {
 	size_ = LENS_SIZE;
 }
@@ -91,10 +94,8 @@ void GimmickLens::Update(void)
 	{
 	case 1:
 		{
-			
 			data_._shotvec = D3DXVECTOR2(position_.x - LENS_FORCE,position_.y + LENS_FORCE) - position_;
 			data_._shotposition = D3DXVECTOR2(position_.x - LENS_PUSH_LENGTH.x,position_.y + LENS_PUSH_LENGTH.y);
-			
 			break;
 		}
 	case 2:
@@ -105,8 +106,8 @@ void GimmickLens::Update(void)
 		}
 	case 3:
 		{
-			data_._shotvec = D3DXVECTOR2(position_.x + LENS_FORCE,position_.y - LENS_FORCE) - position_;
-			data_._shotposition = D3DXVECTOR2(position_.x + LENS_PUSH_LENGTH.x,position_.y - LENS_PUSH_LENGTH.y);
+			data_._shotvec = D3DXVECTOR2(position_.x + LENS_FORCE,position_.y + LENS_FORCE) - position_;
+			data_._shotposition = D3DXVECTOR2(position_.x + LENS_PUSH_LENGTH.x,position_.y + LENS_PUSH_LENGTH.y);
 			break;
 		}
 	case 4:
@@ -159,5 +160,63 @@ void* GimmickLens::GetPointer(void)
 {
 	return &data_;
 }
+
+//=============================================================================
+// __rotation
+//=============================================================================
+void GimmickLens::__rotation(const f32& rotation)
+{
+	rotation_ = rotation;
+	object_lens_->__rotation(rotation_);
+}
+
+//=============================================================================
+// __rotation_to_shot_vector
+//-----------------------------------------------------------------------------
+// shot‚Ì’l‚É]‚Á‚Ä‰ñ“]‚·‚é‚æ[
+//=============================================================================
+void GimmickLens::__rotation_to_shot_vector(void)
+{
+	if(shot_vec_ == 1)
+	{
+		rotation_ = RADIAN(-135);
+	}
+	else if(shot_vec_ == 2)
+	{
+		rotation_ = RADIAN(-180);
+	}
+	else if(shot_vec_ == 3)
+	{
+		rotation_ = RADIAN(135);
+	}
+	else if(shot_vec_ == 4)
+	{
+		rotation_ = RADIAN(-90);
+	}
+	else if(shot_vec_ == 6)
+	{
+		rotation_ = RADIAN(90);
+	}
+	else if(shot_vec_ == 7)
+	{
+		rotation_ = RADIAN(-45);
+	}
+	else if(shot_vec_ == 8)
+	{
+		rotation_ = 0.0f;
+	}
+	else if(shot_vec_ == 9)
+	{
+		rotation_ = RADIAN(45);
+	}
+	else
+	{
+		rotation_ = 0.0f;
+	}
+
+	// rotation
+	object_lens_->__rotation(rotation_);
+}
+
 
 //---------------------------------- EOF --------------------------------------

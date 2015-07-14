@@ -14,7 +14,7 @@
 #include "application/object/object_bg.h"
 
 static const D3DXVECTOR2 MOVE_FAR	(0.00003f,0.0003f);
-static const D3DXVECTOR2 MOVE_NEAR	(0.00004f,0.0003f);
+static const D3DXVECTOR2 MOVE_NEAR	(0.00004f,0.0005f);
 
 //=============================================================================
 // constructor
@@ -68,12 +68,12 @@ void GameBg::Update(void)
 	D3DXVECTOR2 move_far = D3DXVECTOR2(0.0f, 0.0f);
 	D3DXVECTOR2 move_near = D3DXVECTOR2(0.0f, 0.0f);
 
-	if(position_.y < old_position_.y)
+	if(position_player_.y < old_position_player_.y)
 	{
 		move_far.y = -MOVE_FAR.y;
 		move_near.y = -MOVE_NEAR.y;
 	}
-	else if(position_.y > old_position_.y)
+	else if(position_player_.y > old_position_player_.y)
 	{
 		move_far.y = MOVE_FAR.y;
 		move_near.y = MOVE_NEAR.y;
