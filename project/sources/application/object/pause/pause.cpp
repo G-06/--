@@ -322,6 +322,7 @@ void Pause::_ChangeSelect(const s32& now, const s32& old)
 {
 	frame_[now]->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 	frame_[old]->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
+	GET_SE->Play(SE::SE_ID_CURSOR);
 }
 
 //=============================================================================
