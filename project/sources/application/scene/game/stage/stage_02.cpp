@@ -51,7 +51,7 @@ bool StageTwo::Initialize(void)
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/kuso.csv");
+	LoadFromFile("data/script/ending.csv");
 
 	return true;
 }
