@@ -151,7 +151,7 @@ void GamePlayer::UpdateStageIn(void)
 		Status_ = CAT_STATUS_LIVE;
 	}
 
-	color_.a+=0.01;
+	color_.a+=0.01f;
 
 	UpdateLive();
 
@@ -238,7 +238,7 @@ void GamePlayer::UpdateLive(void)
 
 		if(is_sp_recover_speed_up_)
 		{
-			sp_recover_speed_ = sp_max_;
+			sp_ = sp_max_;
 			is_enable_light_ = true;
 		}
 
@@ -273,7 +273,7 @@ void GamePlayer::UpdateLive(void)
 		
 		if(is_sp_recover_speed_up_)
 		{
-			sp_recover_speed_ = sp_max_;
+			sp_ = sp_max_;
 			is_enable_light_ = true;
 		}
 		else
@@ -285,6 +285,7 @@ void GamePlayer::UpdateLive(void)
 				StopLightMode();
 			}
 		}
+
 	}
 
 	if(is_sp_down_)
