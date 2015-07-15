@@ -645,13 +645,16 @@ void GamePlayer::ChangeDirection(const D3DXVECTOR2& vector)
 //=============================================================================
 void GamePlayer::Dead(void)
 {
-	life_--;
+	if(Status_ != CAT_STATUS_DEAD)
+	{
+		life_--;
 
-	is_enable_light_ = true;
-	is_light_ = false;
-	move_ = D3DXVECTOR2(0.0f,0.0f);
-	Status_ = CAT_STATUS_DEAD;
-	GET_SE->Play(SE::SE_ID_DEATH);
+		is_enable_light_ = true;
+		is_light_ = false;
+		move_ = D3DXVECTOR2(0.0f,0.0f);
+		Status_ = CAT_STATUS_DEAD;
+		GET_SE->Play(SE::SE_ID_DEATH);
+	}
 }
 
 //=============================================================================
