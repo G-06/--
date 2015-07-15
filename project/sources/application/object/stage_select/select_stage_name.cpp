@@ -99,9 +99,44 @@ void StageName::__set_name_texture(Stage::TYPE stage)
 		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_TUTORIAL);
 		name_->SetParameter();
 		break;
-
 	case Stage::TYPE_STAGE1:	//ステージ１
 		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_1);
+		name_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE2:	//ステージ１
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_2);
+		name_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE3:	//ステージ１
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_3);
+		name_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE4:	//ステージ１
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_4);
+		name_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE5:	//ステージ１
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_5);
+		name_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE6:	//ステージ１
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_6);
+		name_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE7:	//ステージ１
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_7);
+		name_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE8:	//ステージ１
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_8);
+		name_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE9:	//ステージ１
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_9);
+		name_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE10:	//ステージ１
+		name_->__texture_id(Texture::TEXTURE_ID_SELECT_STRING_STAGE_10);
 		name_->SetParameter();
 		break;
 	}

@@ -47,11 +47,11 @@ bool StageFive::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/stage1.bin");
+	map_->LoadFromFile("data/map/romann.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/stage1.csv");
+	LoadFromFile("data/script/roman.csv");
 
 	return true;
 }
