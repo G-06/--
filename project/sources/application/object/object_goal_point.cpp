@@ -27,6 +27,7 @@ const u32 ObjectGoalPoint::DIVISION_HEIGHT	= 1;
 ObjectGoalPoint::ObjectGoalPoint(void)
 	:object_goal_point_(nullptr)
 	,position_(0.0f,0.0f)
+	,rotation_(0.0)
 	,size_(0.0f,0.0f)
 {
 }
@@ -76,6 +77,7 @@ void ObjectGoalPoint::Update(void)
 void ObjectGoalPoint::Draw(void)
 {
 	object_goal_point_->__position(position_);
+	object_goal_point_->__rotation(rotation_);
 	object_goal_point_->Draw();
 }
 

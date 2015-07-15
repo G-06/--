@@ -51,6 +51,7 @@ public:
 	// color
 	void __color(const D3DXCOLOR& color);
 	const D3DXCOLOR __color(void);
+	void __size(const D3DXVECTOR2& size);
 
 	// alpha_speed
 	void __alpha_speed(const f32& alpha_speed){alpha_speed_ = alpha_speed;}

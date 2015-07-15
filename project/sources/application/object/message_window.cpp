@@ -29,7 +29,10 @@ const D3DXCOLOR SHOW_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 const D3DXVECTOR2 WINDOW_SCALE = D3DXVECTOR2(1.4f, 1.0f);
 const D3DXVECTOR2 WINDOW_SIZE = D3DXVECTOR2(512.f * WINDOW_SCALE.x, 512.0f * WINDOW_SCALE.y);
 const D3DXVECTOR2 TITLE_SIZE = D3DXVECTOR2(512.0f * 1.3f, 64.0f * 1.3f);
-const D3DXVECTOR2 SELECT_SIZE = D3DXVECTOR2(270.0f, 80.0f);
+
+const f32 SELECT_SIZE_SCALE = 1.0f;
+const D3DXVECTOR2 SELECT_SIZE = D3DXVECTOR2(256.0f * SELECT_SIZE_SCALE, 64.0f * SELECT_SIZE_SCALE);
+const D3DXVECTOR2 SELECT_FRAME_SIZE = D3DXVECTOR2(270.0f * SELECT_SIZE_SCALE, 80.0f * SELECT_SIZE_SCALE);
 
 const D3DXVECTOR2 SELECT_POSITION_OFFSET = D3DXVECTOR2(170.0f, 60.0f);
 const D3DXVECTOR2 TITLE_POSITION_OFFSET = D3DXVECTOR2(0.0f, -80.0f);
@@ -52,6 +55,7 @@ MessageWindow::MessageWindow(void)
 	,window_size_(WINDOW_SIZE)
 	,title_size_(TITLE_SIZE)
 	,select_size_(SELECT_SIZE)
+	,select_frame_size_(SELECT_FRAME_SIZE)
 	,is_select_(DEFAULT_SELECT)
 {
 	memset(frame_, NULL, sizeof(frame_));
@@ -191,7 +195,7 @@ void MessageWindow::Show(void)
 		frame_[i]->__size(DEFAULT_SIZE);
 		frame_[i]->__color(CLEAR_COLOR);
 		frame_[i]->__dest_position(select_position);
-		frame_[i]->__dest_size(select_size_);
+		frame_[i]->__dest_size(select_frame_size_);
 		frame_[i]->__dest_color(SHOW_COLOR);
 		frame_[i]->__dest_frame(dest_frame_count_);
 		if(i != is_select_){

@@ -51,6 +51,7 @@ public:
 
 private:
 	ObjectGoalPoint* object_goal_point_;
+	f32 rotation_;
 };
 
 #endif	// _GIMMICK_GOAL_POINT_H_

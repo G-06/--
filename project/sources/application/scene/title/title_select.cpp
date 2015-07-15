@@ -18,7 +18,8 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 TitleSelect::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
-const D3DXVECTOR2 TitleSelect::DEFAULT_SIZE = D3DXVECTOR2(324.0f, 71.0f);
+const f32 SIZE_SCALE = 1.0f;
+const D3DXVECTOR2 TitleSelect::DEFAULT_SIZE = D3DXVECTOR2(256 * SIZE_SCALE, 64.0f * SIZE_SCALE);
 
 //=============================================================================
 // constructor
@@ -88,6 +89,15 @@ void TitleSelect::__position(const D3DXVECTOR2& position)
 void TitleSelect::__texture_id(const Texture::TEXTURE_ID& texture_id)
 {
 	sprite_->__texture_id(texture_id);
+	sprite_->SetParameter();
+}
+
+//=============================================================================
+// __size
+//=============================================================================
+void TitleSelect::__size(const D3DXVECTOR2& size)
+{
+	sprite_->__size(size);
 	sprite_->SetParameter();
 }
 

@@ -257,6 +257,12 @@ void NormalStage::Update(void)
 		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_SMILE);
 		object_player_icon_->Update();
 
+		//ギミック更新
+		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+		{
+			(*it)->Update();
+		}
+
 		//マップとの当たり判定？
 		if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
 		{
@@ -315,6 +321,12 @@ void NormalStage::Update(void)
 	{
 		//プレイヤー更新
 		game_player_->Update();
+
+		//ギミック更新
+		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+		{
+			(*it)->Update();
+		}
 
 		if(game_player_->__Get_warpout()==true)
 		{
