@@ -143,13 +143,16 @@ void GameBg::__SetTexture(Stage::TYPE type)
 		break;
 	case Stage::TYPE_STAGE8:
 		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_002);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_002);
+		break;
+	case Stage::TYPE_STAGE9:
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_002);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_001);
+		break;
+	case Stage::TYPE_STAGE10:
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_002);
 		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
 		break;
-
-
-
-
-
 	}
 }
 

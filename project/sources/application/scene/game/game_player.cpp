@@ -33,6 +33,10 @@ const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
 const D3DXVECTOR2 GamePlayer::DEFAULT_SIZE = D3DXVECTOR2(120.0f,197.0f);
 const u32 GamePlayer::DEAD_TIME = 45;		//死ぬアニメのフレーム数の合計
 const u32 GamePlayer::OUT_WABISABI = 80;	//ワープして消えた後の余韻
+const f32 GamePlayer::NEKO_FADE_IN = 0.03f;	
+const f32 GamePlayer::WARP_SPD_Y=15.f;
+const f32 GamePlayer::WARP_SPD_X=10.f;
+
 
 //=============================================================================
 // constructor
@@ -150,7 +154,7 @@ void GamePlayer::UpdateStageIn(void)
 		Status_ = CAT_STATUS_LIVE;
 	}
 
-	color_.a+=0.01f;
+	color_.a+=NEKO_FADE_IN;
 
 	UpdateLive();
 
@@ -460,7 +464,7 @@ void GamePlayer::UpdateWarp(void)
 	if(warp_cnt_>=20)
 	{
 		size = player_->__Get_size();
-		size.y-=15.f;
+		size.y-=WARP_SPD_Y;
 		player_->SetSize(size);
 		if((size.y < 0)&&(warp_cnt_>=80))
 		{

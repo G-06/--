@@ -674,7 +674,11 @@ void NormalStage::Draw(void)
 	object_light_gauge_->Draw();
 	object_player_icon_->Draw();
 	object_player_life_->Draw();
-	select_record_->Draw();
+
+	if(type_!=Stage::TYPE_TUTORIAL)
+	{
+		select_record_->Draw();
+	}
 
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 	{
