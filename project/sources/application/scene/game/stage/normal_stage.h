@@ -34,6 +34,7 @@ class GameBg;
 class Effect;
 class AssertEffectStart;
 class AssertEffectClear;
+class AssertEffectGameover;
 class SelectRecord;
 class Option;
 class EffectMirror;
@@ -104,9 +105,11 @@ protected:
 	Pause* pause_;
 	MessageWindow* message_window_;
 	Option* option_;
+	u32 next_scene_timer_;
 
 	AssertEffectStart* assert_effect_start_;
 	AssertEffectClear* assert_effect_clear_;
+	AssertEffectGameover* assert_effect_GB_;
 	SelectRecord* select_record_;
 	GameBg* game_bg_;
 	TYPE type_;
@@ -127,6 +130,7 @@ private:
 	static const D3DXVECTOR2 DEFAULT_PLAYER_LIFE_POSITION;
 	static const D3DXVECTOR2 DEFAULT_TIMER_POSITION;
 	static const f32 DEFAULT_LENS_ACCEL_SPEED;
+	static const u32 NEXT_SCENE_TIME;
 };
 
 #endif	// _NORMAL_STAGE_H_

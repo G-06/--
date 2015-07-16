@@ -38,6 +38,8 @@
 #include "../effect/effect_check_point.h"
 #include "../assert_effect/assert_effect_start.h"
 #include "../assert_effect/assert_effect_clear.h"
+#include "../assert_effect/assert_effect_gameover.h"
+
 #include "../effect/effect_mirror.h"
 #include "../effect/effect_skeleton.h"
 #include "object/stage_select/select_record.h"
@@ -53,7 +55,7 @@ const D3DXVECTOR2 NormalStage::DEFAULT_TIMER_POSITION =		  D3DXVECTOR2(DEFAULT_S
 const f32 NormalStage::DEFAULT_LENS_ACCEL_SPEED = 1.1f;
 const u32 DEST_FRAME_COUNT = 20;
 static const u32 GAMEOVER_TIME = 50;	//ゲームプレイヤーの死ぬ時間プラスアルファな時間
-
+const u32 NormalStage::NEXT_SCENE_TIME = 900;
 
 //=============================================================================
 // constructor
@@ -156,6 +158,9 @@ bool NormalStage::Initialize(void)
 	assert_effect_clear_->Initialize();
 	assert_effect_clear_->set_record(select_record_);
 
+	assert_effect_GB_ = new AssertEffectGameover();
+	assert_effect_GB_->Initialize();
+
 	is_start_ = true;
 
 
@@ -172,6 +177,7 @@ bool NormalStage::Initialize(void)
 		effect_skeleton_[i]->Initialize();
 	}
 	time =0;
+	next_scene_timer_ = 0;
 
 	return true;
 }
@@ -198,6 +204,8 @@ void NormalStage::Uninitialize(void)
 	SafeRelease(assert_effect_start_);
 
 	SafeRelease(assert_effect_clear_);
+
+	SafeRelease(assert_effect_GB_);
 
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 	{
@@ -250,6 +258,7 @@ void NormalStage::Update(void)
 		assert_effect_clear_->__is_assert(true);
 		//プレイヤー更新
 		game_player_->Update();
+
 
 		// 笑顔
 		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_SMILE);
@@ -307,7 +316,9 @@ void NormalStage::Update(void)
 
 		if(assert_effect_clear_->__is_stop())
 		{
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+			next_scene_timer_++;	//時間制限カウント
+
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE)||next_scene_timer_>=NEXT_SCENE_TIME)
 			{
 				game_player_->__Set_status(GamePlayer::CAT_STATUS_WARP);
 				warp_=true;
@@ -340,11 +351,23 @@ void NormalStage::Update(void)
 		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_ANGER);
 		object_player_icon_->Update();
 
-		if(time==game_player_->DEAD_TIME+5)
+		if((time>=game_player_->DEAD_TIME+5))
 		{
-			if(next_stage_factory_ == nullptr)
+
+			assert_effect_GB_->__is_assert(true);
+			assert_effect_GB_->Update();
+
+			if((assert_effect_GB_->__is_stop()==true))
 			{
-				next_stage_factory_ = new SelectFactory();
+				next_scene_timer_++;
+
+				if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE)||next_scene_timer_>=NEXT_SCENE_TIME)
+				{
+					if(next_stage_factory_ == nullptr)
+					{
+						next_stage_factory_ = new SelectFactory();
+					}
+				}
 			}
 		}
 		else
@@ -703,6 +726,7 @@ void NormalStage::Draw(void)
 
 
 	assert_effect_start_->Draw();
+	assert_effect_GB_->Draw();
 	assert_effect_clear_->Draw();
 
 	pause_->Draw();

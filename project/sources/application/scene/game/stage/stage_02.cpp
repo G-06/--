@@ -49,11 +49,12 @@ bool StageTwo::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/stage1.bin");
+	//ƒ†[ƒ^[ƒ“
+	map_->LoadFromFile("data/map/Yu-ta-n.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/stage1.csv");
+	LoadFromFile("data/script/Yu-ta-n.csv");
 
 	return true;
 }

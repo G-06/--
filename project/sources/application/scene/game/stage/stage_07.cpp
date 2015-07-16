@@ -49,11 +49,11 @@ bool StageSeven::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/ppp.bin");
+	map_->LoadFromFile("data/work/mario.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/ppp.csv");
+	LoadFromFile("data/work/mario.csv");
 
 	return true;
 }

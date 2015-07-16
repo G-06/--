@@ -49,11 +49,12 @@ bool StageOne::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/romann.bin");
+	//イロンナミチ
+	map_->LoadFromFile("data/map/Ironnamiti.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/roman.csv");
+	LoadFromFile("data/script/Ironnamiti.csv");
 
 	return true;
 }

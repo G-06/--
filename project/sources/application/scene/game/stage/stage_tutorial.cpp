@@ -49,11 +49,12 @@ bool StageTutorial::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/map.bin");
+	//チュートリアル
+	map_->LoadFromFile("data/map/Tutorial.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/script.csv");
+	LoadFromFile("data/script/Tutorial.csv");
 
 	return true;
 }
