@@ -56,6 +56,7 @@ Logo::~Logo(void)
 //=============================================================================
 bool Logo::Initialize(void)
 {
+	GET_BGM->Stop();
 	logo_neko_ = new Sprite();
 
 	if(!SafeInitialize(logo_neko_))

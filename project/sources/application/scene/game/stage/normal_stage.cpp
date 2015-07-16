@@ -99,8 +99,6 @@ NormalStage::~NormalStage(void)
 //=============================================================================
 bool NormalStage::Initialize(void)
 {
-	GET_BGM->Play(BGM::BGM_ID_STAGE_01);
-
 	game_player_ = new GamePlayer();
 
 	if(!SafeInitialize(game_player_))

@@ -404,6 +404,8 @@ void GamePlayer::UpdateClear(void)
 {
 	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JOY);
 
+	is_force_light_ = false;
+	is_preview_light_ = false;
 	if(lightning_start_)	//Œõ‰»‚Í‚¶‚ßH
 	{
 		lightning_start_->__offset_position(offset_position_);
@@ -688,6 +690,7 @@ void GamePlayer::Heal(u32 health)
 void GamePlayer::Clear(void)
 {
 	Status_ = CAT_STATUS_CLEAR;
+	is_force_light_ = false;
 	StopLightMode();
 }
 

@@ -13,6 +13,7 @@
 #include "stage_factory.h"
 #include "object/map.h"
 #include "object/stage_offset.h"
+#include "system/system.h"
 
 //*****************************************************************************
 // constant definition
@@ -38,6 +39,7 @@ StageSix::~StageSix(void)
 //=============================================================================
 bool StageSix::Initialize(void)
 {
+	GET_BGM->Play(BGM::BGM_ID_STAGE_01);
 	NormalStage::Initialize();
 
 	map_ = new Map();
