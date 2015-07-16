@@ -49,6 +49,8 @@ public:
 
 	// accessor
 	void __position(const D3DXVECTOR2& position) { position_ = position; }
+	void __rotation(const f32& rotation) { rotation_ = rotation; }
+	f32 __rotation(void) { return rotation_; }
 	const D3DXVECTOR2& __size(void) { return size_; }
 
 private:
@@ -59,6 +61,7 @@ private:
 	Sprite* object_goal_point_;
 	D3DXVECTOR2 position_;
 	D3DXVECTOR2 size_;
+	f32 rotation_;
 };
 
 #endif	// _OBJECT_GOAL_POINT_H_

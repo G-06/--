@@ -110,11 +110,11 @@ void GameBg::__SetTexture(Stage::TYPE type)
 	{
 	case Stage::TYPE_TUTORIAL:
 	default:
-		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_000);
-		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_TUTORIAL);
+		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_MIDDLE_000);
 		break;
 	case Stage::TYPE_STAGE1:
-		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_000);
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_001);
 		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
 		break;
 	case Stage::TYPE_STAGE2:
@@ -122,7 +122,7 @@ void GameBg::__SetTexture(Stage::TYPE type)
 		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
 		break;
 	case Stage::TYPE_STAGE3:
-		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_001);
+		game_bg_far_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_FAR_000);
 		game_bg_near_->__SetTexture(Texture::TEXTURE_ID_GAME_BG_NEAR_000);
 		break;
 	case Stage::TYPE_STAGE4:

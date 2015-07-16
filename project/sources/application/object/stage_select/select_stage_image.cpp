@@ -18,8 +18,8 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 StageImage::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
-const D3DXVECTOR2 StageImage::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.47f);
-const D3DXVECTOR2 StageImage::DEFAULT_SIZE = D3DXVECTOR2(690.0f,410.0f);
+const D3DXVECTOR2 StageImage::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.464f);
+const D3DXVECTOR2 StageImage::DEFAULT_SIZE = D3DXVECTOR2(690.0f,415.0f);
 
 //=============================================================================
 // constructor
