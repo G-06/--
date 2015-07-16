@@ -555,7 +555,8 @@ void GamePlayer::HitStage(const D3DXVECTOR2& position,bool is_floor)
 		GET_SE->Play(SE::SE_ID_NYAS_LIGHT_COLLISION);
 	}
 
-	is_light_ = false;
+	StopLightMode();
+	//is_light_ = false;
 
 	if(is_floor)
 	{
@@ -659,6 +660,7 @@ void GamePlayer::Dead(void)
 		move_ = D3DXVECTOR2(0.0f,0.0f);
 		Status_ = CAT_STATUS_DEAD;
 		GET_SE->Play(SE::SE_ID_DEATH);
+		light_speed_ = LIGHT_SPEED;
 	}
 }
 
