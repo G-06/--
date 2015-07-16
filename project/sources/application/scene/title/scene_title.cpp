@@ -48,6 +48,11 @@ const D3DXVECTOR2 SELECT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 450
 // color
 const D3DXCOLOR DEFAULT_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
+// frame size
+const D3DXVECTOR2 FRAME_SIZE = D3DXVECTOR2(324.0f,71.0f);
+const f32 PUSH_SIZE_SCALE = 1.2f;
+const D3DXVECTOR2 PUSH_FRAME_SIZE = D3DXVECTOR2(324.0f * PUSH_SIZE_SCALE,71.0f * PUSH_SIZE_SCALE);
+
 // string texture_id
 const Texture::TEXTURE_ID SELECT_STRING_TEXTURE[] = {
 	Texture::TEXTURE_ID_TITLE_STRING_GAME_START,
@@ -108,6 +113,7 @@ bool SceneTitle::Initialize(void)
 	push_frame_ = new TitlePushStart();
 	push_frame_->Initialize();
 	push_frame_->__color(DEFAULT_COLOR);
+	push_frame_->__size(PUSH_FRAME_SIZE);
 	push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 	
 	for(int i = 0 ; i < SELECT_MAX ; i++){
@@ -118,6 +124,9 @@ bool SceneTitle::Initialize(void)
 
 		// texture
 		select_[i].select_->__texture_id(SELECT_STRING_TEXTURE[i]);
+
+		// frame size
+		select_[i].frame_->__size(FRAME_SIZE);
 
 		// position
 		const D3DXVECTOR2 position = D3DXVECTOR2(SELECT_POSITION.x, SELECT_POSITION.y + (i * SELECT_OFFSET_Y));
@@ -134,8 +143,6 @@ bool SceneTitle::Initialize(void)
 	// option
 	option_ = new Option();
 	option_->Initialize();
-	//option_->Load();
-	//option_->__is_indication(false);
 
 	//選択中のステージをチュートリアルに戻す
 	System::__set_current_stage(1);

@@ -113,6 +113,7 @@ private:
 	D3DXVECTOR2 window_size_;
 	D3DXVECTOR2 title_size_;
 	D3DXVECTOR2 select_size_;
+	D3DXVECTOR2 select_frame_size_;
 };
 
 #endif	// _MESSAGE_WINDOW_H_
