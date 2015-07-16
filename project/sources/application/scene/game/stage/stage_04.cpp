@@ -47,11 +47,11 @@ bool StageFour::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/lenstest.bin");
+	map_->LoadFromFile("data/work/kuso.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/lenstest.csv");
+	LoadFromFile("data/work/kuso.csv");
 
 	return true;
 }

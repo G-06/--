@@ -47,11 +47,12 @@ bool StageTen::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/ending.bin");
+	//スタッフロール
+	map_->LoadFromFile("data/map/Ending.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/ending.csv");
+	LoadFromFile("data/script/Ending.csv");
 
 	return true;
 }
