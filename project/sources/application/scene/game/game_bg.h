@@ -3,6 +3,7 @@
 // game bg
 //
 // Author		: taichi kitazawa
+//				: masato masuda
 //
 //*****************************************************************************
 
@@ -60,6 +61,7 @@ public:
 private:
 	ObjectBg* game_bg_far_;
 	ObjectBg* game_bg_near_;
+	ObjectBg* game_bg_middle_;
 
 	D3DXVECTOR2 position_;
 	D3DXVECTOR2 old_position_;

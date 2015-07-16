@@ -37,7 +37,15 @@ static const u32 LEFT = 2;
 //=============================================================================
 StageSelect::StageSelect(void)
 		:Stage(TYPE_SELECT)
+		,select_bg_(nullptr)
+		,select_arrow_(nullptr)
+		,nas_(nullptr)
+		,message_window_(nullptr)
+		,massage_flag_(false)
+		,flag_(false)
+		,current_stage_(0)
 {
+	memset(regions_, 0, sizeof(regions_));
 }
 
 //=============================================================================
@@ -125,7 +133,6 @@ void StageSelect::Uninitialize(void)
 //=============================================================================
 void StageSelect::Update(void)
 {
-
 	if(next_stage_factory_ == nullptr)
 	{
 		switch(update_type_)
@@ -151,9 +158,10 @@ void StageSelect::Update(void)
 		{
 			nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
 		}
-		nas_->Update();
+//		nas_->Update();
 	}
-		message_window_->Update();
+	message_window_->Update();
+	nas_->Update();
 }
 
 
