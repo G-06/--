@@ -95,6 +95,8 @@ public:
 	//ワープするぜ
 	void Warp(void);
 
+	bool LightAccele(const f32& speed);
+
 	// 座標の取得
 	const D3DXVECTOR2& __position(void)const{ return position_; }
 
@@ -158,6 +160,7 @@ private:
 
 
 	static const f32 LIGHT_SPEED;
+	static const f32 LIGHT_SPEED_MAX;
 	static const f32 SPEED;
 	static const f32 DECREMENT;
 	static const f32 JUMP_SPEED;
@@ -193,7 +196,9 @@ private:
 	EffectLocus* nyas_locus_[LOCUS_NUM];
 	bool is_preview_light_;
 	bool is_force_light_;
-
+	bool is_light_accele_;
+	bool is_preview_light_accele_;
+	f32 light_speed_;
 	CAT_STATUS Status_;		//プレイヤーの状態
 	D3DXCOLOR	color_;
 

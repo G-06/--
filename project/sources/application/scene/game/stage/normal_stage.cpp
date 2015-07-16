@@ -50,7 +50,7 @@ const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(21.0f,65.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_LIFE_POSITION = D3DXVECTOR2(180.0f,40.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_TIMER_POSITION =		  D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 220.0f,50.0f);
-
+const f32 NormalStage::DEFAULT_LENS_ACCEL_SPEED = 1.1f;
 const u32 DEST_FRAME_COUNT = 20;
 static const u32 GAMEOVER_TIME = 50;	//ゲームプレイヤーの死ぬ時間プラスアルファな時間
 
@@ -651,8 +651,6 @@ void NormalStage::Draw(void)
 		(*it)->Draw();
 	}
 
-	game_player_->Draw();
-
 	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
 	{
 		(*it)->Draw();
@@ -1038,10 +1036,12 @@ void NormalStage::CollisionGimmick(void)
 							
 
 							//game_player_->__position(data->_shotposition);
-							
-							GET_SE->Play(SE::SE_ID_REFLECTION);
+
 							game_player_->ChangeDirection(data->_shotvec);
-							
+							if(game_player_->LightAccele(DEFAULT_LENS_ACCEL_SPEED))
+							{
+								GET_SE->Play(SE::SE_ID_REFLECTION);
+							}
 						}
 
 						// 乗る判定
