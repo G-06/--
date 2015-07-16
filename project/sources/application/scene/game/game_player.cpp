@@ -477,14 +477,14 @@ void GamePlayer::UpdateWarp(void)
 void GamePlayer::Draw(void)
 {
 	
-	//for(s32 i = 0; i < LOCUS_NUM; i++)
-	//{
-	//	if(!nyas_locus_[i]->__is_free())
-	//	{
-	//		nyas_locus_[i]->Draw();
-	//	}
-	//	
-	//}
+	for(s32 i = 0; i < LOCUS_NUM; i++)
+	{
+		if(!nyas_locus_[i]->__is_free())
+		{
+			nyas_locus_[i]->Draw();
+		}
+		
+	}
 
 	if(lightning_start_)	//光化エフェクト？
 	{
