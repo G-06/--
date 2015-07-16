@@ -660,7 +660,10 @@ void NormalStage::Draw(void)
 
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 	{
-		(*it)->Draw();
+		if(((*it)->__type()!=Gimmick::TYPE_TUTORIAL_TEXT)&&((*it)->__type()!=Gimmick::TYPE_MASSAGE))
+		{
+			(*it)->Draw();
+		}
 	}
 
 	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
@@ -668,9 +671,26 @@ void NormalStage::Draw(void)
 		(*it)->Draw();
 	}
 
+	object_light_gauge_->Draw();
+	object_player_icon_->Draw();
+	object_player_life_->Draw();
+
+	if(type_!=Stage::TYPE_TUTORIAL)
+	{
+		select_record_->Draw();
+	}
+
+	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+	{
+		if(((*it)->__type()==Gimmick::TYPE_TUTORIAL_TEXT)||((*it)->__type()==Gimmick::TYPE_MASSAGE))
+		{
+			(*it)->Draw();
+		}
+	}
+
 	game_player_->Draw();
 
-	
+
 	for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 	{
 		if(!effect_mirror_[i]->__is_free())
@@ -683,10 +703,6 @@ void NormalStage::Draw(void)
 		}
 	}
 
-	object_light_gauge_->Draw();
-	object_player_icon_->Draw();
-	object_player_life_->Draw();
-	select_record_->Draw();
 
 	assert_effect_start_->Draw();
 	assert_effect_clear_->Draw();

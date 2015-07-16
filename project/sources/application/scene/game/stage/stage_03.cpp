@@ -47,11 +47,11 @@ bool StageThree::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/healtest.bin");
+	map_->LoadFromFile("data/map/tst.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/healtest.csv");
+	LoadFromFile("data/script/tst.csv");
 
 	return true;
 }
