@@ -21,6 +21,7 @@ const u32 AssertEffectGameover::SRIDE_IN_FRAME = 30;
 const u32 AssertEffectGameover::STOP_FRAME = 90;
 const u32 AssertEffectGameover::SRIDE_OUT_FRAME = 30;
 const f32 AssertEffectGameover::MAX_ALPHA = 0.7f;
+const D3DXVECTOR2 GAMEOVER_SIZE = D3DXVECTOR2(1028.0f,256.0f);
 
 //=============================================================================
 // constructor
@@ -48,13 +49,12 @@ bool AssertEffectGameover::Initialize(void)
 	sprite_ = new Sprite();
 	sprite_->Initialize();
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,200.0f));
+//	sprite_->__size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,200.0f));
+	sprite_->__size(D3DXVECTOR2(GAMEOVER_SIZE.x,GAMEOVER_SIZE.y));
 	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_GAME_OVER);
 	position_=D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()*2.0f,(f32)GET_SYSTEM.__window()->__width()*2.0f);
 	sprite_->__position(position_);
-
 	sprite_->SetParameter();
-
 
 	alpha_ = 0.0f;
 

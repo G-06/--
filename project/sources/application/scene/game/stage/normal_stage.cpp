@@ -434,6 +434,15 @@ void NormalStage::Update(void)
 									const s32 current_select = pause_->__is_select();
 									switch(current_select)
 									{
+									case Pause::SELECT_TYPE_RETRY:
+										{
+											if(next_stage_factory_ == nullptr)
+											{
+												is_pause_input_ = true;
+												next_stage_factory_ = CreateFactory();
+											}
+											break;
+										}
 									case Pause::SELECT_TYPE_STAGESELECT_BACK:
 										{
 											if(next_stage_factory_ == nullptr)
@@ -442,16 +451,6 @@ void NormalStage::Update(void)
 												
 												is_pause_input_ = true;
 												next_stage_factory_ = new SelectFactory();
-											}
-											break;
-										}
-									case Pause::SELECT_TYPE_TITLE_BACK:
-										{
-											if(next_stage_factory_ == nullptr)
-											{
-												is_pause_input_ = true;
-//												next_scene_factory_ = new TitleFactory();
-												next_stage_factory_ = CreateFactory();
 											}
 											break;
 										}
@@ -484,10 +483,10 @@ void NormalStage::Update(void)
 									pause_->Close();
 									break;
 								}
-							case Pause::SELECT_TYPE_TITLE_BACK:
+							case Pause::SELECT_TYPE_RETRY:
 								{
 									message_window_->Show();
-									message_window_->__title_texture_id_(Texture::TEXTURE_ID_PAUSE_STRUNG_CONFIRM_TITLE);
+									message_window_->__title_texture_id_(Texture::TEXTURE_ID_PAUSE_STRUNG_CONFIRM_RETRY);
 									break;
 								}
 							case Pause::SELECT_TYPE_STAGESELECT_BACK:
