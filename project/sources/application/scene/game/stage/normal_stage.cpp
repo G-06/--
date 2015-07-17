@@ -55,7 +55,7 @@ const D3DXVECTOR2 NormalStage::DEFAULT_TIMER_POSITION =		  D3DXVECTOR2(DEFAULT_S
 const f32 NormalStage::DEFAULT_LENS_ACCEL_SPEED = 1.1f;
 const u32 DEST_FRAME_COUNT = 20;
 static const u32 GAMEOVER_TIME = 50;	//ゲームプレイヤーの死ぬ時間プラスアルファな時間
-const u32 NormalStage::NEXT_SCENE_TIME = 900;
+const u32 NormalStage::NEXT_SCENE_TIME = 300;
 
 //=============================================================================
 // constructor
@@ -438,6 +438,8 @@ void NormalStage::Update(void)
 										{
 											if(next_stage_factory_ == nullptr)
 											{
+							
+												
 												is_pause_input_ = true;
 												next_stage_factory_ = new SelectFactory();
 											}
@@ -448,7 +450,8 @@ void NormalStage::Update(void)
 											if(next_stage_factory_ == nullptr)
 											{
 												is_pause_input_ = true;
-												next_scene_factory_ = new TitleFactory();
+//												next_scene_factory_ = new TitleFactory();
+												next_stage_factory_ = CreateFactory();
 											}
 											break;
 										}

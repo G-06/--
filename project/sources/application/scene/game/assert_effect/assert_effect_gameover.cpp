@@ -49,7 +49,7 @@ bool AssertEffectGameover::Initialize(void)
 	sprite_->Initialize();
 	sprite_->__point(Sprite::POINT_CENTER);
 	sprite_->__size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,200.0f));
-	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_START);
+	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_GAME_OVER);
 	position_=D3DXVECTOR2((f32)GET_SYSTEM.__window()->__width()*2.0f,(f32)GET_SYSTEM.__window()->__width()*2.0f);
 	sprite_->__position(position_);
 
