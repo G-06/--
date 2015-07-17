@@ -157,7 +157,10 @@ bool NormalStage::Initialize(void)
 	assert_effect_clear_ = new AssertEffectClear();
 	assert_effect_clear_->Initialize();
 	assert_effect_clear_->set_record(select_record_);
-
+	if(type_ == Stage::TYPE_TUTORIAL)
+	{
+		assert_effect_clear_->__is_tutorial(true);
+	}
 	assert_effect_GB_ = new AssertEffectGameover();
 	assert_effect_GB_->Initialize();
 
@@ -258,7 +261,6 @@ void NormalStage::Update(void)
 		assert_effect_clear_->__is_assert(true);
 		//プレイヤー更新
 		game_player_->Update();
-
 
 		// 笑顔
 		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_SMILE);

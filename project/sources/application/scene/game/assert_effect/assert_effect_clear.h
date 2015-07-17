@@ -56,8 +56,8 @@ public:
 	bool __is_stop(void) { return is_stop_; }
 	void __time(u32 time) { time_ = time; }
 	void __set_newrecord_flag(bool flag){new_record_flag_ = flag;}
-
 	void set_record(SelectRecord* record){ record_ = record;}
+	void __is_tutorial(bool tutorial){is_turtrial_ = tutorial;}
 
 private:
 	static const u32 SRIDE_IN_FRAME;
@@ -91,6 +91,7 @@ private:
 	bool is_stop_;
 	bool new_record_flag_;
 	bool is_first_;
+	bool is_turtrial_;
 };
 
 #endif	// _ASSERT_EFFECT_CLEAR_H_

@@ -53,6 +53,7 @@ AssertEffectClear::AssertEffectClear(void)
 	,time_(0)
 	,record_(nullptr)
 	,is_first_(true)
+	,is_turtrial_(false)
 {
 }
 
@@ -167,16 +168,20 @@ void AssertEffectClear::Draw(void)
 		sprite_->__position(position_);
 		sprite_->Draw();
 
-
-		if(new_record_flag_ == true)
+		if(is_turtrial_ == false)
 		{
 			if(record_ != nullptr)
 			{
 				record_->__set_position(record_position_);
 				record_->Draw();
 			}
-			new_record_->__set_position(new_record_position_);
-			new_record_->Draw();
+
+				if(new_record_flag_ == true)
+			{
+
+				new_record_->__set_position(new_record_position_);
+				new_record_->Draw();
+			}
 		}
 	}
 }
