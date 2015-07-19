@@ -45,7 +45,7 @@ bool AssertEffectStart::Initialize(void)
 	sprite_ = new Sprite();
 	sprite_->Initialize();
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,200.0f));
+	sprite_->__size(D3DXVECTOR2(1028.0f,256.0f));
 	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_START);
 	sprite_->SetParameter();
 

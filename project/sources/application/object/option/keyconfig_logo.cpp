@@ -19,7 +19,7 @@
 // constant definition
 //*****************************************************************************
 //const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
-const f32 SIZE_SCALE = 1.5f;
+const f32 SIZE_SCALE = 0.9f;
 const D3DXVECTOR2 DEFAULT_SIZE = D3DXVECTOR2(256.0f * SIZE_SCALE, 64.0f * SIZE_SCALE);
 const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 275, 350.f);
 

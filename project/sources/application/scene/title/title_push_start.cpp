@@ -17,7 +17,6 @@
 // constant definition
 //*****************************************************************************
 const f32 DEFAULT_ALPHA_SPEED = -0.03f;
-const f32 SIZE_SCAL = 1.2f;
 const D3DXVECTOR2 TitlePushStart::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 450.0f + 130.0f);
 const f32 SIZE_SCALE = 1.1f;
 const D3DXVECTOR2 TitlePushStart::DEFAULT_SIZE = D3DXVECTOR2(256 * SIZE_SCALE, 64.0f * SIZE_SCALE);

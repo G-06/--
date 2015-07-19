@@ -50,11 +50,11 @@ bool OptionDecide::Initialize(void)
 	sprite_->Initialize();
 	sprite_->__size(DEFAULT_SIZE);
 	sprite_->__position(DEFAULT_POSITION);
-	sprite_->__texture_id(Texture::TEXTURE_ID_OPTION_STRING_OP_DECIDE);
+	sprite_->__texture_id(Texture::TEXTURE_ID_OPTION_STRING_DESIDE);
 
 	sprite_frame_ = new OptionSpriteSmooth();
 	sprite_frame_->Initialize();
-	sprite_frame_->__size(DEFAULT_SIZE);
+	sprite_frame_->__size(Option::DEFAULT_MENU_FRAME_SIZE);
 	sprite_frame_->__position(DEFAULT_POSITION);
 	sprite_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 

@@ -67,6 +67,7 @@ public:
 	};
 
 	static const D3DXVECTOR2 DEFAULT_MENU_SIZE;
+	static const D3DXVECTOR2 DEFAULT_MENU_FRAME_SIZE;
 	static const D3DXVECTOR2 EXPAND_MENU_SIZE;
 
 	// constructor

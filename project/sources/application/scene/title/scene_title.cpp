@@ -33,6 +33,8 @@ const u32 DESIDE_INTERVAL_COUNT = 30;			// 決定ボタン後の余韻
 // push_startの点滅数値
 const f32 PUSH_START_ALPHA_MAX = 1.25f;
 const f32 PUSH_START_ALPHA_MIN = 0.0f;
+const f32 PUSH_START_SCALE = 1.0f;
+const D3DXVECTOR2 PUSH_START_SIZE = D3DXVECTOR2(256 * PUSH_START_SCALE, 64.0f * PUSH_START_SCALE);
 
 // luminesceneの点滅数値
 const f32 LUMINESCENCE_ALPHA_MAX = 1.1f;
@@ -109,6 +111,7 @@ bool SceneTitle::Initialize(void)
 	push_ = new TitlePushStart();
 	push_->Initialize();
 	push_->__color(DEFAULT_COLOR);
+	push_->__size(PUSH_START_SIZE);
 
 	push_frame_ = new TitlePushStart();
 	push_frame_->Initialize();
@@ -139,6 +142,7 @@ bool SceneTitle::Initialize(void)
 	message_window_ = new MessageWindow();
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_TITLE_STRING_CONFIRM_END);
 
 	// option
 	option_ = new Option();
@@ -426,6 +430,8 @@ void SceneTitle::_UpdateSelect(void)
 void SceneTitle::_UpdateMessage(void)
 {
 	if(is_stop_) return;
+
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_TITLE_STRING_CONFIRM_END);
 
 	// 自動遷移止める
 	frame_count_ = 0;

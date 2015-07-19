@@ -87,7 +87,7 @@ bool BgmVolume::Initialize(void)
 
 	bgm_string_frame_ = new OptionSpriteSmooth();
 	bgm_string_frame_->Initialize();
-	bgm_string_frame_->__size(DEFAULT_SIZE);
+	bgm_string_frame_->__size(Option::DEFAULT_MENU_FRAME_SIZE);
 	bgm_string_frame_->__position(DEFAULT_POSITION);
 	bgm_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 
