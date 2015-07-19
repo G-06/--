@@ -19,7 +19,8 @@
 //*****************************************************************************
 const D3DXVECTOR2 StageName::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
 const D3DXVECTOR2 StageName::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 85.0f);
-const D3DXVECTOR2 StageName::DEFAULT_SIZE = D3DXVECTOR2(512.0f,64.0f);
+const f32 SIZE_SCALE = 0.8f;
+const D3DXVECTOR2 StageName::DEFAULT_SIZE = D3DXVECTOR2(512.0f * SIZE_SCALE,64.0f * SIZE_SCALE);
 
 //=============================================================================
 // constructor

@@ -33,7 +33,7 @@ const u32 DESIDE_INTERVAL_COUNT = 30;			// 決定ボタン後の余韻
 // push_startの点滅数値
 const f32 PUSH_START_ALPHA_MAX = 1.25f;
 const f32 PUSH_START_ALPHA_MIN = 0.0f;
-const f32 PUSH_START_SCALE = 1.0f;
+const f32 PUSH_START_SCALE = 0.9f;
 const D3DXVECTOR2 PUSH_START_SIZE = D3DXVECTOR2(256 * PUSH_START_SCALE, 64.0f * PUSH_START_SCALE);
 
 // luminesceneの点滅数値
@@ -52,7 +52,7 @@ const D3DXCOLOR DEFAULT_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 // frame size
 const D3DXVECTOR2 FRAME_SIZE = D3DXVECTOR2(324.0f,71.0f);
-const f32 PUSH_SIZE_SCALE = 1.2f;
+const f32 PUSH_SIZE_SCALE = 1.1f;
 const D3DXVECTOR2 PUSH_FRAME_SIZE = D3DXVECTOR2(324.0f * PUSH_SIZE_SCALE,71.0f * PUSH_SIZE_SCALE);
 
 // string texture_id

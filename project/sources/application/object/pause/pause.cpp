@@ -226,9 +226,16 @@ void Pause::Show(void)
 		select_[i]->__size(DEFAULT_SIZE);
 		select_[i]->__color(CLEAR_COLOR);
 		select_[i]->__dest_position(select_position);
-		select_[i]->__dest_size(select_size_);
+//		select_[i]->__dest_size(select_size_);
 		select_[i]->__dest_color(SHOW_COLOR);
 		select_[i]->__dest_frame(dest_frame_count_);
+
+		if(i == SELECT_TYPE_RETRY || i == SELECT_TYPE_OPTION){
+			const f32 select_size_scale = 0.9f;
+			select_[i]->__dest_size(select_size_ * select_size_scale);
+		}else{
+			select_[i]->__dest_size(select_size_);
+		}
 		select_[i]->StartMove();
 	}
 }
