@@ -104,14 +104,6 @@ void KeyConfigJump::Draw(void)
 //=============================================================================
 void KeyConfigJump::Select(bool is_select)
 {
-	if(is_select == true)
-	{
-		jump_button_->__size(Option::EXPAND_MENU_SIZE);
-	}
-	else
-	{
-		jump_button_->__size(Option::DEFAULT_MENU_SIZE);
-	}
 }
 
 //=============================================================================

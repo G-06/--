@@ -19,13 +19,18 @@
 //*****************************************************************************
 const D3DXVECTOR2 Logo::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
 const D3DXVECTOR2 Logo::DEFAULT_SIZE = D3DXVECTOR2(512.0f,512.0f);
-const u32 Logo::DEFAULT_DIVISION_WIDTH = 3;
+
+const u32 Logo::DEFAULT_DIVISION_WIDTH = 7;
 const u32 Logo::DEFAULT_DIVISION_HEIGHT = 1;
 const Animation::DATA Logo::ANIMATION_DATA[] =
 {
-	Animation::DATA(5,1,0),
-	Animation::DATA(5,2,1),
-	Animation::DATA(5,2,2),
+	Animation::DATA(3,1,0),
+	Animation::DATA(3,2,1),
+	Animation::DATA(3,3,2),
+	Animation::DATA(3,4,3),
+	Animation::DATA(3,5,4),
+	Animation::DATA(3,6,5),
+	Animation::DATA(3,6,6),
 };
 
 //=============================================================================
@@ -51,6 +56,7 @@ Logo::~Logo(void)
 //=============================================================================
 bool Logo::Initialize(void)
 {
+	GET_BGM->Stop();
 	logo_neko_ = new Sprite();
 
 	if(!SafeInitialize(logo_neko_))

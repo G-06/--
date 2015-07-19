@@ -26,12 +26,14 @@ const u32 AssertEffectClear::RECORD_SRIDE_IN_FRAME = 30;
 const u32 AssertEffectClear::NEW_RECORD_SRIDE_IN_FRAME = 30;
 const u32 AssertEffectClear::NEW_RECORD_STOP_FRAME = 10;
 
+const f32 CLEAR_SIZE_SCALE = 1.0f;
+const D3DXVECTOR2 CLEAR_SIZE = D3DXVECTOR2(1028.0f * CLEAR_SIZE_SCALE, 256.0f * CLEAR_SIZE_SCALE);
 
 const D3DXVECTOR2 AssertEffectClear::CLEAR_START_POSITION	= D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 1.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
 const D3DXVECTOR2 AssertEffectClear::CLEAR_STOP_POSITION	= D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
-const D3DXVECTOR2 AssertEffectClear::CLEAR_END_POSITION		= D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.3f);
+const D3DXVECTOR2 AssertEffectClear::CLEAR_END_POSITION		= D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.35f,DEFAULT_SCREEN_HEIGHT * 0.3f);
 
-const D3DXVECTOR2 AssertEffectClear::RECORD_START_POSITION =		D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 290.0f,60.0f);
+const D3DXVECTOR2 AssertEffectClear::RECORD_START_POSITION =		D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 220.0f,50.0f);
 const D3DXVECTOR2 AssertEffectClear::RECORD_END_POSITION =			D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 290.0f,DEFAULT_SCREEN_HEIGHT * 0.23f);
 
 //const D3DXVECTOR2 AssertEffectClear::NEW_RECORD_START_POSITION =	D3DXVECTOR2(0,0);
@@ -53,6 +55,7 @@ AssertEffectClear::AssertEffectClear(void)
 	,time_(0)
 	,record_(nullptr)
 	,is_first_(true)
+	,is_turtrial_(false)
 {
 }
 
@@ -71,7 +74,7 @@ bool AssertEffectClear::Initialize(void)
 	sprite_ = new Sprite();
 	sprite_->Initialize();
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__size(D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH,200.0f));
+	sprite_->__size(D3DXVECTOR2(1028.0f,256.0f));
 	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_CLEAR);
 	position_ = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 1.5f,DEFAULT_SCREEN_HEIGHT * 0.5f);
 	sprite_->SetParameter();
@@ -167,16 +170,20 @@ void AssertEffectClear::Draw(void)
 		sprite_->__position(position_);
 		sprite_->Draw();
 
-		if(record_ != nullptr)
+		if(is_turtrial_ == false)
 		{
-			record_->__set_position(record_position_);
-			record_->Draw();
-		}
+			if(record_ != nullptr)
+			{
+				record_->__set_position(record_position_);
+				record_->Draw();
+			}
 
-		if(new_record_flag_ == true)
-		{
-			new_record_->__set_position(new_record_position_);
-			new_record_->Draw();
+				if(new_record_flag_ == true)
+			{
+
+				new_record_->__set_position(new_record_position_);
+				new_record_->Draw();
+			}
 		}
 	}
 }

@@ -13,6 +13,7 @@
 #include "stage_factory.h"
 #include "object/map.h"
 #include "object/stage_offset.h"
+#include "system/system.h"
 
 //*****************************************************************************
 // constant definition
@@ -38,6 +39,7 @@ StageSeven::~StageSeven(void)
 //=============================================================================
 bool StageSeven::Initialize(void)
 {
+	GET_BGM->Play(BGM::BGM_ID_STAGE_01);
 	NormalStage::Initialize();
 
 	map_ = new Map();
@@ -47,11 +49,11 @@ bool StageSeven::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/stage1.bin");
+	map_->LoadFromFile("data/work/mario.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/stage1.csv");
+	LoadFromFile("data/work/mario.csv");
 
 	return true;
 }

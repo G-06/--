@@ -84,7 +84,7 @@ bool SeVolume::Initialize(void)
 
 	se_string_frame_ = new OptionSpriteSmooth();
 	se_string_frame_->Initialize();
-	se_string_frame_->__size(DEFAULT_SIZE);
+	se_string_frame_->__size(Option::DEFAULT_MENU_FRAME_SIZE);
 	se_string_frame_->__position(DEFAULT_POSITION);
 	se_string_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 

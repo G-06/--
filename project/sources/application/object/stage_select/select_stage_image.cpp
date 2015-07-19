@@ -18,8 +18,8 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 StageImage::STAGE_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH * 2.0f,(f32)DEFAULT_SCREEN_HEIGHT);
-const D3DXVECTOR2 StageImage::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.45f);
-const D3DXVECTOR2 StageImage::DEFAULT_SIZE = D3DXVECTOR2(700.0f,450.0f);
+const D3DXVECTOR2 StageImage::DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,DEFAULT_SCREEN_HEIGHT * 0.464f);
+const D3DXVECTOR2 StageImage::DEFAULT_SIZE = D3DXVECTOR2(690.0f,415.0f);
 
 //=============================================================================
 // constructor
@@ -97,9 +97,48 @@ void StageImage::__set_image_texture(Stage::TYPE stage)
 	case Stage::TYPE_MAX:
 	default:
 		//ステージイメージがよくわからないものの時はすべてテストテクスチャで表示
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_TUTORIAL);
+		image_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE1:
 		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_1);
 		image_->SetParameter();
-
+		break;
+	case Stage::TYPE_STAGE2:
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_2);
+		image_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE3:
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_3);
+		image_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE4:
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_4);
+		image_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE5:
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_5);
+		image_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE6:
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_6);
+		image_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE7:
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_7);
+		image_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE8:
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_8);
+		image_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE9:
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_9);
+		image_->SetParameter();
+		break;
+	case Stage::TYPE_STAGE10:
+		image_->__texture_id(Texture::TEXTURE_ID_SELECT_IMAGE_STAGE_10);
+		image_->SetParameter();
 		break;
 	}
 }

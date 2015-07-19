@@ -79,6 +79,7 @@ public:
 	const ANIMATION_TYPE& __animation_type(void)const { return animation_type_; }
 	bool __is_animation_end(void) { return is_animation_end_; }
 	const D3DXVECTOR2& __Get_size(void)const{return size_;}
+	void __color(D3DXCOLOR color){color_ = color;}
 private:
 	struct ANIMATION_TEXTURE_DATA
 	{
@@ -131,6 +132,7 @@ private:
 	Animation*	animation_;
 	ANIMATION_TYPE animation_type_;
 	bool is_animation_end_;
+	D3DXCOLOR	color_;
 };
 
 #endif	// _OBJECT_PLAYER_H_

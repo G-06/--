@@ -32,9 +32,14 @@
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const f32 MENU_SCALE = 0.9f;
+const f32 MENU_SCALE = 0.75f;
+const f32 MENU_NUM_SCALE = 0.6f;
+const D3DXVECTOR2 MENU_FRAME_SCALE = D3DXVECTOR2(1.0f,0.9f);
+
 const D3DXVECTOR2 Option::DEFAULT_MENU_SIZE = D3DXVECTOR2(256.0f * MENU_SCALE, 64.0f * MENU_SCALE);
-const D3DXVECTOR2 Option::EXPAND_MENU_SIZE = D3DXVECTOR2(450.f, 150.f);
+const D3DXVECTOR2 Option::DEFAULT_MENU_FRAME_SIZE = D3DXVECTOR2(256.0f * MENU_FRAME_SCALE.x, 64.0f * MENU_FRAME_SCALE.y);
+const D3DXVECTOR2 Option::DEFAULT_MENU_NUM_SIZE = D3DXVECTOR2(256.0f * MENU_NUM_SCALE, 64.0f * MENU_NUM_SCALE);
+
 const f32 Option::VOLUME_MIN	= 0.0f;
 const f32 Option::VOLUME_MAX	= 1.0f;
 const f32 Option::VOLUME_RATE	= VOLUME_MAX / 10;
@@ -129,19 +134,19 @@ bool Option::Initialize(void)
 	const D3DXVECTOR2 MENU_OFFSETT = D3DXVECTOR2(400.0f, 10.0f);
 
 	const D3DXVECTOR2 DEF_LOGO_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 160.f);
-	volume_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 320.0f, DEF_LOGO_POS.y - 60.0f));
+	volume_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 340.0f, DEF_LOGO_POS.y - 60.0f));
 	bgm_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y), 250.0f);
-	se_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y + DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y), 250.0f);
+	se_volume_->__position(D3DXVECTOR2(DEF_LOGO_POS.x, DEF_LOGO_POS.y + DEFAULT_MENU_FRAME_SIZE.y + MENU_OFFSETT.y), 250.0f);
 
 	const D3DXVECTOR2 DEF_MENU_POS = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 360.0f);
-	keyconfig_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 275.0f, 300.f));
+	keyconfig_logo_->__position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 300.0f, 300.f));
 	key_config_ok_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y), MENU_OFFSETT.x);
-	key_config_cancel_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y), MENU_OFFSETT.x);
-	key_config_special_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 2), MENU_OFFSETT.x);
-	key_config_pause_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 3), MENU_OFFSETT.x);
+	key_config_cancel_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + DEFAULT_MENU_FRAME_SIZE.y + MENU_OFFSETT.y), MENU_OFFSETT.x);
+	key_config_special_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_FRAME_SIZE.y + MENU_OFFSETT.y) * 2), MENU_OFFSETT.x);
+	key_config_pause_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_FRAME_SIZE.y + MENU_OFFSETT.y) * 3), MENU_OFFSETT.x);
 
 	// decide
-	option_decide_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_SIZE.y + MENU_OFFSETT.y) * 4), MENU_OFFSETT.x);
+	option_decide_->__position(D3DXVECTOR2(DEF_MENU_POS.x, DEF_MENU_POS.y + (DEFAULT_MENU_FRAME_SIZE.y + MENU_OFFSETT.y) * 4), MENU_OFFSETT.x);
 
 	// message_window
 	message_window_ = new MessageWindow();

@@ -19,8 +19,8 @@
 // constant definition
 //*****************************************************************************
 const u32 DEST_FRAME_COUNT = 15;						// ウィンドウ開閉の時間
-const D3DXVECTOR2 DEFAULT_POS_BACK (DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.3f);		//テキスト背景の位置
-const D3DXVECTOR2 DEFAULT_TXT_BACK (DEFAULT_SCREEN_WIDTH * 0.25f, DEFAULT_SCREEN_HEIGHT * 0.2f);	//文字の開始位置
+const D3DXVECTOR2 DEFAULT_POS_BACK (DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.27f);		//テキスト背景の位置
+const D3DXVECTOR2 DEFAULT_TXT_BACK (DEFAULT_SCREEN_WIDTH * 0.25f, DEFAULT_SCREEN_HEIGHT * 0.17f);	//文字の開始位置
 const D3DXCOLOR TEXT_COLOR = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
 
 //=============================================================================
@@ -29,7 +29,7 @@ const D3DXCOLOR TEXT_COLOR = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
 GimmickMassage::GimmickMassage(void)
 	:Gimmick(TYPE_MASSAGE)
 {
-	size_ = D3DXVECTOR2(2048.0f,1024.0f);
+	size_ = D3DXVECTOR2(2300.0f,2600.0f);
 }
 
 //=============================================================================
@@ -56,37 +56,37 @@ bool GimmickMassage::Initialize(void)
 			txtbox_->Print("ブルーニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_MAKER:
-			txtbox_->Print("☆つくった ひとたち☆", TEXT_COLOR);
+			txtbox_->Print("☆つくった  ひとたち☆", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_LEADER:
-			txtbox_->Print("リーダー\nますだ まさと", TEXT_COLOR);
+			txtbox_->Print("リーダー\n  ますだ  まさと", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_DESIGNER:
-			txtbox_->Print("デザイナー\n　はまだ　みさ", TEXT_COLOR);
+			txtbox_->Print("デザイナー\n  はまだ  みさ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_PLANER_1:
-			txtbox_->Print("プランナー\n　はやしだ　けいた", TEXT_COLOR);
+			txtbox_->Print("プランナー\n  はやしだ  けいた", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_PLANER_2:
-			txtbox_->Print("プランナー\n　ますこ　きょうすけ", TEXT_COLOR);
+			txtbox_->Print("プランナー\n  ますこ  きょうすけ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_PROGRAMMER_1:
-			txtbox_->Print("メインプログラマー\n　かぶともり　けんじ", TEXT_COLOR);
+			txtbox_->Print("メインプログラマー\n  かぶともり  けんじ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_PROGRAMMER_2:
-			txtbox_->Print("プログラマー\n　あらい　りょうたろう", TEXT_COLOR);
+			txtbox_->Print("プログラマー\n  あらい  りょうたろう", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_PROGRAMMER_3:
-			txtbox_->Print("プログラマー\n　きたざわ　たいち", TEXT_COLOR);
+			txtbox_->Print("プログラマー\n  きたざわ  たいち", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_PROGRAMMER_4:
-			txtbox_->Print("プログラマー\n　さいとう　はるき", TEXT_COLOR);
+			txtbox_->Print("プログラマー\n  さいとう  はるき", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_SPECIAL_1:
-			txtbox_->Print("サウンド素材\n　ポケットサウンド\n　くらげ工匠\n　効果音ラボ\n", TEXT_COLOR);
+			txtbox_->Print("サウンド素材\n  ポケットサウンド\n  くらげ工匠       効果音ラボ\n", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_SPECIAL_2:
-			txtbox_->Print("スペシャルサンクス\n　やました　やすあき", TEXT_COLOR);
+			txtbox_->Print("スペシャルサンクス\n  やました  やすあき", TEXT_COLOR);
 		break;
 
 	default:

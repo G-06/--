@@ -49,6 +49,7 @@ public:
 	void Draw(void);
 
 	void __position(const D3DXVECTOR2& position);
+	void __size(const D3DXVECTOR2& size);
 	void __texture_id(const Texture::TEXTURE_ID& texture_id);
 
 private:

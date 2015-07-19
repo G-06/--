@@ -23,6 +23,7 @@
 // constant definition
 //*****************************************************************************
 const f32 GamePlayer::LIGHT_SPEED = (27.0f);
+const f32 GamePlayer::LIGHT_SPEED_MAX = (40.0f);
 const f32 GamePlayer::SPEED = (1.75f);
 const f32 GamePlayer::DECREMENT = (0.9f);
 const f32 GamePlayer::JUMP_SPEED = (-70.0f);
@@ -30,9 +31,12 @@ const s32 GamePlayer::DEFAULT_LIFE_MAX = 3;
 const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
 const D3DXVECTOR2 GamePlayer::DEFAULT_SIZE = D3DXVECTOR2(120.0f,197.0f);
-
 const u32 GamePlayer::DEAD_TIME = 45;		//死ぬアニメのフレーム数の合計
 const u32 GamePlayer::OUT_WABISABI = 80;	//ワープして消えた後の余韻
+const f32 GamePlayer::NEKO_FADE_IN = 0.03f;	
+const f32 GamePlayer::WARP_SPD_Y=15.f;
+const f32 GamePlayer::WARP_SPD_X=10.f;
+
 
 //=============================================================================
 // constructor
@@ -85,12 +89,16 @@ bool GamePlayer::Initialize(void)
 		nyas_locus_[i] = new EffectLocus();
 		nyas_locus_[i]->Initialize();
 	}
+	light_speed_ = LIGHT_SPEED;
+	color_ = D3DXCOLOR(1.0f,1.0f,1.0f,0.0f);
 
-	Status_ = CAT_STATUS_LIVE;
+	Status_ = CAT_STATUS_STAGE_IN;
 
 	dead_cnt_ = 0;
 	warp_cnt_ = 0;
 	warp_out_ = false;
+	is_light_accele_ = false;
+	is_preview_light_accele_ = false;
 
 	return true;
 }
@@ -128,19 +136,39 @@ void GamePlayer::Update(void)
 	case CAT_STATUS_WARP:	//ワープするときの更新
 		UpdateWarp();
 		break;
+	case CAT_STATUS_STAGE_IN:	//ワープするときの更新
+		UpdateStageIn();
+		break;
 	}
-#ifndef _RELEASE
-	DEBUG_TOOL.__debug_display()->Print("player position(%.1f,%.1f)\n",position_.x,position_.y);
-#endif // _RELEASE
 }
+
+//=============================================================================
+// ステージに入るときの更新
+//=============================================================================
+void GamePlayer::UpdateStageIn(void)
+{
+	player_->__color(color_);
+	if(color_.a>=1.0f)
+	{
+		color_.a = 1.0f;
+		Status_ = CAT_STATUS_LIVE;
+	}
+
+	color_.a+=NEKO_FADE_IN;
+
+	UpdateLive();
+
+}
+
 
 //=============================================================================
 // ネコが生きてるときの更新
 //=============================================================================
 void GamePlayer::UpdateLive(void)
 {
+	is_preview_light_accele_ = is_light_accele_;
 	is_preview_light_ = is_force_light_;
-
+	is_light_accele_ = false;
 	if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))		//右行くとき
 	{
 		Move(1.0);
@@ -214,7 +242,7 @@ void GamePlayer::UpdateLive(void)
 
 		if(is_sp_recover_speed_up_)
 		{
-			sp_recover_speed_ = sp_max_;
+			sp_ = sp_max_;
 			is_enable_light_ = true;
 		}
 
@@ -249,7 +277,7 @@ void GamePlayer::UpdateLive(void)
 		
 		if(is_sp_recover_speed_up_)
 		{
-			sp_recover_speed_ = sp_max_;
+			sp_ = sp_max_;
 			is_enable_light_ = true;
 		}
 		else
@@ -261,6 +289,7 @@ void GamePlayer::UpdateLive(void)
 				StopLightMode();
 			}
 		}
+
 	}
 
 	if(is_sp_down_)
@@ -375,6 +404,8 @@ void GamePlayer::UpdateClear(void)
 {
 	player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_JOY);
 
+	is_force_light_ = false;
+	is_preview_light_ = false;
 	if(lightning_start_)	//光化はじめ？
 	{
 		lightning_start_->__offset_position(offset_position_);
@@ -435,7 +466,7 @@ void GamePlayer::UpdateWarp(void)
 	if(warp_cnt_>=20)
 	{
 		size = player_->__Get_size();
-		size.y-=15.f;
+		size.y-=WARP_SPD_Y;
 		player_->SetSize(size);
 		if((size.y < 0)&&(warp_cnt_>=80))
 		{
@@ -465,6 +496,10 @@ void GamePlayer::Draw(void)
 	{
 		lightning_start_->Draw();
 	}
+
+#ifndef _RELEASE
+	DEBUG_TOOL.__debug_display()->Print("player position(%.1f,%.1f)\n",position_.x,position_.y);
+#endif // _RELEASE
 
 	player_->__position(position_ - offset_position_);
 	player_->Draw();	//プレイヤー
@@ -526,7 +561,8 @@ void GamePlayer::HitStage(const D3DXVECTOR2& position,bool is_floor)
 		GET_SE->Play(SE::SE_ID_NYAS_LIGHT_COLLISION);
 	}
 
-	is_light_ = false;
+	StopLightMode();
+	//is_light_ = false;
 
 	if(is_floor)
 	{
@@ -556,18 +592,18 @@ void GamePlayer::ChangeLightMode(const D3DXVECTOR2& vector)
 				{
 					if(is_left_)
 					{
-						move_.x = -LIGHT_SPEED;
+						move_.x = -light_speed_;
 						move_.y = 0.0f;
 					}
 					else
 					{
-						move_.x = LIGHT_SPEED;
+						move_.x = light_speed_;
 						move_.y = 0.0f;
 					}
 				}
 				else
 				{
-					move_ = normalize_vector * LIGHT_SPEED;
+					move_ = normalize_vector * light_speed_;
 				}
 
 				player_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
@@ -598,6 +634,7 @@ void GamePlayer::StopLightMode(void)
 		{
 			GET_SE->Play(SE::SE_ID_NYAS_LIGHT_END);
 			is_light_ = false;
+			light_speed_ = LIGHT_SPEED;
 		}
 	}
 }
@@ -611,7 +648,7 @@ void GamePlayer::ChangeDirection(const D3DXVECTOR2& vector)
 	{
 		D3DXVECTOR2 normalize_vector;
 		D3DXVec2Normalize(&normalize_vector,&vector);
-		move_ = normalize_vector * LIGHT_SPEED;
+		move_ = normalize_vector * light_speed_;
 	}
 }
 
@@ -620,13 +657,17 @@ void GamePlayer::ChangeDirection(const D3DXVECTOR2& vector)
 //=============================================================================
 void GamePlayer::Dead(void)
 {
-	life_--;
+	if(Status_ != CAT_STATUS_DEAD)
+	{
+		life_--;
 
-	is_enable_light_ = true;
-	is_light_ = false;
-	move_ = D3DXVECTOR2(0.0f,0.0f);
-	Status_ = CAT_STATUS_DEAD;
-	GET_SE->Play(SE::SE_ID_DEATH);
+		is_enable_light_ = true;
+		is_light_ = false;
+		move_ = D3DXVECTOR2(0.0f,0.0f);
+		Status_ = CAT_STATUS_DEAD;
+		GET_SE->Play(SE::SE_ID_DEATH);
+		light_speed_ = LIGHT_SPEED;
+	}
 }
 
 //=============================================================================
@@ -649,10 +690,37 @@ void GamePlayer::Heal(u32 health)
 void GamePlayer::Clear(void)
 {
 	Status_ = CAT_STATUS_CLEAR;
+	is_force_light_ = false;
 	StopLightMode();
-
 }
 
+//=============================================================================
+// light accele
+//=============================================================================
+bool GamePlayer::LightAccele(const f32& speed)
+{
+	if(!is_preview_light_accele_)
+	{
+		if(!is_light_accele_)
+		{
+			if(is_light_)
+			{
+				is_light_accele_ = true;
+				light_speed_ *= speed;
 
+				if(light_speed_ > LIGHT_SPEED_MAX)
+				{
+					light_speed_ = LIGHT_SPEED_MAX;
+				}
+				D3DXVECTOR2 vector;
+				D3DXVec2Normalize(&vector,&move_);
+
+				move_ = vector * light_speed_;
+				return true;
+			}
+		}
+	}
+	return false;
+}
 
 //---------------------------------- EOF --------------------------------------

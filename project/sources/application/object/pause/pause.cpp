@@ -35,7 +35,8 @@ const D3DXCOLOR BACKGROUND_CLEAR_COLOR = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 
 // size
 const D3DXVECTOR2 TITLE_SIZE = D3DXVECTOR2(512.0f, 128.0f);
-const D3DXVECTOR2 SELECT_SIZE = D3DXVECTOR2(270.0f, 80.0f);
+const f32 SELECT_SIZE_SCALE = 1.0f;
+const D3DXVECTOR2 SELECT_SIZE = D3DXVECTOR2(256.0f * SELECT_SIZE_SCALE, 64.0f * SELECT_SIZE_SCALE);
 const D3DXVECTOR2 BACKGROUND_SIZE = D3DXVECTOR2((f32)DEFAULT_SCREEN_WIDTH, (f32)DEFAULT_SCREEN_HEIGHT);
 
 // position offset
@@ -43,16 +44,15 @@ const D3DXVECTOR2 TITLE_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 120.
 const D3DXVECTOR2 SELECT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 250.0f);
 const D3DXVECTOR2 SELECT_POSITION_OFFSET = D3DXVECTOR2(0.0f, 100.0f);
 
+// frame size
+const D3DXVECTOR2 FRAME_SIZE = D3DXVECTOR2(324.0f,71.0f);
+
 // string texture_id
 const Texture::TEXTURE_ID SELECT_STRING_TEXTURE[Pause::SELECT_TYPE_MAX] = {
-	//Texture::TEXTURE_ID_PAUSE_STRING_PAUSE_RETURN,
-	//Texture::TEXTURE_ID_PAUSE_STRING_PAUSE_TITLE_BACK,
-	//Texture::TEXTURE_ID_PAUSE_STRING_PAUSE_SELECT_BACK,
-	//Texture::TEXTURE_ID_PAUSE_STRING_PAUSE_RETURN,
-	Texture::TEXTURE_ID_TITLE_STRING_GAME_END,
-	Texture::TEXTURE_ID_TITLE_STRING_GAME_END,
-	Texture::TEXTURE_ID_TITLE_STRING_GAME_END,
-	Texture::TEXTURE_ID_TITLE_STRING_GAME_END
+	Texture::TEXTURE_ID_PAUSE_STRING_PAUSE_RETURN,
+	Texture::TEXTURE_ID_PAUSE_STRING_PAUSE_RETRY,
+	Texture::TEXTURE_ID_PAUSE_STRING_PAUSE_SELECT_BACK,
+	Texture::TEXTURE_ID_PAUSE_STRING_PAUSE_OPTION,
 };
 
 //=============================================================================
@@ -90,15 +90,16 @@ bool Pause::Initialize(void)
 	bg_->__color(BACKGROUND_CLEAR_COLOR);
 
 	// title
-	title_ = new SpriteSmooth();
-	title_->Initialize();
-	title_->__texture_id(Texture::TEXTURE_ID_PAUSE_STRING_PAUSE);
+	//title_ = new SpriteSmooth();
+	//title_->Initialize();
+	//title_->__texture_id(Texture::TEXTURE_ID_PAUSE_STRING_PAUSE);
 
 	for(int i = 0 ; i < SELECT_MAX ; i++){
 
 		// frame
 		frame_[i] = new SpriteSmooth();
 		frame_[i]->Initialize();
+		frame_[i]->__size(FRAME_SIZE);
 		if(i != is_select_){
 			frame_[i]->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 		}else{
@@ -119,7 +120,7 @@ bool Pause::Initialize(void)
 //=============================================================================
 void Pause::Uninitialize(void)
 {
-	SafeRelease(title_);
+//	SafeRelease(title_);
 	SafeRelease(bg_);
 	
 	for(int i = 0 ; i < SELECT_MAX ; i++){
@@ -134,14 +135,14 @@ void Pause::Uninitialize(void)
 void Pause::Update(void)
 {
 	bg_->Update();
-	title_->Update();
+//	title_->Update();
 
 	for(int i = 0 ; i < SELECT_MAX ; i++){
 		frame_[i]->Update();
 		select_[i]->Update();
 	}
 
-	if(is_move_ == true && title_->__is_move() == false){
+	if(is_move_ == true && select_[0]->__is_move() == false){
 		is_move_ = false;
 	}
 }
@@ -191,15 +192,15 @@ void Pause::Show(void)
 	bg_->StartMove();
 
 	// title
-	const D3DXVECTOR2 title_position = D3DXVECTOR2(TITLE_POSITION.x, TITLE_POSITION.y);
-	title_->__position(DEFAULT_POSITION);
-	title_->__size(DEFAULT_SIZE);
-	title_->__color(CLEAR_COLOR);
-	title_->__dest_position(title_position);
-	title_->__dest_size(title_size_);
-	title_->__dest_color(SHOW_COLOR);
-	title_->__dest_frame(dest_frame_count_);
-	title_->StartMove();
+	//const D3DXVECTOR2 title_position = D3DXVECTOR2(TITLE_POSITION.x, TITLE_POSITION.y);
+	//title_->__position(DEFAULT_POSITION);
+	//title_->__size(DEFAULT_SIZE);
+	//title_->__color(CLEAR_COLOR);
+	//title_->__dest_position(title_position);
+	//title_->__dest_size(title_size_);
+	//title_->__dest_color(SHOW_COLOR);
+	//title_->__dest_frame(dest_frame_count_);
+	//title_->StartMove();
 
 	for(int i = 0 ; i < SELECT_MAX ; i++){
 
@@ -210,7 +211,7 @@ void Pause::Show(void)
 		frame_[i]->__size(DEFAULT_SIZE);
 		frame_[i]->__color(CLEAR_COLOR);
 		frame_[i]->__dest_position(select_position);
-		frame_[i]->__dest_size(select_size_);
+		frame_[i]->__dest_size(FRAME_SIZE);
 		frame_[i]->__dest_color(SHOW_COLOR);
 		frame_[i]->__dest_frame(dest_frame_count_);
 		if(i != is_select_){
@@ -225,9 +226,16 @@ void Pause::Show(void)
 		select_[i]->__size(DEFAULT_SIZE);
 		select_[i]->__color(CLEAR_COLOR);
 		select_[i]->__dest_position(select_position);
-		select_[i]->__dest_size(select_size_);
+//		select_[i]->__dest_size(select_size_);
 		select_[i]->__dest_color(SHOW_COLOR);
 		select_[i]->__dest_frame(dest_frame_count_);
+
+		if(i == SELECT_TYPE_RETRY || i == SELECT_TYPE_OPTION){
+			const f32 select_size_scale = 0.9f;
+			select_[i]->__dest_size(select_size_ * select_size_scale);
+		}else{
+			select_[i]->__dest_size(select_size_);
+		}
 		select_[i]->StartMove();
 	}
 }
@@ -256,14 +264,14 @@ void Pause::Close(void)
 	bg_->StartMove();
 
 	// title
-	title_->__position(title_->__position());
-	title_->__size(title_->__size());
-	title_->__color(SHOW_COLOR);
-	title_->__dest_position(DEFAULT_POSITION);
-	title_->__dest_size(DEFAULT_SIZE);
-	title_->__dest_color(CLEAR_COLOR);
-	title_->__dest_frame(dest_frame_count_);
-	title_->StartMove();
+	//title_->__position(title_->__position());
+	//title_->__size(title_->__size());
+	//title_->__color(SHOW_COLOR);
+	//title_->__dest_position(DEFAULT_POSITION);
+	//title_->__dest_size(DEFAULT_SIZE);
+	//title_->__dest_color(CLEAR_COLOR);
+	//title_->__dest_frame(dest_frame_count_);
+	//title_->StartMove();
 
 	for(int i = 0 ; i < SELECT_MAX ; i++){
 

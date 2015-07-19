@@ -13,6 +13,7 @@
 #include "stage_factory.h"
 #include "object/map.h"
 #include "object/stage_offset.h"
+#include "system/system.h"
 
 //*****************************************************************************
 // constant definition
@@ -38,6 +39,7 @@ StageThree::~StageThree(void)
 //=============================================================================
 bool StageThree::Initialize(void)
 {
+	GET_BGM->Play(BGM::BGM_ID_STAGE_01);
 	NormalStage::Initialize();
 
 	map_ = new Map();
@@ -47,11 +49,12 @@ bool StageThree::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/healtest.bin");
+	//ヒカリストリート
+	map_->LoadFromFile("data/map/Hikari_street.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/healtest.csv");
+	LoadFromFile("data/script/Hikari_street.csv");
 
 	return true;
 }

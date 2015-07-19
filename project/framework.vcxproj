@@ -66,6 +66,7 @@
     <ClCompile Include="sources\application\object\tutorial_back.cpp" />
     <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect.cpp" />
     <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect_clear.cpp" />
+    <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect_gameover.cpp" />
     <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect_start.cpp" />
     <ClCompile Include="sources\application\scene\game\effect\effect.cpp" />
     <ClCompile Include="sources\application\scene\game\effect\effect_check_point.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="sources\application\scene\factory\scene_factory.h" />
     <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect.h" />
     <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect_clear.h" />
+    <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect_gameover.h" />
     <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect_start.h" />
     <ClInclude Include="sources\application\scene\game\effect\effect.h" />
     <ClInclude Include="sources\application\scene\game\effect\effect_check_point.h" />

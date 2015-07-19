@@ -38,6 +38,8 @@
 #include "../effect/effect_check_point.h"
 #include "../assert_effect/assert_effect_start.h"
 #include "../assert_effect/assert_effect_clear.h"
+#include "../assert_effect/assert_effect_gameover.h"
+
 #include "../effect/effect_mirror.h"
 #include "../effect/effect_skeleton.h"
 #include "object/stage_select/select_record.h"
@@ -49,9 +51,11 @@
 const D3DXVECTOR2 NormalStage::DEFAULT_LIGHT_GAUGE_POSITION = D3DXVECTOR2(40.0f,70.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_ICON_POSITION = D3DXVECTOR2(21.0f,65.0f);
 const D3DXVECTOR2 NormalStage::DEFAULT_PLAYER_LIFE_POSITION = D3DXVECTOR2(180.0f,40.0f);
+const D3DXVECTOR2 NormalStage::DEFAULT_TIMER_POSITION =		  D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 220.0f,50.0f);
+const f32 NormalStage::DEFAULT_LENS_ACCEL_SPEED = 1.1f;
 const u32 DEST_FRAME_COUNT = 20;
 static const u32 GAMEOVER_TIME = 50;	//ゲームプレイヤーの死ぬ時間プラスアルファな時間
-
+const u32 NormalStage::NEXT_SCENE_TIME = 300;
 
 //=============================================================================
 // constructor
@@ -97,8 +101,6 @@ NormalStage::~NormalStage(void)
 //=============================================================================
 bool NormalStage::Initialize(void)
 {
-	GET_BGM->Play(BGM::BGM_ID_STAGE_01);
-
 	game_player_ = new GamePlayer();
 
 	if(!SafeInitialize(game_player_))
@@ -145,7 +147,7 @@ bool NormalStage::Initialize(void)
 	select_record_ = new SelectRecord();
 	select_record_->Initialize();
 	select_record_->__set_time(time_count_);
-	select_record_->__set_position(D3DXVECTOR2(DEFAULT_SCREEN_WIDTH - 290.0f,60.0f));
+	select_record_->__set_position(DEFAULT_TIMER_POSITION);
 	select_record_->Update();
 
 	assert_effect_start_ = new AssertEffectStart();
@@ -155,6 +157,12 @@ bool NormalStage::Initialize(void)
 	assert_effect_clear_ = new AssertEffectClear();
 	assert_effect_clear_->Initialize();
 	assert_effect_clear_->set_record(select_record_);
+	if(type_ == Stage::TYPE_TUTORIAL)
+	{
+		assert_effect_clear_->__is_tutorial(true);
+	}
+	assert_effect_GB_ = new AssertEffectGameover();
+	assert_effect_GB_->Initialize();
 
 	is_start_ = true;
 
@@ -172,6 +180,7 @@ bool NormalStage::Initialize(void)
 		effect_skeleton_[i]->Initialize();
 	}
 	time =0;
+	next_scene_timer_ = 0;
 
 	return true;
 }
@@ -198,6 +207,8 @@ void NormalStage::Uninitialize(void)
 	SafeRelease(assert_effect_start_);
 
 	SafeRelease(assert_effect_clear_);
+
+	SafeRelease(assert_effect_GB_);
 
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 	{
@@ -255,6 +266,12 @@ void NormalStage::Update(void)
 		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_SMILE);
 		object_player_icon_->Update();
 
+		//ギミック更新
+		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+		{
+			(*it)->Update();
+		}
+
 		//マップとの当たり判定？
 		if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
 		{
@@ -301,7 +318,9 @@ void NormalStage::Update(void)
 
 		if(assert_effect_clear_->__is_stop())
 		{
-			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+			next_scene_timer_++;	//時間制限カウント
+
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE)||next_scene_timer_>=NEXT_SCENE_TIME)
 			{
 				game_player_->__Set_status(GamePlayer::CAT_STATUS_WARP);
 				warp_=true;
@@ -313,6 +332,12 @@ void NormalStage::Update(void)
 	{
 		//プレイヤー更新
 		game_player_->Update();
+
+		//ギミック更新
+		for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+		{
+			(*it)->Update();
+		}
 
 		if(game_player_->__Get_warpout()==true)
 		{
@@ -328,11 +353,23 @@ void NormalStage::Update(void)
 		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_ANGER);
 		object_player_icon_->Update();
 
-		if(time==game_player_->DEAD_TIME+5)
+		if((time>=game_player_->DEAD_TIME+5))
 		{
-			if(next_stage_factory_ == nullptr)
+
+			assert_effect_GB_->__is_assert(true);
+			assert_effect_GB_->Update();
+
+			if((assert_effect_GB_->__is_stop()==true))
 			{
-				next_stage_factory_ = new SelectFactory();
+				next_scene_timer_++;
+
+				if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE)||next_scene_timer_>=NEXT_SCENE_TIME)
+				{
+					if(next_stage_factory_ == nullptr)
+					{
+						next_stage_factory_ = new SelectFactory();
+					}
+				}
 			}
 		}
 		else
@@ -399,21 +436,23 @@ void NormalStage::Update(void)
 									const s32 current_select = pause_->__is_select();
 									switch(current_select)
 									{
+									case Pause::SELECT_TYPE_RETRY:
+										{
+											if(next_stage_factory_ == nullptr)
+											{
+												is_pause_input_ = true;
+												next_stage_factory_ = CreateFactory();
+											}
+											break;
+										}
 									case Pause::SELECT_TYPE_STAGESELECT_BACK:
 										{
 											if(next_stage_factory_ == nullptr)
 											{
+							
+												
 												is_pause_input_ = true;
 												next_stage_factory_ = new SelectFactory();
-											}
-											break;
-										}
-									case Pause::SELECT_TYPE_TITLE_BACK:
-										{
-											if(next_stage_factory_ == nullptr)
-											{
-												is_pause_input_ = true;
-												next_scene_factory_ = new TitleFactory();
 											}
 											break;
 										}
@@ -446,10 +485,10 @@ void NormalStage::Update(void)
 									pause_->Close();
 									break;
 								}
-							case Pause::SELECT_TYPE_TITLE_BACK:
+							case Pause::SELECT_TYPE_RETRY:
 								{
 									message_window_->Show();
-									message_window_->__title_texture_id_(Texture::TEXTURE_ID_PAUSE_STRUNG_CONFIRM_TITLE);
+									message_window_->__title_texture_id_(Texture::TEXTURE_ID_PAUSE_STRUNG_CONFIRM_RETRY);
 									break;
 								}
 							case Pause::SELECT_TYPE_STAGESELECT_BACK:
@@ -646,19 +685,37 @@ void NormalStage::Draw(void)
 
 	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
 	{
-		(*it)->Draw();
+		if(((*it)->__type()!=Gimmick::TYPE_TUTORIAL_TEXT)&&((*it)->__type()!=Gimmick::TYPE_MASSAGE))
+		{
+			(*it)->Draw();
+		}
 	}
-
-	game_player_->Draw();
 
 	for(auto it = effect_container_.begin();it != effect_container_.end();++it)
 	{
 		(*it)->Draw();
 	}
 
+	object_light_gauge_->Draw();
+	object_player_icon_->Draw();
+	object_player_life_->Draw();
+
+	if(type_!=Stage::TYPE_TUTORIAL)
+	{
+		select_record_->Draw();
+	}
+
+	for(auto it = gimmick_container_.begin();it != gimmick_container_.end();++it)
+	{
+		if(((*it)->__type()==Gimmick::TYPE_TUTORIAL_TEXT)||((*it)->__type()==Gimmick::TYPE_MASSAGE))
+		{
+			(*it)->Draw();
+		}
+	}
+
 	game_player_->Draw();
 
-	
+
 	for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 	{
 		if(!effect_mirror_[i]->__is_free())
@@ -671,12 +728,9 @@ void NormalStage::Draw(void)
 		}
 	}
 
-	object_light_gauge_->Draw();
-	object_player_icon_->Draw();
-	object_player_life_->Draw();
-	select_record_->Draw();
 
 	assert_effect_start_->Draw();
+	assert_effect_GB_->Draw();
 	assert_effect_clear_->Draw();
 
 	pause_->Draw();
@@ -1036,10 +1090,12 @@ void NormalStage::CollisionGimmick(void)
 							
 
 							//game_player_->__position(data->_shotposition);
-							
-							GET_SE->Play(SE::SE_ID_REFLECTION);
+
 							game_player_->ChangeDirection(data->_shotvec);
-							
+							if(game_player_->LightAccele(DEFAULT_LENS_ACCEL_SPEED))
+							{
+								GET_SE->Play(SE::SE_ID_REFLECTION);
+							}
 						}
 
 						// 乗る判定

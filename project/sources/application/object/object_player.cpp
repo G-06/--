@@ -198,6 +198,7 @@ bool ObjectPlayer::Initialize(void)
 	player_->__size(size_);
 	player_->__position(position_);
 	player_->__point(Sprite::POINT_CENTER);
+	color_ = D3DXCOLOR(1.0f,1.0f,1.0f,1.0f);
 	player_->SetParameter();
 	return true;
 }
@@ -222,7 +223,7 @@ void ObjectPlayer::Update(void)
 	{
 		is_animation_end_ = animation_->__is_end();
 	}
-
+	player_->__color(color_);
 	player_->__index(animation_->__current_index());
 	player_->__is_flip(is_flip_);
 	player_->SetParameter();

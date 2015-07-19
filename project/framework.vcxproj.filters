@@ -562,6 +562,9 @@
     <ClInclude Include="sources\application\object\option\option_decide.h">
       <Filter>sources\application\object\option</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect_gameover.h">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -971,6 +974,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\object\option\option_decide.cpp">
       <Filter>sources\application\object\option</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect_gameover.cpp">
+      <Filter>sources\application\scene\game\assert_effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

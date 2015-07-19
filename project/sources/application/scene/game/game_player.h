@@ -40,6 +40,7 @@ public:
 		CAT_STATUS_DEAD,		//死んだ　チェックポイントから復活
 		CAT_STATUS_CLEAR,		//クリア
 		CAT_STATUS_WARP,		//ワープ
+		CAT_STATUS_STAGE_IN,	//ステージに入るとき
 		CAT_STATUS_MAX
 	};
 
@@ -93,6 +94,8 @@ public:
 
 	//ワープするぜ
 	void Warp(void);
+
+	bool LightAccele(const f32& speed);
 
 	// 座標の取得
 	const D3DXVECTOR2& __position(void)const{ return position_; }
@@ -157,6 +160,7 @@ private:
 
 
 	static const f32 LIGHT_SPEED;
+	static const f32 LIGHT_SPEED_MAX;
 	static const f32 SPEED;
 	static const f32 DECREMENT;
 	static const f32 JUMP_SPEED;
@@ -165,6 +169,9 @@ private:
 	static const s32 DEFAULT_SP_RECOVER_SPEED;
 	static const D3DXVECTOR2 DEFAULT_SIZE;
 	static const u32 OUT_WABISABI;	//ワープして消えた後の余韻
+	static const f32 NEKO_FADE_IN;	//ネコがフェードインする速さ
+	static const f32 WARP_SPD_Y;
+	static const f32 WARP_SPD_X;
 
 	D3DXVECTOR2 position_;				// プレイヤー座標
 	D3DXVECTOR2 old_position_;			// プレイヤーの前回座標
@@ -192,13 +199,18 @@ private:
 	EffectLocus* nyas_locus_[LOCUS_NUM];
 	bool is_preview_light_;
 	bool is_force_light_;
-
+	bool is_light_accele_;
+	bool is_preview_light_accele_;
+	f32 light_speed_;
 	CAT_STATUS Status_;		//プレイヤーの状態
+	D3DXCOLOR	color_;
+
 
 	void UpdateLive(void);		//生きてるときの更新
 	void UpdateDead(void);		//死んでるときの更新
 	void UpdateClear(void);		//クリアした時の更新
 	void UpdateWarp(void);		//ワープしてるときの更新
+	void UpdateStageIn(void);
 	u32 dead_cnt_;				//死んだときのアニメーションカウント
 	u32 warp_cnt_;				//ワープするときのアニメーション
 

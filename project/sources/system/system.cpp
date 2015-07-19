@@ -103,6 +103,8 @@ bool System::Setup(HINSTANCE hinstance)
 	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_LIGHT,instance_.option_data_._light_key);
 	GET_DIRECT_INPUT->RegisterInputEventVertual(INPUT_EVENT_VIRTUAL_PAUSE,instance_.option_data_._pause_key);
 
+	instance_.__xaudio2()->__se()->SetVolume(instance_.option_data_._se_volume);
+	instance_.__xaudio2()->__bgm()->SetVolume(instance_.option_data_._bgm_volume);
 
 	//ƒŒƒR[ƒh“Ç‚İ‚İ‰Šú‰»
 	instance_.record_ = new Record();

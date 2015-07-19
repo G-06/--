@@ -16,6 +16,7 @@
 // constant definition
 //*****************************************************************************
 const D3DXVECTOR2 GOAL_SIZE	= D3DXVECTOR2(200.0f,200.0f);
+const f32 GOAL_ROTATION_ADD = 0.005f;
 
 //=============================================================================
 // constructor
@@ -57,7 +58,22 @@ void GimmickGoalPoint::Uninitialize(void)
 //=============================================================================
 void GimmickGoalPoint::Update(void)
 {
+	// update
 	object_goal_point_->Update();
+
+	// rotation‰ÁŽZ
+	f32 old_rotation = object_goal_point_->__rotation();
+	f32 temp_rotation = old_rotation + GOAL_ROTATION_ADD;
+
+	// normalize
+	if( temp_rotation > D3DX_PI ){
+		temp_rotation -= ( 2.0f * D3DX_PI );
+	}
+	if( temp_rotation < -(D3DX_PI) ){
+		temp_rotation += ( 2.0f * D3DX_PI );
+	}
+
+	object_goal_point_->__rotation(temp_rotation);
 }
 
 //=============================================================================

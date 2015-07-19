@@ -22,7 +22,8 @@
 const D3DXVECTOR2 DEFAULT_SIZE = Option::DEFAULT_MENU_SIZE;
 const D3DXVECTOR2 DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f - 250, 525.0f);
 // number
-const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(DEFAULT_SIZE.y, DEFAULT_SIZE.y);
+const D3DXVECTOR2 DEFAULT_NUM_SIZE = D3DXVECTOR2(Option::DEFAULT_MENU_NUM_SIZE.y, Option::DEFAULT_MENU_NUM_SIZE.y);
+const D3DXVECTOR2 DEFAULT_NUM_FRAME_SIZE = D3DXVECTOR2(Option::DEFAULT_MENU_FRAME_SIZE.y, Option::DEFAULT_MENU_FRAME_SIZE.y);
 const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f, DEFAULT_POSITION.y);
 
 //=============================================================================
@@ -57,7 +58,7 @@ bool KeyConfigPause::Initialize(void)
 
 	pause_button_frame_ = new OptionSpriteSmooth();
 	pause_button_frame_->Initialize();
-	pause_button_frame_->__size(DEFAULT_SIZE);
+	pause_button_frame_->__size(Option::DEFAULT_MENU_FRAME_SIZE);
 	pause_button_frame_->__position(DEFAULT_POSITION);
 	pause_button_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 
@@ -69,7 +70,7 @@ bool KeyConfigPause::Initialize(void)
 
 	set_button_number_frame_ = new OptionSpriteSmooth();
 	set_button_number_frame_->Initialize();
-	set_button_number_frame_->__size(DEFAULT_NUM_SIZE);
+	set_button_number_frame_->__size(DEFAULT_NUM_FRAME_SIZE);
 	set_button_number_frame_->__position(DEFAULT_NUM_POSITION);
 	set_button_number_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 

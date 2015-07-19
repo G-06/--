@@ -33,6 +33,8 @@ const u32 DESIDE_INTERVAL_COUNT = 30;			// 決定ボタン後の余韻
 // push_startの点滅数値
 const f32 PUSH_START_ALPHA_MAX = 1.25f;
 const f32 PUSH_START_ALPHA_MIN = 0.0f;
+const f32 PUSH_START_SCALE = 0.9f;
+const D3DXVECTOR2 PUSH_START_SIZE = D3DXVECTOR2(256 * PUSH_START_SCALE, 64.0f * PUSH_START_SCALE);
 
 // luminesceneの点滅数値
 const f32 LUMINESCENCE_ALPHA_MAX = 1.1f;
@@ -47,6 +49,11 @@ const D3DXVECTOR2 SELECT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 450
 
 // color
 const D3DXCOLOR DEFAULT_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+// frame size
+const D3DXVECTOR2 FRAME_SIZE = D3DXVECTOR2(324.0f,71.0f);
+const f32 PUSH_SIZE_SCALE = 1.1f;
+const D3DXVECTOR2 PUSH_FRAME_SIZE = D3DXVECTOR2(324.0f * PUSH_SIZE_SCALE,71.0f * PUSH_SIZE_SCALE);
 
 // string texture_id
 const Texture::TEXTURE_ID SELECT_STRING_TEXTURE[] = {
@@ -104,10 +111,12 @@ bool SceneTitle::Initialize(void)
 	push_ = new TitlePushStart();
 	push_->Initialize();
 	push_->__color(DEFAULT_COLOR);
+	push_->__size(PUSH_START_SIZE);
 
 	push_frame_ = new TitlePushStart();
 	push_frame_->Initialize();
 	push_frame_->__color(DEFAULT_COLOR);
+	push_frame_->__size(PUSH_FRAME_SIZE);
 	push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 	
 	for(int i = 0 ; i < SELECT_MAX ; i++){
@@ -118,6 +127,9 @@ bool SceneTitle::Initialize(void)
 
 		// texture
 		select_[i].select_->__texture_id(SELECT_STRING_TEXTURE[i]);
+
+		// frame size
+		select_[i].frame_->__size(FRAME_SIZE);
 
 		// position
 		const D3DXVECTOR2 position = D3DXVECTOR2(SELECT_POSITION.x, SELECT_POSITION.y + (i * SELECT_OFFSET_Y));
@@ -130,12 +142,11 @@ bool SceneTitle::Initialize(void)
 	message_window_ = new MessageWindow();
 	message_window_->Initialize();
 	message_window_->__dest_frame_count(DEST_FRAME_COUNT);
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_TITLE_STRING_CONFIRM_END);
 
 	// option
 	option_ = new Option();
 	option_->Initialize();
-	//option_->Load();
-	//option_->__is_indication(false);
 
 	//選択中のステージをチュートリアルに戻す
 	System::__set_current_stage(1);
@@ -419,6 +430,8 @@ void SceneTitle::_UpdateSelect(void)
 void SceneTitle::_UpdateMessage(void)
 {
 	if(is_stop_) return;
+
+	message_window_->__title_texture_id_(Texture::TEXTURE_ID_TITLE_STRING_CONFIRM_END);
 
 	// 自動遷移止める
 	frame_count_ = 0;

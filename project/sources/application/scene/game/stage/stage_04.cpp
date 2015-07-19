@@ -13,6 +13,7 @@
 #include "stage_factory.h"
 #include "object/map.h"
 #include "object/stage_offset.h"
+#include "system/system.h"
 
 //*****************************************************************************
 // constant definition
@@ -38,6 +39,7 @@ StageFour::~StageFour(void)
 //=============================================================================
 bool StageFour::Initialize(void)
 {
+	GET_BGM->Play(BGM::BGM_ID_STAGE_01);
 	NormalStage::Initialize();
 
 	map_ = new Map();
@@ -47,11 +49,11 @@ bool StageFour::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/lenstest.bin");
+	map_->LoadFromFile("data/work/kuso.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/lenstest.csv");
+	LoadFromFile("data/work/kuso.csv");
 
 	return true;
 }
