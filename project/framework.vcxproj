@@ -71,6 +71,7 @@
     <ClCompile Include="sources\application\scene\game\effect\effect.cpp" />
     <ClCompile Include="sources\application\scene\game\effect\effect_check_point.cpp" />
     <ClCompile Include="sources\application\scene\game\effect\effect_dead.cpp" />
+    <ClCompile Include="sources\application\scene\game\effect\effect_lens.cpp" />
     <ClCompile Include="sources\application\scene\game\effect\effect_lightning.cpp" />
     <ClCompile Include="sources\application\scene\game\effect\effect_locus.cpp" />
     <ClCompile Include="sources\application\scene\game\effect\effect_mirror.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="sources\application\scene\game\effect\effect.h" />
     <ClInclude Include="sources\application\scene\game\effect\effect_check_point.h" />
     <ClInclude Include="sources\application\scene\game\effect\effect_dead.h" />
+    <ClInclude Include="sources\application\scene\game\effect\effect_lens.h" />
     <ClInclude Include="sources\application\scene\game\effect\effect_lightning.h" />
     <ClInclude Include="sources\application\scene\game\effect\effect_locus.h" />
     <ClInclude Include="sources\application\scene\game\effect\effect_mirror.h" />

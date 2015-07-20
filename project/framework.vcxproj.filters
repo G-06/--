@@ -565,6 +565,9 @@
     <ClInclude Include="sources\application\scene\game\assert_effect\assert_effect_gameover.h">
       <Filter>sources\application\scene\game\assert_effect</Filter>
     </ClInclude>
+    <ClInclude Include="sources\application\scene\game\effect\effect_lens.h">
+      <Filter>sources\application\scene\game\effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sources\main.cpp">
@@ -977,6 +980,9 @@
     </ClCompile>
     <ClCompile Include="sources\application\scene\game\assert_effect\assert_effect_gameover.cpp">
       <Filter>sources\application\scene\game\assert_effect</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\application\scene\game\effect\effect_lens.cpp">
+      <Filter>sources\application\scene\game\effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
