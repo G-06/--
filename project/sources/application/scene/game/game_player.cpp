@@ -82,6 +82,9 @@ bool GamePlayer::Initialize(void)
 	player_= new ObjectPlayer();
 	player_->Initialize();
 	player_->__position(position_);
+	color_ = D3DXCOLOR(1.0f,1.0f,1.0f,0.0f);
+	player_->__color(color_);
+	player_->Update();
 	lightning_start_ = nullptr;
 	nyas_dead_ = nullptr;
 	for(s32 i = 0; i < LOCUS_NUM; i++)
@@ -90,7 +93,6 @@ bool GamePlayer::Initialize(void)
 		nyas_locus_[i]->Initialize();
 	}
 	light_speed_ = LIGHT_SPEED;
-	color_ = D3DXCOLOR(1.0f,1.0f,1.0f,0.0f);
 
 	Status_ = CAT_STATUS_STAGE_IN;
 

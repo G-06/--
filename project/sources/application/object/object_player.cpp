@@ -199,6 +199,7 @@ bool ObjectPlayer::Initialize(void)
 	player_->__position(position_);
 	player_->__point(Sprite::POINT_CENTER);
 	color_ = D3DXCOLOR(1.0f,1.0f,1.0f,1.0f);
+	player_->__color(color_);
 	player_->SetParameter();
 	return true;
 }

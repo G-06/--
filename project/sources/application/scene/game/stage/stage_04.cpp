@@ -49,11 +49,11 @@ bool StageFour::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/kuso.bin");
+	map_->LoadFromFile("data/work/otiru.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/kuso.csv");
+	LoadFromFile("data/work/otiru.csv");
 
 	return true;
 }
