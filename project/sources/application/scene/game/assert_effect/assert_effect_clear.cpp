@@ -145,7 +145,7 @@ void AssertEffectClear::Update(void)
 		}
 		else if(frame_count_ <= SRIDE_IN_FRAME + STOP_FRAME + SRIDE_OUT_FRAME + RECORD_SRIDE_IN_FRAME+NEW_RECORD_STOP_FRAME+NEW_RECORD_SRIDE_IN_FRAME)
 		{
-			if(is_first_)
+			if(is_first_ && new_record_flag_ == true)
 			{
 				GET_SE->Play(SE::SE_ID_NEW_RECORD);
 			}
