@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-// effect
+// effect lens
 //
-// Author		: Kenji Kabutomori
+// Author		: Ryotaro Arai
 //
 //*****************************************************************************
 
@@ -10,67 +10,59 @@
 // include guard
 //*****************************************************************************
 #pragma once
-#ifndef _EFFECT_H_
-#define _EFFECT_H_
+#ifndef _EFFECT_LENS_H_
+#define _EFFECT_LENS_H_
 
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "basic/basic.h"
+#include "effect.h"
+#include "common/animation/animation.h"
 
 //*****************************************************************************
 // forward declaration
 //*****************************************************************************
+class Sprite;
 
 //*****************************************************************************
 // class definition
 //*****************************************************************************
-class Effect : public Basic
+class EffectLens : public Effect
 {
 public:
-	enum TYPE
-	{
-		TYPE_CHECK_POINT = 0,
-		TYPE_LIGHTNING,
-		TYPE_NYAS_DEAD,
-		TYPE_LOCUS,
-		TYPE_MIRROR,
-		TYPE_SKELETON,
-		TYPE_LENS,
-		TYPE_MAX,
-	};
-
 	// constructor
-	Effect(TYPE type);
+	EffectLens(void);
 
 	// destructor
-	virtual ~Effect(void);
+	virtual ~EffectLens(void);
 
 	// initialize
-	virtual bool Initialize(void);
+	bool Initialize(void);
 
 	// uninitialize
-	virtual void Uninitialize(void);
+	void Uninitialize(void);
 
 	// update
-	virtual void Update(void);
+	void Update(void);
 
 	// draw
-	virtual void Draw(void);
+	void Draw(void);
 
-	// accessor
-	void __position(const D3DXVECTOR2& position) { position_ = position; }
-	const D3DXVECTOR2& __position(void) { return position_; }
-	void __offset_position(const D3DXVECTOR2& offset_position) { offset_position_ = offset_position; }
-	TYPE __type(void)const { return type_; }
-	bool __is_death(void)const { return is_death_; }
-protected:
-	D3DXVECTOR2 position_;
-	D3DXVECTOR2 offset_position_;
-	TYPE type_;
-	bool is_death_;
+	void Start(void);
+
+	bool __is_free(void){ return is_free_;}
+	void __is_free(bool is_free){ is_free_ = is_free;}
+
+private:
+	static const s32 LENS_EFFECT_PATTERN = 6;
+	static const s32 LENS_FRAME = 17;
+	static const Animation::DATA LENS_EFFECT[LENS_EFFECT_PATTERN];
+	Sprite* sprite_;
+	u32 frame_count_;
+	bool is_free_;
+	Animation* animation_;
 };
 
-#endif	// _EFFECT_H_
+#endif	// _EFFECT_LENS_H_
 
 //---------------------------------- EOF --------------------------------------

@@ -42,6 +42,7 @@
 
 #include "../effect/effect_mirror.h"
 #include "../effect/effect_skeleton.h"
+#include "../effect/effect_lens.h"
 #include "object/stage_select/select_record.h"
 #include "object/option.h"
 
@@ -178,6 +179,8 @@ bool NormalStage::Initialize(void)
 		effect_mirror_[i]->Initialize();
 		effect_skeleton_[i] = new EffectSkeleton();
 		effect_skeleton_[i]->Initialize();
+		effect_lens_[i] = new EffectLens();
+		effect_lens_[i]->Initialize();
 	}
 	time =0;
 	next_scene_timer_ = 0;
@@ -237,6 +240,7 @@ void NormalStage::Uninitialize(void)
 	{
 		SafeRelease(effect_mirror_[i]);
 		SafeRelease(effect_skeleton_[i]);
+		SafeRelease(effect_lens_[i]);
 	}
 }
 
@@ -563,6 +567,10 @@ void NormalStage::Update(void)
 				{
 					effect_skeleton_[i]->Update();
 				}
+				if(!effect_lens_[i]->__is_free())
+				{
+					effect_lens_[i]->Update();
+				}
 			}
 
 			//ゲージサイズ計算
@@ -643,6 +651,10 @@ void NormalStage::Update(void)
 				if(!effect_skeleton_[i]->__is_free())
 				{
 					effect_skeleton_[i]->__offset_position(stage_offset_->__position());
+				}
+				if(!effect_lens_[i]->__is_free())
+				{
+					effect_lens_[i]->__offset_position(stage_offset_->__position());
 				}
 			}
 
@@ -725,6 +737,10 @@ void NormalStage::Draw(void)
 		if(!effect_skeleton_[i]->__is_free())
 		{
 			effect_skeleton_[i]->Draw();
+		}
+		if(!effect_lens_[i]->__is_free())
+		{
+			effect_lens_[i]->Draw();
 		}
 	}
 
@@ -1095,6 +1111,15 @@ void NormalStage::CollisionGimmick(void)
 							if(game_player_->LightAccele(DEFAULT_LENS_ACCEL_SPEED))
 							{
 								GET_SE->Play(SE::SE_ID_REFLECTION);
+								for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
+								{
+									if(effect_lens_[i]->__is_free())
+									{
+										effect_lens_[i]->__position(gimmick_position);
+										effect_lens_[i]->Start();
+										break;
+									}
+								}
 							}
 						}
 
