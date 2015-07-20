@@ -20,7 +20,7 @@ const f32 AssertEffectGameover::FADE_IN_FRAME = 40;
 const u32 AssertEffectGameover::SRIDE_IN_FRAME = 30;
 const u32 AssertEffectGameover::STOP_FRAME = 90;
 const u32 AssertEffectGameover::SRIDE_OUT_FRAME = 30;
-const f32 AssertEffectGameover::MAX_ALPHA = 0.7f;
+const f32 AssertEffectGameover::MAX_ALPHA = 0.5f;
 const D3DXVECTOR2 GAMEOVER_SIZE = D3DXVECTOR2(1028.0f,256.0f);
 
 //=============================================================================

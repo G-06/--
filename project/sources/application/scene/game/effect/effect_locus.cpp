@@ -93,6 +93,7 @@ void EffectLocus::Draw(void)
 	LPDIRECT3DDEVICE9 device;
 	device = GET_DIRECTX9_DEVICE;
 
+	device->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
 	device->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 	device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	sprite_->__position(position_ - offset_position_);

@@ -36,6 +36,7 @@ public:
 		TYPE_LOCUS,
 		TYPE_MIRROR,
 		TYPE_SKELETON,
+		TYPE_LENS,
 		TYPE_MAX,
 	};
 
