@@ -39,6 +39,7 @@ class SelectRecord;
 class Option;
 class EffectMirror;
 class EffectSkeleton;
+class EffectLens;
 
 //*****************************************************************************
 // class definition
@@ -123,6 +124,7 @@ protected:
 	u32 time;
 	EffectMirror* effect_mirror_[EFFECT_STOCK_NUM];
 	EffectSkeleton* effect_skeleton_[EFFECT_STOCK_NUM];
+	EffectLens* effect_lens_[EFFECT_STOCK_NUM];
 
 private:
 	static const D3DXVECTOR2 DEFAULT_LIGHT_GAUGE_POSITION;

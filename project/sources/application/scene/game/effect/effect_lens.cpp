@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// effect locus
+// effect lens
 //
 // Author		: Ryotaro Arai
 //
@@ -9,24 +9,31 @@
 //*****************************************************************************
 // include
 //*****************************************************************************
-#include "effect_locus.h"
+#include "effect_lens.h"
 #include "render/sprite.h"
 #include "system/system.h"
-#include "scene/game/game_player.h"
 
 //*****************************************************************************
 // constant definition
 //*****************************************************************************
-const D3DXVECTOR2 EffectLocus::LOCUS_SIZE = D3DXVECTOR2(128.0f, 128.0f);
-const D3DXVECTOR2 EffectLocus::DOWN_SIZE = D3DXVECTOR2(LOCUS_SIZE.x/GamePlayer::LOCUS_NUM, LOCUS_SIZE.y/GamePlayer::LOCUS_NUM);
-const f32 EffectLocus::ADD_ALPHA = 1.0f/35.0f;
+const Animation::DATA EffectLens::LENS_EFFECT[EffectLens::LENS_EFFECT_PATTERN] =
+{
+	Animation::DATA(3,1,0),
+	Animation::DATA(3,2,1),
+	Animation::DATA(3,3,2),
+	Animation::DATA(3,4,3),
+	Animation::DATA(3,5,4),
+	Animation::DATA(3,0,5)
+};
+
+
 //=============================================================================
 // constructor
 //=============================================================================
-EffectLocus::EffectLocus(void)
-	:Effect(TYPE_LOCUS)
+EffectLens::EffectLens(void)
+	:Effect(TYPE_LENS)
 	,sprite_(nullptr)
-	,alpha_(1.0f)
+	,frame_count_(0)
 	,is_free_(true)
 {
 }
@@ -34,20 +41,26 @@ EffectLocus::EffectLocus(void)
 //=============================================================================
 // destructor
 //=============================================================================
-EffectLocus::~EffectLocus(void)
+EffectLens::~EffectLens(void)
 {
 }
 
 //=============================================================================
 // initialize
 //=============================================================================
-bool EffectLocus::Initialize(void)
+bool EffectLens::Initialize(void)
 {
+	animation_ = new Animation();
+	animation_->Add(&LENS_EFFECT[0], sizeof(Animation::DATA)*EffectLens::LENS_EFFECT_PATTERN);
+
 	sprite_ = new Sprite();
 	SafeInitialize(sprite_);
 	sprite_->__point(Sprite::POINT_CENTER);
-	sprite_->__size(LOCUS_SIZE);
-	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_LOCUS);
+	sprite_->__size(D3DXVECTOR2(256.0f,256.0f));
+	sprite_->__texture_id(Texture::TEXTURE_ID_EFFECT_LENS);
+	sprite_->__division_width(5);
+	sprite_->__division_height(2);
+	sprite_->__index(0);
 	sprite_->SetParameter();
 
 	return true;
@@ -56,39 +69,35 @@ bool EffectLocus::Initialize(void)
 //=============================================================================
 // uninitialize
 //=============================================================================
-void EffectLocus::Uninitialize(void)
+void EffectLens::Uninitialize(void)
 {
 	SafeRelease(sprite_);
+	SafeRelease(animation_);
 }
 
 //=============================================================================
 // update
 //=============================================================================
-void EffectLocus::Update(void)
+void EffectLens::Update(void)
 {
-	if(sprite_->__size() <= D3DXVECTOR2(DOWN_SIZE.x/5*2, DOWN_SIZE.y/5*2))
-	{
-		sprite_->__size(sprite_->__size() - DOWN_SIZE - DOWN_SIZE);
-		alpha_+= -ADD_ALPHA*2;
-	}
-	
-	sprite_->__size(sprite_->__size() - DOWN_SIZE);
+	frame_count_++;
 
-	if(sprite_->__size().x <= 0.0f && sprite_->__size().y <= 0.0f )
+	if(frame_count_ > LENS_FRAME)
 	{
 		is_death_ = true;
 		is_free_ = true;
+		animation_->Stop();
 	}
-	
-	alpha_+= -ADD_ALPHA;
-	sprite_->__color(D3DXCOLOR(255,255,255,alpha_));
+
+	animation_->Update();
+	sprite_->__index(animation_->__current_index());
 	sprite_->SetParameter();
 }
 
 //=============================================================================
 // draw
 //=============================================================================
-void EffectLocus::Draw(void)
+void EffectLens::Draw(void)
 {
 	LPDIRECT3DDEVICE9 device;
 	device = GET_DIRECTX9_DEVICE;
@@ -105,14 +114,13 @@ void EffectLocus::Draw(void)
 //=============================================================================
 // start
 //=============================================================================
-void EffectLocus::Start(void)
+void EffectLens::Start(void)
 {
-	alpha_ = 1.0f;
-	sprite_->__color(D3DXCOLOR(255,255,255,1.0f));
-	sprite_->__size(LOCUS_SIZE);
+	frame_count_ = 0;
 	is_death_ = false;
 	is_free_ = false;
-	sprite_->SetParameter();
+	animation_->Start(0);
+	sprite_->__index(0);
 }
 
 //---------------------------------- EOF --------------------------------------
