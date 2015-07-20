@@ -81,7 +81,7 @@ public:
 	const f32& __volume(void) { return volume_; }
 
 private:
-	static const u32 SE_MAX = 10;
+	static const u32 SE_MAX = SE_ID_MAX - SE_ID_DECIDE;
 
 	IXAudio2* ixaudio2_;
 	f32 volume_;

@@ -22,6 +22,7 @@ SE::SE(IXAudio2* ixaudio2)
 	for(u32 i = 0;i < SE_MAX;++i)
 	{
 		is_use_[i] = false;
+		ixaudio2_source_voices_[i] = nullptr;
 	}
 }
 
@@ -60,6 +61,13 @@ void SE::Uninitialize(void)
 {
 	for(u32 i = SE_ID_DECIDE;i < SE_ID_MAX;++i)
 	{
+		if(ixaudio2_source_voices_[i - SE_ID_DECIDE] != nullptr)
+		{
+			is_use_[i - SE_ID_DECIDE] = false;
+			ixaudio2_source_voices_[i - SE_ID_DECIDE]->Stop();
+			ixaudio2_source_voices_[i - SE_ID_DECIDE]->DestroyVoice();
+			ixaudio2_source_voices_[i - SE_ID_DECIDE] = nullptr;
+		}
 		SafeRelease(xaudio2_sound_[i - SE_ID_DECIDE]);
 	}
 }
