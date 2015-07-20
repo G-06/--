@@ -165,6 +165,14 @@
 #define BGM_CREDIT				302
 #define BGM_STAGE_SELECT		303
 #define BGM_STAGE_01			304
+#define BGM_STAGE_02			305
+#define BGM_STAGE_03			306
+#define BGM_STAGE_04			307
+#define BGM_STAGE_05			308
+#define BGM_STAGE_06			309
+#define BGM_STAGE_07			310
+#define BGM_STAGE_08			311
+#define BGM_STAGE_09			312
 
 //*****************************************************************************
 // se

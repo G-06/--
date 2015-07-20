@@ -267,11 +267,24 @@ bool XAudio2Sound::ReadWaveData(const s8* data)
 	{
 		return false;
 	}
+
 	// offset
 	offset += format_chank.size + 8;
 
-	// read data chunk
-	memcpy(&data_chunk,&data[offset],sizeof(DataChunk));
+	while(1)
+	{
+		// read data chunk
+		memcpy(&data_chunk,&data[offset],sizeof(DataChunk));
+
+		if(data_chunk.id[0] != 'd' || data_chunk.id[1] != 'a' || data_chunk.id[2] != 't' || data_chunk.id[3] != 'a')
+		{
+			offset += data_chunk.size + 8;
+		}
+		else
+		{
+			break;
+		}
+	}
 
 	// offset
 	offset += sizeof(DataChunk);

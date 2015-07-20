@@ -39,7 +39,7 @@ StageFive::~StageFive(void)
 //=============================================================================
 bool StageFive::Initialize(void)
 {
-	GET_BGM->Play(BGM::BGM_ID_STAGE_01);
+	GET_BGM->Play(BGM::BGM_ID_STAGE_05);
 	NormalStage::Initialize();
 
 	map_ = new Map();
