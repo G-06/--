@@ -39,7 +39,7 @@ StageFive::~StageFive(void)
 //=============================================================================
 bool StageFive::Initialize(void)
 {
-	GET_BGM->Play(BGM::BGM_ID_STAGE_01);
+	GET_BGM->Play(BGM::BGM_ID_STAGE_05);
 	NormalStage::Initialize();
 
 	map_ = new Map();
@@ -49,11 +49,11 @@ bool StageFive::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/healtest.bin");
+	map_->LoadFromFile("data/work/K.H_stage.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/healtest.csv");
+	LoadFromFile("data/work/K.H_stage.csv");
 
 	return true;
 }

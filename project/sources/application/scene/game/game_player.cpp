@@ -31,7 +31,7 @@ const s32 GamePlayer::DEFAULT_LIFE_MAX = 3;
 const s32 GamePlayer::DEFAULT_SP_MAX = 60;
 const s32 GamePlayer::DEFAULT_SP_RECOVER_SPEED = 2;
 const D3DXVECTOR2 GamePlayer::DEFAULT_SIZE = D3DXVECTOR2(120.0f,197.0f);
-const u32 GamePlayer::DEAD_TIME = 45;		//死ぬアニメのフレーム数の合計
+const u32 GamePlayer::DEAD_TIME = 60;		//死ぬアニメのフレーム数の合計
 const u32 GamePlayer::OUT_WABISABI = 80;	//ワープして消えた後の余韻
 const f32 GamePlayer::NEKO_FADE_IN = 0.03f;	
 const f32 GamePlayer::WARP_SPD_Y=15.f;
@@ -82,6 +82,9 @@ bool GamePlayer::Initialize(void)
 	player_= new ObjectPlayer();
 	player_->Initialize();
 	player_->__position(position_);
+	color_ = D3DXCOLOR(1.0f,1.0f,1.0f,0.0f);
+	player_->__color(color_);
+	player_->Update();
 	lightning_start_ = nullptr;
 	nyas_dead_ = nullptr;
 	for(s32 i = 0; i < LOCUS_NUM; i++)
@@ -90,7 +93,6 @@ bool GamePlayer::Initialize(void)
 		nyas_locus_[i]->Initialize();
 	}
 	light_speed_ = LIGHT_SPEED;
-	color_ = D3DXCOLOR(1.0f,1.0f,1.0f,0.0f);
 
 	Status_ = CAT_STATUS_STAGE_IN;
 
