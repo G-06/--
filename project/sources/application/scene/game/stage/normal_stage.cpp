@@ -276,6 +276,23 @@ void NormalStage::Update(void)
 			(*it)->Update();
 		}
 
+		// その他のエフェクト
+		for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
+		{
+			if(!effect_mirror_[i]->__is_free())
+			{
+				effect_mirror_[i]->Update();
+			}
+			if(!effect_skeleton_[i]->__is_free())
+			{
+				effect_skeleton_[i]->Update();
+			}
+			if(!effect_lens_[i]->__is_free())
+			{
+				effect_lens_[i]->Update();
+			}
+		}
+
 		//マップとの当たり判定？
 		if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
 		{
@@ -356,6 +373,23 @@ void NormalStage::Update(void)
 		// 怒り
 		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_ANGER);
 		object_player_icon_->Update();
+
+		// その他のエフェクト
+		for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
+		{
+			if(!effect_mirror_[i]->__is_free())
+			{
+				effect_mirror_[i]->Update();
+			}
+			if(!effect_skeleton_[i]->__is_free())
+			{
+				effect_skeleton_[i]->Update();
+			}
+			if(!effect_lens_[i]->__is_free())
+			{
+				effect_lens_[i]->Update();
+			}
+		}
 
 		if((time>=game_player_->DEAD_TIME+5))
 		{
@@ -556,7 +590,7 @@ void NormalStage::Update(void)
 				(*it)->Update();
 			}
 
-			
+			// その他のエフェクト
 			for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 			{
 				if(!effect_mirror_[i]->__is_free())
