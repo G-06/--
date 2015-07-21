@@ -49,11 +49,11 @@ bool StageSix::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/arai_stage1.bin");
+	map_->LoadFromFile("data/work/nekono_komichi.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/arai_stage1.csv");
+	LoadFromFile("data/work/nekono_komichi.csv");
 
 	return true;
 }
