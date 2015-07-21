@@ -49,11 +49,11 @@ bool StageEight::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/tst.bin");
+	map_->LoadFromFile("data/map/arai_stage2.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/tst.csv");
+	LoadFromFile("data/script/arai_stage2.csv");
 
 	return true;
 }

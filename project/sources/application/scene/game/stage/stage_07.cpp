@@ -49,11 +49,11 @@ bool StageSeven::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/mario.bin");
+	map_->LoadFromFile("data/map/arai_stage1.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/mario.csv");
+	LoadFromFile("data/script/arai_stage1.csv");
 
 	return true;
 }
