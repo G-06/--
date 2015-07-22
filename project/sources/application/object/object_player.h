@@ -80,6 +80,9 @@ public:
 	bool __is_animation_end(void) { return is_animation_end_; }
 	const D3DXVECTOR2& __Get_size(void)const{return size_;}
 	void __color(D3DXCOLOR color){color_ = color;}
+	void __size(const D3DXVECTOR2& size){ size_ = size; }
+	const D3DXVECTOR2& __size(void)const{return size_;}
+
 private:
 	struct ANIMATION_TEXTURE_DATA
 	{

@@ -346,6 +346,7 @@ void NormalStage::Update(void)
 				game_player_->__Set_status(GamePlayer::CAT_STATUS_WARP);
 				warp_=true;
 				is_clear_ = false;
+				GET_SE->Play(SE::SE_ID_STAGE_START);
 			}
 		}
 	}
@@ -1073,7 +1074,8 @@ void NormalStage::CollisionGimmick(void)
 						game_player_->Heal(1);
 						EffectCheckPoint* effect = new EffectCheckPoint();
 						effect->Initialize();
-						effect->__position(gimmick_position);
+						const D3DXVECTOR2 check_point_position = D3DXVECTOR2(gimmick_position.x,gimmick_position.y - 150.0f);
+						effect->__position(check_point_position);
 						effect_container_.push_back(effect);
 					}
 					break;

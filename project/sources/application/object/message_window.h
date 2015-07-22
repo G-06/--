@@ -65,6 +65,8 @@ public:
 	void __dest_frame_count(const u32& frame){dest_frame_count_ = frame;}
 	const bool& __is_move(void) {return is_move_;}
 	const s32& __is_select(void){return is_select_;}
+	void __is_close_se(const bool& is_close) {is_close_se_ = is_close;}
+	const bool& __is_close_se(void) {return is_close_se_;}
 
 	// ‘I‘ğ’†‚Ìæ“¾
 	void __is_select(const s32& select){is_select_ = select;}
@@ -108,6 +110,8 @@ private:
 
 	// “®‚¢‚Ä‚éH
 	bool is_move_;
+
+	bool is_close_se_;
 
 	// size
 	D3DXVECTOR2 window_size_;

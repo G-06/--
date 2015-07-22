@@ -50,6 +50,7 @@ public:
 		UPDATE_TYPE_SELECT,		//ステージ選択してるとき
 		UPDATE_TYPE_MASSAGE,	//タイトルに戻るか聞いてるとき
 		UPDATE_TYPE_YORN,		//ホントにこのステージで遊ぶか聞いてるとき
+		UPDATE_TYPE_STAGE_IN,	//ステージ入る時
 		UPDATE_TYPE＿MAX
 	};
 
@@ -81,6 +82,7 @@ protected:
 	void SelectUpdate();	// ステージを選んでるときの更新
 	void MassageUpdate();	// メッセージウィンドウが出てるときの更新
 	void YorNUpdate();		// ホントにこのステージで遊ぶか聞いてるときの更新
+	void StageInUpdate();	// ステージ入る時ときの更新
 
 	REGIONS regions_[TYPE_MAX-1];
 
@@ -95,7 +97,7 @@ protected:
 	bool massage_flag_;		//メッセージウィンドウの出てるかどうか
 	UPDATE_TYPE update_type_;
 
-	ObjectPlayer* nas_;
+	ObjectPlayer* nyas_;
 	u32 flag_;
 };
 
