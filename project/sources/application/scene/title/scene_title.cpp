@@ -44,14 +44,15 @@ const f32 LUMINESCENCE_ALPHA_MIN = 0.15f;
 const f32 CIRCLE_ROTATION = 0.005f;
 
 // select position
-const f32 SELECT_OFFSET_Y = 100.0f;
-const D3DXVECTOR2 SELECT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 450.0f);
+const f32 SELECT_OFFSET_Y = 85.0f;
+const D3DXVECTOR2 SELECT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, 485.0f);
 
 // color
 const D3DXCOLOR DEFAULT_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 // frame size
-const D3DXVECTOR2 FRAME_SIZE = D3DXVECTOR2(324.0f,71.0f);
+const f32 FRAME_SCALE = 0.9f;
+const D3DXVECTOR2 FRAME_SIZE = D3DXVECTOR2(324.0f * FRAME_SCALE,71.0f * FRAME_SCALE);
 const f32 PUSH_SIZE_SCALE = 1.1f;
 const D3DXVECTOR2 PUSH_FRAME_SIZE = D3DXVECTOR2(324.0f * PUSH_SIZE_SCALE,71.0f * PUSH_SIZE_SCALE);
 
@@ -60,6 +61,11 @@ const Texture::TEXTURE_ID SELECT_STRING_TEXTURE[] = {
 	Texture::TEXTURE_ID_TITLE_STRING_GAME_START,
 	Texture::TEXTURE_ID_TITLE_STRING_OPTION,
 	Texture::TEXTURE_ID_TITLE_STRING_GAME_END };
+
+// logo
+const D3DXVECTOR2 LOGO_DEFAULT_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,300.0f);
+const D3DXVECTOR2 LOGO_DEST_POSITION = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f,230.0f);
+
 
 //=============================================================================
 // constructor
@@ -245,6 +251,7 @@ void SceneTitle::Update(void)
 		}
 
 		message_window_->Update();
+		logo_->Update();
 	}
 
 	// サークルの回転
@@ -336,6 +343,10 @@ void SceneTitle::_UpdatePush(void)
 
 		// 決定枠テクスチャ
 		push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+		// logo
+		logo_->__dest_position(LOGO_DEST_POSITION);
+		logo_->StartMove();
 	}
 }
 
@@ -379,6 +390,10 @@ void SceneTitle::_UpdateSelect(void)
 
 		// push
 		push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
+
+		// logo
+		logo_->__dest_position(LOGO_DEFAULT_POSITION);
+		logo_->StartMove();
 	}
 
 	// 決定
