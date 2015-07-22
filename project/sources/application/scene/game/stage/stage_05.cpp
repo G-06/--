@@ -49,11 +49,11 @@ bool StageFive::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/K.H_stage.bin");
+	map_->LoadFromFile("data/work/standoUp.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/K.H_stage.csv");
+	LoadFromFile("data/work/standoUp.csv");
 
 	return true;
 }
