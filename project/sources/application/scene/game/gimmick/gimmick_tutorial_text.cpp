@@ -65,7 +65,8 @@ bool GimmickTutorialText::Initialize(void)
 						"ガラスはヒカリカでとおれるニャス",TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_GLAS:
-		txtbox_->Print("ヒカリカちゅうでないととおれないニャス", TEXT_COLOR);
+		txtbox_->Print("  ヒカリカちゅうでないと\n"
+						"  とおれないニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_MIRROR:
 		txtbox_->Print("ヒカリカしてぶつかるとハンシャするニャス", TEXT_COLOR);
