@@ -35,7 +35,7 @@ rotation_(0.0f),
 show_speed_(3),
 show_count_(0),
 frame_count_(0),
-font_type_(FontTexture::TYPE_MS_GOTHIC)
+font_type_(font_type)
 {
 	device_ = GET_DIRECTX9_DEVICE;
 
@@ -126,10 +126,17 @@ void TextBox::Draw(void)
 		}
 	}
 
+	LPDIRECT3DDEVICE9 device = GET_DIRECTX9_DEVICE;
+	device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP );
+	device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP );
+
 	for(u32 i = 0;i < show_count_;++i)
 	{
 		sprites_[i]->Draw(world_matrix);
 	}
+
+	device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+	device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
 }
 
 //=============================================================================

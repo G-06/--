@@ -31,7 +31,7 @@ device_(nullptr),
 texture_(nullptr),
 character_code_(0),
 offset_y_(0),
-type_(TYPE_MS_MINTYO)
+type_(TYPE_MEIRYO)
 {
 	device_ = GET_DIRECTX9_DEVICE;
 
@@ -55,7 +55,7 @@ device_(nullptr),
 texture_(nullptr),
 character_code_(0),
 offset_y_(0),
-type_(TYPE_MS_MINTYO)
+type_(TYPE_MEIRYO)
 {
 	device_ = GET_DIRECTX9_DEVICE;
 	character_code_ = character_code;
