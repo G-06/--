@@ -46,7 +46,7 @@ GimmickTutorialText::~GimmickTutorialText(void)
 //=============================================================================
 bool GimmickTutorialText::Initialize(void)
 {
-	txtbox_ = new TextBox(FontTexture::TYPE_MEIRYO,50);
+	txtbox_ = new TextBox(FontTexture::TYPE_MS_GOTHIC,50);
 	txtbox_->Initialize();
 	txtbox_->__show_speed(2);
 
@@ -61,21 +61,24 @@ bool GimmickTutorialText::Initialize(void)
 		txtbox_->Print("ジャンプキーでジャンプするニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_LIGHT:
-		txtbox_->Print("ヒカリカキーでヒカリカするニャス\n"
-						"ガラスはヒカリカでとおれるニャス",TEXT_COLOR);
+		txtbox_->Print(" ヒカリカボタンでヒカリカするよ\n"
+						" ガラスはヒカリカでとおれるよ",TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_GLAS:
 		txtbox_->Print("  ヒカリカちゅうでないと\n"
-						"  とおれないニャス", TEXT_COLOR);
+						"    とおれないよ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_MIRROR:
-		txtbox_->Print("ヒカリカしてぶつかるとハンシャするニャス", TEXT_COLOR);
+		txtbox_->Print("    ヒカリカしてぶつかると\n"
+						"       ハンシャするよ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_DOWNZONE:
-		txtbox_->Print("このなかにはいるとヒカリカできないニャス", TEXT_COLOR);
+		txtbox_->Print("     このなかにはいると\n"
+						"     ヒカリカできないよ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_UPZONE:
-		txtbox_->Print("このなかはなんかいでもヒカリカできるニャス", TEXT_COLOR);
+		txtbox_->Print("   このなかは  なんかいでも\n"
+			"       ヒカリカできるよ", TEXT_COLOR);
 		break;
 	default:
 		txtbox_->Print("表示する文字がないニャス", TEXT_COLOR);
