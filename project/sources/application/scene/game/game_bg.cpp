@@ -14,9 +14,9 @@
 #include "system/system.h"
 #include "application/object/object_bg.h"
 
-static const D3DXVECTOR2 MOVE_FAR(0.00003f,0.0003f);
-static const D3DXVECTOR2 MOVE_NEAR(0.00004f,0.0005f);
-static const D3DXVECTOR2 MOVE_MIDDLE(0.00003f,0.0003f);
+static const D3DXVECTOR2 MOVE_FAR(0.00003f,0.00015f);
+static const D3DXVECTOR2 MOVE_NEAR(0.00004f,0.00025f);
+static const D3DXVECTOR2 MOVE_MIDDLE(0.00003f,0.00015f);
 static const f32 MIDDLE_AUTO_MOVE_X = 0.0002f;
 
 //=============================================================================
