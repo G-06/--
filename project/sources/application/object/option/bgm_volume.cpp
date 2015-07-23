@@ -28,7 +28,7 @@ const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f
 
 const f32 BgmVolume::VOLUME_MAX = 1.0f;
 const f32 BgmVolume::VOLUME_MIN = 0.0f;
-const D3DXVECTOR2 SIZE_SCALE = D3DXVECTOR2(0.8f, 0.8f);
+const D3DXVECTOR2 SIZE_SCALE = D3DXVECTOR2(0.6f, 0.8f);
 const D3DXVECTOR2 BgmVolume::SIZE = D3DXVECTOR2(470.0f * SIZE_SCALE.x,78.0f * SIZE_SCALE.y);
 
 //=============================================================================

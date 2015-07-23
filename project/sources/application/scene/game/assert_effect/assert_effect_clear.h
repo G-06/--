@@ -94,6 +94,7 @@ private:
 	bool new_record_flag_;
 	bool is_first_;
 	bool is_turtrial_;
+	bool back_move_;
 };
 
 #endif	// _ASSERT_EFFECT_CLEAR_H_
