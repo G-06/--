@@ -17,6 +17,10 @@
 //*****************************************************************************
 const D3DXVECTOR2 GOAL_SIZE	= D3DXVECTOR2(200.0f,200.0f);
 const f32 GOAL_ROTATION_ADD = 0.005f;
+// luminesceneの点滅数値
+const f32 LUMINESCENCE_ALPHA_MAX = 1.1f;
+const f32 LUMINESCENCE_ALPHA_MIN = 0.3f;
+const f32 LUMINESCENCE_ALPHA_SPEED = -0.015f;
 
 //=============================================================================
 // constructor
@@ -41,6 +45,7 @@ bool GimmickGoalPoint::Initialize(void)
 {
 	object_goal_point_ = new ObjectGoalPoint();
 	object_goal_point_->Initialize();
+	object_goal_point_->__alpha_speed(LUMINESCENCE_ALPHA_SPEED);
 
 	return true;
 }
@@ -74,6 +79,26 @@ void GimmickGoalPoint::Update(void)
 	}
 
 	object_goal_point_->__rotation(temp_rotation);
+
+	// アルファ取得
+	f32 alpha = object_goal_point_->__alpha();
+
+	// アルファ値加算
+	alpha += object_goal_point_->__alpha_speed();
+
+	if( alpha > LUMINESCENCE_ALPHA_MAX )
+	{
+		alpha = LUMINESCENCE_ALPHA_MAX;
+		object_goal_point_->InverseAlphaSpeed();
+	}
+	else if( alpha < LUMINESCENCE_ALPHA_MIN)
+	{
+		alpha  = LUMINESCENCE_ALPHA_MIN;
+		object_goal_point_->InverseAlphaSpeed();
+	}
+
+	// 設定
+	object_goal_point_->__alpha(alpha);
 }
 
 //=============================================================================

@@ -26,9 +26,13 @@ const u32 ObjectGoalPoint::DIVISION_HEIGHT	= 1;
 //=============================================================================
 ObjectGoalPoint::ObjectGoalPoint(void)
 	:object_goal_point_(nullptr)
+	,object_goal_point_luminescnce_(nullptr)
 	,position_(0.0f,0.0f)
 	,rotation_(0.0)
+	,rotation_luminescnce_(0.0f)
+	,alpha_(1.0f)
 	,size_(0.0f,0.0f)
+	,alpha_speed_(0.0f)
 {
 }
 
@@ -53,6 +57,15 @@ bool ObjectGoalPoint::Initialize(void)
 	object_goal_point_->__texture_id(Texture::TEXTURE_ID_GAME_GOAL_POINT);
 	object_goal_point_->SetParameter();
 
+	object_goal_point_luminescnce_ = new Sprite();
+	object_goal_point_luminescnce_->Initialize();
+	object_goal_point_luminescnce_->__point(Sprite::POINT_CENTER);
+	object_goal_point_luminescnce_->__division_width(DIVISION_WIDTH);
+	object_goal_point_luminescnce_->__division_height(DIVISION_HEIGHT);
+	object_goal_point_luminescnce_->__size(SIZE);
+	object_goal_point_luminescnce_->__texture_id(Texture::TEXTURE_ID_GAME_GOAL_POINT_LUMINESCENCE);
+	object_goal_point_luminescnce_->SetParameter();
+
 	return true;
 }
 
@@ -62,6 +75,7 @@ bool ObjectGoalPoint::Initialize(void)
 void ObjectGoalPoint::Uninitialize(void)
 {
 	SafeRelease(object_goal_point_);
+	SafeRelease(object_goal_point_luminescnce_);
 }
 
 //=============================================================================
@@ -79,6 +93,13 @@ void ObjectGoalPoint::Draw(void)
 	object_goal_point_->__position(position_);
 	object_goal_point_->__rotation(rotation_);
 	object_goal_point_->Draw();
+
+	object_goal_point_luminescnce_->__color(D3DXCOLOR(1.0f,1.0f,1.0,alpha_));
+	object_goal_point_luminescnce_->__position(position_);
+	object_goal_point_luminescnce_->__rotation(rotation_);
+	object_goal_point_luminescnce_->SetParameter();
+	object_goal_point_luminescnce_->Draw();
+	object_goal_point_luminescnce_->Draw();
 }
 
 //---------------------------------- EOF --------------------------------------

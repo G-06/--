@@ -30,10 +30,11 @@ const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f
 // constructor
 //=============================================================================
 KeyConfigPause::KeyConfigPause(void)
-	:pause_button_(NULL)
-	,pause_button_frame_(NULL)
-	,set_button_number_(NULL)
-	,set_button_number_frame_(NULL)
+	:pause_button_(nullptr)
+	,pause_button_frame_(nullptr)
+	,set_button_number_(nullptr)
+	,set_button_number_frame_(nullptr)
+	,set_button_number_back_(nullptr)
 	,current_key_event_(NULL)
 {
 }
@@ -72,7 +73,13 @@ bool KeyConfigPause::Initialize(void)
 	set_button_number_frame_->Initialize();
 	set_button_number_frame_->__size(DEFAULT_NUM_FRAME_SIZE);
 	set_button_number_frame_->__position(DEFAULT_NUM_POSITION);
-	set_button_number_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
+	set_button_number_frame_->__texture_id(Texture::TEXTURE_ID_OPTION_NUMBER_FRAME);
+
+	set_button_number_back_ = new OptionSpriteSmooth();
+	set_button_number_back_->Initialize();
+	set_button_number_back_->__size(DEFAULT_NUM_FRAME_SIZE);
+	set_button_number_back_->__position(DEFAULT_NUM_POSITION);
+	set_button_number_back_->__texture_id(Texture::TEXTURE_ID_OPTION_BGM_BAR_BACK);
 
 	current_key_event_ = NULL;
 
@@ -88,6 +95,7 @@ void KeyConfigPause::Uninitialize(void)
 	SafeRelease(pause_button_frame_);
 	SafeRelease(set_button_number_);
 	SafeRelease(set_button_number_frame_);
+	SafeRelease(set_button_number_back_);
 }
 
 //=============================================================================
@@ -99,6 +107,7 @@ void KeyConfigPause::Update(void)
 	pause_button_frame_->Update();
 	set_button_number_->Update();
 	set_button_number_frame_->Update();
+	set_button_number_back_->Update();
 }
 
 //=============================================================================
@@ -108,6 +117,8 @@ void KeyConfigPause::Draw(void)
 {
 	pause_button_frame_->Draw();
 	pause_button_->Draw();
+
+	set_button_number_back_->Draw();
 	set_button_number_frame_->Draw();
 	set_button_number_->Draw();
 }
@@ -206,6 +217,7 @@ void KeyConfigPause::__position(const D3DXVECTOR2 position, const float offset_x
 	pause_button_frame_->__position(position);
 	set_button_number_frame_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
 	set_button_number_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
+	set_button_number_back_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
 }
 
 //=============================================================================

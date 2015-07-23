@@ -33,7 +33,7 @@
 // constant definition
 //*****************************************************************************
 const f32 MENU_SCALE = 0.75f;
-const f32 MENU_NUM_SCALE = 0.6f;
+const f32 MENU_NUM_SCALE = 0.55f;
 const D3DXVECTOR2 MENU_FRAME_SCALE = D3DXVECTOR2(1.0f,0.9f);
 
 const D3DXVECTOR2 Option::DEFAULT_MENU_SIZE = D3DXVECTOR2(256.0f * MENU_SCALE, 64.0f * MENU_SCALE);
