@@ -443,7 +443,7 @@ void StageSelect::YorNUpdate()
 
 					// アップデートタイプ
 					update_type_ = UPDATE_TYPE_STAGE_IN;
-					GET_SE->Play(SE::SE_ID_STAGE_START);
+					GET_SE->Play(SE::SE_ID_NYAS_LIGHT_START);
 
 					// メッセージ閉じる
 					message_window_->__is_close_se(false);

@@ -328,25 +328,30 @@ void SceneTitle::_UpdatePush(void)
 	// モード変更
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 	{
-		GET_SE->Play(SE::SE_ID_DECIDE);
-		decide_interval_ = DESIDE_INTERVAL_COUNT;
-		mode_ = MODE_PUSH_INTERVAL;
+		if(logo_->__is_move() == false)
+		{
+			// SE
+			GET_SE->Play(SE::SE_ID_DECIDE);
 
-		// 初期値に戻しておく
-		push_->ResetAlphaSpeed();
-		push_->__alpha(DEFAULT_COLOR.a);
-		push_->__color(DEFAULT_COLOR);
+			decide_interval_ = DESIDE_INTERVAL_COUNT;
+			mode_ = MODE_PUSH_INTERVAL;
 
-		push_frame_->ResetAlphaSpeed();
-		push_frame_->__alpha(DEFAULT_COLOR.a);
-		push_frame_->__color(DEFAULT_COLOR);
+			// 初期値に戻しておく
+			push_->ResetAlphaSpeed();
+			push_->__alpha(DEFAULT_COLOR.a);
+			push_->__color(DEFAULT_COLOR);
 
-		// 決定枠テクスチャ
-		push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+			push_frame_->ResetAlphaSpeed();
+			push_frame_->__alpha(DEFAULT_COLOR.a);
+			push_frame_->__color(DEFAULT_COLOR);
 
-		// logo
-		logo_->__dest_position(LOGO_DEST_POSITION);
-		logo_->StartMove();
+			// 決定枠テクスチャ
+			push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+			// logo
+			logo_->__dest_position(LOGO_DEST_POSITION);
+			logo_->StartMove();
+		} // is_move_
 	}
 }
 
@@ -379,21 +384,24 @@ void SceneTitle::_UpdateSelect(void)
 	// キャンセル
 	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 	{
-		// 選択肢を戻しておく
-		GET_SE->Play(SE::SE_ID_CANCEL);
-		mode_ = MODE_PUSH;
-		current_select_ = SELECT_START;
-		for(int i = 0 ; i < SELECT_MAX ; i++){
-			select_[i].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
-		}
-		select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
+		if(logo_->__is_move() == false)
+		{
+			// 選択肢を戻しておく
+			GET_SE->Play(SE::SE_ID_CANCEL);
+			mode_ = MODE_PUSH;
+			current_select_ = SELECT_START;
+			for(int i = 0 ; i < SELECT_MAX ; i++){
+				select_[i].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
+			}
+			select_[current_select_].frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_001);
 
-		// push
-		push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
+			// push
+			push_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
 
-		// logo
-		logo_->__dest_position(LOGO_DEFAULT_POSITION);
-		logo_->StartMove();
+			// logo
+			logo_->__dest_position(LOGO_DEFAULT_POSITION);
+			logo_->StartMove();
+		} // is_move
 	}
 
 	// 決定
