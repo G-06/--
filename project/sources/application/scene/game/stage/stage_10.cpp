@@ -54,7 +54,7 @@ bool StageTen::Initialize(void)
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/Ending.csv");
+	LoadFromFile("data/script/ending.csv");
 
 	return true;
 }

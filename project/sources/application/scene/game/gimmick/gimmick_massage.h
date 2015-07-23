@@ -45,6 +45,7 @@ public:
 		MASSAGE_TYPE_STAFF_PROGRAMMER_4,
 		MASSAGE_TYPE_STAFF_SPECIAL_1,
 		MASSAGE_TYPE_STAFF_SPECIAL_2,
+		MASSAGE_TYPE_STAFF_SPECIAL_3,
 		MASSAGE_TYPE_MAX
 
 	};
@@ -75,6 +76,8 @@ public:
 	void* GetPointer(void);
 	// accessor
 	void __type(u32 type){type_ = (MASSAGE_TYPE)type;};
+	//
+	void __size(D3DXVECTOR2 size){size_ = size;}
 
 private:
 	TextBox* txtbox_;

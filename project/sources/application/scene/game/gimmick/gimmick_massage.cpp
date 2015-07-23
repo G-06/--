@@ -102,11 +102,15 @@ bool GimmickMassage::Initialize(void)
 		break;
 	case MASSAGE_TYPE_STAFF_SPECIAL_1:
 //			txtbox_->Print("サウンド素材\n  ポケットサウンド\n  くらげ工匠       効果音ラボ\n", TEXT_COLOR);
-			txtbox_->Print("        サウンドそざい\n", TEXT_COLOR);
-			txtbox_->Print("  ポケットサウンド\n  くらげ工匠     効果音ラボ\n", TEXT_COLOR);
+			txtbox_->Print("      サウンドそざい\n", TEXT_COLOR);
+			txtbox_->Print(" ポケットサウンド  くらげ工匠", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_STAFF_SPECIAL_2:
-//			txtbox_->Print("スペシャルサンクス\n  やました  やすあき", TEXT_COLOR);
+			txtbox_->Print("      サウンドそざい\n", TEXT_COLOR);
+			txtbox_->Print("効果音ラボ フリーBGM 自遊素材\n", TEXT_COLOR);
+		break;
+
+	case MASSAGE_TYPE_STAFF_SPECIAL_3:
 			txtbox_->Print("    スペシャルサンクス\n", TEXT_COLOR);
 			txtbox_->Print("    やました  やすあき", TEXT_COLOR);
 		break;
