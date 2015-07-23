@@ -49,11 +49,12 @@ bool StageNine::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/tst.bin");
+	// ƒWƒGƒ“ƒh
+	map_->LoadFromFile("data/map/theEnd.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/tst.csv");
+	LoadFromFile("data/script/theEnd.csv");
 
 	return true;
 }

@@ -49,12 +49,12 @@ bool StageTwo::Initialize(void)
 		return false;
 	}
 
-	//ユーターン
-	map_->LoadFromFile("data/map/Yu-ta-n.bin");
+	//ヒカリストリート
+	map_->LoadFromFile("data/map/Hikari_street.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/Yu-ta-n.csv");
+	LoadFromFile("data/script/Hikari_street.csv");
 
 	return true;
 }

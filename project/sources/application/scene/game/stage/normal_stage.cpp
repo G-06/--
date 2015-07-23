@@ -1427,6 +1427,7 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					i++;
 					i += FindWord(word,&data[i],",\n\0");
 					u32 massage = atoi(word);
+					i++;
 					//ÉTÉCÉY
 					i += FindWord(word,&data[i],",\n\0");
 					f32 sx = atof(word);

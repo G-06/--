@@ -49,12 +49,12 @@ bool StageThree::Initialize(void)
 		return false;
 	}
 
-	//ヒカリストリート
-	map_->LoadFromFile("data/map/Hikari_street.bin");
+	//スタンドアップ
+	map_->LoadFromFile("data/map/standoUp.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/Hikari_street.csv");
+	LoadFromFile("data/script/standoUp.csv");
 
 	return true;
 }
