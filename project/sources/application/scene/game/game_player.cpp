@@ -705,9 +705,10 @@ bool GamePlayer::LightAccele(const f32& speed)
 	{
 		if(!is_light_accele_)
 		{
+			is_light_accele_ = true;
+
 			if(is_light_)
 			{
-				is_light_accele_ = true;
 				light_speed_ *= speed;
 
 				if(light_speed_ > LIGHT_SPEED_MAX)
@@ -722,6 +723,8 @@ bool GamePlayer::LightAccele(const f32& speed)
 			}
 		}
 	}
+	is_light_accele_ = true;
+
 	return false;
 }
 
