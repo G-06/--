@@ -25,6 +25,7 @@ const u32 AssertEffectStart::SRIDE_OUT_FRAME = 30;
 AssertEffectStart::AssertEffectStart(void)
 	:AssertEffect(TYPE_START)
 	,sprite_(nullptr)
+	,sprite_back_(nullptr)
 	,position_(0.0f,0.0f)
 	,frame_count_(0)
 {
@@ -49,6 +50,13 @@ bool AssertEffectStart::Initialize(void)
 	sprite_->__texture_id(Texture::TEXTURE_ID_GAME_STRING_START);
 	sprite_->SetParameter();
 
+	sprite_back_ = new Sprite();
+	sprite_back_->Initialize();
+	sprite_back_->__point(Sprite::POINT_CENTER);
+	sprite_back_->__size(D3DXVECTOR2(1280.0f,300.0f));
+	sprite_back_->__color(D3DXCOLOR(0.0f,0.0f,0.0f,0.6f));
+	sprite_back_->SetParameter();
+
 	return true;
 }
 
@@ -58,6 +66,7 @@ bool AssertEffectStart::Initialize(void)
 void AssertEffectStart::Uninitialize(void)
 {
 	SafeRelease(sprite_);
+	SafeRelease(sprite_back_);
 }
 
 //=============================================================================
@@ -65,7 +74,7 @@ void AssertEffectStart::Uninitialize(void)
 //=============================================================================
 void AssertEffectStart::Update(void)
 {
-	D3DXVECTOR2 vector;
+	D3DXVECTOR2 vector = D3DXVECTOR2(0.0f,0.0f);
 
 	frame_count_++;
 
@@ -99,6 +108,9 @@ void AssertEffectStart::Draw(void)
 {
 	if(is_assert_)
 	{
+		sprite_back_->__position(position_);
+		sprite_back_->Draw();
+
 		sprite_->__position(position_);
 		sprite_->Draw();
 	}

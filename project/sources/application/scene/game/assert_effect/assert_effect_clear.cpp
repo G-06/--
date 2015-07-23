@@ -46,7 +46,9 @@ const D3DXVECTOR2 AssertEffectClear::NEW_RECORD_END_POSITION =		D3DXVECTOR2(DEFA
 AssertEffectClear::AssertEffectClear(void)
 	:AssertEffect(TYPE_CLEAR)
 	,sprite_(nullptr)
+	,sprite_back_(nullptr)
 	,position_(0.0f,0.0f)
+	,back_position_(0.0f,0.0f)
 	,record_position_(RECORD_START_POSITION)
 	,new_record_position_(NEW_RECORD_START_POSITION)
 	,frame_count_(0)
@@ -83,6 +85,13 @@ bool AssertEffectClear::Initialize(void)
 	//record_->__set_time(time_);
 	//record_->__set_position(record_position_);
 
+	sprite_back_ = new Sprite();
+	sprite_back_->Initialize();
+	sprite_back_->__point(Sprite::POINT_CENTER);
+	sprite_back_->__size(D3DXVECTOR2(1280.0f,350.0f));
+	sprite_back_->__color(D3DXCOLOR(0.0f,0.0f,0.0f,0.6f));
+	sprite_back_->SetParameter();
+
 	new_record_ = new ObjectNewRecord();
 	new_record_ ->Initialize();
 	new_record_->__set_position(new_record_position_);
@@ -99,6 +108,7 @@ bool AssertEffectClear::Initialize(void)
 void AssertEffectClear::Uninitialize(void)
 {
 	SafeRelease(sprite_);
+	SafeRelease(sprite_back_);
 
 	//if(record_ != nullptr)
 	//	SafeRelease(record_);
@@ -121,6 +131,7 @@ void AssertEffectClear::Update(void)
 		{
 			vector = CLEAR_STOP_POSITION - CLEAR_START_POSITION;
 			position_ = CLEAR_START_POSITION + vector * 1.0f / (f32)SRIDE_IN_FRAME * (f32)frame_count_;
+			back_position_ = position_;
 		}
 		else if(frame_count_ <= SRIDE_IN_FRAME + STOP_FRAME)
 		{
@@ -129,6 +140,8 @@ void AssertEffectClear::Update(void)
 		{
 			vector = CLEAR_END_POSITION - CLEAR_STOP_POSITION;
 			position_ = CLEAR_STOP_POSITION + vector * 1.0f / (f32)SRIDE_OUT_FRAME * (f32)(frame_count_ - SRIDE_IN_FRAME - STOP_FRAME);
+			const D3DXVECTOR2 back_position = D3DXVECTOR2(back_position_.x, position_.y);
+			back_position_ = back_position;
 		}
 		else if(frame_count_ <= SRIDE_IN_FRAME + STOP_FRAME + SRIDE_OUT_FRAME + RECORD_SRIDE_IN_FRAME)
 		{
@@ -166,6 +179,9 @@ void AssertEffectClear::Draw(void)
 {
 	if(is_assert_)
 	{
+		sprite_back_->__position(back_position_);
+		sprite_back_->Draw();
+
 		sprite_->__position(position_);
 		sprite_->Draw();
 
