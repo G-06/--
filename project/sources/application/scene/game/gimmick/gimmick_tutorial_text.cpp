@@ -20,7 +20,7 @@
 // constant definition
 //*****************************************************************************
 const u32 DEST_FRAME_COUNT = 15;						// ウィンドウ開閉の時間
-const D3DXVECTOR2 DEFAULT_POS_BACK (DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.32f);		//テキスト背景の位置
+const D3DXVECTOR2 DEFAULT_POS_BACK (DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.32f);	//テキスト背景の位置
 const D3DXVECTOR2 DEFAULT_TXT_BACK (DEFAULT_SCREEN_WIDTH * 0.25f, DEFAULT_SCREEN_HEIGHT * 0.2f);	//文字の開始位置
 const D3DXCOLOR TEXT_COLOR = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
 

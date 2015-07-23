@@ -1425,17 +1425,22 @@ bool NormalStage::LoadFromFile(const s8* filename)
 					//yを文字列からfloatに
 					f32 y = atof(word);
 					i++;
-					//プライオリティ
-					i += FindWord(word,&data[i],",\n\0");
-					u32 priority = atoi(word);
-					i++;
 					i += FindWord(word,&data[i],",\n\0");
 					u32 massage = atoi(word);
+					//サイズ
+					i += FindWord(word,&data[i],",\n\0");
+					f32 sx = atof(word);
+					i++;
+					i += FindWord(word,&data[i],",\n\0");
+					f32 sy = atof(word);
+					i++;
+
 
 					GimmickTutorialText* gimmick = new GimmickTutorialText();
 					gimmick->__type(massage);
 					gimmick->Initialize();
 					gimmick->__position(D3DXVECTOR2(x,y));
+					gimmick->__size(D3DXVECTOR2(sx,sy));
 
 					//無いと死ぬ
 					gimmick_container_.push_back(gimmick);

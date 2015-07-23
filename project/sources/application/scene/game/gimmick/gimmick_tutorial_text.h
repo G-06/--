@@ -73,6 +73,7 @@ public:
 	u32 __priority(void)const { return data_._priority; }
 	void __priority(u32 priority) { data_._priority = priority; }
 	void __type(u32 type){type_ = (MASSAGE_TYPE)type;};
+	void __size(D3DXVECTOR2 size){size_ = size;}
 
 private:
 	TextBox* txtbox_;
