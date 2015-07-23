@@ -49,11 +49,12 @@ bool StageSix::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/nekono_komichi.bin");
+	//ƒ†[ƒ^ƒ“
+	map_->LoadFromFile("data/map/Yu-ta-n.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/nekono_komichi.csv");
+	LoadFromFile("data/script/Yu-ta-n.csv");
 
 	return true;
 }

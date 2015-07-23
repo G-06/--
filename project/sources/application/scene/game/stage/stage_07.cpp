@@ -49,11 +49,12 @@ bool StageSeven::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/light_highway.bin");
+	//ライトハイウェイ
+	map_->LoadFromFile("data/map/light_highway.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/light_highway.csv");
+	LoadFromFile("data/script/light_highway.csv");
 
 	return true;
 }

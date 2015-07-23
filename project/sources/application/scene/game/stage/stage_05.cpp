@@ -49,11 +49,12 @@ bool StageFive::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/standoUp.bin");
+	//アシモトチュウイ
+	map_->LoadFromFile("data/map/asimototyuui.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/standoUp.csv");
+	LoadFromFile("data/script/asimototyuui.csv");
 
 	return true;
 }

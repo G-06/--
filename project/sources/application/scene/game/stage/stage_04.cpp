@@ -49,11 +49,12 @@ bool StageFour::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/otiru.bin");
+	//ネコノコミチ
+	map_->LoadFromFile("data/map/nekono_komichi.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/otiru.csv");
+	LoadFromFile("data/script/nekono_komichi.csv");
 
 	return true;
 }
