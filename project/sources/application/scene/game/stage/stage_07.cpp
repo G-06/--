@@ -49,11 +49,11 @@ bool StageSeven::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/work/arai_stage2.bin");
+	map_->LoadFromFile("data/work/light_highway.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/work/arai_stage2.csv");
+	LoadFromFile("data/work/light_highway.csv");
 
 	return true;
 }
