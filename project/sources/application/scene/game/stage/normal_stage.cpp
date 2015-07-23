@@ -185,6 +185,47 @@ bool NormalStage::Initialize(void)
 	time =0;
 	next_scene_timer_ = 0;
 
+	if(type_ == Stage::TYPE_TUTORIAL)
+	{
+		GET_BGM->Play(BGM::BGM_ID_TUTORIAL);
+	}
+	else if(type_ == Stage::TYPE_STAGE10)
+	{
+		GET_BGM->Play(BGM::BGM_ID_CREDIT);
+	}
+	else if(type_ == Stage::TYPE_STAGE9)
+	{
+		GET_BGM->Play(BGM::BGM_ID_STAGE_03);
+	}
+	else
+	{
+		const int rand_bgm = rand() % 5;
+		if(rand_bgm == 0)
+		{
+			GET_BGM->Play(BGM::BGM_ID_STAGE_01);
+		}
+		else if(rand_bgm == 1)
+		{
+			GET_BGM->Play(BGM::BGM_ID_STAGE_02);
+		}
+		else if(rand_bgm == 2)
+		{
+			GET_BGM->Play(BGM::BGM_ID_STAGE_03);
+		}
+		else if(rand_bgm == 3)
+		{
+			GET_BGM->Play(BGM::BGM_ID_STAGE_04);
+		}
+		else if(rand_bgm == 4)
+		{
+			GET_BGM->Play(BGM::BGM_ID_STAGE_05);
+		}
+		else
+		{
+			GET_BGM->Play(BGM::BGM_ID_STAGE_01);
+		}
+	}
+
 	return true;
 }
 
@@ -902,6 +943,8 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 			{
 				if(game_player_->__is_light())
 				{
+					const D3DXVECTOR2 position = game_player_->__position();
+
 					game_player_->__position(collision_map.__position());
 					GET_SE->Play(SE::SE_ID_REFLECTION);
 
@@ -909,7 +952,7 @@ void NormalStage::CollisionChip(u32 index,const D3DXVECTOR2& position)
 					{
 						if(effect_mirror_[i]->__is_free())
 						{
-							effect_mirror_[i]->__position(game_player_->__position());
+							effect_mirror_[i]->__position(position);
 							effect_mirror_[i]->Start();
 							break;
 						}

@@ -24,7 +24,7 @@ const Animation::DATA EffectSkeleton::SKELETON_EFFECT[EffectSkeleton::SKELETON_E
 	Animation::DATA(3,5,4),
 	Animation::DATA(3,6,5),
 	Animation::DATA(3,7,6),
-	Animation::DATA(3,0,7)
+	Animation::DATA(3,7,7)
 };
 
 

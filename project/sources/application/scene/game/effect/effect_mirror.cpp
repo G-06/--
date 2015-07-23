@@ -27,7 +27,7 @@ const Animation::DATA EffectMirror::MIRROR_EFFECT[EffectMirror::MIRROR_EFFECT_PA
 	Animation::DATA(3,7,6),
 	Animation::DATA(3,8,7),
 	Animation::DATA(3,9,8),
-	Animation::DATA(3,0,9)
+	Animation::DATA(3,9,9)
 //	Animation::DATA(2,0,10),
 //	Animation::DATA(2,0,11),
 	//Animation::DATA(2,12,12),
