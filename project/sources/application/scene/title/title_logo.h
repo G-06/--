@@ -51,6 +51,8 @@ public:
 
 	void __dest_position(const D3DXVECTOR2& dest_position){dest_position_ = dest_position;}
 
+	bool __is_move(void){return is_move_;}
+
 private:
 	static const D3DXVECTOR2 DEFAULT_POSITION;
 	static const D3DXVECTOR2 DEFAULT_SIZE;
