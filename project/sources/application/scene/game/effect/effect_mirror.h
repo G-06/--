@@ -54,8 +54,8 @@ public:
 	void __is_free(bool is_free){ is_free_ = is_free;}
 
 private:
-	static const s32 MIRROR_EFFECT_PATTERN = 11;
-	static const s32 MIRROR_FRAME = 32;
+	static const s32 MIRROR_EFFECT_PATTERN = 10;
+	static const s32 MIRROR_FRAME = 30;
 	static const Animation::DATA MIRROR_EFFECT[MIRROR_EFFECT_PATTERN];
 	Sprite* sprite_;
 	u32 frame_count_;

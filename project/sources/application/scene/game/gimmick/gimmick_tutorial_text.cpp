@@ -46,7 +46,7 @@ GimmickTutorialText::~GimmickTutorialText(void)
 //=============================================================================
 bool GimmickTutorialText::Initialize(void)
 {
-	txtbox_ = new TextBox(FontTexture::TYPE_MS_GOTHIC,64);
+	txtbox_ = new TextBox(FontTexture::TYPE_MEIRYO,64);
 	txtbox_->Initialize();
 	txtbox_->__show_speed(2);
 
@@ -61,20 +61,24 @@ bool GimmickTutorialText::Initialize(void)
 		txtbox_->Print("ジャンプキーでジャンプするニャス", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_LIGHT:
-		txtbox_->Print("光化キーで光化するニャス\n"
-						"ガラスは光化でとおれるニャス",TEXT_COLOR);
+		txtbox_->Print("ひかりかぼたんで ひかりかするよ\n"
+						"がらすは ひかりかで とおれるよ",TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_GLAS:
-		txtbox_->Print("光化中でないととおれないニャス", TEXT_COLOR);
+		txtbox_->Print("  ひかりかちゅう でないと\n"
+						"    とおれないよ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_GIMMICK_MIRROR:
-		txtbox_->Print("光化してぶつかると反射するニャス", TEXT_COLOR);
+		txtbox_->Print("   ひかりかして ぶつかると\n"
+						"     はんしゃ するよ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_DOWNZONE:
-		txtbox_->Print("この中に入ると光化できないニャス", TEXT_COLOR);
+		txtbox_->Print("    このなかに はいると\n"
+						"    ひかりか できないよ", TEXT_COLOR);
 		break;
 	case MASSAGE_TYPE_UPZONE:
-		txtbox_->Print("この中は何回でも光化できるニャス", TEXT_COLOR);
+		txtbox_->Print("   このなかは なんかいでも\n"
+			"    ひかりか できるよ", TEXT_COLOR);
 		break;
 	default:
 		txtbox_->Print("表示する文字がないニャス", TEXT_COLOR);
