@@ -44,7 +44,7 @@ GimmickMassage::~GimmickMassage(void)
 //=============================================================================
 bool GimmickMassage::Initialize(void)
 {
-	txtbox_ = new TextBox(FontTexture::TYPE_MEIRYO,50);
+	txtbox_ = new TextBox(FontTexture::TYPE_MEIRYO,70);
 	txtbox_->Initialize();
 	txtbox_->__show_speed(2);
 

@@ -46,7 +46,7 @@ GimmickTutorialText::~GimmickTutorialText(void)
 //=============================================================================
 bool GimmickTutorialText::Initialize(void)
 {
-	txtbox_ = new TextBox(FontTexture::TYPE_MEIRYO,50);
+	txtbox_ = new TextBox(FontTexture::TYPE_MS_GOTHIC,64);
 	txtbox_->Initialize();
 	txtbox_->__show_speed(2);
 
@@ -89,8 +89,6 @@ bool GimmickTutorialText::Initialize(void)
 	back_->__dest_frame_count(DEST_FRAME_COUNT);
 	back_->__window_position(DEFAULT_POS_BACK);
 	back_flag_ = false;
-
-
 
 	return true;
 }

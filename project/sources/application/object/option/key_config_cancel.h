@@ -63,6 +63,7 @@ private:
 	OptionSpriteSmooth* cancel_button_frame_;
 	OptionSpriteSmooth* set_button_number_;
 	OptionSpriteSmooth* set_button_number_frame_;
+	OptionSpriteSmooth* set_button_number_back_;
 
 	u32 current_key_event_;
 };

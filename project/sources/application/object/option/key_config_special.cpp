@@ -30,10 +30,11 @@ const D3DXVECTOR2 DEFAULT_NUM_POSITION = D3DXVECTOR2(DEFAULT_POSITION.x + 300.0f
 // constructor
 //=============================================================================
 KeyConfigSpecial::KeyConfigSpecial(void)
-	:special_button_(NULL)
-	,special_button_frame_(NULL)
-	,set_button_number_(NULL)
-	,set_button_number_frame_(NULL)
+	:special_button_(nullptr)
+	,special_button_frame_(nullptr)
+	,set_button_number_(nullptr)
+	,set_button_number_frame_(nullptr)
+	,set_button_number_back_(nullptr)
 	,current_key_event_(NULL)
 {
 }
@@ -72,7 +73,13 @@ bool KeyConfigSpecial::Initialize(void)
 	set_button_number_frame_->Initialize();
 	set_button_number_frame_->__size(DEFAULT_NUM_FRAME_SIZE);
 	set_button_number_frame_->__position(DEFAULT_NUM_POSITION);
-	set_button_number_frame_->__texture_id(Texture::TEXTURE_ID_TITLE_SELECT_FRAME_000);
+	set_button_number_frame_->__texture_id(Texture::TEXTURE_ID_OPTION_NUMBER_FRAME);
+
+	set_button_number_back_ = new OptionSpriteSmooth();
+	set_button_number_back_->Initialize();
+	set_button_number_back_->__size(DEFAULT_NUM_FRAME_SIZE);
+	set_button_number_back_->__position(DEFAULT_NUM_POSITION);
+	set_button_number_back_->__texture_id(Texture::TEXTURE_ID_OPTION_BGM_BAR_BACK);
 
 	current_key_event_ = NULL;
 	return true;
@@ -87,6 +94,7 @@ void KeyConfigSpecial::Uninitialize(void)
 	SafeRelease(special_button_frame_);
 	SafeRelease(set_button_number_);
 	SafeRelease(set_button_number_frame_);
+	SafeRelease(set_button_number_back_);
 }
 
 //=============================================================================
@@ -98,6 +106,7 @@ void KeyConfigSpecial::Update(void)
 	special_button_frame_->Update();
 	set_button_number_->Update();
 	set_button_number_frame_->Update();
+	set_button_number_back_->Update();
 }
 
 //=============================================================================
@@ -107,6 +116,8 @@ void KeyConfigSpecial::Draw(void)
 {
 	special_button_frame_->Draw();
 	special_button_->Draw();
+
+	set_button_number_back_->Draw();
 	set_button_number_frame_->Draw();
 	set_button_number_->Draw();
 }
@@ -204,6 +215,7 @@ void KeyConfigSpecial::__position(const D3DXVECTOR2 position, const float offset
 	special_button_frame_->__position(position);
 	set_button_number_frame_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
 	set_button_number_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
+	set_button_number_back_->__position(D3DXVECTOR2(position.x + offset_x, position.y));
 }
 
 //=============================================================================

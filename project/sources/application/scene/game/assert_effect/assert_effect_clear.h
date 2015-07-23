@@ -77,6 +77,7 @@ private:
 	static const D3DXVECTOR2 NEW_RECORD_END_POSITION;
 
 	Sprite* sprite_;
+	Sprite* sprite_back_;
 	SelectRecord* record_;
 	ObjectNewRecord* new_record_;
 
@@ -84,6 +85,7 @@ private:
 	D3DXVECTOR2 purpose_position_;
 	D3DXVECTOR2 record_position_;
 	D3DXVECTOR2 new_record_position_;
+	D3DXVECTOR2 back_position_;
 	f32 record_alpha_;
 
 	u32 frame_count_;
