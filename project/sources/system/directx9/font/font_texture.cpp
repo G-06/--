@@ -26,12 +26,12 @@ const s8* FontTexture::FONT_TYPE_NAME[TYPE_MAX] =
 //=============================================================================
 // constructor
 //=============================================================================
-FontTexture::FontTexture(const s8* character,const s16& size) :
+FontTexture::FontTexture(const s8* character,const s16& size,TYPE type) :
 device_(nullptr),
 texture_(nullptr),
 character_code_(0),
 offset_y_(0),
-type_(TYPE_MS_MINTYO)
+type_(type)
 {
 	device_ = GET_DIRECTX9_DEVICE;
 
@@ -50,12 +50,12 @@ type_(TYPE_MS_MINTYO)
 //=============================================================================
 // constructor
 //=============================================================================
-FontTexture::FontTexture(const u32& character_code,const s16& size) :
+FontTexture::FontTexture(const u32& character_code,const s16& size,TYPE type) :
 device_(nullptr),
 texture_(nullptr),
 character_code_(0),
 offset_y_(0),
-type_(TYPE_MS_MINTYO)
+type_(type)
 {
 	device_ = GET_DIRECTX9_DEVICE;
 	character_code_ = character_code;
