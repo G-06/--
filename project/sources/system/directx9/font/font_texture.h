@@ -34,8 +34,8 @@ public:
 	};
 
 	// constructor
-	FontTexture(const s8* character,const s16& size);
-	FontTexture(const u32& character_code,const s16& size);
+	FontTexture(const s8* character,const s16& size,TYPE type = TYPE_MS_MINTYO);
+	FontTexture(const u32& character_code,const s16& size,TYPE type = TYPE_MS_MINTYO);
 
 	// destructor
 	virtual ~FontTexture(void);

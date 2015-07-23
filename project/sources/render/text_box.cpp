@@ -35,7 +35,7 @@ rotation_(0.0f),
 show_speed_(3),
 show_count_(0),
 frame_count_(0),
-font_type_(FontTexture::TYPE_MS_GOTHIC)
+font_type_(font_type)
 {
 	device_ = GET_DIRECTX9_DEVICE;
 
@@ -126,10 +126,15 @@ void TextBox::Draw(void)
 		}
 	}
 
+	GET_DIRECTX9_DEVICE->SetSamplerState(0,D3DSAMP_ADDRESSU,D3DTADDRESS_CLAMP);
+	GET_DIRECTX9_DEVICE->SetSamplerState(0,D3DSAMP_ADDRESSV,D3DTADDRESS_CLAMP);
+
 	for(u32 i = 0;i < show_count_;++i)
 	{
 		sprites_[i]->Draw(world_matrix);
 	}
+	GET_DIRECTX9_DEVICE->SetSamplerState(0,D3DSAMP_ADDRESSU,D3DTADDRESS_WRAP);
+	GET_DIRECTX9_DEVICE->SetSamplerState(0,D3DSAMP_ADDRESSV,D3DTADDRESS_WRAP);
 }
 
 //=============================================================================
@@ -195,7 +200,7 @@ void TextBox::Print(const s8* format,D3DCOLOR font_color,...)
 
 		if(it == font_texture_container_.end())
 		{
-			font_texture = new FontTexture(character_code,font_size_);
+			font_texture = new FontTexture(character_code,font_size_,font_type_);
 			font_texture->Initialize();
 			font_texture_container_.insert(std::pair<u32,FontTexture*>(character_code,font_texture));
 		}

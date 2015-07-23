@@ -56,9 +56,12 @@ private:
 	Sprite* sprite_;
 	D3DXVECTOR2 position_;
 	D3DXVECTOR2 purpose_position_;
+	D3DXVECTOR2 position_back_;
 	u32 frame_count_;
 
 	Sprite* sprite_back_;
+
+	bool back_move_;
 };
 
 #endif	// _ASSERT_EFFECT_START_H_
