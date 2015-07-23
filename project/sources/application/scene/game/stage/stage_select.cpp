@@ -29,6 +29,11 @@ const u32 DEST_FRAME_COUNT = 20;						// ウィンドウ開閉の時間
 const f32 REGION_INTERVAL = (850.0f*0.87f)*1.3f;		// レギオンの間隔
 const f32 REGION_MOVE = 960.f;							// レギオンの間隔
 
+// nyas
+const D3DXVECTOR2 PLAYER_DEFAULT_POSITION = D3DXVECTOR2(260.f,510.f);
+f32 PLAYER_SIZE_SCALE = 1.2f;
+const D3DXVECTOR2 PLAYER_SIZE = D3DXVECTOR2(255.0f * PLAYER_SIZE_SCALE,255.0f * PLAYER_SIZE_SCALE);
+
 static const u32 RIGHT = 1;
 static const u32 LEFT = 2;
 
@@ -39,7 +44,7 @@ StageSelect::StageSelect(void)
 		:Stage(TYPE_SELECT)
 		,select_bg_(nullptr)
 		,select_arrow_(nullptr)
-		,nas_(nullptr)
+		,nyas_(nullptr)
 		,message_window_(nullptr)
 		,massage_flag_(false)
 		,flag_(false)
@@ -67,13 +72,13 @@ bool StageSelect::Initialize(void)
 	select_bg_->Initialize();
 
 	//ブルーニャス
-	nas_ = new ObjectPlayer();
-	nas_ -> Initialize();
-	nas_ -> __position(D3DXVECTOR2(260.f,510.f));
-	nas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
-	nas_->__is_flip(false);
-	const f32 scale = 1.2f;
-	nas_->SetSize(D3DXVECTOR2(255.0f * scale,255.0f * scale));
+	nyas_ = new ObjectPlayer();
+	nyas_ -> Initialize();
+	nyas_ -> __position(PLAYER_DEFAULT_POSITION);
+	nyas_ -> StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
+	nyas_->__is_flip(false);
+	nyas_->SetSize(PLAYER_SIZE);
+
 	//矢印
 	select_arrow_ = new SelectArrow();
 	select_arrow_ ->Initialize();
@@ -120,7 +125,7 @@ void StageSelect::Uninitialize(void)
 	SafeRelease(select_bg_);
 	SafeRelease(select_arrow_);	
 	SafeRelease(message_window_);
-	SafeRelease(nas_);
+	SafeRelease(nyas_);
 	for(u32 i=0;i<TYPE_MAX-1;i++)
 	{
 		SafeRelease(regions_[i].region_);
@@ -146,22 +151,31 @@ void StageSelect::Update(void)
 		case UPDATE_TYPE_YORN:			//このステージで遊ぶ?
 			YorNUpdate();
 			break;
+		case UPDATE_TYPE_STAGE_IN:		//ステージ入る時
+			StageInUpdate();
+			break;
 		}
 
 		//ニャス更新
 		if(regions_[0].region_->__get_move_falg() == false)
 		{
-			nas_->__is_flip(false);
-			nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
+			nyas_->__is_flip(false);
+			nyas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_WAIT);
 		}
 		else if(regions_[0].region_->__get_move_falg() == true)
 		{
-			nas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
+			nyas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_RUN);
 		}
-//		nas_->Update();
 	}
+
+	// nyas
+	if(update_type_ == UPDATE_TYPE_STAGE_IN)
+	{
+		StageInUpdate();
+	}
+	nyas_->Update();
+
 	message_window_->Update();
-	nas_->Update();
 }
 
 
@@ -181,7 +195,36 @@ void StageSelect::Draw(void)
 		select_arrow_->Draw();
 
 	message_window_->Draw();
-	nas_->Draw();
+	nyas_->Draw();
+}
+
+//=============================================================================
+// ステージ入る時の更新
+//=============================================================================
+void StageSelect::StageInUpdate(void)
+{
+	D3DXVECTOR2 size = D3DXVECTOR2(0.0,0.0f);
+
+	nyas_->StartAnimation(ObjectPlayer::ANIMATION_TYPE_LIGHT);
+
+	// size
+	const f32 sub_size = 5.0f;
+	size = nyas_->__Get_size();
+	size -= D3DXVECTOR2(sub_size, sub_size);
+	if(size.x < 0)
+	{
+		size = D3DXVECTOR2(0.0,0.0f);
+	}
+	nyas_->SetSize(size);
+
+	// posision
+	const float move_speed = 0.05f;
+	const D3DXVECTOR2 dest_positon = D3DXVECTOR2(DEFAULT_SCREEN_WIDTH * 0.5f, DEFAULT_SCREEN_HEIGHT * 0.5f);
+	D3DXVECTOR2 position = nyas_->__position();
+	
+	position.x += (dest_positon.x - position.x) * move_speed;
+	position.y += (dest_positon.y - position.y) * move_speed;
+	nyas_->__position(position);
 }
 
 //=============================================================================
@@ -191,58 +234,61 @@ void StageSelect::SelectUpdate()
 {
 	if(regions_[0].region_->__get_move_falg() == false)	//レギオンが動いてないとき
 	{
-		//必要以上に右に行かない
-		if(current_stage_ !=TYPE_MAX-1)
+		if(is_fade_ == false)
 		{
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
+			//必要以上に右に行かない
+			if(current_stage_ !=TYPE_MAX-1)
 			{
-				GET_SE->Play(SE::SE_ID_WINDOW_SELECT);
-				for(u32 i=0;i<TYPE_MAX-1;i++)
+				if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_RIGHT))
 				{
-					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(-REGION_MOVE,0.0f));
-					flag_=RIGHT;
+					GET_SE->Play(SE::SE_ID_WINDOW_SELECT);
+					for(u32 i=0;i<TYPE_MAX-1;i++)
+					{
+						regions_[i].region_->__set_region_distpos(D3DXVECTOR2(-REGION_MOVE,0.0f));
+						flag_=RIGHT;
+					}
+					current_stage_++;
+					nyas_->__is_flip(false);
 				}
-				current_stage_++;
-				nas_->__is_flip(false);
 			}
-		}
 
-		//必要以上に左に行かない
-		if(current_stage_!=TYPE_TUTORIAL)
-		{
-			if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
+			//必要以上に左に行かない
+			if(current_stage_!=TYPE_TUTORIAL)
 			{
-				GET_SE->Play(SE::SE_ID_WINDOW_SELECT);
-				for(u32 i=0;i<TYPE_MAX-1;i++)
+				if(GET_DIRECT_INPUT->CheckPress(INPUT_EVENT_VIRTUAL_LEFT))
 				{
-					regions_[i].region_->__set_region_distpos(D3DXVECTOR2(REGION_MOVE,0.0f));
-					flag_=LEFT;
+					GET_SE->Play(SE::SE_ID_WINDOW_SELECT);
+					for(u32 i=0;i<TYPE_MAX-1;i++)
+					{
+						regions_[i].region_->__set_region_distpos(D3DXVECTOR2(REGION_MOVE,0.0f));
+						flag_=LEFT;
+					}
+					current_stage_--;
+					nyas_->__is_flip(true);
 				}
-				current_stage_--;
-				nas_->__is_flip(true);
 			}
-		}
 
-		//決定押されたとき
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
-		{
-			GET_SE->Play(SE::SE_ID_DECIDE);
-			if(message_window_->__is_move() == false)
+			//決定押されたとき
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
 			{
-				message_window_->Show();
-				update_type_ = UPDATE_TYPE_YORN;
+				GET_SE->Play(SE::SE_ID_DECIDE);
+				if(message_window_->__is_move() == false)
+				{
+					message_window_->Show();
+					update_type_ = UPDATE_TYPE_YORN;
+				}
 			}
-		}
-		//キャンセル押されたときメッセージ表示
-		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
-		{
-			GET_SE->Play(SE::SE_ID_CANCEL);
-			if(message_window_->__is_move() == false)
+			//キャンセル押されたときメッセージ表示
+			if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 			{
-				message_window_->Show();
-				update_type_ = UPDATE_TYPE_MASSAGE;
+				GET_SE->Play(SE::SE_ID_CANCEL);
+				if(message_window_->__is_move() == false)
+				{
+					message_window_->Show();
+					update_type_ = UPDATE_TYPE_MASSAGE;
+				}
 			}
-		}
+		} // fade
 	}
 	else if(regions_[0].region_->__get_move_falg() == true)	//レギオンが動いているとき
 	{
@@ -291,59 +337,69 @@ void StageSelect::SelectUpdate()
 }
 
 //=============================================================================
-// メッセージウィンドウが出てるときの更新
+// MassageUpdate
+//-----------------------------------------------------------------------------
+// タイトルに戻る？のメッセージ更新
 //=============================================================================
 void StageSelect::MassageUpdate()
 {
 	message_window_->__title_texture_id_(Texture::TEXTURE_ID_SELECT_STRING_RETURN_TITLE);
 
-	//十字キー入力時
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
+	if( next_scene_factory_ != nullptr)
 	{
-		message_window_->SelectDown();
+		return;
 	}
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
-	{
-		message_window_->SelectUp();
-	}
-	//決定キー押されたとき
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
-	{
-		GET_SE->Play(SE::SE_ID_DECIDE);
-		// 枠を決定色に変更
-		message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
 
-		//イエスの時
-		if(message_window_->__is_select() == 0)
+	if(message_window_->__is_move() == false)
+	{
+		//十字キー入力時
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 		{
-			// タイトルに戻る
-			if(next_scene_factory_ == nullptr)
+			message_window_->SelectDown();
+		}
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+		{
+			message_window_->SelectUp();
+		}
+		//決定キー押されたとき
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+		{
+			GET_SE->Play(SE::SE_ID_DECIDE);
+			// 枠を決定色に変更
+			message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+			//イエスの時
+			if(message_window_->__is_select() == 0)
 			{
-				next_scene_factory_ = new TitleFactory();
+				// タイトルに戻る
+				if(next_scene_factory_ == nullptr)
+				{
+					next_scene_factory_ = new TitleFactory();
+				}
+			}
+			//ノーの時
+			if(message_window_->__is_select() == 1)
+			{
+				//ウィンドウを閉じる
+				if(message_window_->__is_move() == false)
+				{
+					message_window_->Close();
+					update_type_ = UPDATE_TYPE_SELECT;
+				}
 			}
 		}
-		//ノーの時
-		if(message_window_->__is_select() == 1)
+
+		//キャンセル押されたときメッセージけし
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 		{
-			//ウィンドウを閉じる
+			GET_SE->Play(SE::SE_ID_CANCEL);
 			if(message_window_->__is_move() == false)
 			{
 				message_window_->Close();
 				update_type_ = UPDATE_TYPE_SELECT;
 			}
 		}
-	}
-
-	//キャンセル押されたときメッセージけし
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
-	{
-		GET_SE->Play(SE::SE_ID_CANCEL);
-		if(message_window_->__is_move() == false)
-		{
-			message_window_->Close();
-			update_type_ = UPDATE_TYPE_SELECT;
-		}
-	}
+	} // is_move_
 }
 
 //=============================================================================
@@ -353,99 +409,111 @@ void StageSelect::YorNUpdate()
 {
 	message_window_->__title_texture_id_(Texture::TEXTURE_ID_SELECT_STRING_STAGE_OK);
 
-	//十字キー入力時
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
-	{
-		message_window_->SelectDown();
-	}
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
-	{
-		message_window_->SelectUp();
-	}
-
-	//決定キー押されたとき
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+	if(message_window_->__is_move() == false)
 	{
 
-		GET_SE->Play(SE::SE_ID_DECIDE);
-		// 枠を決定色に変更
-		message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
-
-		//イエスの時
-		if(message_window_->__is_select() == 0)
+		//十字キー入力時
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_LEFT))
 		{
-			if(next_stage_factory_ == nullptr)
+			message_window_->SelectDown();
+		}
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_RIGHT))
+		{
+			message_window_->SelectUp();
+		}
+
+		//決定キー押されたとき
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_DECIDE))
+		{
+			GET_SE->Play(SE::SE_ID_DECIDE);
+
+			// 枠を決定色に変更
+			message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+			//イエスの時
+			if(message_window_->__is_select() == 0)
 			{
-				// 枠を決定色に変更
-				message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
-
-				//ナウステージおしえます
-				System::__set_current_stage(current_stage_);
-
-				//ゲームに移る
-				switch(current_stage_)
+				if(next_stage_factory_ == nullptr)
 				{
-				case TYPE_TUTORIAL:		//チュートリアル行くぜ
-				default:
-						next_stage_factory_ = new TutorialFactory();
-					break;
-				case TYPE_STAGE1:
-					next_stage_factory_ = new StageOneFactory();
-					break;
-				case TYPE_STAGE2:
-					next_stage_factory_ = new StageTwoFactory();
-					break;
-				case TYPE_STAGE3:
-					next_stage_factory_ = new StageThreeFactory();
-					break;
-				case TYPE_STAGE4:
-					next_stage_factory_ = new StageFourFactory();
-					break;
-				case TYPE_STAGE5:
-					next_stage_factory_ = new StageFiveFactory();
-					break;
-				case TYPE_STAGE6:
-					next_stage_factory_ = new StageSixFactory();
-					break;
-				case TYPE_STAGE7:
-					next_stage_factory_ = new StageSevenFactory();
-					break;
-				case TYPE_STAGE8:
-					next_stage_factory_ = new StageEightFactory();
-					break;
-				case TYPE_STAGE9:
-					next_stage_factory_ = new StageNineFactory();
-					break;
-				case TYPE_STAGE10:
-					next_stage_factory_ = new StageTenFactory();
-					break;
+					// 枠を決定色に変更
+					message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+					//ナウステージおしえます
+					System::__set_current_stage(current_stage_);
+
+					// アップデートタイプ
+					update_type_ = UPDATE_TYPE_STAGE_IN;
+					GET_SE->Play(SE::SE_ID_STAGE_START);
+
+					// メッセージ閉じる
+					message_window_->__is_close_se(false);
+					message_window_->Close();
+
+					//ゲームに移る
+					switch(current_stage_)
+					{
+					case TYPE_TUTORIAL:		//チュートリアル行くぜ
+					default:
+							next_stage_factory_ = new TutorialFactory();
+						break;
+					case TYPE_STAGE1:
+						next_stage_factory_ = new StageOneFactory();
+						break;
+					case TYPE_STAGE2:
+						next_stage_factory_ = new StageTwoFactory();
+						break;
+					case TYPE_STAGE3:
+						next_stage_factory_ = new StageThreeFactory();
+						break;
+					case TYPE_STAGE4:
+						next_stage_factory_ = new StageFourFactory();
+						break;
+					case TYPE_STAGE5:
+						next_stage_factory_ = new StageFiveFactory();
+						break;
+					case TYPE_STAGE6:
+						next_stage_factory_ = new StageSixFactory();
+						break;
+					case TYPE_STAGE7:
+						next_stage_factory_ = new StageSevenFactory();
+						break;
+					case TYPE_STAGE8:
+						next_stage_factory_ = new StageEightFactory();
+						break;
+					case TYPE_STAGE9:
+						next_stage_factory_ = new StageNineFactory();
+						break;
+					case TYPE_STAGE10:
+						next_stage_factory_ = new StageTenFactory();
+						break;
+					}
+				}
+			}
+			//メッセージを閉じる
+			if(message_window_->__is_select() == 1)
+			{
+				if(message_window_->__is_move() == false)
+				{
+					// 枠を決定色に変更
+					message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
+
+					message_window_->Close();
+					update_type_ = UPDATE_TYPE_SELECT;
 				}
 			}
 		}
-		//メッセージを閉じる
-		if(message_window_->__is_select() == 1)
+
+		//キャンセル押されたときメッセージけし
+		if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
 		{
+			GET_SE->Play(SE::SE_ID_CANCEL);
 			if(message_window_->__is_move() == false)
 			{
-				// 枠を決定色に変更
-				message_window_->__select_frame_texture_id_(message_window_->__is_select(), Texture::TEXTURE_ID_TITLE_SELECT_FRAME_002);
-
 				message_window_->Close();
 				update_type_ = UPDATE_TYPE_SELECT;
 			}
 		}
-	}
-
-	//キャンセル押されたときメッセージけし
-	if(GET_DIRECT_INPUT->CheckTrigger(INPUT_EVENT_VIRTUAL_CANCEL))
-	{
-		GET_SE->Play(SE::SE_ID_CANCEL);
-		if(message_window_->__is_move() == false)
-		{
-			message_window_->Close();
-			update_type_ = UPDATE_TYPE_SELECT;
-		}
-	}
+	} // is_move_
 }
 
 //=============================================================================

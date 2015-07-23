@@ -49,11 +49,11 @@ bool StageEight::Initialize(void)
 		return false;
 	}
 
-	map_->LoadFromFile("data/map/arai_stage2.bin");
+	map_->LoadFromFile("data/work/tengokujigoku.bin");
 
 	stage_offset_->__stage_size(map_->__size());
 
-	LoadFromFile("data/script/arai_stage2.csv");
+	LoadFromFile("data/work/tengokujigoku.csv");
 
 	return true;
 }

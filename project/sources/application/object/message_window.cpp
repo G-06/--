@@ -59,6 +59,7 @@ MessageWindow::MessageWindow(void)
 	,select_size_(SELECT_SIZE)
 	,select_frame_size_(SELECT_FRAME_SIZE)
 	,is_select_(DEFAULT_SELECT)
+	,is_close_se_(true)
 {
 	memset(frame_, NULL, sizeof(frame_));
 	memset(select_, NULL, sizeof(select_));
@@ -229,7 +230,10 @@ void MessageWindow::Close(void)
 	is_show_ = false;
 	is_move_ = true;
 
-	GET_SE->Play(SE::SE_ID_WINDOW_CLOSE);
+	if(is_close_se_)
+	{
+		GET_SE->Play(SE::SE_ID_WINDOW_CLOSE);
+	}
 
 	// window
 	window_->__position(window_->__position());

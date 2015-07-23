@@ -134,7 +134,7 @@ public:
 	bool __Get_warpout(void){return warp_out_;}
 
 	static const u32 DEAD_TIME;
-	static const s32 LOCUS_NUM = 60;
+	static const s32 LOCUS_NUM = 90;
 
 private:
 	enum ANIMATION_TYPE

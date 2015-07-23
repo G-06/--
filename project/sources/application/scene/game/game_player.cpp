@@ -634,7 +634,7 @@ void GamePlayer::StopLightMode(void)
 	{
 		if(is_light_)
 		{
-			GET_SE->Play(SE::SE_ID_NYAS_LIGHT_END);
+//			GET_SE->Play(SE::SE_ID_NYAS_LIGHT_END);
 			is_light_ = false;
 			light_speed_ = LIGHT_SPEED;
 		}

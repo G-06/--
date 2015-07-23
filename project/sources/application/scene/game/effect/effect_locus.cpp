@@ -20,6 +20,8 @@
 const D3DXVECTOR2 EffectLocus::LOCUS_SIZE = D3DXVECTOR2(128.0f, 128.0f);
 const D3DXVECTOR2 EffectLocus::DOWN_SIZE = D3DXVECTOR2(LOCUS_SIZE.x/GamePlayer::LOCUS_NUM, LOCUS_SIZE.y/GamePlayer::LOCUS_NUM);
 const f32 EffectLocus::ADD_ALPHA = 1.0f/35.0f;
+const D3DXCOLOR LOCUS_COLOR = D3DXCOLOR(0.0f,0.65f,1.0f,1.0f);
+
 //=============================================================================
 // constructor
 //=============================================================================
@@ -69,7 +71,7 @@ void EffectLocus::Update(void)
 	if(sprite_->__size() <= D3DXVECTOR2(DOWN_SIZE.x/5*2, DOWN_SIZE.y/5*2))
 	{
 		sprite_->__size(sprite_->__size() - DOWN_SIZE - DOWN_SIZE);
-		alpha_+= -ADD_ALPHA*2;
+		alpha_+= -ADD_ALPHA;
 	}
 	
 	sprite_->__size(sprite_->__size() - DOWN_SIZE);
@@ -81,7 +83,7 @@ void EffectLocus::Update(void)
 	}
 	
 	alpha_+= -ADD_ALPHA;
-	sprite_->__color(D3DXCOLOR(255,255,255,alpha_));
+	sprite_->__color(D3DXCOLOR(LOCUS_COLOR.r,LOCUS_COLOR.g,LOCUS_COLOR.b,alpha_));
 	sprite_->SetParameter();
 }
 
@@ -108,7 +110,7 @@ void EffectLocus::Draw(void)
 void EffectLocus::Start(void)
 {
 	alpha_ = 1.0f;
-	sprite_->__color(D3DXCOLOR(255,255,255,1.0f));
+	sprite_->__color(LOCUS_COLOR);
 	sprite_->__size(LOCUS_SIZE);
 	is_death_ = false;
 	is_free_ = false;

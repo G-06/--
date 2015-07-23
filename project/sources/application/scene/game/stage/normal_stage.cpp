@@ -276,6 +276,23 @@ void NormalStage::Update(void)
 			(*it)->Update();
 		}
 
+		// その他のエフェクト
+		for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
+		{
+			if(!effect_mirror_[i]->__is_free())
+			{
+				effect_mirror_[i]->Update();
+			}
+			if(!effect_skeleton_[i]->__is_free())
+			{
+				effect_skeleton_[i]->Update();
+			}
+			if(!effect_lens_[i]->__is_free())
+			{
+				effect_lens_[i]->Update();
+			}
+		}
+
 		//マップとの当たり判定？
 		if(game_player_->__position().x + game_player_->__size().x * 0.5f > map_->__size().x)
 		{
@@ -329,6 +346,7 @@ void NormalStage::Update(void)
 				game_player_->__Set_status(GamePlayer::CAT_STATUS_WARP);
 				warp_=true;
 				is_clear_ = false;
+				GET_SE->Play(SE::SE_ID_STAGE_START);
 			}
 		}
 	}
@@ -356,6 +374,23 @@ void NormalStage::Update(void)
 		// 怒り
 		object_player_icon_->__animation_index(ObjectPlayerIcon::ICON_TYPE_ANGER);
 		object_player_icon_->Update();
+
+		// その他のエフェクト
+		for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
+		{
+			if(!effect_mirror_[i]->__is_free())
+			{
+				effect_mirror_[i]->Update();
+			}
+			if(!effect_skeleton_[i]->__is_free())
+			{
+				effect_skeleton_[i]->Update();
+			}
+			if(!effect_lens_[i]->__is_free())
+			{
+				effect_lens_[i]->Update();
+			}
+		}
 
 		if((time>=game_player_->DEAD_TIME+5))
 		{
@@ -556,7 +591,7 @@ void NormalStage::Update(void)
 				(*it)->Update();
 			}
 
-			
+			// その他のエフェクト
 			for(s32 i = 0; i < EFFECT_STOCK_NUM;i++)
 			{
 				if(!effect_mirror_[i]->__is_free())
@@ -1039,7 +1074,8 @@ void NormalStage::CollisionGimmick(void)
 						game_player_->Heal(1);
 						EffectCheckPoint* effect = new EffectCheckPoint();
 						effect->Initialize();
-						effect->__position(gimmick_position);
+						const D3DXVECTOR2 check_point_position = D3DXVECTOR2(gimmick_position.x,gimmick_position.y - 150.0f);
+						effect->__position(check_point_position);
 						effect_container_.push_back(effect);
 					}
 					break;
